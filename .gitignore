@@ -1,3 +1,2 @@
 *.pk3
 __pycache__/
-!pk3/*.pk3

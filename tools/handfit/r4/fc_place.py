@@ -1,4 +1,4 @@
-"""Hands r4, job 1: FlameCannon placement (owner 2026-10-27 18:46-18:48, docs/history/OWNER_REPORT_2026-10-27_r3.md item 21).
+"""Hands r4, job 1: FlameCannon placement (owner 2026-10-27 18:46-18:48, OWNER_REPORT_2026-10-27_r3.md item 21).
 No gun hand is drawn. The wrist stays pinned (the approved FBX pistol hand, fbx_b1_R.md3 frame 0, hook 0); the CANNON moves:
   - the rear flesh slit's centre goes to the wrist (the hand slides into the slit; the hand is inside the housing)
   - the housing axis is turned onto the forearm axis (the barrel runs along the forearm), the smallest turn that does it (no extra roll)
