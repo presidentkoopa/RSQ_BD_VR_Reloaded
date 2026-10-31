@@ -312,6 +312,17 @@ class RSVR_MeleeHandler : EventHandler
 				if (mo.Distance3D(a) > mo.radius + a.radius + 16)
 					continue;
 				RSQ_Dual.GiveCopy(mo, RSQ_DualTable.AXE);
+				// 2.0.3hb (owner 2026-10-31): the second axe goes INTO THE OFF HAND at once.
+				// GiveCopy deliberately cancels the switch (dual.zs: "getting it never switches
+				// to it; the Dual key does") because picking up a second GUN must not take the
+				// main hand's gun away. The axe is the one case where the copy has nowhere else
+				// to go: the player is already holding the axe, so the off hand is the only
+				// place it can land. Same PendingWeapon path the Dual key uses (RSQ_Dual.Toggle)
+				// and the put-away branch above, with the same guard against stomping a switch
+				// the player just asked for.
+				let cp = Weapon(mo.FindInventory(Inv('RSQ_Off_BrutalAxe')));
+				if (cp && mo.player.PendingWeapon == WP_NOCHANGE)
+					mo.player.PendingWeapon = cp;
 				mo.A_StartSound("Axe/Draw", CHAN_ITEM);
 				a.Destroy();
 				axePickups.Delete(i);
@@ -795,6 +806,20 @@ class RSVR_Hand play
 		f = 0.01 * mv.x;
 		r = -0.01 * mv.y;
 		u = 0.01 * mv.z;
+		// 2.0.3hb (owner 2026-10-31: "offhand axe attack range seems a lot shorter, or maybe I
+		// have to swing a hell of a lot harder"). THE OFF HAND'S MODEL IS MIRRORED BY THE ENGINE,
+		// not by MODELDEF: GetWeaponTransform (hw_vrmodes.cpp) applies scale(-1, 1, 1) for the
+		// controller the off weapon sits on, and MODELDEF.rsqaxedual carries the same
+		// Scale -1 1 1 as the main axe's own block. So the off axe is DRAWN as this whole chain
+		// reflected across the hand's forward/up plane, and the point has to be reflected with
+		// it or the hit geometry describes an axe that is not the one on screen.
+		// Unreflected, the edge vector (BladeOut - BladeIn) faces the wrong way laterally, so
+		// the edge-leading gate (rsvr_axe_edge, 60 degrees) throws out swings that visually lead
+		// with the edge -- the misses land at the end of the arc, which reads as lost reach --
+		// and the tip sits far enough off to under-read its own speed against AXE_SWING.
+		// Main hand is untouched: off is false there.
+		if (off)
+			r = -r;
 		Vector3 w = fF * f + fR * r + fU * u;
 		w.z /= ps;
 		return fH + w * vu;

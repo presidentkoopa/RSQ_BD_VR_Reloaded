@@ -1,6 +1,6 @@
 OptionMenu "RSQ_VoxelOptions"
 {
-	Title "VOXEL OPTIONS"
+	Title "VOXELS"
 	Option "Weapons", "rsq_vox_weapons", "OnOff"
 	Option "Ammo", "rsq_vox_ammo", "OnOff"
 	Option "Health", "rsq_vox_health", "OnOff"
