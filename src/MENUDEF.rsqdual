@@ -1,8 +1,6 @@
 OptionMenu "RSQ_DualOptions"
 {
-	Title "DUAL WIELD"
-	Option "Dual Flick to Reload", "rsq_flick", "OnOff"
-	StaticText " "
+	Title "DUAL OPTIONS"
 	Option "Pistol Start: Start with Dual Pistols", "rsq_dual_start", "OnOff"
 	Option "Pistol", "rsq_dual_pistol", "OnOff"
 	Option "Silvergun", "rsq_dual_moonlight", "OnOff"

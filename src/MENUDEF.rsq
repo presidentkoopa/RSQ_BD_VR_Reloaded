@@ -56,96 +56,63 @@ OptionValue "RSR_ShellCredit"
 	4, "4"
 }
 
-// 2026-10-31 (owner: "organize the options menu so that it makes sense"): one page of sections,
-// each a submenu. Same cvars and option names as before; only the layout changed.
 OptionMenu "RSQ_Options"
 {
 	Title "BD22 VR WEAPONS"
-	Submenu "Hands and HUD", "RSQ_OptHands"
-	Submenu "Reloading", "RSQ_OptReload"
-	Submenu "Weapons and Alt Fire", "RSQ_OptWeapons"
-	Submenu "Scopes, Bullets and Casings", "RSQ_OptBallistics"
-	Submenu "Melee, Throwing and Doors", "RSQ_OptMelee"
-	Submenu "Dual Wield", "RSQ_DualOptions"
-	Submenu "Voxels", "RSQ_VoxelOptions"
-}
-
-OptionMenu "RSQ_OptHands"
-{
-	Title "HANDS AND HUD"
 	Option "VR Hands", "rsq_hands", "OnOff"
 	Option "Hand Skin Tone", "rsq_hand_tone", "RSQ_HandTone"	// BD 2.0: zscript/rsq/handtone.zs
-	Option "Two-Hand Grip (engine)", "vr_two_handed_weapons", "OnOff"	// 2.0.2: QuestZDoom's own two-hand cvar, unchanged; the row only says so
-	Option "Instant Weapon Switch", "rsq_instant_switch", "OnOff"	// 2.0.2a (owner 19:47): no raise / lower (zscript/rsq/switch.zs)
-	Option "HUD Ammo", "rsq_hud_ammo", "RSQ_HudAmmo"
-}
-
-OptionMenu "RSQ_OptReload"
-{
-	Title "RELOADING"
 	Option "Reloading", "rsr_reload", "RSR_ReloadMode"
 	Option "Reload Non-Standard Guns", "rsq_reload_nonstd", "OnOff"
 	Option "Grab ammo with", "rsr_grab_with", "RSR_GrabWith"
 	Option "New magazine from", "rsr_pouch", "RSR_Pouch"
-	Slider "Reload assist", "rsr_assist", 0.5, 3.0, 0.1
-	StaticText " "
 	Option "Shotgun Shells Per Insert", "rsr_shell_credit", "RSR_ShellCredit"
-	Option "Shot/Revolver Reload", "rsb_revolver_feed", "RSB_RevFeed"
-	StaticText " "
-	Submenu "Tuning and debug", "RSR_Debug"
-}
-
-OptionMenu "RSQ_OptWeapons"
-{
-	Title "WEAPONS AND ALT FIRE"
+	Slider "Reload assist", "rsr_assist", 0.5, 3.0, 0.1
 	Option "Pistol Semi Auto", "rsa_pistol_semi", "OnOff"
 	Option "Shotgun Slugshot Alt Fire", "rsa_sg_slug", "OnOff"
 	Option "Assault Shotgun Slugshot Alt Fire", "rsa_asg_slug", "OnOff"
-	Option "Shotvolver Slugshot Alt Fire", "rsa_rev_slug", "OnOff"
 	Option "Rocket Launcher Lock-On Alt Fire", "rsa_rl_lock", "OnOff"
+	Option "Shotvolver Slugshot Alt Fire", "rsa_rev_slug", "OnOff"
+	Option "Shot/Revolver Reload", "rsb_revolver_feed", "RSB_RevFeed"
 	Option "Rifle Underbarrel Ammo", "rsm_ammo", "RSM_Ammo"
-	Option "Pump Shotgun Spread", "rsq_pump_spread", "RSQ_PumpSpread"	// BD 2.0: actors/Weapons/Shotgun.dec
-	StaticText " "
 	Option "Machinegun replaces MG42", "rsq_mg_replaces_mg42", "OnOff"
 	Option "Silvergun Replaces Pistol", "rsq_moonlight_pistol", "OnOff"
 	Option "Start With Two Silverguns", "rsq_moonlight_two", "OnOff"
-	Option "Extra weapons with cheats", "rsq_extra_weapons", "OnOff"
-}
-
-OptionMenu "RSQ_OptBallistics"
-{
-	Title "SCOPES, BULLETS AND CASINGS"
+	Option "HUD Ammo", "rsq_hud_ammo", "RSQ_HudAmmo"
 	Option "Sniper Scope", "rsq_scope2_sniper", "RSQ_ScopeMode"
 	Option "Railgun Scope", "rsq_scope2_railgun", "RSQ_ScopeMode"
-	StaticText " "
 	Option "Ballistics", "rsq_ballistics", "RSQ_Ballistics"
 	Option "True Bullets", "sv_rsq_true_bullets", "OnOff"	// 2.0.2 (owner r3 item 39): On = flying rounds with the Dakka look (playerrounds.zs, shotfx.zs); Off = stock BD22 hitscan and tracers
+	Option "Pump Shotgun Spread", "rsq_pump_spread", "RSQ_PumpSpread"	// BD 2.0: actors/Weapons/Shotgun.dec
 	StaticText " "
-	Option "Real Casing Models", "rsq_casing_models", "OnOff"
-	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
-}
-
-OptionMenu "RSQ_OptMelee"
-{
-	Title "MELEE, THROWING AND DOORS"
+	Submenu "Voxel Options", "RSQ_VoxelOptions"
+	StaticText " "
+	Submenu "Dual Options", "RSQ_DualOptions"
+	Option "Dual Flick to Reload", "rsq_flick", "OnOff"
+	StaticText " "
+	Option "VR Throwing", "rsg_vr", "OnOff"
+	Option "Two-Hand Grip (engine)", "vr_two_handed_weapons", "OnOff"	// 2.0.2: QuestZDoom's own two-hand cvar, unchanged; the row only says so
 	Option "VR Punching", "rsq_punch", "OnOff"
 	Option "Punch Switches Open", "rsq_punch_use", "OnOff"
 	Option "Pistol Whip", "rsq_pistol_whip", "OnOff"	// 2.0.2 (owner r3 item 39): swing a pistol or revolver into something (zscript/rsvr/melee.zs); the kick-key gun bash is gone
 	Slider "Pistol Whip: Swing Needed", "rsq_whip_speed", 2.0, 10.0, 0.5, 1	// 2.0.3g: higher = whip harder (was 3.2)
+	Option "Instant Weapon Switch", "rsq_instant_switch", "OnOff"	// 2.0.2a (owner 19:47): no raise / lower (zscript/rsq/switch.zs)
+	Option "Lift Doors by Hand", "rsq_door", "OnOff"	// 2.0.3f: from RSQ_DistanceGrab (zscript/rsvr/door.zs)
 	Option "Two-Handed Butt Strike", "rsq_butt", "OnOff"
-	Slider "Melee swing strength", "rsvr_melee_swing", 0.2, 3.0, 0.1
-	StaticText " "
+	Option "Real Casing Models", "rsq_casing_models", "OnOff"
+	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
 	Option "Melee Hit Flash", "rsq_bash_flash", "OnOff"
 	Option "Melee Hit Flash Style", "rsq_bash_fx", "RSQ_BashFXOpt"
 	Option "Melee Hit Flash Colour", "rsq_bash_tint", "RSQ_BashTintOpt"
+	Slider "Melee swing strength", "rsvr_melee_swing", 0.2, 3.0, 0.1
 	StaticText " "
-	Option "VR Throwing", "rsg_vr", "OnOff"
-	Option "Lift Doors by Hand", "rsq_door", "OnOff"	// 2.0.3f: from RSQ_DistanceGrab (zscript/rsvr/door.zs)
+	Option "Extra weapons with cheats", "rsq_extra_weapons", "OnOff"
+	StaticText " "
+	Submenu "Reload: tuning and debug", "RSR_Debug"
 }
 
 OptionMenu "RSR_Debug"
 {
-	Title "RELOAD TUNING AND DEBUG"
+	Title "RELOAD: TUNING AND DEBUG"
 	Option "Show the capture zones", "rsr_assist_debug", "OnOff"
 	Option "Print each reload step", "rsr_debug", "OnOff"
 }
