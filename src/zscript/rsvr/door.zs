@@ -153,6 +153,10 @@ class RSVR_Door : EventHandler
 		if (!p || !p.mo || p.mo.health <= 0) return;
 		let pmo = p.mo;
 		if (!Flag(p, 'rsq_door', true)) return;
+		// 2.0.3j: with RSQ_DistanceGrab loaded its own door lifting (RSQDG_Door) has the doors; ours steps aside
+		Name dgName = 'RSQDG_Door';	// looked up at run time: the class exists only with DistanceGrab loaded
+		class<StaticEventHandler> dg = dgName;
+		if (dg && EventHandler.Find(dg)) return;
 		let rs = RSR_ReloadHandler.StateOf(pmo);
 		int n = consoleplayer;
 

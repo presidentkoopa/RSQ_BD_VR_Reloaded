@@ -829,9 +829,19 @@ ACTOR BrutalAxeOnWall: CustomInventory
 		AXET A 1
 		AXET A -1
 		Stop
+	// 2.0.3j (owner 2026-11-01: "we need consistency"): the axe stuck in a wall follows the floor axe's rules:
+	// no axe -> the main hand's; an axe in the main hand -> the off hand's (melee.zs gives it); one in each hand ->
+	// it stays where it is. It used to be used up for nothing when the player already had the axe.
 	Pickup:
-	    TNT1 A 0
+		TNT1 A 0 A_JumpIfInventory("BrutalAxe", 1, "RSQ_HasMain")
 		TNT1 A 0 A_GiveInventory("BrutalAxe", 1)
 		Stop
+	RSQ_HasMain:
+		TNT1 A 0 A_JumpIfInventory("RSQ_Off_BrutalAxe", 1, "RSQ_Full")
+		TNT1 A 0 A_GiveInventory("RSVR_GiveOffAxe", 1)
+		Stop
+	RSQ_Full:
+		TNT1 A 0
+		Fail
     }
 }

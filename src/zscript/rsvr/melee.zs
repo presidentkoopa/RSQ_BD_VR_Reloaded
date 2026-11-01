@@ -267,6 +267,12 @@ class RSVR_MeleeHandler : EventHandler
 			// 2.0.3i (owner 2026-10-29 07:00, "player gets max one axe in each hand at a time"): no free second
 			// axe with the first. The off-hand axe comes only from picking up a second axe (below).
 			hadAxe[n] = has;
+			// 2.0.3j: an axe taken off a wall (BrutalAxeOnWall) while the main hand had one: the off hand's
+			if (mo.CountInv('RSVR_GiveOffAxe') > 0)
+			{
+				mo.TakeInventory('RSVR_GiveOffAxe', 999);
+				RSVR_AxeGrab.GiveOff(mo);
+			}
 			// a thrown MAIN axe is gone until an axe is picked up: once the throw has put the fists up
 			// (Axe.dec AxeThrown, FistSelect), the axe leaves the inventory, so the axe on the floor can be
 			// taken again by BD22's own pickup
@@ -1572,7 +1578,8 @@ class RSVR_Token : Inventory
 }
 
 class RSVR_AxeHolding : RSVR_Token {}
-class RSVR_MainAxeGone : RSVR_Token {}	// 2.0.3i: the main axe was thrown; it leaves the inventory once the fists are up
+class RSVR_MainAxeGone : RSVR_Token {}
+class RSVR_GiveOffAxe : RSVR_Token {}	// 2.0.3j: a wall axe was taken while the main hand had one	// 2.0.3i: the main axe was thrown; it leaves the inventory once the fists are up
 class RSVR_AxeHold : RSVR_Token {}		// the hold input is down: Ready enters the hold loop
 class RSVR_AxeThrown : RSVR_Token {}
 class RSVR_AxeTrig : RSVR_Token {}
