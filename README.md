@@ -104,22 +104,33 @@ the pack. It has not yet been confirmed in a headset.
 - **Two-Hand Grip (engine)** (was "Two-Handed Steadying"): QuestZDoom's own two-hand setting,
   unchanged. On: grip with your off hand near the gun to steady it with both hands.
 
-### Two-Hand Aim (Rifle, test) (2.0.3k, rig only, not headset-confirmed)
-A test of two-handed aiming done by the pack itself instead of the engine. Rifle only, off by default.
-- **To try it:** set **Two-Hand Grip (engine)** to Off and **Two-Hand Aim (Rifle, test)** to On. Hold the Rifle,
-  put your off palm under the handguard where the support hand is drawn and press the off grip. The support hand
-  shows on the gun and the Rifle's shots go down the line through both hands. Let go of the grip and the shots go
-  down the barrel again. With Two-Hand Grip (engine) On, this option does nothing: the engine's own two-handing is
-  used and the two are never applied together.
-- **The grab:** your palm (not the controller: the same palm point the hand reloads use) within 15 cm of the
-  support hand's spot on the Rifle when you press the grip. It never takes hold while a reload or the M203 has your
-  off hand, or with a gun in the off hand, and a reload that starts while you hold lets go.
-- **What it does not do yet:** the drawn Rifle stays on your gun hand. Only the shots follow both hands, so with
-  your off hand away from the handguard the shots leave the drawn barrel at an angle (13 degrees for 8 cm).
+### Two-Hand Aim (test) (2.0.3k Rifle, 2.0.3l every two-handed gun; rig only, not headset-confirmed)
+Two-handed aiming done by the pack itself instead of the engine, on every gun held in two hands. Off by default.
+- **To try it:** set **Two-Hand Grip (engine)** to Off and **Two-Hand Aim (test)** to On (the menu row under it says
+  so). Put your off palm where the support hand is drawn on the gun and press the off grip. The support hand shows
+  and the gun's shots go down the line through both hands. Let go and they go down the barrel again. With Two-Hand
+  Grip (engine) On this option does nothing: the engine's own two-handing is used, never both.
+- **The guns (21):** AssaultShotgun, Shot_Gun, SSG, BrutalSMG, MP40, Rifle, Machinegun, MG42, Minigun (its side
+  handle), Sniper, Plasma_Gun, RailGun, GrenadeLauncher, Rocket_Launcher, IncendiaryLauncher, BFG10k, BFG9000,
+  NukeLauncher, Devastator, Unmaker, HellishMissileLauncher. **Not:** pistol and revolvers (cup grip, hands together),
+  Flamethrower and FlameCannon (no barrel line; the flame stays on the drawn nozzle), axe, chainsaw, Dragonslayer.
+- **Where to grab:** each gun's spot is measured off its own drawn support hand (`tools/twohand/support_points.py`):
+  where your palm is when your real hand sits exactly on the drawn one. Your palm (the point the hand reloads use)
+  must be within 15 cm of it (12.4 to 13.2 cm on the short BFG, BFG9000, Nuke and SSG holds) when you press.
+- **What a gun fires is Brutal Doom's.** Only the line it leaves along changes: shotgun pellets keep their spread
+  round the new line, rockets and plasma their speed. Alt fires follow the same line (not yet run on the rig).
+- **Reloads:** a reload, shell loading, break-open or the M203 takes your off hand and lets go of the gun; keep the
+  grip held and bring the palm back and both hands go back on (rig: shown with the option switched off and on while
+  held, not yet through a full hand reload). The pump shotgun's pump cycle keeps both hands on (rig: Brutal Doom's own
+  pump; a hand-worked stroke while held is not yet shown).
+- **What it does not do yet:** the drawn gun stays on your gun hand; only the shots follow both hands. A scoped gun
+  held off its support spot shoots off the scope's centre by the same angle.
 - `rsq_twohand_debug 1` prints the grab and, for each shot, the angle between the two-hand line and the barrel.
-- On the rig (palm 8 cm up, down, left or right of the spot): the two-hand line was 11.7 to 13.3 degrees off the
-  barrel and every hit landed within 0.03 to 1.1 degrees of it (Brutal Doom's own 1 degree spread); with the grip
-  let go, the option off, the palm 52 cm away, or the engine's two-handing on, the hits stayed on the barrel's line.
+- On the rig, all 21 guns, palm 8 cm up or left of the spot while held: the two-hand line was 7.9 to 18.9 degrees off
+  the barrel and the shots (bullets, pellets, rails, rockets, plasma, BFG balls) went down it, as close as Brutal Doom's
+  own spread puts them (pellets and bullets within their usual spread, missiles exactly on it). With the grip let go,
+  the palm 3 cm outside the grab, the option off, or the engine's two-handing on, they stayed on the barrel. Frames
+  with the free hand on the measured spot and then the support hand drawn there: `renders/twohand_2.0.3l/`.
 
 ## What was new in 1.99
 

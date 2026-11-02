@@ -84,10 +84,11 @@ class RSVR_VRHand play
 	// F11: two hands on the weapon as the player SEES it. Guns: the engine's steadying. The axe
 	// and the sword: RSVR_MeleeTwo (melee.zs), the off grip held near them -- the engine's
 	// steadying is switched off while they are in hand, so one controller still drives them.
-	// 2.0.3k: and the Rifle under our Two-Hand Aim test (RSQ_TwoHandRifle, rsq/twohand.zs; rig only, not headset-confirmed).
+	// 2.0.3k: and a gun under our Two-Hand Aim test (RSQ_TwoHandAimed, rsq/twohand.zs; 2.0.3l every two-handed gun, was the
+	// Rifle's RSQ_TwoHandRifle; rig only, not headset-confirmed).
 	static bool TwoHands(PlayerPawn mo)
 	{
-		return mo && mo.player && (Steadied(mo) || mo.CountInv('RSVR_MeleeTwo') > 0 || mo.CountInv('RSQ_TwoHandRifle') > 0);
+		return mo && mo.player && (Steadied(mo) || mo.CountInv('RSVR_MeleeTwo') > 0 || mo.CountInv('RSQ_TwoHandAimed') > 0);
 	}
 
 	// the distance between the two controllers, real cm: the engine's own steadying

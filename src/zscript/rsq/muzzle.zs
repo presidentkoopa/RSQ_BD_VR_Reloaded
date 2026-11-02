@@ -273,8 +273,9 @@ class RSQ_Muzzle : EventHandler
 		return atan2(b.y, b.x), asin(clamp(b.z, -1, 1));
 	}
 
-	// 2.0.3k (twohand.zs): the same for a MAIN-hand shot of the player mo: the Rifle held in two hands (our Two-Hand Aim
-	// test, RSQ_TwoHand) goes down the two-hand line instead of the plain bore. Every other shot: AimOffset, unchanged.
+	// 2.0.3k (twohand.zs): the same for a MAIN-hand shot of the player mo: a gun held in two hands under our Two-Hand Aim test
+	// (RSQ_TwoHand; 2.0.3k the Rifle, 2.0.3l every two-handed gun) goes down the two-hand line instead of the plain bore.
+	// Every other shot: AimOffset, unchanged.
 	static double, double AimOffsetMo(PlayerPawn mo, Weapon w, Vector3 from)
 	{
 		if (!HasBore(w))

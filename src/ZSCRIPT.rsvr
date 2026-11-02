@@ -50,7 +50,7 @@ version "4.14"	// 1.97 F5: WorldHitscanPreFired is 4.13+; qzd17.3 is 4.14.3
 #include "zscript/rsq/bullet.zs"
 #include "zscript/rsq/hit.zs"
 #include "zscript/rsq/flash.zs"
-#include "zscript/rsq/twohand.zs"	// 2.0.3k: Two-Hand Aim (Rifle, test); rig only, not headset-confirmed
+#include "zscript/rsq/twohand.zs"	// 2.0.3k: Two-Hand Aim (Rifle, test); 2.0.3l: every two-handed gun, "Two-Hand Aim (test)"; rig only, not headset-confirmed
 #include "zscript/rsq/muzzle.zs"	// r4: the Ruger's shot starts at its muzzle
 #include "zscript/rsr/rsr_pump.zs"
 #include "zscript/rsr/rsr_pump_guns.zs"

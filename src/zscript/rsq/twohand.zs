@@ -1,37 +1,99 @@
-// twohand.zs (2.0.3k, owner-approved proof 2026-11-02): TWO-HAND AIM, Rifle only, our own (script), OFF by default.
-// Rig only, not headset-confirmed.
+// twohand.zs: TWO-HAND AIM, our own (script), OFF by default. Rig only, not headset-confirmed.
+// 2.0.3k: the Rifle-only proof (owner-approved 2026-11-02). 2.0.3l (owner 2026-11-02): every two-handed BD22 gun, each on
+// the measured grip point of its own drawn support hand (RSQ_TwoHandTable below).
 //
-// WHAT IT DOES. With "Two-Hand Aim (Rifle, test)" on (rsq_twohand_rifle) and the engine's own two-handing OFF
-// (vr_two_handed_weapons 0), bring the off hand's palm to the Rifle's handguard and press the off grip: the support
-// hand shows on the gun (RSVR_VRHand.TwoHands) and every Rifle shot goes down the TWO-HAND LINE instead of the plain
-// bore. Let go of the grip and the shots go down the plain bore again.
+// WHAT IT DOES. With "Two-Hand Aim (test)" on (rsq_twohand_rifle: the 2.0.3k name, kept so the owner's ini still works) and
+// the engine's own two-handing OFF (vr_two_handed_weapons 0), bring the off hand's palm to where the support hand is drawn on
+// the gun in hand and press the off grip: the support hand shows on the gun (RSVR_VRHand.TwoHands) and every shot of that
+// gun goes down the TWO-HAND LINE instead of the plain bore. Let go of the grip and the shots go down the plain bore again.
+// Every shot muzzle.zs turns onto the bore is turned this way: hitscans and each shotgun pellet (by angle, so a spread keeps
+// BD22's own spread round the new line), rails, the player's missiles. Primary and alt fire alike: what a gun fires is
+// BD22's, only the line it leaves along follows both hands.
 //
-// THE TWO-HAND LINE. In the main controller's frame (F L U, cm) the support hand's place on the gun is the hand table's
-// SupportPoint (row 18, the Rifle: (33.6, 3.3, 8.0) cm, measured off the fitted support hand, rsq/handtable.zs). The
-// line is the plain bore (muzzle.zs Bore: 0.99602 0.06710 0.05866) turned by the rotation, about the main controller,
-// that takes SupportPoint onto where the off palm is now. The gun hand stays the pivot; the roll is the main
-// controller's (the shot's direction is handed to the engine as a yaw / pitch in the controller's frame, AimOffset).
-// The shot still STARTS at the drawn muzzle (muzzle.zs Where); the drawn gun is not turned (see README).
+// THE TWO-HAND LINE. In the main controller's frame (F L U, cm) the support point S of the gun is where the off palm is
+// when the real off hand sits exactly where the support hand is drawn (MEASURED per gun off the drawn mesh by
+// tools/twohand/support_points.py, see the table). The line is the gun's plain line (muzzle.zs AimFLU: the bore, or the
+// scoped guns' zeroed line) turned by the rotation, about the main controller, that takes S onto where the off palm is now,
+// times the gun's Steer (1 = all of it, the Rifle test's). The gun hand stays the pivot. The shot still STARTS at the drawn
+// muzzle (muzzle.zs Where); the drawn gun is not turned (see README).
 //
 // THE PALM. The off controller's origin is not the palm: the palm is RSR.PalmGrab() (-1.5, 2.0, -4.5) cm in the off
-// controller's frame, the same point every reload grab measures from (rsr/vreload.zs). The grab takes the palm within
-// GRAB_CM of SupportPoint.
+// controller's frame, the same point every reload grab measures from (rsr/vreload.zs). The grab takes the palm within the
+// gun's Grab radius of S.
 //
-// WHEN. A rising edge of the off grip (rsr_grip, the synchronised event vreload.zs sends) with the palm within
-// GRAB_CM latches; letting go of the grip unlatches. Never: with vr_two_handed_weapons on (the engine two-hands; ours
-// stands down, the two are never applied together), with a gun in the off hand (dual wield), while a reload or the
-// M203 has the off hand (a reload that starts while latched drops the latch; grab again after it).
-// rsq_twohand_debug prints the latch and, for each shot, the angle between the two-hand line and the plain bore.
+// WHEN. A rising edge of the off grip (rsr_grip, the synchronised event vreload.zs sends) with the palm within Grab latches
+// on the gun in hand; letting go of the grip, or another gun coming up, unlatches. Never: with vr_two_handed_weapons on (the
+// engine two-hands; ours stands down, the two are never applied together), with a gun in the off hand (dual wield), while a
+// reload, shell loading, a break-open or the M203 has the off hand. One that starts while latched drops the latch; if the grip
+// is still held when it ends and the palm is back within Grab, two hands go back on the gun (no new press needed).
+// THE PUMP (Shot_Gun): working the pump does NOT drop the latch. With the engine's two-handing off, the same grip press takes
+// the pump (rsr/rsr_pump.zs: a grab), the support hand rides the pump as it does under the engine's steadying
+// (RSP_Handler.SupportShift), and the next shot goes down the two-hand line again without letting go.
+// rsq_twohand_debug prints the latch and, for each shot, the angle between the two-hand line and the plain line.
 
-class RSQ_TwoHandRifle : RSVR_Token {}	// two hands on the Rifle (ours): RSVR_VRHand.TwoHands ORs it in
+class RSQ_TwoHandAimed : RSVR_Token {}	// two hands on the gun (ours): RSVR_VRHand.TwoHands ORs it in
+
+// Per hand-table row (rsq/handtable.zs Index): Gun (Two-Hand Aim applies), Support (cm F L U, main controller), Grab (cm),
+// Steer. The rows left out and why: tools/twohand/support_points.py prints them (the pistol cups, guns without a bore, melee).
+class RSQ_TwoHandTable abstract
+{
+// twohand-table BEGIN: generated by tools/twohand/support_points.py --write (do not edit by hand)
+// row 1 AssaultShotgun: FbxWrapAS (fbx_s192_L.md3 frame 2), point 44.86 9.48 -8.63 cm (open-hand check 0.26 cm off), fit rms 0.08 cm over 780 vertices <= 0.3 cm, grab 15.0 cm
+// row 2 BFG10k: FbxWrapBFG10k (fbx_s192_L.md3 frame 14), point 21.32 8.92 -1.20 cm (open-hand check 0.33 cm off), fit rms 0.54 cm over 190 vertices <= 0.3 cm, grab 12.8 cm
+// row 3 BIG_FUCKING_GUN: FbxWrapBFG9 (fbx_s192_L.md3 frame 15), point 22.49 8.72 -1.72 cm (open-hand check 0.33 cm off), fit rms 0.55 cm over 193 vertices <= 0.3 cm, grab 13.2 cm
+// row 5 BrutalSMG: FbxSupF (fbx_b1_L.md3 frame 1), point 31.82 0.76 -4.60 cm (open-hand check 1.22 cm off), fit rms 0.19 cm over 438 vertices <= 0.3 cm, grab 15.0 cm
+// row 6 Devastator: FbxWrapDevastator (fbx_s192_L.md3 frame 4), point 42.06 8.85 0.52 cm (open-hand check 0.82 cm off), fit rms 0.21 cm over 391 vertices <= 0.3 cm, grab 15.0 cm
+// row 8 GrenadeLauncher: FbxWrapGL (fbx_s192_L.md3 frame 6), point 27.44 9.38 -9.60 cm (open-hand check 1.15 cm off), fit rms 0.27 cm over 317 vertices <= 0.3 cm, grab 15.0 cm
+// row 9 HellishMissileLauncher: FbxWrapHML (fbx_s192_L.md3 frame 17), point 30.82 6.95 -11.05 cm (open-hand check 0.62 cm off), fit rms 0.69 cm over 99 vertices <= 0.3 cm, grab 15.0 cm
+// row 10 IncendiaryLauncher: FbxWrapInc (fbx_s192_L.md3 frame 5), point 46.57 13.21 -11.32 cm (open-hand check 0.75 cm off), fit rms 0.08 cm over 625 vertices <= 0.3 cm, grab 15.0 cm
+// row 11 MG42: FbxWrapMG42 (fbx_s192_L.md3 frame 11), point 31.33 -0.28 6.30 cm (open-hand check 0.34 cm off), fit rms 0.18 cm over 455 vertices <= 0.3 cm, grab 15.0 cm
+// row 12 MP40: FbxSupF (fbx_b1_L.md3 frame 1), point 45.23 2.85 6.90 cm (open-hand check 1.22 cm off), fit rms 0.19 cm over 438 vertices <= 0.3 cm, grab 15.0 cm
+// row 13 Minigun: FbxSupMini (fbx_r4_Minigun_bar_L.md3 frame 0), point 37.91 22.58 8.98 cm (open-hand check 1.66 cm off), fit rms 0.28 cm over 287 vertices <= 0.3 cm, grab 15.0 cm
+// row 14 NukeLauncher: FbxWrapNukeLauncher (fbx_s192_L.md3 frame 13), point 20.59 7.91 1.23 cm (open-hand check 0.48 cm off), fit rms 0.38 cm over 249 vertices <= 0.3 cm, grab 12.4 cm
+// row 15 Plasma_Gun: FbxWrapPlasmaGun (fbx_s192_L.md3 frame 8), point 45.47 8.10 -3.37 cm (open-hand check 0.34 cm off), fit rms 0.06 cm over 617 vertices <= 0.3 cm, grab 15.0 cm
+// row 16 RailGun: FbxWrapRailGun (fbx_s192_L.md3 frame 9), point 46.38 6.82 -1.17 cm (open-hand check 1.23 cm off), fit rms 0.50 cm over 113 vertices <= 0.3 cm, grab 15.0 cm
+// row 18 Rifle: FbxWrapRifle (fbx_s192_L.md3 frame 3), point 44.04 6.13 1.07 cm (open-hand check 0.31 cm off), fit rms 0.45 cm over 134 vertices <= 0.3 cm, grab 15.0 cm
+// row 19 Rocket_Launcher: FbxWrapRL (fbx_s192_L.md3 frame 7), point 25.26 -2.02 10.89 cm (open-hand check 1.54 cm off), fit rms 0.24 cm over 342 vertices <= 0.3 cm, grab 15.0 cm
+// row 20 SSG: FbxWrapSSG (fbx_s192_L.md3 frame 0), point 21.42 7.35 -7.59 cm (open-hand check 0.32 cm off), fit rms 0.42 cm over 149 vertices <= 0.3 cm, grab 12.5 cm
+// row 21 Shot_Gun: FbxWrapShotGun (fbx_s192_L.md3 frame 1), point 43.25 8.04 -3.85 cm (open-hand check 0.38 cm off), fit rms 0.09 cm over 746 vertices <= 0.3 cm, grab 15.0 cm
+// row 22 Sniper: FbxWrapSniper (fbx_s192_L.md3 frame 10), point 32.68 4.31 3.96 cm (open-hand check 0.08 cm off), fit rms 0.21 cm over 391 vertices <= 0.3 cm, grab 15.0 cm
+// row 23 Unmaker: FbxWrapUnmaker (fbx_s192_L.md3 frame 16), point 31.64 4.55 -1.21 cm (open-hand check 0.09 cm off), fit rms 0.44 cm over 214 vertices <= 0.3 cm, grab 15.0 cm
+// row 27 Machinegun: FbxWrapMachinegun (fbx_s192_L.md3 frame 12), point 42.03 3.49 -3.07 cm (open-hand check 0.16 cm off), fit rms 0.19 cm over 438 vertices <= 0.3 cm, grab 15.0 cm
+	const ROWS = 28;
+	clearscope static bool Gun(int i)
+	{
+		static const int v[] = { 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1 };
+		return i > 0 && i < ROWS && v[i] != 0;
+	}
+	// the support point, cm F L U in the main controller's frame
+	clearscope static Vector3 Support(int i)
+	{
+		static const double x[] = { 0.00, 44.86, 21.32, 22.49, 0.00, 31.82, 42.06, 0.00, 27.44, 30.82, 46.57, 31.33, 45.23, 37.91, 20.59, 45.47, 46.38, 0.00, 44.04, 25.26, 21.42, 43.25, 32.68, 31.64, 0.00, 0.00, 0.00, 42.03 };
+		static const double y[] = { 0.00, 9.48, 8.92, 8.72, 0.00, 0.76, 8.85, 0.00, 9.38, 6.95, 13.21, -0.28, 2.85, 22.58, 7.91, 8.10, 6.82, 0.00, 6.13, -2.02, 7.35, 8.04, 4.31, 4.55, 0.00, 0.00, 0.00, 3.49 };
+		static const double z[] = { 0.00, -8.63, -1.20, -1.72, 0.00, -4.60, 0.52, 0.00, -9.60, -11.05, -11.32, 6.30, 6.90, 8.98, 1.23, -3.37, -1.17, 0.00, 1.07, 10.89, -7.59, -3.85, 3.96, -1.21, 0.00, 0.00, 0.00, -3.07 };
+		return Gun(i) ? (x[i], y[i], z[i]) : (0, 0, 0);
+	}
+	// the palm within this of Support at the grip's press: two hands on the gun (cm)
+	clearscope static double Grab(int i)
+	{
+		static const double v[] = { 0.0, 15.0, 12.8, 13.2, 0.0, 15.0, 15.0, 0.0, 15.0, 15.0, 15.0, 15.0, 15.0, 15.0, 12.4, 15.0, 15.0, 0.0, 15.0, 15.0, 12.5, 15.0, 15.0, 15.0, 0.0, 0.0, 0.0, 15.0 };
+		return Gun(i) ? v[i] : 0;
+	}
+	// how much of the turn from the barrel line onto the two-hand line the shots take (1 = all of it, as the Rifle test)
+	clearscope static double Steer(int i)
+	{
+		static const double v[] = { 0.00, 1.00, 1.00, 1.00, 0.00, 1.00, 1.00, 0.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 0.00, 0.00, 0.00, 1.00 };
+		return Gun(i) ? v[i] : 0;
+	}
+// twohand-table END
+}
 
 class RSQ_TwoHand : EventHandler
 {
-	const ROW = 18;			// RSQ_HandTable row of the Rifle
-	const GRAB_CM = 15.0;	// the palm this close to SupportPoint at the grip's press: two hands on the gun
-
 	bool offGrip[MAXPLAYERS];
 	bool gripPrev[MAXPLAYERS];
+	int held[MAXPLAYERS];	// the hand-table row two hands are on, 0 none
+	int retake[MAXPLAYERS];	// the row a reload took the hand from while the grip stayed held, 0 none
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
@@ -50,12 +112,14 @@ class RSQ_TwoHand : EventHandler
 		return cv && cv.GetBool();
 	}
 
-	static bool IsRifle(Weapon w)
+	// the gun's row when Two-Hand Aim applies to it, else 0
+	static int Row(Weapon w)
 	{
-		return w && w is 'Rifle' && RSQ_HandTable.Index(w) == ROW;
+		int i = w ? RSQ_HandTable.Index(w) : 0;
+		return RSQ_TwoHandTable.Gun(i) ? i : 0;
 	}
 
-	// everything but the grip: may two hands go on the Rifle now
+	// everything but the grip: may two hands go on the gun in hand now
 	static bool Allowed(PlayerPawn mo)
 	{
 		if (!mo || !mo.player || mo.player.playerstate != PST_LIVE || !RSVR_VRHand.InVR(mo))
@@ -63,7 +127,7 @@ class RSQ_TwoHand : EventHandler
 		let p = mo.player;
 		if (RSR.PlayerInt(p, 'rsq_twohand_rifle', 0) == 0 || EngineTwoHanded() || RSVR_VRHand.Steadied(mo))
 			return false;
-		if (!IsRifle(p.ReadyWeapon) || p.PendingWeapon != WP_NOCHANGE)
+		if (Row(p.ReadyWeapon) <= 0 || p.PendingWeapon != WP_NOCHANGE)
 			return false;
 		let off = p.OffhandWeapon;
 		if (off && !(off is 'RSQ_Hands'))
@@ -72,8 +136,8 @@ class RSQ_TwoHand : EventHandler
 		let rs = RSR_ReloadHandler.StateOf(mo);
 		if (rs && rs.phase != RSR.IDLE)
 			return false;
-		if (RSP_Handler.Busy(n) || RSB_Handler.Busy(n) || RSK_M203Handler.Busy(n))
-			return false;
+		if (RSB_Handler.Busy(n) || RSK_M203Handler.Busy(n))
+			return false;	// (RSP_Handler.Busy: a pump stroke keeps the hand on the gun; its shell loading shows in FreeHand)
 		if (RSR_ReloadHandler.FreeHand(mo) != "" || RSP_Handler.FreeHand(mo) != "" || RSB_Handler.FreeHand(mo) != ""
 			|| RSK_M203Handler.FreeHand(mo) != "")
 			return false;	// the same "a reload has the hand" test rsq/hands.zs makes
@@ -104,12 +168,6 @@ class RSQ_TwoHand : EventHandler
 		return (w dot F + pw dot F, w dot L + pw dot L, w dot U + pw dot U);
 	}
 
-	// the Rifle's support point, cm F L U (measured: rsq/handtable.zs SupportPoint, metres)
-	static Vector3 Support()
-	{
-		return RSQ_HandTable.SupportPoint(ROW) * 100.0;
-	}
-
 	override void WorldTick()
 	{
 		for (int n = 0; n < MAXPLAYERS; n++)
@@ -118,39 +176,69 @@ class RSQ_TwoHand : EventHandler
 			bool edge = g && !gripPrev[n];
 			gripPrev[n] = g;
 			if (!playeringame[n] || !players[n].mo)
-				continue;
-			let mo = PlayerPawn(players[n].mo);
-			bool had = mo.CountInv('RSQ_TwoHandRifle') > 0;
-			bool on = had && g && Allowed(mo);
-			double d = -1;
-			if (!had && edge && Allowed(mo))
 			{
-				d = (PalmInMain(mo) - Support()).Length();
-				on = d < GRAB_CM;
+				held[n] = retake[n] = 0;
+				continue;
 			}
-			if (on != had)
-				mo.SetInventory('RSQ_TwoHandRifle', on ? 1 : 0);
-			if (Debug(mo.player) && (on != had || edge))
-				Console.Printf("twh t%d grip %s, palm %.1f cm from the support point: %s", Level.maptime,
-					edge ? "pressed" : g ? "held" : "released", d >= 0 ? d : (PalmInMain(mo) - Support()).Length(),
-					on ? "two hands on the Rifle" : had ? "let go" : "not on the Rifle");
+			let mo = PlayerPawn(players[n].mo);
+			int row = Row(players[n].ReadyWeapon);
+			int had = mo.CountInv('RSQ_TwoHandAimed') > 0 ? held[n] : 0;
+			bool ok = Allowed(mo);
+			int on = had > 0 && had == row && g && ok ? had : 0;
+			if (!g || row != retake[n])
+				retake[n] = 0;
+			if (had > 0 && had == row && g && !ok)
+				retake[n] = row;	// a reload (or the like) took the hand; the grip is still held
+			double d = -1;
+			bool back = retake[n] > 0 && ok;
+			if (had == 0 && (edge || back) && ok)
+			{
+				d = (PalmInMain(mo) - RSQ_TwoHandTable.Support(row)).Length();
+				if (d < RSQ_TwoHandTable.Grab(row))
+				{
+					on = row;
+					retake[n] = 0;
+				}
+			}
+			held[n] = on;
+			if ((on > 0) != (mo.CountInv('RSQ_TwoHandAimed') > 0))
+				mo.SetInventory('RSQ_TwoHandAimed', on > 0 ? 1 : 0);
+			if (Debug(mo.player) && (on != had || edge) && row > 0 && (edge || on > 0 || had > 0))
+				Console.Printf("twh t%d %s (row %d) grip %s, palm %.1f cm from the support point (grab %.1f): %s", Level.maptime,
+					players[n].ReadyWeapon.GetClassName(), row, edge ? "pressed" : g ? "held" : "released",
+					d >= 0 ? d : (PalmInMain(mo) - RSQ_TwoHandTable.Support(row)).Length(), RSQ_TwoHandTable.Grab(row),
+					on > 0 ? (back && !edge ? "two hands back on the gun" : "two hands on the gun") : had > 0 ? (retake[n] > 0 ? "the hand is busy (grip held)" : "let go") : "not on the gun");
 		}
 	}
 
-	// muzzle.zs AimOffset: the two-hand line (F L U, unit), or false when two hands are not on the gun
+	// v turned about unit k by a degrees (Rodrigues)
+	static Vector3 Spin(Vector3 v, Vector3 k, double a)
+	{
+		double c = cos(a), s = sin(a);
+		return v * c + (k cross v) * s + k * ((k dot v) * (1 - c));
+	}
+
+	// muzzle.zs AimOffsetMo: the two-hand line (F L U, unit), or false when two hands are not on the gun
 	static Vector3, bool Aim(PlayerPawn mo, Weapon w, Vector3 bore)
 	{
-		if (!mo || !mo.player || w != mo.player.ReadyWeapon || !IsRifle(w) || mo.CountInv('RSQ_TwoHandRifle') <= 0)
+		if (!mo || !mo.player || w != mo.player.ReadyWeapon || mo.CountInv('RSQ_TwoHandAimed') <= 0)
 			return bore, false;
-		if (EngineTwoHanded() || !mo.OverrideAttackPosDir)
+		int row = Row(w);
+		if (row <= 0 || EngineTwoHanded() || !mo.OverrideAttackPosDir)
 			return bore, false;	// never both; the frames below need a live controller (vrhand.zs)
-		Vector3 s = Support(), o = PalmInMain(mo);
-		if (s.Length() < 1 || o.Length() < 1)
+		Vector3 sp = RSQ_TwoHandTable.Support(row), pm = PalmInMain(mo);
+		if (sp.Length() < 1 || pm.Length() < 1)
 			return bore, false;
-		Vector3 t = RSQ_Muzzle.Turn(bore, s.Unit(), o.Unit()).Unit();
+		Vector3 s = sp.Unit(), o = pm.Unit();
+		Vector3 k = s cross o;
+		double sl = k.Length();
+		Vector3 t = bore;
+		if (sl > 1e-9)
+			t = Spin(bore, k / sl, atan2(sl, s dot o) * RSQ_TwoHandTable.Steer(row)).Unit();
 		if (Debug(mo.player))
-			Console.Printf("twh shot t%d two-hand line %.5f %.5f %.5f, %.2f deg off the plain bore (palm %.1f %.1f %.1f cm, support %.1f %.1f %.1f)",
-				mo.Level.maptime, t.x, t.y, t.z, acos(clamp(t dot bore, -1, 1)), o.x, o.y, o.z, s.x, s.y, s.z);
+			Console.Printf("twh shot t%d %s (row %d) two-hand line %.5f %.5f %.5f, %.2f deg off the plain line (palm %.1f %.1f %.1f cm, support %.1f %.1f %.1f)",
+				mo.Level.maptime, w.GetClassName(), row, t.x, t.y, t.z, acos(clamp(t dot bore, -1, 1)),
+				pm.x, pm.y, pm.z, sp.x, sp.y, sp.z);
 		return t, true;
 	}
 }
