@@ -89,7 +89,10 @@ class RSQ_Muzzle : EventHandler
 		else
 			[at, ok] = Where(mo);
 		double da, dp;
-		[da, dp] = AimOffset(w, FromFLU(w, ok));
+		if (off)
+			[da, dp] = AimOffset(w, FromFLU(w, ok));
+		else
+			[da, dp] = AimOffsetMo(mo, w, FromFLU(w, ok));
 		Vector3 fw = Dir(off ? mo.OffhandDir(mo, mo.angle, mo.pitch) : mo.AttackDir(mo, mo.angle, mo.pitch));
 		Vector3 bw = Dir(off ? mo.OffhandDir(mo, mo.angle + da, mo.pitch + dp) : mo.AttackDir(mo, mo.angle + da, mo.pitch + dp));
 		Vector3 hp = off ? mo.OffhandPos : mo.AttackPos;
@@ -270,6 +273,18 @@ class RSQ_Muzzle : EventHandler
 		return atan2(b.y, b.x), asin(clamp(b.z, -1, 1));
 	}
 
+	// 2.0.3k (twohand.zs): the same for a MAIN-hand shot of the player mo: the Rifle held in two hands (our Two-Hand Aim
+	// test, RSQ_TwoHand) goes down the two-hand line instead of the plain bore. Every other shot: AimOffset, unchanged.
+	static double, double AimOffsetMo(PlayerPawn mo, Weapon w, Vector3 from)
+	{
+		if (!HasBore(w))
+			return 0, 0;
+		Vector3 b = AimFLU(w, from);
+		bool two;
+		[b, two] = RSQ_TwoHand.Aim(mo, w, b);
+		return atan2(b.y, b.x), asin(clamp(b.z, -1, 1));
+	}
+
 	// the muzzle in the controller's frame, or the controller itself when the guard said no
 	static Vector3 FromFLU(Weapon w, bool atMuzzle)
 	{
@@ -361,7 +376,7 @@ class RSQ_Muzzle : EventHandler
 			return false;
 		double da = 0, dp = 0;
 		if (bore)
-			[da, dp] = AimOffset(w, FromFLU(w, ok));
+			[da, dp] = AimOffsetMo(mo, w, FromFLU(w, ok));
 		busy = true;
 		mo.LineAttack(e.AttackAngle + da, e.AttackDistance, e.AttackPitch + dp, e.Damage, e.DamageType, e.AttackPuffType,
 			e.AttackLineFlags | LAF_ABSPOSITION, null, at.z, at.x, at.y);
@@ -387,7 +402,10 @@ class RSQ_Muzzle : EventHandler
 			if (!bore)
 				return false;
 			double da, dp;
-			[da, dp] = AimOffset(w, (0, 0, 0));
+			if (off)
+				[da, dp] = AimOffset(w, (0, 0, 0));
+			else
+				[da, dp] = AimOffsetMo(mo, w, (0, 0, 0));
 			FRailParams q;
 			q.damage = e.RailParams.damage;
 			q.offset_xy = e.RailParams.offset_xy;
@@ -419,7 +437,7 @@ class RSQ_Muzzle : EventHandler
 		// 2026-10-27: AttackDir only while live (see rsvr/vrhand.zs); else the event's own angles
 		double ta = 0, tp = 0;
 		if (bore)
-			[ta, tp] = AimOffset(w, FromFLU(w, true));
+			[ta, tp] = AimOffsetMo(mo, w, FromFLU(w, true));
 		Vector3 ap = mo.OverrideAttackPosDir ? mo.AttackDir(mo, e.AttackAngle + ta, e.AttackPitch + tp)
 			: (e.AttackAngle, e.AttackPitch, 0);
 		r.angle = ap.x;

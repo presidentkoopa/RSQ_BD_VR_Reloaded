@@ -104,6 +104,23 @@ the pack. It has not yet been confirmed in a headset.
 - **Two-Hand Grip (engine)** (was "Two-Handed Steadying"): QuestZDoom's own two-hand setting,
   unchanged. On: grip with your off hand near the gun to steady it with both hands.
 
+### Two-Hand Aim (Rifle, test) (2.0.3k, rig only, not headset-confirmed)
+A test of two-handed aiming done by the pack itself instead of the engine. Rifle only, off by default.
+- **To try it:** set **Two-Hand Grip (engine)** to Off and **Two-Hand Aim (Rifle, test)** to On. Hold the Rifle,
+  put your off palm under the handguard where the support hand is drawn and press the off grip. The support hand
+  shows on the gun and the Rifle's shots go down the line through both hands. Let go of the grip and the shots go
+  down the barrel again. With Two-Hand Grip (engine) On, this option does nothing: the engine's own two-handing is
+  used and the two are never applied together.
+- **The grab:** your palm (not the controller: the same palm point the hand reloads use) within 15 cm of the
+  support hand's spot on the Rifle when you press the grip. It never takes hold while a reload or the M203 has your
+  off hand, or with a gun in the off hand, and a reload that starts while you hold lets go.
+- **What it does not do yet:** the drawn Rifle stays on your gun hand. Only the shots follow both hands, so with
+  your off hand away from the handguard the shots leave the drawn barrel at an angle (13 degrees for 8 cm).
+- `rsq_twohand_debug 1` prints the grab and, for each shot, the angle between the two-hand line and the barrel.
+- On the rig (palm 8 cm up, down, left or right of the spot): the two-hand line was 11.7 to 13.3 degrees off the
+  barrel and every hit landed within 0.03 to 1.1 degrees of it (Brutal Doom's own 1 degree spread); with the grip
+  let go, the option off, the palm 52 cm away, or the engine's two-handing on, the hits stayed on the barrel's line.
+
 ## What was new in 1.99
 
 ### Every gun reloads by hand

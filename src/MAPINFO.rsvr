@@ -2,5 +2,5 @@
 // RS VR hands and ballistics: zscript/rsq. Real VR reload: zscript/rsr
 gameinfo
 {
-	AddEventHandlers = "RSQ_PoseHandler", "RSVR_MeleeHandler", "RSQ_Handler", "RSQ_Ballistics", "RSR_ReloadHandler", "RSQ_Counters", "RSQ_FlashHandler", "RSQ_Roster", "RSB_Handler", "RSP_Handler", "RSK_M203Handler", "RSG_Handler", "RSQ_Fists", "RSQ_DualHands", "RSQ_Flick", "RSA_Handler", "RSA_Casings", "RSA_FlameSpout", "RSQ_Dual", "RSQ_Voxels", "RSQ_ScopeReal", "RSQ_Muzzle", "RSQ_Switch", "RSQ_RocketLock", "RSVR_Door"
+	AddEventHandlers = "RSQ_PoseHandler", "RSVR_MeleeHandler", "RSQ_Handler", "RSQ_Ballistics", "RSR_ReloadHandler", "RSQ_Counters", "RSQ_FlashHandler", "RSQ_Roster", "RSB_Handler", "RSP_Handler", "RSK_M203Handler", "RSG_Handler", "RSQ_Fists", "RSQ_DualHands", "RSQ_Flick", "RSA_Handler", "RSA_Casings", "RSA_FlameSpout", "RSQ_Dual", "RSQ_Voxels", "RSQ_ScopeReal", "RSQ_Muzzle", "RSQ_TwoHand", "RSQ_Switch", "RSQ_RocketLock", "RSVR_Door"
 }
