@@ -67,12 +67,8 @@ class RSQ_Muzzle : EventHandler
 			return;
 		Name n = c.GetClassName();
 		if (n == 'FlamethrowerProjectileNew' || n == 'FlamethrowerProjectileNew2' || n == 'FlamethrowerProjectileNew3'
-			|| n == 'BigFireBallWithGravity')
+			|| n == 'BigFireBallWithGravity' || n == 'Shotgunparticles2')
 			return;	// flamespout.zs
-		// 2.0.3m: the shotguns' muzzle sparks (Shotgunparticles2) are no longer left out here for every gun: flamespout.zs only
-		// places the FlameCannon's (which has no bore, so HasBore below leaves them to it). On the Shot_Gun and the
-		// AssaultShotgun they now leave the drawn muzzle down the drawn barrel, so a gun Two-Hand Aim turns does not spray
-		// them out along the old line from the hand.
 		if (NotAShot(n))
 			return;
 		// born at which controller: the spawn step from it runs (within the spread) along the velocity, no longer than it
@@ -93,10 +89,7 @@ class RSQ_Muzzle : EventHandler
 		else
 			[at, ok] = Where(mo);
 		double da, dp;
-		if (off)
-			[da, dp] = AimOffset(w, FromFLU(w, ok));
-		else
-			[da, dp] = AimOffsetMo(mo, w, FromFLU(w, ok));
+		[da, dp] = AimOffset(w, FromFLU(w, ok));
 		Vector3 fw = Dir(off ? mo.OffhandDir(mo, mo.angle, mo.pitch) : mo.AttackDir(mo, mo.angle, mo.pitch));
 		Vector3 bw = Dir(off ? mo.OffhandDir(mo, mo.angle + da, mo.pitch + dp) : mo.AttackDir(mo, mo.angle + da, mo.pitch + dp));
 		Vector3 hp = off ? mo.OffhandPos : mo.AttackPos;
@@ -277,21 +270,6 @@ class RSQ_Muzzle : EventHandler
 		return atan2(b.y, b.x), asin(clamp(b.z, -1, 1));
 	}
 
-	// 2.0.3k (twohand.zs): the same for a MAIN-hand shot of the player mo: a gun held in two hands under our Two-Hand Aim test
-	// (RSQ_TwoHand; 2.0.3k the Rifle, 2.0.3l every two-handed gun) goes down the two-hand line instead of the plain bore.
-	// 2.0.3m: the line the drawn gun, turned by Two-Hand Aim, now shows (the same turn written into its layer), from its
-	// turned muzzle (Where). `from` is the unturned muzzle (the scoped guns' zero is taken on the unturned gun, then turned).
-	// Every other shot: AimOffset, unchanged.
-	static double, double AimOffsetMo(PlayerPawn mo, Weapon w, Vector3 from)
-	{
-		if (!HasBore(w))
-			return 0, 0;
-		Vector3 b = AimFLU(w, from);
-		bool two;
-		[b, two] = RSQ_TwoHand.Aim(mo, w, b);
-		return atan2(b.y, b.x), asin(clamp(b.z, -1, 1));
-	}
-
 	// the muzzle in the controller's frame, or the controller itself when the guard said no
 	static Vector3 FromFLU(Weapon w, bool atMuzzle)
 	{
@@ -341,7 +319,6 @@ class RSQ_Muzzle : EventHandler
 		Vector3 m = Muzzle(mo.player.ReadyWeapon);
 		if (m == (0, 0, 0))
 			return hp, false;
-		m = RSQ_TwoHand.OnGun(mo, m);	// 2.0.3m: where the gun, turned by Two-Hand Aim, draws its muzzle
 		double ps = mo.Level.pixelstretch;
 		if (ps <= 0)
 			ps = 1.2;
@@ -384,7 +361,7 @@ class RSQ_Muzzle : EventHandler
 			return false;
 		double da = 0, dp = 0;
 		if (bore)
-			[da, dp] = AimOffsetMo(mo, w, FromFLU(w, ok));
+			[da, dp] = AimOffset(w, FromFLU(w, ok));
 		busy = true;
 		mo.LineAttack(e.AttackAngle + da, e.AttackDistance, e.AttackPitch + dp, e.Damage, e.DamageType, e.AttackPuffType,
 			e.AttackLineFlags | LAF_ABSPOSITION, null, at.z, at.x, at.y);
@@ -410,10 +387,7 @@ class RSQ_Muzzle : EventHandler
 			if (!bore)
 				return false;
 			double da, dp;
-			if (off)
-				[da, dp] = AimOffset(w, (0, 0, 0));
-			else
-				[da, dp] = AimOffsetMo(mo, w, (0, 0, 0));
+			[da, dp] = AimOffset(w, (0, 0, 0));
 			FRailParams q;
 			q.damage = e.RailParams.damage;
 			q.offset_xy = e.RailParams.offset_xy;
@@ -445,7 +419,7 @@ class RSQ_Muzzle : EventHandler
 		// 2026-10-27: AttackDir only while live (see rsvr/vrhand.zs); else the event's own angles
 		double ta = 0, tp = 0;
 		if (bore)
-			[ta, tp] = AimOffsetMo(mo, w, FromFLU(w, true));
+			[ta, tp] = AimOffset(w, FromFLU(w, true));
 		Vector3 ap = mo.OverrideAttackPosDir ? mo.AttackDir(mo, e.AttackAngle + ta, e.AttackPitch + tp)
 			: (e.AttackAngle, e.AttackPitch, 0);
 		r.angle = ap.x;

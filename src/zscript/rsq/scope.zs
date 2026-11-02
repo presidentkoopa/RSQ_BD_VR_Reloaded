@@ -268,8 +268,8 @@ class RSQ_Scope abstract
 	// D = E + A * ((P - E) dot A), then clipped to the glass so it never leaves the tube.
 	clearscope static Vector3, bool DotAt(PlayerPawn mo, int i)
 	{
-		Vector3 P = RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Lens(i));	// 2.0.3m: on the gun as Two-Hand Aim turns it
-		Vector3 A = RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Axis(i));
+		Vector3 P = RSQ_ScopeTable.Lens(i);
+		Vector3 A = RSQ_ScopeTable.Axis(i);
 		double al = A.Length();
 		if (al <= 0)
 			return P, false;

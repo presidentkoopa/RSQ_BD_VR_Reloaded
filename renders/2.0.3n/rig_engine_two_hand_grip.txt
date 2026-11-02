@@ -1,0 +1,98 @@
+2.0.3n rig evidence: QuestZDoom 17.3 series rig (RSQ_UBQSeries/tools/rig17/run17.sh), IWAD doom2.wad, -file brutal22test6 ->
+02 BD22_VoxelPack -> 03 BD22_VR-Reloaded_2.0.3n -> 04-07 XMVE, the pack's cvars at their defaults, vr_two_handed_weapons 1.
+The engine's Two-Hand Grip is latched for real: the rig feeds the off grip into QuestZDoom's own VrInputDefault.cpp.
+Probe: a test-only event handler (not shipped) printing WF_TWOHANDSTABILIZED (steady), the pack's support-hand hold (hold),
+and each psprite as id:caller:sprite. (OFF) = its caller is the off-hand weapon, which the engine does not draw while steady.
+2101 = the support hand on the gun (caller RSQ_GunSide, drawn while steady); 2200 = the free off hand (caller rsq_hands).
+
+== Rifle: off hand at the drawn support hand, grip pressed, fire, off hand moved, fire, released
+LP t150 steady 0 hold 0 ready Rifle off rsq_hands aim 90.0 25.7 layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t210 steady 1 hold 1 ready Rifle off rsq_hands aim 97.8 -1.1 layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:941D 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t220 steady 1 hold 1 ready Rifle off rsq_hands aim 116.6 -3.2 layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:941D 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP shot t232 DecorativeTracer angle 119.44 pitch -6.01
+LP t260 steady 1 hold 1 ready Rifle off rsq_hands aim 116.6 -3.2 layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:941D 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t270 steady 0 hold 0 ready Rifle off rsq_hands aim 90.0 25.7 layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+
+== Shot_Gun held: fire, hand pump stroke while held, fire (rsr_debug)
+rsp t179 gun 1 PUMPING/EMPTY: the hand is on the pump (steadied): it pumps (ready no sooner than t199)
+rsp t197 sound Shotgun/Pump1 (slot 5)
+rsp t197 gun 1 PUMPING/EMPTY: pump at the back
+rsp t203 sound Shotgun/Pump2 (slot 5)
+rsp t203 gun 1 PUMPING/EMPTY: pump forward: stroke done
+rsp t203 gun 1 PUMPING/EMPTY: ready (the set's own refire time)
+rsp t203 gun 1 PUMPING/EMPTY: end
+
+== Other guns and melee, grip pressed then released (lines where steady/hold change). Built before the hands.zs fix:
+   note SSG t630, its break-open took the off hand while still held: hold 0 and the free hand (OFF), so no off hand drawn.
+PHASE BrutalPistol
+LP t90 steady 0 hold 0 ready BrutalPistol off rsq_hands layers 1:BrutalPistol:2A 2100:RSQ_GunSide:935A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t135 steady 1 hold 1 ready BrutalPistol off rsq_hands layers 1:BrutalPistol:2A 2100:RSQ_GunSide:935A 2101:RSQ_GunSide:936A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t195 steady 0 hold 0 ready BrutalPistol off rsq_hands layers 1:BrutalPistol:2A 2100:RSQ_GunSide:935A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE Melee_Attacks
+LP t220 steady 0 hold 0 ready Melee_Attacks off rsq_hands layers 1:Melee_Attacks:2A 2100:RSQ_GunSide:968A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t285 steady 1 hold 0 ready Melee_Attacks off rsq_hands layers 1:Melee_Attacks:2A 2100:RSQ_GunSide:968A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t345 steady 0 hold 0 ready Melee_Attacks off rsq_hands layers 1:Melee_Attacks:0A 2100:RSQ_GunSide:968A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE HandGrenades
+LP t370 steady 0 hold 0 ready HandGrenades off rsq_hands layers 1:HandGrenades:1730C 2100:RSQ_GunSide:969A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t435 steady 1 hold 0 ready HandGrenades off rsq_hands layers 1:HandGrenades:1730C 2100:RSQ_GunSide:969A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t495 steady 0 hold 0 ready HandGrenades off rsq_hands layers 1:HandGrenades:1730C 2100:RSQ_GunSide:969A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971A(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE SSG
+LP t520 steady 0 hold 0 ready SSG off rsq_hands layers 1:SSG:1622I 2100:RSQ_GunSide:962A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t585 steady 1 hold 1 ready SSG off rsq_hands layers 1:SSG:2A 2100:RSQ_GunSide:962A 2101:RSQ_GunSide:941A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t620 steady 1 hold 1 ready SSG off rsq_hands layers 1:SSG:2F 2100:RSQ_GunSide:962B 2101:RSQ_GunSide:941A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t630 steady 1 hold 0 ready SSG off rsq_hands layers 1:SSG:2A 2100:RSQ_GunSide:962A 2101:RSQ_GunSide:0A 2105:RSB_GunParts:978A 2106:RSB_GunParts:978A 2107:RSB_GunParts:978A 2112:RSQ_GunSide:0A 2200:rsq_hands:971A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t645 steady 0 hold 0 ready SSG off rsq_hands layers 1:SSG:2A 2100:RSQ_GunSide:962A 2101:RSQ_GunSide:0A 2105:RSB_GunParts:978A 2112:RSQ_GunSide:0A 2200:rsq_hands:971A(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE Minigun
+LP t670 steady 0 hold 0 ready Minigun off rsq_hands layers 1:Minigun:2A 2100:RSQ_GunSide:953A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t735 steady 1 hold 1 ready Minigun off rsq_hands layers 1:Minigun:2A 2100:RSQ_GunSide:953A 2101:RSQ_GunSide:940A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t770 steady 1 hold 1 ready Minigun off rsq_hands layers 1:Minigun:2H 2100:RSQ_GunSide:953B 2101:RSQ_GunSide:940A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t795 steady 0 hold 0 ready Minigun off rsq_hands layers 1:Minigun:2E 2100:RSQ_GunSide:953B 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE DSweap
+LP t820 steady 0 hold 0 ready DSweap off rsq_hands layers 1:DSweap:1675A 2100:RSQ_GunSide:966A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t885 steady 1 hold 1 ready DSweap off rsq_hands layers 1:DSweap:1675A 2100:RSQ_GunSide:966A 2101:RSQ_GunSide:937A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t945 steady 0 hold 1 ready DSweap off rsq_hands layers 1:DSweap:1676A 2100:RSQ_GunSide:966A 2101:RSQ_GunSide:937A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t950 steady 0 hold 0 ready DSweap off rsq_hands layers 1:DSweap:1675A 2100:RSQ_GunSide:966A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE Chain_saw
+LP t970 steady 0 hold 0 ready Chain_saw off rsq_hands layers 1:Chain_saw:2F 2100:RSQ_GunSide:965A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1035 steady 1 hold 1 ready Chain_saw off rsq_hands layers 1:Chain_saw:2G 2100:RSQ_GunSide:965A 2101:RSQ_GunSide:938A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1095 steady 0 hold 0 ready Chain_saw off rsq_hands layers 1:Chain_saw:2B 2100:RSQ_GunSide:965A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE BrutalAxe
+LP t1120 steady 0 hold 0 ready BrutalAxe off rsq_hands layers 1:BrutalAxe:2A 2100:RSQ_GunSide:967A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1185 steady 1 hold 1 ready BrutalAxe off rsq_hands layers 1:BrutalAxe:2A 2100:RSQ_GunSide:967A 2101:RSQ_GunSide:941S 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1245 steady 0 hold 0 ready BrutalAxe off rsq_hands layers 1:BrutalAxe:2A 2100:RSQ_GunSide:967A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE Rocket_Launcher
+LP t1270 steady 0 hold 0 ready Rocket_Launcher off rsq_hands layers 1:Rocket_Launcher:2A 2100:RSQ_GunSide:950A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1335 steady 1 hold 1 ready Rocket_Launcher off rsq_hands layers 1:Rocket_Launcher:2A 2100:RSQ_GunSide:950A 2101:RSQ_GunSide:941H 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1370 steady 1 hold 1 ready Rocket_Launcher off rsq_hands layers 1:Rocket_Launcher:2F 2100:RSQ_GunSide:950B 2101:RSQ_GunSide:941H 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1390 steady 1 hold 1 ready Rocket_Launcher off rsq_hands layers 1:Rocket_Launcher:913A 2100:RSQ_GunSide:950A 2101:RSQ_GunSide:941H 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1395 steady 0 hold 0 ready Rocket_Launcher off rsq_hands layers 1:Rocket_Launcher:913B 2100:RSQ_GunSide:950B 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1410 steady 0 hold 0 ready Rocket_Launcher off rsq_hands layers 1:Rocket_Launcher:2A 2100:RSQ_GunSide:950A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+PHASE RailGun
+LP t1420 steady 0 hold 0 ready Railgun off rsq_hands layers 1:Railgun:1636C 2100:RSQ_GunSide:951A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1495 steady 1 hold 1 ready Railgun off rsq_hands layers 1:Railgun:1636C 2100:RSQ_GunSide:951A 2101:RSQ_GunSide:941J 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1520 steady 1 hold 1 ready Railgun off rsq_hands layers 1:Railgun:2E 2100:RSQ_GunSide:951B 2101:RSQ_GunSide:941J 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1530 steady 1 hold 1 ready Railgun off rsq_hands layers 1:Railgun:1694H 2100:RSQ_GunSide:951A 2101:RSQ_GunSide:941J 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t1546 steady 0 hold 0 ready Railgun off rsq_hands layers 1:Railgun:1694K 2100:RSQ_GunSide:951A 2101:RSQ_GunSide:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971H(OFF) 1000000:rsq_hands:0A(OFF)
+
+== After the hands.zs fix (final pk3): SSG break-open and a Rifle magazine reload started while held: the support hand stays (2101)
+LP t190 steady 1 hold 1 ready SSG off rsq_hands layers 1:SSG:2A 2100:RSQ_GunSide:962A 2101:RSQ_GunSide:941A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+rsb t191 gun 1: IDLE -> OPENING
+rsb t191 sound SSG/Lever2 (slot 5)
+rsb t197 ejected 2
+rsb t197 gun 1: OPENING -> OPEN
+LP t200 steady 1 hold 1 ready SSG off rsq_hands layers 1:SSG:2A 2100:RSQ_GunSide:962A 2101:RSQ_GunSide:941A 2105:RSB_GunParts:978A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t215 steady 0 hold 0 ready SSG off rsq_hands layers 1:SSG:2A 2100:RSQ_GunSide:962A 2101:RSQ_GunSide:0A 2105:RSB_GunParts:978A 2112:RSQ_GunSide:0A 2200:rsq_hands:971A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t420 steady 1 hold 1 ready Rifle off rsq_hands layers 1:Rifle:2B 2100:RSQ_GunSide:944B 2101:RSQ_GunSide:941D 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t430 steady 1 hold 1 ready Rifle off rsq_hands layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:941D 2103:RSR_GunParts:0A 2104:RSR_GunParts:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+rsr t432 gun 1: IDLE -> EMPTY
+rsr t432 sound Rifle/Reload1 (slot 5)
+rsr t432 gun 1: EMPTY -> DROP
+rsr t436 gun 1: DROP -> EMPTY
+LP t440 steady 1 hold 1 ready Rifle off rsq_hands layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:941D 2103:RSR_GunParts:0A 2104:RSR_GunParts:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:0A(OFF) 1000000:rsq_hands:0A(OFF)
+LP t495 steady 0 hold 0 ready Rifle off rsq_hands layers 1:Rifle:2A 2100:RSQ_GunSide:944A 2101:RSQ_GunSide:0A 2103:RSR_GunParts:0A 2104:RSR_GunParts:0A 2112:RSQ_GunSide:0A 2200:rsq_hands:971A(OFF) 1000000:rsq_hands:0A(OFF)
+
+== Regression (final pk3, no probe): give all, options menu, fight, nine guns fired. Script errors:
+      1 Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+      1 Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+      1 Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+      1 Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:

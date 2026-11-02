@@ -250,17 +250,6 @@ class RSR_State play
 		F = RSVR_VRHand.HandDir(mo, 0, 0, ps);
 		L = RSVR_VRHand.HandDir(mo, 90, 0, ps);
 		U = RSVR_VRHand.HandDir(mo, 0, 90, ps);
-		// 2.0.3m: while Two-Hand Aim turns the drawn gun about the gun hand (rsq/twohand.zs), the GUN frame is the turned
-		// gun's: every grab, stroke and part here (the pump's fore-end, a magazine at the well) is measured against the gun
-		// as it is drawn, not against the controller's forward
-		Vector3 tF = RSQ_TwoHand.OnGun(mo, (1, 0, 0)), tL = RSQ_TwoHand.OnGun(mo, (0, 1, 0)), tU = RSQ_TwoHand.OnGun(mo, (0, 0, 1));
-		if (tF != (1, 0, 0) || tL != (0, 1, 0))
-		{
-			Vector3 f = F * tF.x + L * tF.y + U * tF.z, l = F * tL.x + L * tL.y + U * tL.z, u = F * tU.x + L * tU.y + U * tU.z;
-			F = f;
-			L = l;
-			U = u;
-		}
 		oF = RSVR_VRHand.OffDir(mo, 0, 0, ps);
 		oL = RSVR_VRHand.OffDir(mo, 90, 0, ps);
 		oU = RSVR_VRHand.OffDir(mo, 0, 90, ps);

@@ -104,36 +104,18 @@ the pack. It has not yet been confirmed in a headset.
 - **Two-Hand Grip (engine)** (was "Two-Handed Steadying"): QuestZDoom's own two-hand setting,
   unchanged. On: grip with your off hand near the gun to steady it with both hands.
 
-### Two-Hand Aim (test) (2.0.3m: the gun turns with both hands; rig only, not headset-confirmed)
-Two-handed aiming done by the pack itself instead of the engine, on every gun held in two hands. Off by default.
-- **To try it:** set **Two-Hand Grip (engine)** to Off and **Two-Hand Aim (test)** to On. Put your off palm where the
-  support hand is drawn on the gun and press the off grip. The support hand shows, and **the drawn gun swings about
-  your gun hand to point through your off hand**. The shots go down that drawn barrel, from its drawn muzzle. Let go
-  and the gun eases back onto your gun hand in a few frames. With Two-Hand Grip (engine) On this option does nothing.
-- **2.0.3m fixes the first headset test** (2.0.3l: the shots followed your off hand but the drawn rifle stayed facing
-  forward, so it fired out to the side). Now the shots use exactly the turn the gun is drawn with: a shot never leaves
-  a line the gun isn't showing.
-- **How (stock QuestZDoom 17.3, no engine change):** the engine turns the held model by its weapon layer's offset
-  (yaw and pitch, no roll: hw_weapon.cpp) about the weapon's BobPivot3D. Each tic the pack adds the turn there and puts
-  the pivot on your gun hand (measured off each gun's MODELDEF by `tools/twohand/support_points.py`). The gun keeps
-  your gun hand's roll. The hands drawn on the gun turn with it (rig frames). The pump's parts, a scope's lens and
-  camera, and the reload and pump grabs are moved with it in code (not yet shown).
-- **The guns (21):** AssaultShotgun, Shot_Gun, SSG, BrutalSMG, MP40, Rifle, Machinegun, MG42, Minigun (its side
-  handle), Sniper, Plasma_Gun, RailGun, GrenadeLauncher, Rocket_Launcher, IncendiaryLauncher, BFG10k, BFG9000,
-  NukeLauncher, Devastator, Unmaker, HellishMissileLauncher. **Not:** pistol and revolvers (cup grip), Flamethrower and
-  FlameCannon (no barrel line), axe, chainsaw, Dragonslayer.
-- **Where to grab:** each gun's spot is measured off its own drawn support hand. Your palm must be within 15 cm of it
-  (12.4 to 13.2 cm on the BFG, BFG9000, Nuke and SSG) when you press. A reload, shell loading, break-open or the M203
-  takes the off hand and the gun eases back to the gun hand; the turn is capped at 60 degrees.
-- **On the rig** (canted, turned gun-hand grip; off hand where the fitted support hand puts it): with the palm on the
-  spot the gun doesn't turn. Moved 10 cm left, 8 cm up, 8 cm right and 5 cm down, or 25 cm left, the drawn gun turned
-  about 10 to 60 degrees, and its drawn support hand pointed at the real palm within 0.9 degrees (0.00 on most guns). Every
-  bullet, pellet, rail, rocket, grenade, plasma and BFG ball left the drawn muzzle (0.0 cm) down the drawn barrel, within
-  that gun's own Brutal Doom spread (rockets, grenades, rails, plasma: 0.00 degrees). Frames: `renders/twohand_2.0.3m/`.
-- **Not shown yet:** a hand-worked pump stroke while held (the rig doesn't engage the hand pump in this test, 2.0.3l
-  didn't either); the scope picture on a turned Sniper or RailGun. Ejected brass and the widest shotgun muzzle sparks
-  still leave from the untouched gun hand's line.
-- `rsq_twohand_debug 1` prints the grab and, for each shot, the turn and its angle off the plain barrel.
+### Two-handing is the engine's Two-Hand Grip (2.0.3n; rig only, not headset-confirmed)
+- Hold a gun in two hands with QuestZDoom's own **Two-Hand Grip (engine)**: off hand near the gun, press the off
+  grip. The engine points the gun from your gun hand through your off hand, the support hand shows on the gun, and
+  the shots go down the gun's own barrel from its muzzle, exactly as in 2.0.3j. Let go of the grip to release.
+- While the grip holds, the engine hides whatever the off hand itself holds and switches off an off-hand weapon (it
+  doesn't fire). The support hand drawn on the gun is not affected.
+- **Fix:** a magazine or break-open reload that started while you held the grip (the Rifle running dry, the SSG
+  opening after both barrels) hid the support hand, and the engine hid the empty off hand: no off hand at all. Now the
+  support hand stays on the gun until your off hand takes something.
+- On the rig (QuestZDoom 17.3, the owner's load order) the support hand showed and released correctly on the Rifle,
+  Shot_Gun, SSG, Minigun, Rocket Launcher, Railgun, pistol, sword, chainsaw and axe; the Shot_Gun's hand pump worked
+  while held. Frames and log: `renders/2.0.3n/`.
 
 ## What was new in 1.99
 

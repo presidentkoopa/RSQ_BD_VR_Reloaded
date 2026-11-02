@@ -351,6 +351,12 @@ class RSQ_Hands : Weapon
 			rsr = RSK_M203Handler.FreeHand(mo);	// 1.30 RSR-M203: the rifle's launcher (rsr/rsr_m203.zs)
 		if (rsr == "" && mo.CountInv('RSG_RingHand') > 0)
 			rsr = "RsgRing";				// the VR grenade's ring, pinched (rsg/grenade.zs)
+		// 2.0.3n: while the engine's Two-Hand Grip holds the gun (WF_TWOHANDSTABILIZED) it draws nothing the off-hand weapon
+		// owns (hw_weapon.cpp:832, :917), so an EMPTY free hand during a magazine or break-open reload was not drawn at all,
+		// and the support hand was hidden for it too: no off hand anywhere. Empty and steadied, the support hand holds the gun,
+		// as the pump and the M203 already do (their FreeHand returns "" while steadied). A hand holding a part is unchanged.
+		if (rsr == "FreeHand" && RSVR_VRHand.Steadied(mo))
+			rsr = "";
 		int i = on ? RSQ_HandTable.Index(p.ReadyWeapon) : 0;
 		// 2026-10-28 (owner, overrides his 2026-10-16 "fists are Ermac's, both hands"): the fists are the FBX hand, both hands
 		// (MODELDEF RQGF / RQHN H: one FBX fist frame fitted in place of Ermac's, tools/handfit/offhand); the VR grenade sits in the FBX nade hand
@@ -1021,7 +1027,6 @@ class RSQ_Hands : Weapon
 		{
 			Vector3 bt, br;
 			[bt, br] = RSB_Handler.Place(Owner, translation, rotation, layer, ticfrac);
-			[bt, br] = RSQ_TwoHand.OnGunLayer(PlayerPawn(Owner), layer, bt, br, ticfrac);	// 2.0.3m: on the turned gun
 			return bt, br;
 		}
 		// 1.30 RSR-M203: the rifle launcher's tube and round (rsr/rsr_m203.zs)
@@ -1029,7 +1034,6 @@ class RSQ_Hands : Weapon
 		{
 			Vector3 mt, mr;
 			[mt, mr] = RSK_M203Handler.Place(Owner, translation, rotation, layer, ticfrac);
-			[mt, mr] = RSQ_TwoHand.OnGunLayer(PlayerPawn(Owner), layer, mt, mr, ticfrac);	// 2.0.3m: on the turned gun
 			return mt, mr;
 		}
 		// RSR-PUMP: the pump shotguns' layers (rsr/rsr_pump.zs)
@@ -1037,7 +1041,6 @@ class RSQ_Hands : Weapon
 		{
 			Vector3 pt, pr;
 			[pt, pr] = RSP_Handler.Place(Owner, translation, rotation, layer, ticfrac);
-			[pt, pr] = RSQ_TwoHand.OnGunLayer(PlayerPawn(Owner), layer, pt, pr, ticfrac);	// 2.0.3m: on the turned gun
 			return pt, pr;
 		}
 		// the real reload's layers (rsr/vreload.zs)
@@ -1046,10 +1049,7 @@ class RSQ_Hands : Weapon
 			Vector3 t, r;
 			[t, r] = RSR_ReloadHandler.Place(Owner, translation, rotation, layer, ticfrac);
 			if (layer != RSQ_Layers.FREEHAND)
-			{
-				[t, r] = RSQ_TwoHand.OnGunLayer(PlayerPawn(Owner), layer, t, r, ticfrac);	// 2.0.3m: on the turned gun
 				return t, r;
-			}
 			translation = t;
 			rotation = r;
 			if (offMesh > 0 || offMeshPrev > 0)	// 1.5: the off-hand trigger punch
@@ -1124,16 +1124,8 @@ class RSQ_Hands : Weapon
 			frameMove += RSP_Handler.SupportShift(Owner, ticfrac);	// RSR-PUMP: the support hand rides the pump
 			frameMove += RSK_M203Handler.SupportShift(Owner, ticfrac);	// 1.30 RSR-M203: ...and the launcher's tube
 		}
-		// 2.0.3m: while Two-Hand Aim turns the gun (rsq/twohand.zs) its layer turns about the controller (BobPivot3D), and the
-		// hands turn about the same point (HandGrip, in their own turn space), so they stay where they hold it
-		Vector3 gunPivot = RSQ_GunMoves.Pivot(i);
-		Vector3 twoPivot;
-		bool twoTurn;
-		[twoPivot, twoTurn] = RSQ_TwoHand.HandPivot(PlayerPawn(Owner));
-		if (twoTurn)
-			gunPivot = twoPivot;
 		Vector3 t, r;
-		[t, r] = RSQ_Turn.Place(hook, hookTurn, gunTurnNow, frameTurn, frameMove, gunPivot);
+		[t, r] = RSQ_Turn.Place(hook, hookTurn, gunTurnNow, frameTurn, frameMove, RSQ_GunMoves.Pivot(i));
 		if (i == 26 && Owner.CountInv('RSVR_SwordTwo') > 0)	// r12 port: the support hand (FBX L on the hilt) takes the same turn as the gun hand and the sword
 		{
 			// r6b: the two-handed sword block (MODELDEF.bd.txt DSL2) turns the mesh 110 deg

@@ -1,4 +1,8 @@
-"""support_points.py [--write] [--json OUT] : Two-Hand Aim's per-gun table, MEASURED off the drawn support hands.
+"""support_points.py [--write] [--json OUT] : the per-gun two-hand support-point table, MEASURED off the drawn support hands.
+
+2.0.3n: DATA ONLY. It was the table of the script "Two-Hand Aim" (2.0.3k-2.0.3m), which is removed (it turned the drawn gun
+at tic rate and lagged the hands in the owner's headset); two-handing is the engine's Two-Hand Grip. Nothing in the shipped
+pk3 reads this table. It is kept for later: where each gun's support hand is drawn, in the main controller's frame.
 
 For every gun in the pack it reads, from the pack's own files (src/):
   - zscript/rsq/handtable.zs   Index() (class -> row), SupportHook / SupportRot (the support layer's hook and turn)
@@ -32,7 +36,7 @@ the controller's origin in that space, PARSED from the gun's own MODELDEF block 
 (less the player's (-vr_3dweaponOffsetX, Y, Z), added at run time). The same for the hand meshes (hook.PL) gives HandGrip,
 the point the hands turn about with the gun. Checked against gunmoves.zs Pivot (the gun origin in hand space).
 
---write puts the table into src/zscript/rsq/twohand.zs between `// twohand-table BEGIN` and `// twohand-table END`.
+--write writes the table to tools/twohand/support_table.zs.txt (a ZScript block, not part of src/ and not shipped).
 """
 import os, re, sys, json, argparse
 import numpy as np
@@ -274,9 +278,6 @@ if __name__ == '__main__':
 	if a.json:
 		json.dump(dict(guns=guns, left=left, palm_grab=palm_grab().tolist()), open(a.json, 'w'), indent=1)
 	if a.write:
-		p = os.path.join(SRC, 'zscript/rsq/twohand.zs')
-		tx = open(p, encoding='latin-1').read()
-		i, j = tx.index('// twohand-table BEGIN'), tx.index('// twohand-table END')
-		j = tx.index('\n', j) + 1
-		open(p, 'w', encoding='latin-1', newline='').write(tx[:i] + zs_block(guns) + tx[j:])
+		p = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'support_table.zs.txt')
+		open(p, 'w', encoding='latin-1', newline='').write(zs_block(guns))
 		print('wrote', p)
