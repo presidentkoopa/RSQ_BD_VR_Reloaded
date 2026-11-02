@@ -66,7 +66,7 @@ user float rsq_casing_size = 1.0;
 // 2.0.2a (owner 2026-10-28 19:47): Instant Weapon Switch (zscript/rsq/switch.zs). Off = BD22's raise / lower.
 user bool rsq_instant_switch = true;
 user int rsq_switch_log = 0;
-// 2.0.3k (zscript/rsq/twohand.zs): Two-Hand Aim (Rifle, test); 2.0.3l: "Two-Hand Aim (test)", every two-handed gun (the cvar
+// 2.0.3k (zscript/rsq/twohand.zs): Two-Hand Aim (Rifle, test); 2.0.3l: "Two-Hand Aim (test)", every two-handed gun; 2.0.3m: the drawn gun turns with both hands (the cvar
 // keeps its 2.0.3k name so saved inis still work). Off grip pressed with the off palm where the gun's support hand is drawn:
 // that gun's shots go down the line through both hands. Needs vr_two_handed_weapons 0 (with it on, this stands down).
 // Rig only, not headset-confirmed. rsq_twohand_debug prints the grab and each shot's angle off the plain bore.

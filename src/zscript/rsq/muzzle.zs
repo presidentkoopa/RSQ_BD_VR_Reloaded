@@ -67,8 +67,12 @@ class RSQ_Muzzle : EventHandler
 			return;
 		Name n = c.GetClassName();
 		if (n == 'FlamethrowerProjectileNew' || n == 'FlamethrowerProjectileNew2' || n == 'FlamethrowerProjectileNew3'
-			|| n == 'BigFireBallWithGravity' || n == 'Shotgunparticles2')
+			|| n == 'BigFireBallWithGravity')
 			return;	// flamespout.zs
+		// 2.0.3m: the shotguns' muzzle sparks (Shotgunparticles2) are no longer left out here for every gun: flamespout.zs only
+		// places the FlameCannon's (which has no bore, so HasBore below leaves them to it). On the Shot_Gun and the
+		// AssaultShotgun they now leave the drawn muzzle down the drawn barrel, so a gun Two-Hand Aim turns does not spray
+		// them out along the old line from the hand.
 		if (NotAShot(n))
 			return;
 		// born at which controller: the spawn step from it runs (within the spread) along the velocity, no longer than it
@@ -275,6 +279,8 @@ class RSQ_Muzzle : EventHandler
 
 	// 2.0.3k (twohand.zs): the same for a MAIN-hand shot of the player mo: a gun held in two hands under our Two-Hand Aim test
 	// (RSQ_TwoHand; 2.0.3k the Rifle, 2.0.3l every two-handed gun) goes down the two-hand line instead of the plain bore.
+	// 2.0.3m: the line the drawn gun, turned by Two-Hand Aim, now shows (the same turn written into its layer), from its
+	// turned muzzle (Where). `from` is the unturned muzzle (the scoped guns' zero is taken on the unturned gun, then turned).
 	// Every other shot: AimOffset, unchanged.
 	static double, double AimOffsetMo(PlayerPawn mo, Weapon w, Vector3 from)
 	{
@@ -335,6 +341,7 @@ class RSQ_Muzzle : EventHandler
 		Vector3 m = Muzzle(mo.player.ReadyWeapon);
 		if (m == (0, 0, 0))
 			return hp, false;
+		m = RSQ_TwoHand.OnGun(mo, m);	// 2.0.3m: where the gun, turned by Two-Hand Aim, draws its muzzle
 		double ps = mo.Level.pixelstretch;
 		if (ps <= 0)
 			ps = 1.2;

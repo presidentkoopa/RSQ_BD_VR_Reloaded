@@ -104,33 +104,36 @@ the pack. It has not yet been confirmed in a headset.
 - **Two-Hand Grip (engine)** (was "Two-Handed Steadying"): QuestZDoom's own two-hand setting,
   unchanged. On: grip with your off hand near the gun to steady it with both hands.
 
-### Two-Hand Aim (test) (2.0.3k Rifle, 2.0.3l every two-handed gun; rig only, not headset-confirmed)
+### Two-Hand Aim (test) (2.0.3m: the gun turns with both hands; rig only, not headset-confirmed)
 Two-handed aiming done by the pack itself instead of the engine, on every gun held in two hands. Off by default.
-- **To try it:** set **Two-Hand Grip (engine)** to Off and **Two-Hand Aim (test)** to On (the menu row under it says
-  so). Put your off palm where the support hand is drawn on the gun and press the off grip. The support hand shows
-  and the gun's shots go down the line through both hands. Let go and they go down the barrel again. With Two-Hand
-  Grip (engine) On this option does nothing: the engine's own two-handing is used, never both.
+- **To try it:** set **Two-Hand Grip (engine)** to Off and **Two-Hand Aim (test)** to On. Put your off palm where the
+  support hand is drawn on the gun and press the off grip. The support hand shows, and **the drawn gun swings about
+  your gun hand to point through your off hand**. The shots go down that drawn barrel, from its drawn muzzle. Let go
+  and the gun eases back onto your gun hand in a few frames. With Two-Hand Grip (engine) On this option does nothing.
+- **2.0.3m fixes the first headset test** (2.0.3l: the shots followed your off hand but the drawn rifle stayed facing
+  forward, so it fired out to the side). Now the shots use exactly the turn the gun is drawn with: a shot never leaves
+  a line the gun isn't showing.
+- **How (stock QuestZDoom 17.3, no engine change):** the engine turns the held model by its weapon layer's offset
+  (yaw and pitch, no roll: hw_weapon.cpp) about the weapon's BobPivot3D. Each tic the pack adds the turn there and puts
+  the pivot on your gun hand (measured off each gun's MODELDEF by `tools/twohand/support_points.py`). The gun keeps
+  your gun hand's roll. The hands drawn on the gun turn with it (rig frames). The pump's parts, a scope's lens and
+  camera, and the reload and pump grabs are moved with it in code (not yet shown).
 - **The guns (21):** AssaultShotgun, Shot_Gun, SSG, BrutalSMG, MP40, Rifle, Machinegun, MG42, Minigun (its side
   handle), Sniper, Plasma_Gun, RailGun, GrenadeLauncher, Rocket_Launcher, IncendiaryLauncher, BFG10k, BFG9000,
-  NukeLauncher, Devastator, Unmaker, HellishMissileLauncher. **Not:** pistol and revolvers (cup grip, hands together),
-  Flamethrower and FlameCannon (no barrel line; the flame stays on the drawn nozzle), axe, chainsaw, Dragonslayer.
-- **Where to grab:** each gun's spot is measured off its own drawn support hand (`tools/twohand/support_points.py`):
-  where your palm is when your real hand sits exactly on the drawn one. Your palm (the point the hand reloads use)
-  must be within 15 cm of it (12.4 to 13.2 cm on the short BFG, BFG9000, Nuke and SSG holds) when you press.
-- **What a gun fires is Brutal Doom's.** Only the line it leaves along changes: shotgun pellets keep their spread
-  round the new line, rockets and plasma their speed. Alt fires follow the same line (not yet run on the rig).
-- **Reloads:** a reload, shell loading, break-open or the M203 takes your off hand and lets go of the gun; keep the
-  grip held and bring the palm back and both hands go back on (rig: shown with the option switched off and on while
-  held, not yet through a full hand reload). The pump shotgun's pump cycle keeps both hands on (rig: Brutal Doom's own
-  pump; a hand-worked stroke while held is not yet shown).
-- **What it does not do yet:** the drawn gun stays on your gun hand; only the shots follow both hands. A scoped gun
-  held off its support spot shoots off the scope's centre by the same angle.
-- `rsq_twohand_debug 1` prints the grab and, for each shot, the angle between the two-hand line and the barrel.
-- On the rig, all 21 guns, palm 8 cm up or left of the spot while held: the two-hand line was 7.9 to 18.9 degrees off
-  the barrel and the shots (bullets, pellets, rails, rockets, plasma, BFG balls) went down it, as close as Brutal Doom's
-  own spread puts them (pellets and bullets within their usual spread, missiles exactly on it). With the grip let go,
-  the palm 3 cm outside the grab, the option off, or the engine's two-handing on, they stayed on the barrel. Frames
-  with the free hand on the measured spot and then the support hand drawn there: `renders/twohand_2.0.3l/`.
+  NukeLauncher, Devastator, Unmaker, HellishMissileLauncher. **Not:** pistol and revolvers (cup grip), Flamethrower and
+  FlameCannon (no barrel line), axe, chainsaw, Dragonslayer.
+- **Where to grab:** each gun's spot is measured off its own drawn support hand. Your palm must be within 15 cm of it
+  (12.4 to 13.2 cm on the BFG, BFG9000, Nuke and SSG) when you press. A reload, shell loading, break-open or the M203
+  takes the off hand and the gun eases back to the gun hand; the turn is capped at 60 degrees.
+- **On the rig** (canted, turned gun-hand grip; off hand where the fitted support hand puts it): with the palm on the
+  spot the gun doesn't turn. Moved 10 cm left, 8 cm up, 8 cm right and 5 cm down, or 25 cm left, the drawn gun turned
+  about 10 to 60 degrees, and its drawn support hand pointed at the real palm within 0.9 degrees (0.00 on most guns). Every
+  bullet, pellet, rail, rocket, grenade, plasma and BFG ball left the drawn muzzle (0.0 cm) down the drawn barrel, within
+  that gun's own Brutal Doom spread (rockets, grenades, rails, plasma: 0.00 degrees). Frames: `renders/twohand_2.0.3m/`.
+- **Not shown yet:** a hand-worked pump stroke while held (the rig doesn't engage the hand pump in this test, 2.0.3l
+  didn't either); the scope picture on a turned Sniper or RailGun. Ejected brass and the widest shotgun muzzle sparks
+  still leave from the untouched gun hand's line.
+- `rsq_twohand_debug 1` prints the grab and, for each shot, the turn and its angle off the plain barrel.
 
 ## What was new in 1.99
 

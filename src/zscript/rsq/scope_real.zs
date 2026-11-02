@@ -169,8 +169,8 @@ class RSQ_ScopeReal : EventHandler
 	double eyeAlong;
 	private double SightAlong(PlayerPawn mo, int i)
 	{
-		Vector3 P = RSQ_ScopeTable.Lens(i);
-		Vector3 A = RSQ_ScopeTable.Axis(i);
+		Vector3 P = RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Lens(i));
+		Vector3 A = RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Axis(i));
 		double al = A.Length();
 		if (al <= 0)
 			return ALONG_NOMINAL;
@@ -326,15 +326,15 @@ class RSQ_ScopeReal : EventHandler
 		// 2.0: no eye gate. The picture is up for as long as the gun is held (see the header).
 		eyeAlong = SightAlong(mo, i);
 
-		Vector3 lens = Place(RSQ_ScopeTable.Lens(i));
+		Vector3 lens = Place(RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Lens(i)));
 		// Down the bore, as the difference of two placed points rather than a rotated vector:
 		// the squash in Place is not a rotation, so a direction has to be transformed the same
 		// way a displacement is or it drifts off axis with pitch.
-		Vector3 A = RSQ_ScopeTable.Axis(i);
+		Vector3 A = RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Axis(i));
 		double al = A.Length();
 		if (al <= 0)
 			return;
-		Vector3 ahead = Place(RSQ_ScopeTable.Lens(i) + A * (10.0 / al));
+		Vector3 ahead = Place(RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Lens(i)) + A * (10.0 / al));
 		Vector3 d = ahead - lens;
 		double dl = d.Length();
 		if (dl <= 0)
@@ -361,7 +361,7 @@ class RSQ_ScopeReal : EventHandler
 		// BEFORE it applies roll (hw_drawinfo.cpp SetViewMatrix), while angle and pitch are
 		// converted by the engine (r_utility.cpp:1229). Map space overshot by about 2 degrees
 		// at the guns' 11 degree tilt (rig, HANDOFF scope-3x).
-		Vector3 up = Place(RSQ_ScopeTable.Lens(i) + RSQ_ScopeTable.Up(i) * 10.0) - lens;
+		Vector3 up = Place(RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Lens(i)) + RSQ_TwoHand.OnGun(mo, RSQ_ScopeTable.Up(i)) * 10.0) - lens;
 		up.z *= ps;
 		Vector3 dr = (d.x, d.y, d.z * ps);
 		dr = dr / dr.Length();

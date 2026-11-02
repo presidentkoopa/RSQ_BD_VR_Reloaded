@@ -91,7 +91,7 @@ OptionMenu "RSQ_Options"
 	StaticText " "
 	Option "VR Throwing", "rsg_vr", "OnOff"
 	Option "Two-Hand Grip (engine)", "vr_two_handed_weapons", "OnOff"	// 2.0.2: QuestZDoom's own two-hand cvar, unchanged; the row only says so
-	Option "Two-Hand Aim (test)", "rsq_twohand_rifle", "OnOff"	// 2.0.3k Rifle, 2.0.3l every two-handed gun (zscript/rsq/twohand.zs): needs Two-Hand Grip (engine) Off; with it On this stands down. Rig only, not headset-confirmed
+	Option "Two-Hand Aim (test)", "rsq_twohand_rifle", "OnOff"	// 2.0.3k Rifle, 2.0.3l every two-handed gun, 2.0.3m the drawn gun turns with both hands (zscript/rsq/twohand.zs): needs Two-Hand Grip (engine) Off; with it On this stands down. Rig only, not headset-confirmed
 	StaticText "Two-Hand Aim needs Two-Hand Grip (engine) Off"
 	Option "VR Punching", "rsq_punch", "OnOff"
 	Option "Punch Switches Open", "rsq_punch_use", "OnOff"
