@@ -1,0 +1,133 @@
+2.0.3q rig evidence (QuestZDoom 17.3 rig /home/claude/g9/rig, -singletics). Rig only, not headset-confirmed.
+Order: doom2 -> 01 brutal22test6 -> 02 BD22_VoxelPack -> 03 BD22_VR-Reloaded_2.0.3q -> 04-07 XMVE -> GunBonsai-0.10.6 -> 18 RSQ pk3s (snapshot with SHA1SUMS) -> test-only probe.
+
+== 1. Off-hand axe swing probe (OFFHAND_SWING_AUDIT_2026-11-03 probe; main = qz_rhand, off = mirrored qz_lhand; 11 durations, 24..2 tics)
+   fast tics = tics at/over the 4.5 m/s threshold and not rising; edge pass = of those, passing the edge-leading test
+log       hand   fast tics  edge pass min pass m/s max fail m/s hit trials  slowest hit N
+q_chop    main          35         35         4.54         0.00       8/11             18
+q_chop    off           33         33         4.54         0.00       7/11              9
+q_drop    main          10         10         4.63         0.00       6/11              7
+q_drop    off           11         11         4.63         0.00       6/11              7
+q_wrist   main          15         13         4.60         4.49       4/11              5
+q_wrist   off           15         13         4.60         4.49       4/11              5
+q_lunge   main          33         32         4.52         4.50       7/11              9
+q_lunge   off           33         33         4.52         0.00       7/11              9
+q_sideP   main          30         28         4.69         4.50       6/11              7
+q_sideP   off           27         27         4.50         0.00       7/11              9
+q_sideN   main          28          0            -        19.58       0/11              -
+q_sideN   off           28          0            -        19.59       0/11              -
+q_thrust  main           9          0            -         9.78       0/11              -
+q_thrust  off           10          0            -         9.78       0/11              -
+   (sideN = side slash spine-first, thrust = forward stab pointing down: both refused on both hands, as intended)
+   2.0.3p, same probe (audit): off hand 0 edge passes on chop/drop/wrist/lunge/edge-first side; it cut only spine-first (sideN 33/33) and pointing-down stab (9/9).
+
+== 2. Off-hand axe throw (overhand chop-throw over 3 tics, trigger released at the end; spawn point relative to the throwing controller, body frame, map units)
+   2.0.3q AXP t149 THROW ThrowedAxe trial main_throw_3 age 0: spawn rel. hand fwd 22.9 left -0.9 up 1.5 | speed 34.7 dir fwd 1.00 left 0.00 up -0.02
+   2.0.3q AXP t149 THROW ThrowedAxe trial main_throw_3 hand main: from hand fwd 22.9 left -0.9 up 1.5 | speed 34.7 dir fwd 1.00 left 0.00 up -0.02
+   2.0.3q AXP t150 THROW ThrowedAxe trial off_throw_3 age 0: spawn rel. hand fwd 22.9 left 1.0 up 1.5 | speed 34.7 dir fwd 1.00 left -0.00 up -0.02
+   2.0.3q AXP t150 THROW ThrowedAxe trial off_throw_3 hand off: from hand fwd 22.9 left 1.0 up 1.5 | speed 34.7 dir fwd 1.00 left -0.00 up -0.02
+   2.0.3p AXP t149 THROW ThrowedAxe trial off_throw_3 age 0: spawn rel. hand fwd 21.3 left 0.9 up -10.8 | speed 31.7 dir fwd 1.00 left -0.00 up 0.01
+   2.0.3p AXP t149 THROW ThrowedAxe trial off_throw_3 hand off: from hand fwd 21.3 left 0.9 up -10.8 | speed 31.7 dir fwd 1.00 left -0.00 up 0.01
+
+== 3. Pump shotgun: empty -> hand reload (shells pushed into the port, no reload button) -> pump -> fire. bd_noautoreload on (probe gives NoAutoReload), rsr_shell_credit 4, off hand RSQ_Hands.
+   No trigger pull between the last shot (t205) and SGP_FIRE_NOW. 'trig' is BT_ATTACK.
+-- 2.0.3p (bug):
+   SGP t3 Melee_Attacks st Ready tube 9 chamberEmpty 0 reserve 0 noAuto 0 rsp NONE trig 0 off UBQS_ForceHand vr 1 want 0
+   SGP t201 Shot_Gun st Ready tube 1 chamberEmpty 0 reserve 40 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t205 Shot_Gun st ? tube 0 chamberEmpty 1 reserve 40 noAuto 1 rsp NONE trig 1 off rsq_hands vr 1 want 1
+   SGP t210 Shot_Gun st ? tube 0 chamberEmpty 1 reserve 40 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t212 Shot_Gun st Ready tube 0 chamberEmpty 1 reserve 40 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t278 grab down (trigger)
+   rsp t278 gun 1 NONE/CARRY: took a shell 50 cm from the gun hand (no reload needed)
+   rsp t288 gun 1 NONE/INSERT: the shell is in the port: -6.0 cm, 0.0 off the line, 0 deg
+   rsp t314 sound Shotgun/Reload (slot 5)
+   rsp t314 gun 1 NONE/INSERT: shell home (4 credited), gun idle
+   SGP t315 Shot_Gun st Ready tube 4 chamberEmpty 1 reserve 36 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t327 grab up
+   rsp t347 grab down (trigger)
+   rsp t347 gun 1 NONE/CARRY: took a shell 50 cm from the gun hand (no reload needed)
+   rsp t359 gun 1 NONE/INSERT: the shell is in the port: -6.0 cm, 0.0 off the line, 0 deg
+   rsp t383 sound Shotgun/Reload (slot 5)
+   rsp t383 gun 1 NONE/INSERT: shell home (4 credited), gun idle
+   SGP t384 Shot_Gun st Ready tube 8 chamberEmpty 1 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t397 grab up
+   SGP_PUMP_NOW
+   rsp t453 grab down (trigger) on the pump
+   rsp t480 grab up
+   SGP_FIRE_NOW
+   rsp t510 gun 1 PUMPING/EMPTY: loaded empty: the gun waits for the hand on the pump (fire: the set's own pump)
+   SGP t510 Shot_Gun st RSP_P2Wait tube 8 chamberEmpty 1 reserve 32 noAuto 1 rsp PUMPING trig 1 off rsq_hands vr 1 want 1
+   rsp t511 gun 1 PUMPING/EMPTY: fire: the set's own pump
+   rsp t511 gun 1 PUMPING/EMPTY: end
+   SGP t511 Shot_Gun st ? tube 8 chamberEmpty 1 reserve 32 noAuto 1 rsp NONE trig 1 off rsq_hands vr 1 want 1
+   SGP t514 Shot_Gun st ? tube 8 chamberEmpty 1 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t521 Shot_Gun st ? tube 8 chamberEmpty 0 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t528 Shot_Gun st ReadyToFireAgain tube 8 chamberEmpty 0 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t532 Shot_Gun st Ready tube 8 chamberEmpty 0 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+-- 2.0.3q (fixed):
+   SGP t5 Rifle st Ready tube 9 chamberEmpty 0 reserve 0 noAuto 1 rsp NONE trig 0 off UBQS_ForceHand vr 1 want 0
+   SGP t201 Shot_Gun st Ready tube 1 chamberEmpty 0 reserve 40 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t206 Shot_Gun st ? tube 0 chamberEmpty 1 reserve 40 noAuto 1 rsp NONE trig 1 off rsq_hands vr 1 want 1
+   SGP t208 Shot_Gun st ? tube 0 chamberEmpty 1 reserve 40 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t219 Shot_Gun st Ready tube 0 chamberEmpty 1 reserve 40 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t278 grab down (trigger)
+   rsp t278 gun 1 NONE/CARRY: took a shell 50 cm from the gun hand (no reload needed)
+   rsp t288 gun 1 NONE/INSERT: the shell is in the port: -6.0 cm, 0.0 off the line, 0 deg
+   rsp t314 sound Shotgun/Reload (slot 5)
+   rsp t314 gun 1 NONE/INSERT: shell home (4 credited), gun idle
+   rsp t315 gun 1 PUMPING/EMPTY: loaded empty: the gun waits for the hand on the pump (fire: the set's own pump)
+   SGP t315 Shot_Gun st RSP_P2Wait tube 4 chamberEmpty 1 reserve 36 noAuto 1 rsp PUMPING trig 0 off rsq_hands vr 1 want 1
+   rsp t328 grab up
+   rsp t347 grab down (trigger)
+   rsp t347 gun 1 PUMPING/CARRY: took a shell 50 cm from the gun hand (no reload needed)
+   rsp t357 gun 1 PUMPING/INSERT: the shell is in the port: -6.0 cm, 0.0 off the line, 0 deg
+   rsp t382 sound Shotgun/Reload (slot 5)
+   rsp t382 gun 1 PUMPING/INSERT: shell home (4 credited), gun idle
+   SGP t383 Shot_Gun st RSP_P2Wait tube 8 chamberEmpty 1 reserve 32 noAuto 1 rsp PUMPING trig 0 off rsq_hands vr 1 want 1
+   rsp t397 grab up
+   SGP_PUMP_NOW
+   rsp t452 grab down (trigger) on the pump
+   rsp t452 gun 1 PUMPING/EMPTY: took the pump (grab) at 0.0 cm
+   rsp t461 sound Shotgun/Pump1 (slot 5)
+   rsp t461 gun 1 PUMPING/EMPTY: pump at the back
+   rsp t470 sound Shotgun/Pump2 (slot 5)
+   rsp t470 gun 1 PUMPING/EMPTY: pump forward: stroke done
+   rsp t470 gun 1 PUMPING/EMPTY: ready (the set's own refire time)
+   rsp t470 gun 1 PUMPING/EMPTY: end
+   SGP t470 Shot_Gun st ReadyToFireAgain tube 8 chamberEmpty 0 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t474 Shot_Gun st Ready tube 8 chamberEmpty 0 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t480 grab up
+   SGP_FIRE_NOW
+   SGP t510 Shot_Gun st ? tube 7 chamberEmpty 1 reserve 32 noAuto 1 rsp NONE trig 1 off rsq_hands vr 1 want 1
+   SGP t513 Shot_Gun st ? tube 7 chamberEmpty 1 reserve 32 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t523 gun 1 PUMPING/EMPTY: loaded empty: the gun waits for the hand on the pump (fire: the set's own pump)
+   SGP t523 Shot_Gun st RSP_P1Wait tube 7 chamberEmpty 1 reserve 32 noAuto 1 rsp PUMPING trig 0 off rsq_hands vr 1 want 1
+-- 2.0.3q partial reload (4 chambered/tube, chamberEmpty 0): stays Ready, first trigger fires:
+   SGP t3 Melee_Attacks st Ready tube 9 chamberEmpty 0 reserve 0 noAuto 1 rsp NONE trig 0 off UBQS_ForceHand vr 1 want 0
+   SGP t201 Shot_Gun st Ready tube 4 chamberEmpty 0 reserve 40 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t309 gun 1 NONE/INSERT: shell home (4 credited), gun idle
+   SGP t310 Shot_Gun st Ready tube 8 chamberEmpty 0 reserve 36 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   rsp t378 gun 1 NONE/INSERT: shell home (4 credited), gun idle
+   SGP t379 Shot_Gun st Ready tube 9 chamberEmpty 0 reserve 35 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP_FIRE_NOW
+   SGP t433 Shot_Gun st ? tube 8 chamberEmpty 1 reserve 35 noAuto 1 rsp NONE trig 1 off rsq_hands vr 1 want 1
+   SGP t436 Shot_Gun st ? tube 8 chamberEmpty 1 reserve 35 noAuto 1 rsp NONE trig 0 off rsq_hands vr 1 want 1
+   SGP t440 Shot_Gun st RSP_P1Wait tube 8 chamberEmpty 1 reserve 35 noAuto 1 rsp PUMPING trig 0 off rsq_hands vr 1 want 1
+-- 2.0.3q auto reload on (unchanged path: reload loop -> pump wait):
+   rsp t385 gun 1 LOAD/EMPTY: end
+   rsp t385 gun 1 PUMPING/EMPTY: loaded empty: the gun waits for the hand on the pump (fire: the set's own pump)
+   SGP_PUMP_NOW
+   rsp t471 gun 1 PUMPING/EMPTY: pump forward: stroke done
+   rsp t471 gun 1 PUMPING/EMPTY: ready (the set's own refire time)
+   rsp t471 gun 1 PUMPING/EMPTY: end
+   SGP_FIRE_NOW
+   rsp t517 gun 1 PUMPING/EMPTY: loaded empty: the gun waits for the hand on the pump (fire: the set's own pump)
+
+== 4. Script errors (run17.sh, doom2.wad)
+   q203_short: Script error 4 (non-voxeldef 0), VM abort/exception 0
+   q203_full: Script error 4 (non-voxeldef 0), VM abort/exception 0
+   Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+   Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+   Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+   Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:
+   Probe runs (full order, 10 runs): 4 each, all 02_BD22_VoxelPack voxeldef.txt lines 66/72/77/892.

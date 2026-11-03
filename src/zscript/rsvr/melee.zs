@@ -763,7 +763,7 @@ class RSVR_Hand play
 		fH = ph.pos[0];
 		fF = ph.F;
 		fR = -ph.L;
-		fU = ph.U;
+		fU = off ? -ph.U : ph.U;	// 2.0.3q: the off frame arrives mirrored (engine mirrors the left weapon, hw_vrmodes.cpp:469; OffDir yaw 90 is the hand's right), so pose.zs U = F x L points down. fR = -ph.L is already mirrored like the drawn off model.
 		pBod = ph.bod[0];
 		pByaw = ph.byaw[0];
 		pStamp = ph.stamp[0];

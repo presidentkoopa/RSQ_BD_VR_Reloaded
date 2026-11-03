@@ -137,6 +137,18 @@ the pack. It has not yet been confirmed in a headset.
 - On the rig, on the owner's full load order: pin out on the 12th tic at the face; no pin with the option off; no second
   pin without leaving the face; the ring still pulls and re-pins. Log: `renders/2.0.3p/`.
 
+### Off-hand axe and shotgun pump fixes (2.0.3q; rig only, not headset-confirmed)
+- **The off-hand axe cuts like the main-hand axe.** The engine draws the left-hand weapon mirrored, and the swing code
+  had the off axe's blade upside down: the edge and head were worked out below your wrist, so the edge-first rule threw
+  out every real chop. Now the off hand cuts on the same swings as the main hand (chop, drop, wrist snap, lunging chop,
+  edge-first side slash) at the same speed (about 4.5 m/s at the blade), and refuses the same spine-first ones. The off
+  axe's throw now leaves from the drawn axe head, as the main hand's does (it used to leave from below the wrist).
+- **The pump shotgun pumps straight after a reload from empty.** With Auto Reload off, an empty shotgun loaded with
+  shells pushed into the port used to sit there until you pulled the trigger once (nothing happened), and only then
+  could you pump. Now the last shell in puts the gun straight into the pump wait: rack it and fire. A gun that still
+  has a round chambered loads exactly as before. The reload-button and auto-reload paths already waited for the pump.
+- On the rig, on the owner's full load order. Logs: `renders/2.0.3q/`.
+
 ## What was new in 1.99
 
 ### Every gun reloads by hand
