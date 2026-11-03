@@ -7,7 +7,7 @@ user int rsq_punch = 0;			// VR punching: a real punch with either fist lands (z
 // 2026-10-23: a punch that lands on a switch or any usable line works it, at the fist's own reach
 // instead of the engine's 64-unit use range. The LINE'S SPECIAL decides, not its texture.
 user bool rsq_punch_use = true;
-server bool rsq_extra_weapons = false;	// cheats also give the MP40, MG42, Devastator, Hellish launcher, flame cannon (zscript/nosniper)
+server bool rsq_extra_weapons = false;	// cheats also give the MP40, MG42, Devastator, Hellish launcher, flame cannon, incendiary launcher (zscript/nosniper)
 user int rsr_grab_with = 0;		// 1.17 Grab ammo with: 0 off trigger, 1 off grip (1.14 rule), 2 Use key (only while a reload has the hand)
 user bool rsq_flick = true;		// 1.17 Flick to reload: a gun in each hand, snap a barrel down to reload that gun (zscript/rsq/flick.zs)
 // 2026-10-23: the VR scopes (zscript/rsq/scope.zs). Per gun, 0 DOT (a collimated red dot on

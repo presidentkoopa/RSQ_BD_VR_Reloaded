@@ -11,7 +11,8 @@ class RSQ_NoSniper : EventHandler
 		'MG42', 'PuristMG42',										// MG42 "buzzsaw"
 		'Devastator', 'PuristDevastator',							// Devastator
 		'HellishMissileLauncher', 'PuristHellishMissileLauncher',	// Hellish missile launcher
-		'FlameCannon', 'PuristFlameCannon', 'DualFlameCannon'		// flame cannon
+		'FlameCannon', 'PuristFlameCannon', 'DualFlameCannon',		// flame cannon
+		'IncendiaryLauncher', 'PuristIncendiaryLauncher'			// 2.0.3o (owner 2026-11-03): incendiary launcher
 	};
 	static const Name instead[] = {
 	//	'Rifle', 'PuristRifle',										// 1.93: the sniper's stand-in, off with it
@@ -19,18 +20,21 @@ class RSQ_NoSniper : EventHandler
 		'Minigun', 'PuristMinigun',
 		'Rocket_Launcher', 'PuristRocket_Launcher',
 		'Rocket_Launcher', 'PuristRocket_Launcher',
-		'Flamethrower2', 'PuristFlamethrower2', 'Flamethrower2'
+		'Flamethrower2', 'PuristFlamethrower2', 'Flamethrower2',
+		'GrenadeLauncher', 'PuristGrenadeLauncher'		// slot 5 next to it (BD22 KEYCONF setslot 5, SelectionOrder 2700 vs 2600)
 	};
 
 	// 1.6 (owner): "Allow extra weapons with cheats" (rsq_extra_weapons, menu). On, these come
 	// back through cheats (give all, idkfa, give <name>): the MP40, the MG42 "buzzsaw", the flame cannon, the
-	// Devastator and the Hellish missile launcher. Maps still spawn the stand-ins either way.
+	// Devastator, the Hellish missile launcher and (2.0.3o) the incendiary launcher. Maps still spawn the
+	// stand-ins either way.
 	// 1.93 (owner): the SNIPER IS BACK ON. Its rows in gone[] / instead[] and its SniperAmmo
 	// line are commented out, so it is a normal weapon again and needs no cheat. It was only
 	// switched off on 2026-10-16 because its model had gone from the pack.
 	static const Name extra[] = { 'MP40', 'PuristMP40', 'MG42', 'PuristMG42', 'Devastator', 'PuristDevastator',
 		'HellishMissileLauncher', 'PuristHellishMissileLauncher', 
-		'FlameCannon', 'PuristFlameCannon', 'DualFlameCannon' };
+		'FlameCannon', 'PuristFlameCannon', 'DualFlameCannon',
+		'IncendiaryLauncher', 'PuristIncendiaryLauncher' };
 
 	static bool ExtraOn()
 	{
@@ -76,9 +80,11 @@ class RSQ_NoSniper : EventHandler
 		else if (n == 'DevastatorSpawner')	e.Replacement = Find('Rocket_Launcher');	// Devastator
 		else if (n == 'HMLSpawner')			e.Replacement = Find('Rocket_Launcher');	// Hellish
 		else if (n == 'FlameCannonSpawner')	e.Replacement = Find('Flamethrower2');	// flame cannon
-		// BD22 swaps these two for pickup spawners, and give all skips any replaced weapon.
-		// Keep them as themselves so give all / idkfa include them (maps place the spawners directly).
-		else if (n == 'IncendiaryLauncher' || n == 'NukeLauncher')
+		else if (n == 'ILSpawner')			e.Replacement = Find('GrenadeLauncher');	// incendiary launcher (2.0.3o)
+		// BD22 swaps the Nuker for a pickup spawner, and give all skips any replaced weapon.
+		// Keep it as itself so give all / idkfa include it (maps place the spawner directly).
+		// (The incendiary launcher had this line too until 2.0.3o; it is in gone[] / extra[] now.)
+		else if (n == 'NukeLauncher')
 		{ e.Replacement = null; e.IsFinal = true; }	// null + final = no replacement (events.cpp)
 	}
 

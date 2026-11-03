@@ -1,0 +1,40 @@
+2.0.3o rig evidence: QuestZDoom 17.3 series rig (RSQ_UBQSeries/tools/rig17/run17.sh), IWAD doom2.wad, MAP01, -file brutal22test6 ->
+02 BD22_VoxelPack -> 03 BD22_VR-Reloaded_2.0.3o -> 04-07 XMVE, plus a test-only probe pk3 (not shipped) whose 'netevent ilprobe'
+prints the player's inventory counts and the unowned (world) copies of each class.
+
+== il_off: rsq_extra_weapons 0. probe; summon IncendiaryLauncher, ILSpawner, PuristIncendiaryLauncher; probe; give IncendiaryLauncher; probe;
+   give PuristIncendiaryLauncher; probe; give all; probe   (the Purist give flips BD22 into purist mode, which then swaps GrenadeLauncher for its Purist copy)
+ILPROBE extra=0  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=0 PuristGrenadeLauncher=0 AmmoM202=0 ready=BrutalPistol
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=0 ILSpawner=0
+ILPROBE extra=0  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=0 PuristGrenadeLauncher=0 AmmoM202=0 ready=BrutalPistol
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=3 ILSpawner=0
+ILPROBE extra=0  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=1 PuristGrenadeLauncher=0 AmmoM202=0 ready=BrutalPistol
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=3 ILSpawner=0
+ILPROBE extra=0  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=1 PuristGrenadeLauncher=1 AmmoM202=0 ready=BrutalPistol
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=3 ILSpawner=0
+ILPROBE extra=0  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=0 PuristGrenadeLauncher=1 AmmoM202=48 ready=BrutalPistol
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=3 ILSpawner=0
+
+== il_a: rsq_extra_weapons 0. give all; probe; give IncendiaryLauncher; probe
+ILPROBE extra=0  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=1 PuristGrenadeLauncher=0 AmmoM202=4 ready=Rifle BrutalSMG=1 PuristSMG=0 IsPlayingAsPurist=0
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=0 ILSpawner=0
+ILPROBE extra=0  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=1 PuristGrenadeLauncher=0 AmmoM202=4 ready=Rifle BrutalSMG=1 PuristSMG=0 IsPlayingAsPurist=0
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=0 ILSpawner=0
+
+== il_on: rsq_extra_weapons 1. probe; give IncendiaryLauncher; use IncendiaryLauncher; probe; take IncendiaryLauncher; give all; probe;
+   summon ILSpawner (the map spawner); probe
+ILPROBE extra=1  inv: IncendiaryLauncher=0 PuristIncendiaryLauncher=0 GrenadeLauncher=0 PuristGrenadeLauncher=0 AmmoM202=0 ready=Rifle
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=0 ILSpawner=0
+ILPROBE extra=1  inv: IncendiaryLauncher=1 PuristIncendiaryLauncher=0 GrenadeLauncher=0 PuristGrenadeLauncher=0 AmmoM202=0 ready=IncendiaryLauncher
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=0 ILSpawner=0
+ILPROBE extra=1  inv: IncendiaryLauncher=1 PuristIncendiaryLauncher=0 GrenadeLauncher=1 PuristGrenadeLauncher=0 AmmoM202=48 ready=Rifle
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=0 ILSpawner=0
+ILPROBE extra=1  inv: IncendiaryLauncher=1 PuristIncendiaryLauncher=0 GrenadeLauncher=1 PuristGrenadeLauncher=0 AmmoM202=48 ready=Rifle
+ILPROBE world (unowned): IncendiaryLauncher=0 GrenadeLauncher=1 ILSpawner=0
+
+== Script errors (all runs identical): only the voxel pack's 4
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:
+No line in any run names 03_BD22_VR-Reloaded, RSQ_NoSniper or 'VM execution aborted'.

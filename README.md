@@ -117,6 +117,14 @@ the pack. It has not yet been confirmed in a headset.
   Shot_Gun, SSG, Minigun, Rocket Launcher, Railgun, pistol, sword, chainsaw and axe; the Shot_Gun's hand pump worked
   while held. Frames and log: `renders/2.0.3n/`.
 
+### Switched-off guns (2.0.3o)
+- Switched off in this pack, each replaced by a stand-in wherever it would appear: MP40 (SMG), MG42 (Minigun),
+  Devastator and Hellish Missile Launcher (Rocket Launcher), Flame Cannon (Flamethrower), and now the **Incendiary
+  Launcher** (Grenade Launcher, its neighbour in slot 5).
+- **Extra weapons with cheats** (Options → BD22 VR Weapons) brings all six back, through cheats only (give all, idkfa,
+  give). Maps always place the stand-ins. On the rig: `give IncendiaryLauncher` gave the Grenade Launcher; with the
+  option on it gave the real launcher. Log: `renders/2.0.3o/`.
+
 ## What was new in 1.99
 
 ### Every gun reloads by hand
