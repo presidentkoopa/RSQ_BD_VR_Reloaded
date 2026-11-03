@@ -125,6 +125,18 @@ the pack. It has not yet been confirmed in a headset.
   give). Maps always place the stand-ins. On the rig: `give IncendiaryLauncher` gave the Grenade Launcher; with the
   option on it gave the real launcher. Log: `renders/2.0.3o/`.
 
+### Pin the grenade with your teeth (2.0.3p; rig only, not headset-confirmed)
+- The grenade's pin pull now matches RSQ Grenade's. As well as the off-hand ring, you can **pull the pin with your teeth**:
+  squeeze the grenade's trigger and hold the grenade at your face (within 0.47 m of your eyes) for 12 tics. The squeeze
+  alone never cooks or throws. Once the pin is out, the trigger is your grip on the spoon, as always: let go while swinging
+  to throw, or while still to cook. The teeth pull another pin only after your hand has been more than 0.71 m from your
+  face, or after you let go of the trigger.
+- The off-hand ring works exactly as before, and it can put a pin back in however it came out.
+- Options → BD22 VR Weapons, next to VR Throwing: **Pin With Your Teeth** (On by default), **Teeth: At**, **Teeth: Again
+  Beyond**, **Teeth: Hold**. These have RSQ Grenade's defaults.
+- On the rig, on the owner's full load order: pin out on the 12th tic at the face; no pin with the option off; no second
+  pin without leaving the face; the ring still pulls and re-pins. Log: `renders/2.0.3p/`.
+
 ## What was new in 1.99
 
 ### Every gun reloads by hand

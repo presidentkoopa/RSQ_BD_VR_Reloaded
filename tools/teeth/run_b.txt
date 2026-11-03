@@ -1,0 +1,7 @@
+playerclass BDoomer; wait 20; buddha; notarget; give HandGrenades; give GrenadeAmmo 5; use HandGrenades; qz_rhand "0.25 1.3 -0.3 30 0 0"; qz_lhand "-0.25 1.3 -0.3 30 0 0"; rsg_face 0; wait 40;
+echo B1_SWITCH_OFF_TEETH_30_TICS_AT_FACE; ttp_trace 1; qz_rtrigger 1; wait 2; qz_rhand "0.05 1.5 -0.15 30 0 0"; wait 30; ttp_trace 0; qz_rhand "0.25 1.3 -0.3 30 0 0"; wait 3; qz_rtrigger 0; wait 5;
+echo B2_RING_PULL; qz_lhand "0.2 1.35 -0.335 30 0 0"; wait 3; qz_ltrigger 1; wait 3; qz_lhand "0.1 1.35 -0.335 30 0 0"; wait 1; qz_lhand "-0.05 1.35 -0.335 30 0 0"; wait 3; qz_ltrigger 0; qz_lhand "-0.25 1.3 -0.3 30 0 0"; wait 10;
+echo B3_RING_REPIN; qz_lhand "0.2 1.35 -0.335 30 0 0"; wait 3; qz_ltrigger 1; wait 3; qz_ltrigger 0; qz_lhand "-0.25 1.3 -0.3 30 0 0"; wait 10;
+echo B4_SWITCH_ON_TEETH_AGAIN; rsg_face 1; ttp_trace 1; qz_rtrigger 1; wait 2; qz_rhand "0.05 1.5 -0.15 30 0 0"; wait 16; ttp_trace 0; qz_rhand "0.25 1.3 -0.3 30 0 0"; wait 3;
+echo B5_RING_REPIN_AFTER_TEETH; qz_lhand "0.2 1.35 -0.335 30 0 0"; wait 3; qz_ltrigger 1; wait 3; qz_ltrigger 0; qz_lhand "-0.25 1.3 -0.3 30 0 0"; wait 5; qz_rtrigger 0; wait 10;
+echo B6_DONE; quit

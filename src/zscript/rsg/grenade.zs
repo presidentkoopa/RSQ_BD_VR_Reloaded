@@ -5,6 +5,13 @@
 //      at the speed and direction of the swing. Let go while still: the spoon flies off
 //      (ping) and the fuse is lit in your hand -- cooking. Squeeze and let go again to throw.
 //   3. cook too long (BD's fuse, 48 tics) and it goes off in the hand.
+//   4. THE TEETH (2.0.3p, owner 2026-11-03: the pin pull standardised with RSQ Grenade, whose hand.zs Face() is
+//      the standard and is copied here, numbers and all): squeeze the grenade's trigger and hold the grenade at
+//      your face for a run of tics (rsg_face_hold, 12): the pin is out. Two radii, not one: once the pin is out
+//      the hand has to have been clear of your face (rsg_face_far, 0.71 m) before it can take another; letting go
+//      of the trigger re-arms it too. The squeeze at the face is only a squeeze: it neither cooks nor throws. As
+//      in RSQ, the trigger is still your squeeze on the spoon once the pin is out, so letting go of it afterwards
+//      is 2. above (a swing throws, still cooks). The off-hand ring (1.) is unchanged and works alongside.
 // BD22's own HandGrenade projectile, its fuse token, its explosion and sounds.
 // Out of VR, or rsg_vr 0, BD22's own canned throw is untouched.
 class RSG_Handler : EventHandler
@@ -74,6 +81,9 @@ class RSG_State play
 	bool spoonOff;		// cooking
 	int cookTic;
 	bool trigPrev, grabPrev;
+	int faceTic;		// 2.0.3p THE TEETH: tics the squeezed grenade has been at the face
+	bool faceReady;		// ...and the teeth may take a pin (RSQ Grenade's far radius / trigger re-arm)
+	bool teethPin;		// this pin came out by the teeth (no ring in the off hand)
 	int gripPrevPresses;
 	double hx[HIST], hy[HIST], hz[HIST];	// the hand in the BODY's frame: forward, left, up
 	int head, count;
@@ -93,7 +103,8 @@ class RSG_State play
 
 	void Reset(PlayerPawn mo)
 	{
-		armed = ringHeld = ringKept = spoonOff = false;
+		armed = ringHeld = ringKept = spoonOff = teethPin = false;
+		faceTic = 0;
 		mo.SetInventory('RSG_PinOut', 0);
 		mo.SetInventory('RSG_Spoon', 0);
 	}
@@ -130,6 +141,8 @@ class RSG_State play
 			if (armed)
 				Reset(mo);
 			count = 0;
+			faceTic = 0;
+			faceReady = true;	// RSQ Grenade: a new hand on the grenade starts ready
 			return;
 		}
 		if (!geo)
@@ -190,9 +203,14 @@ class RSG_State play
 				mo.SetInventory('RSG_PinOut', 1);
 				mo.A_StartSound("Grenade/Pin", CHAN_WEAPON, CHANF_OVERLAP);
 				Buzz(mo);
+				return;
 			}
+			Face(mo, trig);
 			return;
 		}
+		faceTic = 0;
+		if (!trig)
+			faceReady = true;
 
 		if (!spoonOff)
 		{
@@ -234,6 +252,52 @@ class RSG_State play
 		}
 		if (trigUp)
 			Throw(mo, cooked, false);
+	}
+
+	// 2.0.3p THE TEETH, RSQ Grenade's Face() (RSQ_UBQSeries Grenade/zscript/rsqgn/hand.zs): the trigger squeezed
+	// and the drawn grenade held at your face for a run of tics. The distance is from the drawn grenade's body centre
+	// to your eyes (the pawn's x, y and the view height), in metres; RSQ's 0.47 / 0.71 m and 12 tics are the
+	// defaults. Once taken, the far radius (or letting go of the trigger) re-arms it. Only runs with the pin in.
+	static double PFloat(PlayerInfo p, Name n, double d) { let c = CVar.GetCVar(n, p); return c ? c.GetFloat() : d; }
+
+	double FaceDist(PlayerPawn mo)
+	{
+		if (!geo)
+			return 999;
+		Vector3 v = DrawnNade(mo) - (mo.Pos.x, mo.Pos.y, mo.player.viewz);
+		double vu = geo.vu > 0 ? geo.vu : 34;
+		double ps = geo.ps > 0 ? geo.ps : 1.2;
+		return (v.x, v.y, v.z * ps).Length() / vu;
+	}
+
+	void Face(PlayerPawn mo, bool trig)
+	{
+		let p = mo.player;
+		if (RSR.PlayerInt(p, 'rsg_face', 1) == 0)
+		{
+			faceTic = 0;
+			return;
+		}
+		double dist = FaceDist(mo);
+		double near = PFloat(p, 'rsg_face_near', 0.47);
+		double far = PFloat(p, 'rsg_face_far', 0.71);
+		int hold = int(PFloat(p, 'rsg_face_hold', 12));
+		if (!trig || dist > far)
+			faceReady = true;
+		if (trig && dist <= near)
+			faceTic++;
+		else
+			faceTic = 0;
+		if (faceReady && faceTic >= hold)
+		{
+			faceReady = false;
+			faceTic = 0;
+			armed = true;
+			teethPin = true;
+			mo.SetInventory('RSG_PinOut', 1);
+			mo.A_StartSound("Grenade/Pin", CHAN_WEAPON, CHANF_OVERLAP);
+			Buzz(mo);
+		}
 	}
 
 	// the fastest step of the hand over the last tics, in the BODY'S frame (forward, left, up),

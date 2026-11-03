@@ -10,6 +10,11 @@ user int rsr_sideport = 1;
 
 // 2026-10-16: the VR grenade (pin, spoon, cook, throw by swing); 0: BD22's own throw
 user int rsg_vr = 1;
+// 2.0.3p (owner 2026-11-03): the teeth pin pull, RSQ Grenade's (rsqgn_face*), same defaults (zscript/rsg/grenade.zs Face)
+user int rsg_face = 1;			// squeeze the trigger and hold the grenade at your face: the pin is out (0: the ring only)
+user float rsg_face_near = 0.47;	// m from your eyes the grenade must be
+user float rsg_face_far = 0.71;		// m it must have been clear of your face before another
+user int rsg_face_hold = 12;		// tics it must stay at your face
 
 // 1.97: Shot/Revolver Reload -- 0 the speedloader (as 1.96b shipped), 1 a round at a time
 server int rsb_revolver_feed = 0;

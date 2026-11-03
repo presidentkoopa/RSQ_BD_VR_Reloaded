@@ -1,0 +1,95 @@
+2.0.3p rig evidence: the teeth pin pull (RSQ Grenade's Face(), ported). RIG ONLY, NOT HEADSET-CONFIRMED.
+QuestZDoom 17.3 series rig (RSQ_UBQSeries/tools/rig17/run17.sh), IWAD doom2.wad, MAP01, BD22 class (not Purist), poses from the
+rig's qz_hmd (default 0 1.6 0) / qz_rhand / qz_lhand, triggers qz_rtrigger / qz_ltrigger. Console scripts: tools/teeth/run_a.txt,
+run_b.txt. A test-only probe pk3 (tools/teeth/probe, never shipped) prints a TTP line on every change of the grenade's state
+(RSG_State: pin, teeth, ring kept, spoon; GrenadeAmmo; HandGrenade actors in the world), and every tic while the trigger is held
+with ttp_trace 1. face = the drawn grenade's body centre to the eyes (m), as Face() measures it; faceTic = tics held at the face;
+ready = the teeth may take a pin (RSQ's far-radius / trigger re-arm). Defaults: rsg_face 1, near 0.47 m, far 0.71 m, hold 12.
+
+Load order (the owner's, full): 01 brutal22test6 -> 02 BD22_VoxelPack -> 03 BD22_VR-Reloaded_2.0.3p -> 04-07 XMVE ->
+GunBonsai-0.10.6 -> every RSQ_UBQSeries/pk3/*.pk3 (RSQ_Grenade stands down: it sees RSG_Handler) -> probe.
+Lines below: consecutive identical states folded (faceTic counts shown at the first and pin tic; full per-tic trace further down).
+
+== Run A (full load order): teeth pull, refusal, far-radius re-arm, release after teeth, throw
+T1_TEETH_PULL_AND_HOLD
+TTP t60 trig=1 face=0.47m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t62 trig=1 face=0.19m faceTic=1 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t73 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+T2_REPIN_BY_RING_AT_FACE_TRIGGER_HELD
+TTP t95 trig=1 face=0.19m faceTic=0 ready=0 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+T2b_SECOND_TEETH_PULL_WITHOUT_LEAVING_FACE_30_TICS
+T3_CLEAR_OF_FACE_THEN_TEETH_AGAIN
+TTP t133 trig=1 face=0.81m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t137 trig=1 face=0.19m faceTic=1 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t148 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+T4_RELEASE_AFTER_TEETH_STILL_COOKS_AS_RSQ
+TTP t161 trig=0 face=0.47m faceTic=0 ready=1 | pin=OUT teeth=1 ring=0 spoon=1 | ammo=5 thrownNades=0 rsg_face=1
+T5_SQUEEZE_AND_SWING_THROWS
+TTP t174 trig=0 face=0.76m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=4 thrownNades=1 rsg_face=1
+TTP t235 trig=0 face=0.47m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=4 thrownNades=0 rsg_face=1
+T6_DONE
+
+  T1: trigger from t60, grenade at the face (0.19 m) from t62; faceTic 1..11 at t62..t72; at t73 (the 12th tic) the pin is out by
+      the teeth. The trigger stays held at the face to t90: spoon=0, ammo 5, thrownNades 0 -- the squeeze neither cooked nor threw.
+  T2: the off-hand trigger at the ring re-pins it (t95), trigger still held, still at the face.
+  T2b: 36 tics at the face with the trigger held: faceTic passes 12 (to 36) but ready=0, so no pin -- refused until the hand has
+      been clear of the face or the trigger let go (RSQ's two radii).
+  T3: hand out to 0.81 m (> 0.71) re-arms (ready=1); back at the face, the pin comes out again at the 12th tic (t148).
+  T4: letting go of the trigger with the pin out and the hand still: the spoon flies (cooking), exactly as RSQ Grenade does after a
+      teeth pull (its release branch: swing >= threshold throws, otherwise cooks).
+  T5: squeeze and swing, let go: thrown (ammo 5 -> 4, one HandGrenade in the world; it goes off at t235).
+
+== Run B (full load order): the switch off, the ring pull and re-pin
+B1_SWITCH_OFF_TEETH_30_TICS_AT_FACE
+TTP t60 trig=1 face=0.47m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=0
+TTP t62 trig=1 face=0.19m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=0
+B2_RING_PULL
+TTP t107 trig=0 face=0.47m faceTic=0 ready=1 | pin=OUT teeth=0 ring=1 spoon=0 | ammo=5 thrownNades=0 rsg_face=0
+B3_RING_REPIN
+TTP t123 trig=0 face=0.47m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=0
+B4_SWITCH_ON_TEETH_AGAIN
+TTP t136 trig=1 face=0.47m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t138 trig=1 face=0.19m faceTic=1 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t149 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+B5_RING_REPIN_AFTER_TEETH
+TTP t160 trig=1 face=0.47m faceTic=0 ready=0 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+B6_DONE
+
+  B1: rsg_face 0, 30 tics at the face with the trigger held: faceTic stays 0, no pin; letting go does nothing (no throw, ammo 5).
+  B2: off-hand trigger takes the ring and pulls it away: pin out, ring kept in the off hand (unchanged 2.0.2a behaviour).
+  B3: back to the ring, off-hand trigger: pin back in.
+  B4: rsg_face 1 again: pin out by the teeth at the 12th tic.  B5: the ring re-pins a teeth-pulled grenade too.
+
+== Run A per-tic trace of T1 (full load order)
+TTP t60 trig=1 face=0.47m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t61 trig=1 face=0.47m faceTic=0 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t62 trig=1 face=0.19m faceTic=1 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t63 trig=1 face=0.19m faceTic=2 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t64 trig=1 face=0.19m faceTic=3 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t65 trig=1 face=0.19m faceTic=4 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t66 trig=1 face=0.19m faceTic=5 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t67 trig=1 face=0.19m faceTic=6 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t68 trig=1 face=0.19m faceTic=7 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t69 trig=1 face=0.19m faceTic=8 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t70 trig=1 face=0.19m faceTic=9 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t71 trig=1 face=0.19m faceTic=10 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t72 trig=1 face=0.19m faceTic=11 ready=1 | pin=in teeth=0 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t73 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t74 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t75 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t76 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t77 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t78 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t79 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+TTP t80 trig=1 face=0.19m faceTic=0 ready=0 | pin=OUT teeth=1 ring=0 spoon=0 | ammo=5 thrownNades=0 rsg_face=1
+
+== Also run on doom2 -> brutal22test6 -> BD22_VoxelPack -> 03 2.0.3p (+ probe), same scripts: identical state sequence
+   (teeth pin at t73 and t148, refusal, cook at t161, throw at t174; B: no pin with the switch off, ring pull t107, re-pin t123,
+   teeth t149, ring re-pin t160).
+
+== Script errors
+teeth_a: 4 script errors, all in 02_BD22_VoxelPack.pk3:voxeldef.txt (lines 66, 72, 77, 892); 0 VM aborts; 0 lines name BD22_VR-Reloaded
+teeth_b: 4 script errors, all in 02_BD22_VoxelPack.pk3:voxeldef.txt (lines 66, 72, 77, 892); 0 VM aborts; 0 lines name BD22_VR-Reloaded
+teeth_full_a: 4 script errors, all in 02_BD22_VoxelPack.pk3:voxeldef.txt (lines 66, 72, 77, 892); 0 VM aborts; 0 lines name BD22_VR-Reloaded
+teeth_full_b: 4 script errors, all in 02_BD22_VoxelPack.pk3:voxeldef.txt (lines 66, 72, 77, 892); 0 VM aborts; 0 lines name BD22_VR-Reloaded
+(teeth_a / teeth_b = the short load order, teeth_full_a / teeth_full_b = the owner's full load order.)
