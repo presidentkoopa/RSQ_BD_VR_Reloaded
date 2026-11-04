@@ -1,0 +1,166 @@
+Log started: 2026-11-03 20:13:50
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:
+No sprites specified for voxel.
+GTP_Y1_GRACE_ROCKET_2_TICS_OUT
+RSG face t110 mouth 0.04 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t115 mouth 0.04 m (reach 0.15) squeeze trigger held 2/12 ready 1
+RSG face t120 mouth 0.04 m (reach 0.15) squeeze trigger held 7/12 ready 1
+RSG teeth t125: squeezed by trigger, 0.04 m from the mouth (reach 0.15) for 12 tics
+GTP t125 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t140 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t142 hung HandGrenade at (-96 880 97), 96 ahead
+GTP t143 rocket from 40 units short of the HandGrenade
+GTP t143 rocket 40 units from the hung grenade
+GTP t144 rocket 20 units from the hung grenade
+GTP t145 rocket 0 units from the hung grenade
+GTP t146 rocket 20 units from the hung grenade
+GTP t147 rocket 40 units from the hung grenade
+GTP_Y2_ROCKET_AGAIN_20_TICS_OUT
+GTP t148 rocket 60 units from the hung grenade
+GTP t149 rocket 80 units from the hung grenade
+GTP t150 rocket 100 units from the hung grenade
+GTP t151 rocket 120 units from the hung grenade
+GTP t152 rocket 140 units from the hung grenade
+GTP t153 rocket 160 units from the hung grenade
+GTP t154 rocket 180 units from the hung grenade
+GTP t155 rocket 200 units from the hung grenade
+GTP t156 rocket 220 units from the hung grenade
+GTP t157 rocket from 40 units short of the HandGrenade
+GTP t157 rocket 40 units from the hung grenade
+GTP t158 rocket 20 units from the hung grenade
+RSG shot t159: projectile VanillaCyberRocket, in the air (skeet), 19 tics out of the hand
+GTP t159 the hung grenade went off
+GTP t159 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 9 (health 31)
+GTP t159 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 10 (health 21)
+GTP t159 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 5 (health 35)
+GTP t159 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 6 (health 15)
+GTP t159 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 4 (health 31)
+GTP_Y3_PISTOL_SHOT_IN_THE_AIR
+RSG face t205 mouth 0.04 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t210 mouth 0.04 m (reach 0.15) squeeze trigger held 2/12 ready 1
+RSG face t215 mouth 0.04 m (reach 0.15) squeeze trigger held 7/12 ready 1
+RSG teeth t220: squeezed by trigger, 0.04 m from the mouth (reach 0.15) for 12 tics
+GTP t220 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t235 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t237 hung HandGrenade at (-96 880 97), 96 ahead
+GTP t282 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t284 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+RSG shot t286: hitscan, in the air (skeet), 51 tics out of the hand
+GTP t286 the hung grenade went off
+GTP t286 btn A--- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t286 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 9 (health 6)
+GTP t286 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 15 (health -9)
+GTP t286 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 2 (health 29)
+GTP t286 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 6 (health 23)
+GTP t286 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 4 (health 19)
+GTP t288 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t290 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t292 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t294 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t296 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t298 btn A--- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t300 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t302 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t304 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP t306 btn ---- hmd 1.70 adj 0.00 viewz 1.55 m eyes 1.70 m; main: 0.40 under the eyes, 0.30 ahead, old-measure 0.39 m; off: 0.60 under the eyes, 0.35 ahead, old-measure 0.61 m; ready BrutalPistol off rsq_hands
+GTP_Y4_SWITCH_OFF_ROCKET
+GTP t314 damaged BootSmearerRed by None via None: 1000 (health 0)
+RSG face t355 mouth 0.04 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t360 mouth 0.04 m (reach 0.15) squeeze trigger held 4/12 ready 1
+RSG face t365 mouth 0.04 m (reach 0.15) squeeze trigger held 9/12 ready 1
+RSG teeth t368: squeezed by trigger, 0.04 m from the mouth (reach 0.15) for 12 tics
+GTP t368 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t383 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t385 hung HandGrenade at (-96 880 97), 96 ahead
+GTP t397 rocket from 40 units short of the HandGrenade
+GTP t397 rocket 40 units from the hung grenade
+GTP t398 rocket 20 units from the hung grenade
+GTP t399 rocket 0 units from the hung grenade
+GTP t400 rocket 20 units from the hung grenade
+GTP t401 rocket 40 units from the hung grenade
+GTP t402 rocket 60 units from the hung grenade
+GTP t403 rocket 80 units from the hung grenade
+GTP t404 rocket 100 units from the hung grenade
+GTP t405 rocket 120 units from the hung grenade
+GTP t406 rocket 140 units from the hung grenade
+GTP t407 rocket from 40 units short of the HandGrenade
+GTP t407 rocket 40 units from the hung grenade
+GTP t408 rocket 20 units from the hung grenade
+RSG shot t409: projectile VanillaCyberRocket, in the air (skeet), 26 tics out of the hand
+GTP t409 the hung grenade went off
+GTP t409 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 6 (health 13)
+GTP t409 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 9 (health 4)
+GTP t409 damaged RifleZombie by Doomer2 via FragGrenadeExplosion: 5 (health -1)
+GTP_Y5_SLOWED_FAST_OFF
+RSG face t475 mouth 0.04 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t480 mouth 0.04 m (reach 0.15) squeeze trigger held 2/12 ready 1
+RSG face t485 mouth 0.04 m (reach 0.15) squeeze trigger held 7/12 ready 1
+RSG teeth t490: squeezed by trigger, 0.04 m from the mouth (reach 0.15) for 12 tics
+GTP t490 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t504 damaged BootSmearerRed by None via None: 1000 (health 0)
+GTP t506 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t506 HandGrenade speed 20.84 u/tic gravity 0.700
+GTP t507 HandGrenade speed 5.20 u/tic gravity 0.044
+GTP t508 HandGrenade speed 5.19 u/tic gravity 0.044
+GTP t509 HandGrenade speed 5.18 u/tic gravity 0.044
+GTP_Y6_SLOWED_FAST_ON
+GTP t510 HandGrenade speed 5.18 u/tic gravity 0.044
+RSG slow t511: world x0.25, grenade x0.63
+GTP t514 HandGrenade speed 12.82 u/tic gravity 0.273
+GTP t515 HandGrenade speed 12.79 u/tic gravity 0.273
+GTP t516 HandGrenade speed 12.77 u/tic gravity 0.273
+GTP t517 HandGrenade speed 12.76 u/tic gravity 0.273
+GTP_Y7_ONLY_IN_SLOW_MOTION
+RSG slow t528: world x0.25, grenade x0.25
+RSG face t870 mouth 0.04 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t875 mouth 0.04 m (reach 0.15) squeeze trigger held 4/12 ready 1
+RSG face t880 mouth 0.04 m (reach 0.15) squeeze trigger held 9/12 ready 1
+RSG teeth t883: squeezed by trigger, 0.04 m from the mouth (reach 0.15) for 12 tics
+GTP t883 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t898 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t900 hung HandGrenade at (-96 880 97), 96 ahead
+GTP t912 rocket from 40 units short of the HandGrenade
+GTP t912 rocket 40 units from the hung grenade
+GTP t913 rocket 20 units from the hung grenade
+GTP t914 rocket 0 units from the hung grenade
+GTP t915 rocket 20 units from the hung grenade
+GTP t916 rocket 40 units from the hung grenade
+GTP t917 rocket 60 units from the hung grenade
+GTP t918 rocket 80 units from the hung grenade
+GTP t919 rocket 100 units from the hung grenade
+GTP t920 rocket 120 units from the hung grenade
+GTP t921 rocket 140 units from the hung grenade
+GTP t922 rocket 160 units from the hung grenade
+GTP t923 rocket 180 units from the hung grenade
+GTP t924 rocket 200 units from the hung grenade
+GTP t925 rocket 220 units from the hung grenade
+GTP t926 rocket 240 units from the hung grenade
+GTP t927 rocket 260 units from the hung grenade
+GTP t928 rocket 280 units from the hung grenade
+GTP t929 rocket 300 units from the hung grenade
+GTP t930 rocket 320 units from the hung grenade
+GTP t931 rocket 340 units from the hung grenade
+GTP t932 rocket 360 units from the hung grenade
+GTP t933 rocket 380 units from the hung grenade
+GTP t934 rocket 400 units from the hung grenade
+GTP t935 rocket 420 units from the hung grenade
+GTP t936 rocket 440 units from the hung grenade
+GTP t937 rocket 460 units from the hung grenade
+GTP t938 rocket 480 units from the hung grenade
+GTP t939 rocket 500 units from the hung grenade
+GTP t940 rocket from 40 units short of the HandGrenade
+GTP t940 rocket 40 units from the hung grenade
+GTP t941 rocket 20 units from the hung grenade
+GTP t942 rocket 0 units from the hung grenade
+GTP t943 rocket 20 units from the hung grenade
+GTP t944 rocket 40 units from the hung grenade
+GTP t945 rocket 60 units from the hung grenade
+GTP t946 rocket 80 units from the hung grenade
+GTP t947 rocket 100 units from the hung grenade
+GTP t948 rocket 120 units from the hung grenade

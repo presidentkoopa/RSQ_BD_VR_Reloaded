@@ -1,0 +1,60 @@
+Log started: 2026-11-03 20:26:33
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:
+No sprites specified for voxel.
+GTP_Y7_ONLY_IN_SLOW_MOTION
+RSG face t155 mouth 0.04 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t160 mouth 0.04 m (reach 0.15) squeeze trigger held 2/12 ready 1
+RSG face t165 mouth 0.04 m (reach 0.15) squeeze trigger held 7/12 ready 1
+RSG teeth t170: squeezed by trigger, 0.04 m from the mouth (reach 0.15) for 12 tics
+GTP t170 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t185 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t187 hung HandGrenade at (-96 880 97), 96 ahead
+GTP t199 rocket from 40 units short of the HandGrenade
+GTP t199 rocket 40 units from the hung grenade
+GTP t200 rocket 20 units from the hung grenade
+GTP t201 rocket 0 units from the hung grenade
+GTP t202 rocket 20 units from the hung grenade
+GTP t203 rocket 40 units from the hung grenade
+GTP t204 rocket 60 units from the hung grenade
+GTP t205 rocket 80 units from the hung grenade
+GTP t206 rocket 100 units from the hung grenade
+GTP t207 rocket 120 units from the hung grenade
+GTP t208 rocket 136 units from the hung grenade
+GTP t209 rocket 149 units from the hung grenade
+GTP t210 rocket 157 units from the hung grenade
+GTP t211 rocket 162 units from the hung grenade
+GTP t212 rocket 167 units from the hung grenade
+GTP t213 rocket 172 units from the hung grenade
+GTP t214 rocket 177 units from the hung grenade
+GTP t215 rocket 182 units from the hung grenade
+GTP t216 rocket 187 units from the hung grenade
+GTP t217 rocket 192 units from the hung grenade
+GTP t218 rocket 197 units from the hung grenade
+GTP t219 rocket 202 units from the hung grenade
+GTP t220 rocket 207 units from the hung grenade
+GTP t221 rocket 212 units from the hung grenade
+GTP t222 rocket 217 units from the hung grenade
+GTP t223 rocket 222 units from the hung grenade
+GTP t224 rocket 227 units from the hung grenade
+GTP t225 rocket 232 units from the hung grenade
+GTP t226 rocket 237 units from the hung grenade
+GTP t227 rocket 242 units from the hung grenade
+GTP t228 rocket from 40 units short of the HandGrenade
+GTP t228 rocket 40 units from the hung grenade
+GTP t229 rocket 35 units from the hung grenade
+GTP t230 rocket 30 units from the hung grenade
+GTP t231 rocket 25 units from the hung grenade
+GTP t232 rocket 20 units from the hung grenade
+RSG shot t233: projectile VanillaCyberRocket, in the air (skeet), 48 tics out of the hand
+GTP t233 the hung grenade went off
+GTP t233 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 9 (health 31)
+GTP t233 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 10 (health 21)
+GTP t233 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 5 (health 35)
+GTP t233 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 6 (health 15)
+GTP t233 damaged PistolZombie by Doomer2 via FragGrenadeExplosion: 4 (health 31)

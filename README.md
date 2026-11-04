@@ -149,7 +149,7 @@ the pack. It has not yet been confirmed in a headset.
   has a round chambered loads exactly as before. The reload-button and auto-reload paths already waited for the pump.
 - On the rig, on the owner's full load order. Logs: `renders/2.0.3q/`.
 
-### The teeth pin pull at your mouth (2.0.3r; rig only, not headset-confirmed)
+### The teeth pin pull at your mouth; shoot thrown grenades (2.0.3r; rig only, not headset-confirmed)
 - The owner never saw the teeth pull fire in his headset. It looked for the grenade within 0.47 m of `player.viewz`,
   the pawn's fixed eye (1.55 m for BD's player), not your headset; and it counted only the trigger. QuestZDoom's
   default button layout (`vr_secondary_button_mappings` on) makes the main grip a shift key, so squeezing grip and
@@ -160,6 +160,14 @@ the pack. It has not yet been confirmed in a headset.
   grenade or its ring may be the part at your mouth. A small wobble out of the zone no longer restarts the count.
 - Options → BD22 VR Weapons: **Teeth: At** is now **Teeth: Mouth Reach** (0.15 m round the lips-to-chin line). Pin
   With Your Teeth, Teeth: Again Beyond and Teeth: Hold are unchanged. The off-hand ring is unchanged.
+- **Shoot thrown grenades** (Options → BD22 VR Weapons, **Shoot Thrown Grenades**, On): a bullet or a projectile of
+  yours (a rocket, plasma) passing within 0.35 m of a thrown grenade sets it off where it is, credited to you; shot in
+  the air it counts as a skeet for RSQ Score's Trap Shot. It must be 6 tics (0.17 s) out of your hand first. Punches
+  never set one off; a grenade in your hand cannot be hit. **Only in Slow Motion** (Off): only while RSQ SlowMo has the
+  world slowed.
+- **Faster Grenades in Slow Motion** (Off) and **Grenade Speed in Slow Motion** (0.50): RSQ SlowMo slows a thrown
+  grenade with the world; with this on it moves that much of the way from the world's speed up to real speed (at the
+  world's 0.25: 0.625), still visibly slow, so you can throw and then shoot it. Its fuse stays slowed with the world.
 - The grenade works in the main hand only, as before (BD22's VR grenade reads the main hand's weapon).
 - On the rig (`renders/2.0.3r/`), each pose in its own run on brutal22test6 + voxels + this pk3 + XMVE, headset
   1.65-1.75 m, the controller 12 cm under and 10 cm in front of the eyes. 2.0.3q: the pin came out with the trigger
@@ -167,7 +175,10 @@ the pack. It has not yet been confirmed in a headset.
   1.20 m: 0.48 m from the pawn's eye), and it did come out with the grenade at the chest. 2.0.3r: out on the 12th tic
   at the mouth in all six poses (standing, chin, upright hold, grip and trigger, 1.75 m with `vr_height_adjust` 0.3,
   seated), never at the chest. A grenade put in the off hand (the engine's switch-hand) does nothing in BD22 VR, ring
-  and throw included, as before.
+  and throw included, as before. Shooting (`renders/2.0.3r/shoot_bd.log`, with RSQ SlowMo): a rocket through a
+  grenade held in the air 3 tics after the throw set nothing off, one at 19 tics set it off (a skeet); a pistol shot
+  set one off; Shoot Thrown Grenades off: a rocket set nothing off; slow motion at 0.25 took a thrown grenade from 20.8
+  to 5.2 units a tic, Faster Grenades on to 12.8 (x0.63).
 
 ## What was new in 1.99
 

@@ -15,6 +15,11 @@ user int rsg_face = 1;			// squeeze the trigger and hold the grenade at your fac
 user float rsg_mouth_r = 0.15;		// 2.0.3r: m the controller, the drawn grenade or its ring may be from your mouth (lips to under the chin, from the headset); replaces rsg_face_near (0.47 m round the pawn's fixed eye)
 user float rsg_face_far = 0.71;		// m it must have been clear of your mouth before another
 user int rsg_face_hold = 12;		// tics it must stay at your face
+// 2.0.3r (owner 2026-11-03 19:43): shoot a thrown grenade and it goes off on the spot (zscript/rsg/grenade.zs RSG_Handler)
+server int rsg_shoot = 1;			// a player's shot or projectile within 0.35 m sets off a thrown grenade, 6 tics out of the hand
+server int rsg_shoot_slowmo = 0;	// ...only while RSQ SlowMo has the world slowed
+server int rsg_slowmo_fast = 0;		// in slow motion a thrown grenade runs faster than the world (still slow)
+server float rsg_slowmo_speed = 0.5;	// ...this much of the way from the world's speed up to real speed
 
 // 1.97: Shot/Revolver Reload -- 0 the speedloader (as 1.96b shipped), 1 a round at a time
 server int rsb_revolver_feed = 0;
