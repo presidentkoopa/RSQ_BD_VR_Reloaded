@@ -149,6 +149,26 @@ the pack. It has not yet been confirmed in a headset.
   has a round chambered loads exactly as before. The reload-button and auto-reload paths already waited for the pump.
 - On the rig, on the owner's full load order. Logs: `renders/2.0.3q/`.
 
+### The teeth pin pull at your mouth (2.0.3r; rig only, not headset-confirmed)
+- The owner never saw the teeth pull fire in his headset. It looked for the grenade within 0.47 m of `player.viewz`,
+  the pawn's fixed eye (1.55 m for BD's player), not your headset; and it counted only the trigger. QuestZDoom's
+  default button layout (`vr_secondary_button_mappings` on) makes the main grip a shift key, so squeezing grip and
+  trigger together (a fist round the grenade) sends alt fire and never fire: that squeeze could never pull the pin.
+  The ball round the pawn's eye also missed a seated player's mouth and caught a grenade held at the chest.
+- Now: bring the grenade to your **mouth** (lips to just under the chin, measured from your headset, as RSQ Tactical
+  Rig's cigarette does) and squeeze, with the trigger or with grip and trigger, for 12 tics. The controller, the drawn
+  grenade or its ring may be the part at your mouth. A small wobble out of the zone no longer restarts the count.
+- Options → BD22 VR Weapons: **Teeth: At** is now **Teeth: Mouth Reach** (0.15 m round the lips-to-chin line). Pin
+  With Your Teeth, Teeth: Again Beyond and Teeth: Hold are unchanged. The off-hand ring is unchanged.
+- The grenade works in the main hand only, as before (BD22's VR grenade reads the main hand's weapon).
+- On the rig (`renders/2.0.3r/`), each pose in its own run on brutal22test6 + voxels + this pk3 + XMVE, headset
+  1.65-1.75 m, the controller 12 cm under and 10 cm in front of the eyes. 2.0.3q: the pin came out with the trigger
+  alone standing, but not with grip and trigger together (the command carried alt fire only), not seated (headset
+  1.20 m: 0.48 m from the pawn's eye), and it did come out with the grenade at the chest. 2.0.3r: out on the 12th tic
+  at the mouth in all six poses (standing, chin, upright hold, grip and trigger, 1.75 m with `vr_height_adjust` 0.3,
+  seated), never at the chest. A grenade put in the off hand (the engine's switch-hand) does nothing in BD22 VR, ring
+  and throw included, as before.
+
 ## What was new in 1.99
 
 ### Every gun reloads by hand

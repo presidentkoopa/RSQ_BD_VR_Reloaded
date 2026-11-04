@@ -12,8 +12,8 @@ user int rsr_sideport = 1;
 user int rsg_vr = 1;
 // 2.0.3p (owner 2026-11-03): the teeth pin pull, RSQ Grenade's (rsqgn_face*), same defaults (zscript/rsg/grenade.zs Face)
 user int rsg_face = 1;			// squeeze the trigger and hold the grenade at your face: the pin is out (0: the ring only)
-user float rsg_face_near = 0.47;	// m from your eyes the grenade must be
-user float rsg_face_far = 0.71;		// m it must have been clear of your face before another
+user float rsg_mouth_r = 0.15;		// 2.0.3r: m the controller, the drawn grenade or its ring may be from your mouth (lips to under the chin, from the headset); replaces rsg_face_near (0.47 m round the pawn's fixed eye)
+user float rsg_face_far = 0.71;		// m it must have been clear of your mouth before another
 user int rsg_face_hold = 12;		// tics it must stay at your face
 
 // 1.97: Shot/Revolver Reload -- 0 the speedloader (as 1.96b shipped), 1 a round at a time

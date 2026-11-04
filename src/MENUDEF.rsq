@@ -91,7 +91,7 @@ OptionMenu "RSQ_Options"
 	StaticText " "
 	Option "VR Throwing", "rsg_vr", "OnOff"
 	Option "Pin With Your Teeth", "rsg_face", "OnOff"	// 2.0.3p: RSQ Grenade's teeth pull (zscript/rsg/grenade.zs Face); the off-hand ring works either way
-	Slider "Teeth: At (m)", "rsg_face_near", 0.10, 0.70, 0.01, 2
+	Slider "Teeth: Mouth Reach (m)", "rsg_mouth_r", 0.05, 0.30, 0.01, 2	// 2.0.3r: round the mouth (lips to under the chin), from the headset
 	Slider "Teeth: Again Beyond (m)", "rsg_face_far", 0.30, 1.50, 0.01, 2
 	Slider "Teeth: Hold (tics)", "rsg_face_hold", 2, 40, 1, 0
 	Option "Two-Hand Grip (engine)", "vr_two_handed_weapons", "OnOff"	// 2.0.2: QuestZDoom's own two-hand cvar, unchanged; the row only says so

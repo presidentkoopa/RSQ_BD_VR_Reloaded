@@ -12,6 +12,14 @@
 //      of the trigger re-arms it too. The squeeze at the face is only a squeeze: it neither cooks nor throws. As
 //      in RSQ, the trigger is still your squeeze on the spoon once the pin is out, so letting go of it afterwards
 //      is 2. above (a swing throws, still cooks). The off-hand ring (1.) is unchanged and works alongside.
+//      2.0.3r (owner 2026-11-03: "I still haven't seen the face-mouth pin pull work in either BD or ours"), as RSQ
+//      Grenade's Face() now: the MOUTH, not a 0.47 m ball round player.viewz (the pawn's fixed 1.45 m eye, 0.25 m
+//      under a 1.70 m headset, past 0.47 m for a tall player with vr_height_adjust; the chest counted). The mouth is
+//      RSQ Tactical Rig's cigarette zone from your real eyes (the headset, rsq/scope.zs's eye height): lips to under
+//      the chin, the controller, the drawn grenade or its ring within rsg_mouth_r (0.15 m) of it. The squeeze is the
+//      trigger OR alt fire there: QuestZDoom's default vr_secondary_button_mappings makes the main grip a shift key, so
+//      a fist round the grenade (grip and trigger) sends alt fire, never fire. A wobble of up to FACE_SLACK tics out
+//      of the zone does not restart the count.
 // BD22's own HandGrenade projectile, its fuse token, its explosion and sounds.
 // Out of VR, or rsg_vr 0, BD22's own canned throw is untouched.
 class RSG_Handler : EventHandler
@@ -71,6 +79,11 @@ class RSG_State play
 	const NADE_F = 2.77;		// the grenade body's centre as drawn (moved 4.0 cm by the FBX hand fit): the throw and the in-hand blast start here
 	const NADE_L = 4.23;
 	const NADE_U = -1.97;
+	const MOUTH_AF = 0.04;		// 2.0.3r THE MOUTH (RSQ Tactical Rig cig.zs ZONE_*): lips 0.04 m forward of the eyes, 0.06 under
+	const MOUTH_AD = 0.06;
+	const MOUTH_BF = 0.08;		// ...to just under the chin, 0.08 forward, 0.19 under (the head's frame)
+	const MOUTH_BD = 0.19;
+	const FACE_SLACK = 4;		// tics out of the zone (or off the squeeze) a hold forgives
 
 	RSR_State geo;
 	bool wantGrab;		// 2026-10-23: a grenade is in hand and wants the off-hand grab (read from
@@ -82,6 +95,7 @@ class RSG_State play
 	int cookTic;
 	bool trigPrev, grabPrev;
 	int faceTic;		// 2.0.3p THE TEETH: tics the squeezed grenade has been at the face
+	int faceMiss;		// 2.0.3r: tics it has been away (or unsqueezed) during a hold
 	bool faceReady;		// ...and the teeth may take a pin (RSQ Grenade's far radius / trigger re-arm)
 	bool teethPin;		// this pin came out by the teeth (no ring in the off hand)
 	int gripPrevPresses;
@@ -181,6 +195,7 @@ class RSG_State play
 		bool trig = (mo.player.cmd.buttons & BT_ATTACK) != 0;
 		bool trigUp = !trig && trigPrev;
 		trigPrev = trig;
+		bool alt = (mo.player.cmd.buttons & BT_ALTATTACK) != 0;	// 2.0.3r: a gripped squeeze (see the top, 4.)
 
 		double cap = RING_GRAB * RSR.Float('rsr_assist', 1.0);
 		double d = (geo.offLocal - (RING_F, RING_L, RING_U)).Length();
@@ -205,11 +220,12 @@ class RSG_State play
 				Buzz(mo);
 				return;
 			}
-			Face(mo, trig);
+			Face(mo, trig || alt, trig ? "trigger" : alt ? "alt" : "none");
 			return;
 		}
 		faceTic = 0;
-		if (!trig)
+		faceMiss = 0;
+		if (!trig && !alt)
 			faceReady = true;
 
 		if (!spoonOff)
@@ -254,50 +270,100 @@ class RSG_State play
 			Throw(mo, cooked, false);
 	}
 
-	// 2.0.3p THE TEETH, RSQ Grenade's Face() (RSQ_UBQSeries Grenade/zscript/rsqgn/hand.zs): the trigger squeezed
-	// and the drawn grenade held at your face for a run of tics. The distance is from the drawn grenade's body centre
-	// to your eyes (the pawn's x, y and the view height), in metres; RSQ's 0.47 / 0.71 m and 12 tics are the
-	// defaults. Once taken, the far radius (or letting go of the trigger) re-arms it. Only runs with the pin in.
+	// 2.0.3p THE TEETH, RSQ Grenade's Face() (RSQ_UBQSeries Grenade/zscript/rsqgn/hand.zs): the grenade squeezed and
+	// held at your mouth for a run of tics (rsg_face_hold, 12). 2.0.3r: at your MOUTH (see the top, 4.), measured from
+	// your real eyes; once taken, a hand clear of the mouth by rsg_face_far (0.71 m) or a let-go squeeze re-arms it.
+	// Only runs with the pin in.
 	static double PFloat(PlayerInfo p, Name n, double d) { let c = CVar.GetCVar(n, p); return c ? c.GetFloat() : d; }
 
-	double FaceDist(PlayerPawn mo)
+	// YOUR REAL EYES (rsq/scope.zs Eye, the way the renderer places them): the pawn's x, y; viewz plus the headset's
+	// height less the pawn's view height (vr_crouch_use_button on, the default: viewz stays at the pawn's eye and the
+	// headset's real height is added afterwards, hw_openxrdevice.cpp:219; the hands are placed from the controller's
+	// real height, hw_openxrdevice.cpp:595 / gl_openvr.cpp GetHandTransform). No headset height read: viewz.
+	Vector3 Eyes(PlayerPawn mo)
 	{
-		if (!geo)
-			return 999;
-		Vector3 v = DrawnNade(mo) - (mo.Pos.x, mo.Pos.y, mo.player.viewz);
-		double vu = geo.vu > 0 ? geo.vu : 34;
-		double ps = geo.ps > 0 ? geo.ps : 1.2;
-		return (v.x, v.y, v.z * ps).Length() / vu;
+		let p = mo.player;
+		Vector3 e = (mo.pos.x, mo.pos.y, p.viewz);
+		let cb = CVar.FindCVar('vr_crouch_use_button');
+		if (mo.HmdPosition.y > 0.3 && (!cb || cb.GetBool()))
+			e.z += (mo.HmdPosition.y + RSR.Float('vr_height_adjust', 0)) * geo.vu / geo.ps - mo.ViewHeight;
+		return e;
 	}
 
-	void Face(PlayerPawn mo, bool trig)
+	// metres forward along where you look and down, from the eyes, in the head's frame (yaw and pitch: the headset's)
+	Vector3 FromEyes(PlayerPawn mo, double fwd, double down)
+	{
+		double hp = clamp(mo.pitch, -89, 89);
+		double horiz = fwd * cos(hp) - down * sin(hp);
+		double vert = -fwd * sin(hp) - down * cos(hp);
+		return Eyes(mo) + (cos(mo.angle) * horiz * geo.vu, sin(mo.angle) * horiz * geo.vu, vert * geo.vu / geo.ps);
+	}
+
+	// room metres from pt to the segment a-b
+	double SegDist(Vector3 pt, Vector3 a, Vector3 b)
+	{
+		Vector3 ab = b - a, ap = pt - a;
+		ab = (ab.x, ab.y, ab.z * geo.ps) / geo.vu;
+		ap = (ap.x, ap.y, ap.z * geo.ps) / geo.vu;
+		double ll = ab dot ab;
+		double t = ll > 0 ? clamp((ap dot ab) / ll, 0.0, 1.0) : 0.0;
+		return (ap - ab * t).Length();
+	}
+
+	// metres from the mouth zone's line to the nearest of the controller, the drawn grenade and its ring
+	double MouthDist(PlayerPawn mo)
+	{
+		if (!geo || geo.vu <= 0 || geo.ps <= 0)
+			return 999;
+		Vector3 a = FromEyes(mo, MOUTH_AF, MOUTH_AD), b = FromEyes(mo, MOUTH_BF, MOUTH_BD);
+		Vector3 c = RSVR_VRHand.HandPos(mo);
+		double d = SegDist(c, a, b);
+		d = min(d, SegDist(c + geo.FromGun((NADE_F, NADE_L, NADE_U)), a, b));
+		return min(d, SegDist(c + geo.FromGun((RING_F, RING_L, RING_U)), a, b));
+	}
+
+	void Face(PlayerPawn mo, bool squeeze, String by)
 	{
 		let p = mo.player;
 		if (RSR.PlayerInt(p, 'rsg_face', 1) == 0)
 		{
 			faceTic = 0;
+			faceMiss = 0;
 			return;
 		}
-		double dist = FaceDist(mo);
-		double near = PFloat(p, 'rsg_face_near', 0.47);
+		double dist = MouthDist(mo);
+		double reach = clamp(PFloat(p, 'rsg_mouth_r', 0.15), 0.03, 0.40);
 		double far = PFloat(p, 'rsg_face_far', 0.71);
-		int hold = int(PFloat(p, 'rsg_face_hold', 12));
-		if (!trig || dist > far)
+		int hold = clamp(int(PFloat(p, 'rsg_face_hold', 12)), 1, 70);
+		bool atMouth = dist <= reach;
+		if (!squeeze || dist > far)
 			faceReady = true;
-		if (trig && dist <= near)
+		if (squeeze && atMouth)
+		{
 			faceTic++;
-		else
+			faceMiss = 0;
+		}
+		else if (faceTic > 0 && ++faceMiss > FACE_SLACK)
+		{
 			faceTic = 0;
+			faceMiss = 0;
+		}
+		bool dbg = RSR.Debug(p);	// "Print each reload step" (rsr_debug)
 		if (faceReady && faceTic >= hold)
 		{
 			faceReady = false;
 			faceTic = 0;
+			faceMiss = 0;
 			armed = true;
 			teethPin = true;
 			mo.SetInventory('RSG_PinOut', 1);
 			mo.A_StartSound("Grenade/Pin", CHAN_WEAPON, CHANF_OVERLAP);
 			Buzz(mo);
+			if (dbg)
+				Console.Printf("RSG teeth t%d: squeezed by %s, %.2f m from the mouth (reach %.2f) for %d tics", mo.Level.maptime, by, dist, reach, hold);
 		}
+		else if (dbg && (squeeze || atMouth) && mo.Level.maptime % 5 == 0)
+			Console.Printf("RSG face t%d mouth %.2f m (reach %.2f) squeeze %s held %d/%d ready %d", mo.Level.maptime, dist, reach, by, faceTic, hold, faceReady);
 	}
 
 	// the fastest step of the hand over the last tics, in the BODY'S frame (forward, left, up),
