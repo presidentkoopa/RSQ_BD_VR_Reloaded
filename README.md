@@ -65,9 +65,9 @@ Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3
 - **2.0.3j** (11-01): the axe as a throwing weapon with RSQ Distance Grab. A pulled axe goes to the hand that pulled
   it, or is stored if that hand holds a gun. The berserk wall axe follows the one-axe-per-hand rule, and the door lift
   steps aside for Distance Grab's.
-- **2.0.3i** (10-31): the off-hand axe is its own off-hand weapon. No free second axe (one per hand, from pickups),
+- **2.0.3i**: the off-hand axe is its own off-hand weapon. No free second axe (one per hand, from pickups),
   a thrown axe is gone until you pick one up, and axe cuts reach 33% further.
-- **2.0.3h** (10-31): the Unmaker's firing loop stops when the skull empties mid-fire, and its reload sounds only the
+- **2.0.3h**: the Unmaker's firing loop stops when the skull empties mid-fire, and its reload sounds only the
   out and in clicks.
 
 ## What's new in 2.0
