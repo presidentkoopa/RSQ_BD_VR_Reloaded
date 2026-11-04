@@ -32,6 +32,44 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
+## Changelog: 2.0.3h to 2.0.3u
+
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3u.pk3`. Builds marked
+*rig only* were tested on the development rig and still need a headset check.
+
+- **2.0.3u** (11-03, *rig only*): **Ammo From the Rig's Pouch Only** (On). With RSQ Tactical Rig's ammo pouch (just
+  left of the belt-buckle grenade), every belt reload takes from the pouch only: magazines, drums, boxes, shotgun
+  shells, break-open and cylinder rounds, the underbarrel 40 mm. A press at a holster, the buckle or the flare holster
+  never hands you ammo. Without the rig, reloads work exactly as before.
+- **2.0.3t** (11-03, *rig only*): **Shot Grenade Reach** slider (0.10 to 0.35 m, default 0.35; it only tightens).
+  Shooting a thrown grenade is more reliable: a projectile's whole path over the tic is checked, a bullet names the
+  exact grenade it hit, and the railgun counts.
+- **2.0.3s** (11-03, *rig only*): walking, strafing, stairs and snap turns no longer swing the axe, the pistol whip or
+  any melee while your hands are still. The hands are now measured against the frame they were drawn in.
+- **2.0.3r** (11-03, *rig only*):
+  - **Shoot Thrown Grenades** (On, with "Only in Slow Motion", Off): your bullet or damaging projectile sets off your
+    thrown grenade where it is. The kill is yours, and RSQ Score pays a skeet in the air.
+  - **Faster Grenades in Slow Motion** (Off) with a speed slider.
+  - The teeth pin pull now works: it reads your real mouth from the headset (lips to under the chin, "Teeth: Mouth
+    Reach" 0.15 m), and grip plus trigger counts as the squeeze.
+- **2.0.3q** (11-03): the off-hand axe cuts and throws like the main-hand axe (its blade was read upside down). The
+  pump shotgun waits for your hand on the pump right after a reload from empty, without a dead trigger pull.
+- **2.0.3p** (11-03): pull the grenade's pin with your teeth (RSQ Grenade's face pull, ported). The off-hand ring
+  pull is unchanged.
+- **2.0.3o** (11-03): the Incendiary Launcher is switched off unless "Extra weapons with cheats" is on; the Grenade
+  Launcher takes its place.
+- **2.0.3n** (11-02): Two-Hand Aim removed after the headset test showed the scripted gun turn lagging behind the
+  hands. Two-handing is the engine's own Two-Hand Grip again, and shots go down the gun's own barrel.
+- **2.0.3k to 2.0.3m** (11-02): Two-Hand Aim test builds (the Rifle first, then all 21 two-handed guns). Superseded
+  by 2.0.3n.
+- **2.0.3j** (11-01): the axe as a throwing weapon with RSQ Distance Grab. A pulled axe goes to the hand that pulled
+  it, or is stored if that hand holds a gun. The berserk wall axe follows the one-axe-per-hand rule, and the door lift
+  steps aside for Distance Grab's.
+- **2.0.3i** (10-31): the off-hand axe is its own off-hand weapon. No free second axe (one per hand, from pickups),
+  a thrown axe is gone until you pick one up, and axe cuts reach 33% further.
+- **2.0.3h** (10-31): the Unmaker's firing loop stops when the skull empties mid-fire, and its reload sounds only the
+  out and in clicks.
+
 ## What's new in 2.0
 Everything here was checked on the test rig on the load order above, with no script errors from
 the pack. It has not yet been confirmed in a headset.
