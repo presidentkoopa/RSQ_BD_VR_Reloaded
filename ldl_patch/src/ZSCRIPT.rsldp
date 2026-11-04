@@ -1,0 +1,8 @@
+version "4.14"	// QuestZDoom 17.3 is 4.14.3
+
+// LDL x BD22 VR patch (load after LegenDoom 3.0 and Champions). Class prefix RSLDP_.
+#include "zscript/rsldp/tables.zs"
+#include "zscript/rsldp/data.zs"
+#include "zscript/rsldp/effects.zs"
+#include "zscript/rsldp/pickup.zs"
+#include "zscript/rsldp/handler.zs"

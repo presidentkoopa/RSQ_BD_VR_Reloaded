@@ -1,0 +1,5 @@
+// LDL x BD22 VR patch
+gameinfo
+{
+	AddEventHandlers = "RSLDP_Handler"
+}

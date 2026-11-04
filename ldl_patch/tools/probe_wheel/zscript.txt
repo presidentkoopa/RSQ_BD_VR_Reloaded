@@ -1,0 +1,37 @@
+version "4.14"
+// TEST ONLY, never ships. Loaded after RSQ Wheel and the patch: logs what Wheel's own LegenDoom reader
+// (Wheel/zscript/wheel/wr_compat_legendoom.zs, read-only use) returns for the gun in hand, and what the same read
+// returns when the token prefix comes from the patch's RSLDP_Service (the proposal in docs/WHEEL_LEGENDARY_PROPOSAL.md).
+class RSLDPW_Probe : EventHandler
+{
+	static const string rw[] = { "Epic", "Rare", "Uncommon", "Common" };
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (e.Name != "rsldpw_card") return;
+		let p = players[consoleplayer].mo;
+		if (!p || !p.player.ReadyWeapon) { Console.Printf("WCARD no weapon"); return; }
+		let w = p.player.ReadyWeapon;
+		bool got; int r;
+		[got, r] = wr_CompatLegenDoom.RarityOf(w);
+		string eff = wr_CompatLegenDoom.EffectsOf(w);
+		string ic = w.Icon.IsValid() ? TexMan.GetName(w.Icon) : "none";
+		Console.Printf("WCARD wheel-today: weapon=%s tag=\"%s\" icon=%s ammo1=%s:%d ammo2=%s:%d rarityFound=%d rarity=%s effects=\"%s\"",
+			w.GetClassName(), w.GetTag(), ic, w.Ammo1 ? w.Ammo1.GetClassName() : 'none', w.Ammo1 ? w.Ammo1.Amount : 0,
+			w.Ammo2 ? w.Ammo2.GetClassName() : 'none', w.Ammo2 ? w.Ammo2.Amount : 0, got ? 1 : 0, got ? wr_CompatLegenDoom.RarityWord(r) : "", eff);
+		// the proposal: ask the patch for LegenDoom's token prefix of this gun, then read the same tokens
+		string pre = "";
+		let it = ServiceIterator.Find("RSLDP_Service");
+		Service s;
+		while (s = it.Next()) { pre = s.GetString("ld_prefix", w.GetClassName()); if (pre != "") break; }
+		string rar = "", effs = "";
+		for (let i = p.Inv; i && pre != ""; i = i.Inv)
+		{
+			string n = i.GetClassName();
+			for (int k = 0; k < 4; k++) if (n ~== pre .. "Legendary" .. rw[k]) rar = rw[k];
+			string ep = pre .. "Effect_";
+			if (n.Length() > ep.Length() && n.Left(ep.Length()) ~== ep) effs = effs .. n.Mid(ep.Length()) .. " ";
+		}
+		Console.Printf("WCARD with-service: prefix=%s rarity=%s effects=%s title=\"%s\"", pre, rar, effs, effs != "" ? StringTable.Localize("$LD_FX_TITLE_" .. effs.Left(effs.Length() - 1)) : "");
+	}
+}

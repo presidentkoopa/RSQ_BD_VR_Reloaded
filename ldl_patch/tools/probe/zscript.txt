@@ -1,0 +1,212 @@
+version "4.14"
+// TEST ONLY, never ships. Probe for the LDL/BD22 VR patch on the rig (tools/rig.sh appends it last).
+// Names LegenDoom/Champions/patch classes only by string, so it loads with or without any of them.
+// Console (netevent):
+//   rsldpp_repl            print REPL <replacee> <final replacement> for every class LegenDoom 3.0 replaces
+//   rsldpp_who             print the player's class, ready weapon, and LD effect tokens
+//   rsldpp_legend <n>      spawn (with replacement) monster n of the list 160 units ahead and make it legendary (LDMonsterInit)
+//   rsldpp_champ <n>       spawn monster n ahead with a Champions colour forced (champion_OverrideChance is set by the run)
+//   rsldpp_hurt <amt>      the player damages every monster within 1024 by amt (source = player, inflictor = player)
+//   rsldpp_face            turn the player to the nearest live monster
+//   rsldpp_gopick          move the player onto the nearest RSLDP/LD weapon pickup
+//   rsldpp_give <slot> <effect> <rarity>  give LD tokens (LD<slot>Effect_<effect>, ...EffectActive, ...Legendary<rarity>)
+class RSLDPP_Probe : EventHandler
+{
+	static const string mons[] = { "Zombieman", "ShotgunGuy", "DoomImp", "Demon", "Cacodemon", "HellKnight", "BaronOfHell", "Revenant", "Fatso", "Arachnotron", "LostSoul", "Cyberdemon" };
+	static const string repl[] = { "AllMap", "Arachnotron", "Archvile", "ArmorBonus", "Backpack", "BaronOfHell", "Berserk", "BFG9000", "BlueArmor", "BlueCard", "BlueSkull", "BlurSphere", "Cacodemon", "Cell", "CellPack", "Chaingun", "Chaingunguy", "Chainsaw", "Clip", "ClipBox", "Cyberdemon", "Demon", "DoomImp", "DoomPlayer", "Fatso", "Fist", "GreenArmor", "HealthBonus", "HellKnight", "Infrared", "InvulnerabilitySphere", "LostSoul", "Medikit", "Megasphere", "PainElemental", "Pistol", "PlasmaRifle", "Radsuit", "RedCard", "RedSkull", "Revenant", "RocketAmmo", "RocketBox", "RocketLauncher", "Shell", "ShellBox", "Shotgun", "Shotgunguy", "Soulsphere", "Spectre", "SpiderMastermind", "Stimpack", "SuperShotgun", "YellowCard", "YellowSkull", "Zombieman" };
+	static const string slots[] = { "Fists", "Chainsaw", "Pistol", "Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher", "PlasmaRifle", "BFG9000" };
+	static const string fam[] = { "Melee_Attacks", "Chain_Saw", "BrutalPistol", "Shot_Gun", "SSG", "Rifle|MiniGun", "Rocket_Launcher", "Plasma_Gun", "BIG_FUCKING_GUN" };
+	static const string rars[] = { "Common", "Uncommon", "Rare", "Epic" };
+	static const string effs[] = { "Vampiric", "Exorcist", "Murderous", "Unlikely", "Crippling", "Replicating", "Bloodthirsty", "DemonSlayer", "Pristine", "Painful" };
+	int lastHealth, legendWait;
+	vector3 legendAt;
+	Weapon lastWeap;
+
+	PlayerPawn P() { return players[consoleplayer].mo; }
+
+	Actor SpawnAhead(string cname, double dist)
+	{
+		let p = P(); if (!p) return null;
+		class<Actor> c = cname; if (!c) { Console.Printf("PROBE no class %s", cname); return null; }
+		vector3 pos = p.Vec3Angle(dist, p.angle, 0);
+		let mo = Actor.Spawn(c, pos, ALLOW_REPLACE);
+		if (mo) { mo.angle = p.angle + 180; Console.Printf("PROBE spawned %s -> %s at dist %.0f", cname, mo.GetClassName(), dist); }
+		return mo;
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		let p = P(); if (!p) return;
+		if (e.Name == "rsldpp_repl")
+		{
+			for (int i = 0; i < repl.Size(); i++)
+			{
+				class<Actor> c = repl[i];
+				if (!c) { Console.Printf("REPL %s (no class)", repl[i]); continue; }
+				Console.Printf("REPL %s %s", repl[i], Actor.GetReplacement(c).GetClassName());
+			}
+		}
+		else if (e.Name == "rsldpp_who")
+		{
+			string w = p.player.ReadyWeapon ? p.player.ReadyWeapon.GetClassName() : 'none';
+			Console.Printf("WHO class=%s weapon=%s health=%d", p.GetClassName(), w, p.health);
+			for (let i = p.Inv; i; i = i.Inv)
+			{
+				string n = i.GetClassName();
+				if (n.Left(2) == "LD" || n.Left(5) == "RSLDP" || i is "Weapon") Console.Printf("WHO  inv %s x%d", n, i.Amount);
+			}
+		}
+		else if (e.Name == "rsldpp_legend" || e.Name == "rsldpp_champ")
+		{
+			int n = clamp(e.Args[0], 0, mons.Size() - 1);
+			let mo = SpawnAhead(mons[n], 200);
+			// XMVE's replacements are RandomSpawners: the monster appears a tic later, so mark the spot
+			if (mo) { legendAt = mo.pos; legendWait = (e.Name == "rsldpp_legend") ? 3 : 0; }
+		}
+		else if (e.Name == "rsldpp_hurt")
+		{
+			let it = ThinkerIterator.Create("Actor");
+			Actor a;
+			while (a = Actor(it.Next()))
+			{
+				if (!a.bIsMonster || a.health <= 0 || a.Distance3D(p) > 1024) continue;
+				name tok = "LDLegendaryMonsterToken"; class<Inventory> tc = tok;
+				if (e.Args[1] == 1 && (!tc || !a.CountInv(tc))) continue;	// arg 2 = 1: legendary monsters only
+				a.DamageMobj(p, p, e.Args[0], 'None');
+			}
+		}
+		else if (e.Name == "rsldpp_give")	// args: slot, effect index (effs[]), rarity -- the tokens LegenDoom's pickup would transfer
+		{
+			string s = slots[clamp(e.Args[0], 0, 8)], ef = effs[clamp(e.Args[1], 0, effs.Size() - 1)], r = rars[clamp(e.Args[2], 0, 3)];
+			string toks[3]; toks[0] = "LD" .. s .. "EffectActive"; toks[1] = "LD" .. s .. "Legendary" .. r; toks[2] = "LD" .. s .. "Effect_" .. ef;
+			for (int i = 0; i < 3; i++) { class<Inventory> c = toks[i]; if (c) p.GiveInventory(c, 1); else Console.Printf("PROBE no token %s", toks[i]); }
+			Console.Printf("PROBE gave %s %s %s", s, r, ef);
+		}
+		else if (e.Name == "rsldpp_selectleg")	// select the BD22 gun of the slot whose legendary the player holds
+		{
+			for (int s = 0; s < 9; s++)
+			{
+				class<Inventory> a = "LD" .. slots[s] .. "EffectActive";
+				if (!a || !p.CountInv(a)) continue;
+				Array<string> f; fam[s].Split(f, "|");
+				for (int i = 0; i < f.Size(); i++)
+				{
+					class<Weapon> w = f[i];
+					let wi = w ? Weapon(p.FindInventory(w)) : null;
+					if (wi) { p.player.PendingWeapon = wi; Console.Printf("PROBE select %s (legendary slot %s)", f[i], slots[s]); return; }
+				}
+			}
+			Console.Printf("PROBE selectleg: none");
+		}
+		else if (e.Name == "rsldpp_mons")	// every live monster within 1024: class, health / spawn health, LegenDoom and Champions tokens
+		{
+			let it = ThinkerIterator.Create("Actor");
+			Actor a;
+			while (a = Actor(it.Next()))
+			{
+				if (!a.bIsMonster || a.health <= 0 || a.Distance3D(p) > 1024) continue;
+				string tk = "";
+				for (let i = a.Inv; i; i = i.Inv) { string n = i.GetClassName(); if (n.Left(2) == "LD" || n.Left(9) == "champion_") tk = tk .. " " .. n; }
+				Console.Printf("MON %s hp=%d spawnhp=%d dist=%.0f tokens:%s", a.GetClassName(), a.health, a.SpawnHealth(), a.Distance3D(p), tk);
+			}
+		}
+		else if (e.Name == "rsldpp_gun")	// give slot n's BD22 gun, fill its magazine and reserve, select it
+		{
+			Array<string> f; fam[clamp(e.Args[0], 0, 8)].Split(f, "|");
+			class<Weapon> w = f[0];
+			if (!w) { Console.Printf("PROBE no gun %s", f[0]); return; }
+			p.GiveInventory(w, 1);
+			let wi = Weapon(p.FindInventory(w));
+			if (!wi) return;
+			if (wi.Ammo1) wi.Ammo1.Amount = wi.Ammo1.MaxAmount;
+			if (wi.Ammo2) wi.Ammo2.Amount = wi.Ammo2.MaxAmount;
+			p.player.PendingWeapon = wi;
+			Console.Printf("PROBE gun %s ammo1=%d ammo2=%d", f[0], wi.Ammo1 ? wi.Ammo1.Amount : -1, wi.Ammo2 ? wi.Ammo2.Amount : -1);
+		}
+		else if (e.Name == "rsldpp_fill")
+		{
+			let wi = p.player.ReadyWeapon;
+			if (wi && wi.Ammo1) wi.Ammo1.Amount = wi.Ammo1.MaxAmount;
+			if (wi && wi.Ammo2) wi.Ammo2.Amount = wi.Ammo2.MaxAmount;
+			if (wi) Console.Printf("PROBE fill %s ammo1=%d ammo2=%d", wi.GetClassName(), wi.Ammo1 ? wi.Ammo1.Amount : -1, wi.Ammo2 ? wi.Ammo2.Amount : -1);
+		}
+		else if (e.Name == "rsldpp_set1") { let wi = p.player.ReadyWeapon; if (wi && wi.Ammo1) { wi.Ammo1.Amount = e.Args[0]; Console.Printf("PROBE set ammo1 %s=%d", wi.Ammo1.GetClassName(), e.Args[0]); } }
+		else if (e.Name == "rsldpp_hp") { p.A_SetHealth(e.Args[0]); Console.Printf("PROBE hp %d", p.health); }
+		else if (e.Name == "rsldpp_ammo")
+		{
+			let wi = p.player.ReadyWeapon;
+			if (wi) Console.Printf("AMMO %s ammo1=%d ammo2=%d", wi.GetClassName(), wi.Ammo1 ? wi.Ammo1.Amount : -1, wi.Ammo2 ? wi.Ammo2.Amount : -1);
+		}
+		else if (e.Name == "rsldpp_inv")	// list the player's powerups and LD items with amounts / tics
+		{
+			for (let i = p.Inv; i; i = i.Inv)
+			{
+				string n = i.GetClassName();
+				let pw = Powerup(i);
+				if (n.Left(2) == "LD" || pw) Console.Printf("INV %s x%d%s", n, i.Amount, pw ? String.Format(" tics=%d", pw.EffectTics) : "");
+			}
+		}
+		else if (e.Name == "rsldpp_face")
+		{
+			Actor best; double bd = 1e9;
+			let it = ThinkerIterator.Create("Actor");
+			Actor a;
+			while (a = Actor(it.Next())) if (a.bIsMonster && a.health > 0 && a.Distance3D(p) < bd) { bd = a.Distance3D(p); best = a; }
+			if (best) { p.A_Face(best, 0, 0); p.pitch = 0; Console.Printf("PROBE face %s at %.0f", best.GetClassName(), bd); }
+		}
+		else if (e.Name == "rsldpp_gopick")
+		{
+			Actor best; double bd = 1e9;
+			let it = ThinkerIterator.Create("Inventory");
+			Inventory a;
+			while (a = Inventory(it.Next()))
+			{
+				if (a.Owner) continue;
+				string n = a.GetClassName();
+				if ((n.Left(5) == "RSLDP" || n.IndexOf("PickupLegendary") >= 0) && a.Distance3D(p) < bd) { bd = a.Distance3D(p); best = a; }
+			}
+			if (best) { Console.Printf("PROBE gopick %s at %.0f", best.GetClassName(), bd); p.SetOrigin(best.pos, false); best.Touch(p); }
+			else Console.Printf("PROBE gopick: none");
+		}
+	}
+
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		if (!e.Thing) return;
+		string n = e.Thing.GetClassName();
+		if (n.IndexOf("PickupLegendary") >= 0 || n.Left(5) == "RSLDP" || n.IndexOf("RandomLegendary") >= 0 || n.IndexOf("LegendaryDrop") >= 0)
+			Console.Printf("SPAWN %s at (%.0f,%.0f,%.0f)", n, e.Thing.pos.x, e.Thing.pos.y, e.Thing.pos.z);
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e.Thing || !e.Thing.bIsMonster) return;
+		name tok = "LDLegendaryMonsterToken"; class<Inventory> tc = tok; bool leg = tc && e.Thing.CountInv(tc) > 0;
+		string ch = "";
+		for (let i = e.Thing.Inv; i; i = i.Inv) { string n = i.GetClassName(); if (n.Left(9) == "champion_" && n.IndexOf("Token") >= 0) ch = n; }
+		Console.Printf("DIED %s legendary=%d champion=%s", e.Thing.GetClassName(), leg ? 1 : 0, ch);
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!e.Thing || !e.DamageSource || !e.DamageSource.player || !e.Thing.bIsMonster) return;
+		string inf = e.Inflictor ? e.Inflictor.GetClassName() : 'none';
+		Console.Printf("HIT %s dmg=%d type=%s inflictor=%s hp=%d", e.Thing.GetClassName(), e.Damage, e.DamageType, inf, e.Thing.health);
+	}
+
+	override void WorldTick()
+	{
+		let p = P(); if (!p) return;
+		if (legendWait > 0 && --legendWait == 0)	// LegenDoom's own LDMonsterInit on the monster the spawner made
+		{
+			Actor best; double bd = 1e9;
+			let it = ThinkerIterator.Create("Actor");
+			Actor a;
+			while (a = Actor(it.Next())) if (a.bIsMonster && a.health > 0 && (a.pos - legendAt).Length() < bd) { bd = (a.pos - legendAt).Length(); best = a; }
+			if (best) { best.ACS_NamedExecuteAlways("LDMonsterInit", 0); Console.Printf("PROBE legendary init on %s (%.0f from the spawn spot)", best.GetClassName(), bd); }
+		}
+		let w = p.player.ReadyWeapon;
+		if (w != lastWeap) { Console.Printf("WEAPON %s", w ? w.GetClassName() : 'none'); lastWeap = w; }
+		if (p.health != lastHealth) { if (level.maptime > 2) Console.Printf("PHEALTH %d -> %d", lastHealth, p.health); lastHealth = p.health; }
+	}
+}

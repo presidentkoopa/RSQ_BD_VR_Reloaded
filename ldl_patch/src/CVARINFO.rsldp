@@ -1,0 +1,4 @@
+// LDL x BD22 VR patch
+server bool rsldp_reroll = true;	// a legendary drop whose effect BD22 VR guns can't use is re-rolled (same slot, same rarity)
+user bool rsldp_hud = true;		// the held gun's legendary name at the top of the HUD
+server noarchive int rsldp_debug = 0;	// log replacements, drops, effects

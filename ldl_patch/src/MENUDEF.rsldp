@@ -1,0 +1,24 @@
+// LDL x BD22 VR patch
+AddOptionMenu "OptionsMenu"
+{
+	Submenu "LegenDoom x BD22 VR", "RSLDP_Options"
+}
+
+AddOptionMenu "BrutalMenu"
+{
+	StaticText " "
+	Submenu "LegenDoom x BD22 VR", "RSLDP_Options"
+}
+
+OptionMenu "RSLDP_Options"
+{
+	Title "LEGENDOOM x BD22 VR"
+	Command "Legendary Info Screen", "pukename LDMenuToggle", 0, 1
+	Command "Drop Held Gun's Legendary", "netevent rsldp_drop", 0, 1
+	StaticText " "
+	Option "Legendary Name On HUD", "rsldp_hud", "OnOff"
+	Option "Re-roll Effects BD22 VR Can't Use", "rsldp_reroll", "OnOff"
+	Option "Debug Log", "rsldp_debug", "OnOff"
+	StaticText " "
+	Submenu "LegenDoom Options", "LegenDoom"
+}
