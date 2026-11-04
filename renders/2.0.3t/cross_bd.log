@@ -1,0 +1,54 @@
+Log started: 2026-11-03 21:04:22
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:
+No sprites specified for voxel.
+GTP_C1_ROCKET_20_CROSSES_MIDFLIGHT
+RSG face t110 mouth 0.05 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t115 mouth 0.05 m (reach 0.15) squeeze trigger held 2/12 ready 1
+RSG face t120 mouth 0.05 m (reach 0.15) squeeze trigger held 7/12 ready 1
+RSG teeth t125: squeezed by trigger, 0.05 m from the mouth (reach 0.15) for 12 tics
+GTP t125 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t140 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t142 rocket at 20 a tic, to cross the HandGrenade at (-91 998 113) in tic 149
+RSG shot t147: projectile VanillaCyberRocket, in the air (skeet), 7 tics out of the hand
+GTP t147 damaged PistolZombie by Purist via FragGrenadeExplosion: 15 (health 25)
+GTP t147 damaged PistolZombie by Purist via FragGrenadeExplosion: 19 (health 6)
+GTP t147 damaged PistolZombie by Purist via FragGrenadeExplosion: 9 (health 31)
+GTP t147 damaged PistolZombie by Purist via FragGrenadeExplosion: 15 (health -9)
+GTP t147 damaged PistolZombie by Purist via FragGrenadeExplosion: 10 (health 21)
+GTP t147 damaged PistolZombie by Purist via FragGrenadeExplosion: 6 (health 15)
+GTP t148 rocket 11 units from the crossing point
+GTP t149 rocket 11 units from the crossing point
+GTP t150 rocket 30 units from the crossing point
+GTP_C2_FAST_SHOT_100_CROSSES_MIDFLIGHT
+GTP t164 damaged PistolZombie by Purist via RocketExplosion: 59 (health -44)
+GTP t175 damaged BootSmearerRed by None via None: 1000 (health 0)
+GTP t190 damaged BootSmearerRed by None via None: 1000 (health 0)
+RSG face t215 mouth 0.05 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t220 mouth 0.05 m (reach 0.15) squeeze trigger held 5/12 ready 1
+RSG face t225 mouth 0.05 m (reach 0.15) squeeze trigger held 10/12 ready 1
+RSG teeth t227: squeezed by trigger, 0.05 m from the mouth (reach 0.15) for 12 tics
+GTP t227 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t242 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t250 rocket at 100 a tic, to cross the HandGrenade at (-91 998 113) in tic 251
+GTP t250 rocket 50 units from the crossing point
+RSG shot t251: projectile VanillaCyberRocket, in the air (skeet), 9 tics out of the hand
+GTP t251 rocket 50 units from the crossing point
+GTP t252 rocket 150 units from the crossing point
+GTP_C3_RAILGUN
+RSG face t320 mouth 0.05 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t325 mouth 0.05 m (reach 0.15) squeeze trigger held 2/12 ready 1
+RSG face t330 mouth 0.05 m (reach 0.15) squeeze trigger held 7/12 ready 1
+RSG teeth t335: squeezed by trigger, 0.05 m from the mouth (reach 0.15) for 12 tics
+GTP t335 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t350 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t354 hung HandGrenade at (-96 880 91), 96 ahead
+RSG shot ray t364: 0.7 units off its centre, reach 11.9
+GTP t364 railgun fired (A_CustomRailgun)
+RSG shot t365: railgun, in the air (skeet), 15 tics out of the hand
+GTP t365 the hung grenade went off

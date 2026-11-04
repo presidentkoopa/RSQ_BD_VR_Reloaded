@@ -1,0 +1,63 @@
+Log started: 2026-11-03 21:05:10
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+No sprites specified for voxel.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:
+No sprites specified for voxel.
+GTP_R1_REACH_010_NEAR_MISS_015M_SIDE
+RSG face t110 mouth 0.05 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t115 mouth 0.05 m (reach 0.15) squeeze trigger held 2/12 ready 1
+RSG face t120 mouth 0.05 m (reach 0.15) squeeze trigger held 7/12 ready 1
+RSG teeth t125: squeezed by trigger, 0.05 m from the mouth (reach 0.15) for 12 tics
+GTP t125 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t140 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t144 hung HandGrenade at (-96 880 91), 96 ahead
+RSG shot missed t192: 5.0 units off its centre, reach 3.4
+RSG shot missed t192: 5.0 units off its centre, reach 3.4
+GTP_R2_REACH_010_DEAD_ON
+RSG shot ray t219: 0.7 units off its centre, reach 3.4
+RSG shot ray t219: 0.7 units off its centre, reach 3.4
+RSG shot t220: hitscan, in the air (skeet), 80 tics out of the hand
+GTP t220 the hung grenade went off
+GTP t220 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 9 (health 31)
+GTP t220 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 10 (health 21)
+GTP t220 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 5 (health 35)
+GTP t220 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 6 (health 15)
+GTP t220 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 4 (health 31)
+GTP_R3_DEFAULT_035_SHOT_025M_SIDE
+RSG face t295 mouth 0.05 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t300 mouth 0.05 m (reach 0.15) squeeze trigger held 4/12 ready 1
+RSG face t305 mouth 0.05 m (reach 0.15) squeeze trigger held 9/12 ready 1
+RSG teeth t308: squeezed by trigger, 0.05 m from the mouth (reach 0.15) for 12 tics
+GTP t308 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t323 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t327 hung HandGrenade at (-96 880 91), 96 ahead
+RSG shot ray t375: 8.5 units off its centre, reach 11.9
+RSG shot ray t375: 8.5 units off its centre, reach 11.9
+RSG shot t376: hitscan, in the air (skeet), 53 tics out of the hand
+GTP t376 the hung grenade went off
+GTP t376 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 17 (health -2)
+GTP t376 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 9 (health 22)
+GTP t376 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 10 (health 12)
+GTP t376 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 6 (health 6)
+GTP_R4_DEFAULT_035_NEAR_MISS_045M_SIDE
+GTP t404 damaged BootSmearerRed by None via None: 1000 (health 0)
+RSG face t450 mouth 0.05 m (reach 0.15) squeeze none held 0/12 ready 1
+RSG face t455 mouth 0.05 m (reach 0.15) squeeze trigger held 3/12 ready 1
+RSG face t460 mouth 0.05 m (reach 0.15) squeeze trigger held 8/12 ready 1
+RSG teeth t464: squeezed by trigger, 0.05 m from the mouth (reach 0.15) for 12 tics
+GTP t464 BD22 pin OUT (RSG_PinOut 0 -> 1)
+GTP t479 BD22 pin back (RSG_PinOut 1 -> 0)
+GTP t483 hung HandGrenade at (-96 880 91), 96 ahead
+RSG shot missed t531: 15.3 units off its centre, reach 11.9
+RSG shot missed t531: 15.3 units off its centre, reach 11.9
+GTP_R4B_DEAD_ON
+RSG shot ray t558: 0.7 units off its centre, reach 11.9
+RSG shot ray t558: 0.7 units off its centre, reach 11.9
+RSG shot t559: hitscan, in the air (skeet), 80 tics out of the hand
+GTP t559 the hung grenade went off
+GTP t559 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 4 (health 2)
+GTP t559 damaged PistolZombie by Doomer3 via FragGrenadeExplosion: 12 (health -10)

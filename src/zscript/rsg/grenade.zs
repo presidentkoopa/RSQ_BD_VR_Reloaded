@@ -34,12 +34,25 @@ class RSG_Handler : EventHandler
 	// (RSQ Score's Trap Shot asks RSQ Grenade's service, which reads it).
 	// FASTER GRENADES IN SLOW MOTION (rsg_slowmo_fast, off): RSQ SlowMo slows a thrown grenade with the world; with this
 	// on it runs rsg_slowmo_speed (0.5) of the way from the world's speed up to real speed.
-	const SHOT_R = 12.0;
+	const SHOT_R = 12.0;		// the largest reach (0.35 m); "Shot Grenade Reach" (rsg_shot_r, 2.0.3t) only tightens it
+	// 2.0.3t (owner 2026-11-03 20:30: "let me have a slider to tighten it some but I won't make it bigger"): rsg_shot_r
+	// metres, 0.10 to 0.35, x vr_vunits_per_meter, never past SHOT_R
+	static double ShotR()
+	{
+		let c = CVar.FindCVar('rsg_shot_r');
+		double m = clamp(c ? c.GetFloat() : 0.35, 0.10, 0.35);
+		double vu = RSR.Float('vr_vunits_per_meter', 34);
+		return min(m * (vu > 0 ? vu : 34), SHOT_R);
+	}
 	const SHOT_GRACE = 6;
 	Array<Actor> nades;			// thrown HandGrenades (any thrower; a player's are the shootable ones)
 	Array<int> nadeTic;			// ...the tic each was spawned
 	Array<double> nadeBoost;	// ...the slow-motion boost applied to it now (1 none)
+	Array<int> nadeId;			// ...a serial (the same on every machine): a shot names the grenade, not a place
+	Array<double> nadeLX, nadeLY, nadeLZ;	// ...where it was a tic ago (the swept projectile test)
 	Array<Actor> missiles;		// other live missiles (projectiles are not in the blockmap)
+	Array<double> missLX, missLY, missLZ;	// ...where each was a tic ago
+	int nadeSerial;
 
 	static bool IsNade(Actor a) { Name c = a.GetClassName(); return c == 'HandGrenade' || c == 'HandGrenadeAlt'; }
 
@@ -56,14 +69,12 @@ class RSG_Handler : EventHandler
 	{
 		let a = e.Thing;
 		if (!a || !a.bMissile) return;
-		if (IsNade(a)) { nades.Push(a); nadeTic.Push(a.Level.maptime); nadeBoost.Push(1.0); }
-		else missiles.Push(a);
+		if (IsNade(a)) { nades.Push(a); nadeTic.Push(a.Level.maptime); nadeBoost.Push(1.0); nadeId.Push(++nadeSerial); nadeLX.Push(a.pos.x); nadeLY.Push(a.pos.y); nadeLZ.Push(a.pos.z); }
+		else { missiles.Push(a); missLX.Push(a.pos.x); missLY.Push(a.pos.y); missLZ.Push(a.pos.z); }
 	}
 
 	void ShotTick()
 	{
-		for (int i = missiles.Size() - 1; i >= 0; i--)
-			if (!missiles[i] || missiles[i].bDestroyed || !missiles[i].bMissile) missiles.Delete(i);
 		double w = WorldScale();
 		double want = 1.0;
 		if (w < 0.9999 && CvOn('rsg_slowmo_fast', false) && CvOn('rsqsm_slow_own', true))
@@ -77,7 +88,7 @@ class RSG_Handler : EventHandler
 			let g = nades[i];
 			if (!g || g.bDestroyed)
 			{
-				nades.Delete(i); nadeTic.Delete(i); nadeBoost.Delete(i);
+				DropNade(i);
 				continue;
 			}
 			// slow motion: RSQ SlowMo scales the velocity and the gravity by its factor; the boost rides on top
@@ -90,19 +101,37 @@ class RSG_Handler : EventHandler
 					Console.Printf("RSG slow t%d: world x%.2f, grenade x%.2f", g.Level.maptime, w, w * want);
 				nadeBoost[i] = want;
 			}
-			if (!open || !g.target || !g.target.player || g.Level.maptime - nadeTic[i] < SHOT_GRACE) continue;
+			if (!open || !g.target || !g.target.player || g.Level.maptime - nadeTic[i] < SHOT_GRACE) { SetNadeLast(i, g.pos); continue; }
+			bool hit = false;
 			for (int m = 0; m < missiles.Size(); m++)
 			{
 				let t = missiles[m];
-				if (!t || t.bDestroyed || !t.bMissile || t.bNoInteraction || !t.target || !t.target.player || IsNade(t)) continue;
+				// (a missile that burst in this tic's movement still counts: it passed)
+				if (!t || t.bDestroyed || t.bNoInteraction || !t.target || !t.target.player || IsNade(t)) continue;
 				if (t.GetMissileDamage(0, 1) <= 0) continue;	// a trail, a tracer, smoke: decoration that hurts nothing
-				Vector3 c = t.pos + (0, 0, t.height * 0.5) - (g.pos + (0, 0, g.height * 0.5));
-				if (c.Length() > SHOT_R + t.radius) continue;
+				// SWEPT (a scoping read: a fast shot passed through between two samples): the closest the two came over the
+				// last tic, each from where it was a tic ago to where it is now (WorldTick runs before the thinkers, and the
+				// engine has already reset Prev, so the handler keeps the last positions itself)
+				Vector3 r0 = (missLX[m], missLY[m], missLZ[m]) - (nadeLX[i], nadeLY[i], nadeLZ[i]), r1 = t.pos - g.pos;
+				r0.z += (t.height - g.height) * 0.5;
+				r1.z += (t.height - g.height) * 0.5;
+				Vector3 dr = r1 - r0;
+				double ll = dr dot dr;
+				double k = ll > 0 ? clamp(-(r0 dot dr) / ll, 0.0, 1.0) : 1.0;
+				if ((r0 + dr * k).Length() > ShotR() + t.radius) continue;
 				Shoot(i, String.Format("projectile %s", t.GetClassName()));
+				hit = true;
 				break;
 			}
+			if (!hit) SetNadeLast(i, g.pos);
 		}
+		for (int m = 0; m < missiles.Size(); m++) if (missiles[m]) { missLX[m] = missiles[m].pos.x; missLY[m] = missiles[m].pos.y; missLZ[m] = missiles[m].pos.z; }
+		for (int m = missiles.Size() - 1; m >= 0; m--)
+			if (!missiles[m] || missiles[m].bDestroyed || !missiles[m].bMissile) { missiles.Delete(m); missLX.Delete(m); missLY.Delete(m); missLZ.Delete(m); }
 	}
+
+	void DropNade(int i) { nades.Delete(i); nadeTic.Delete(i); nadeBoost.Delete(i); nadeId.Delete(i); nadeLX.Delete(i); nadeLY.Delete(i); nadeLZ.Delete(i); }
+	void SetNadeLast(int i, Vector3 p) { nadeLX[i] = p.x; nadeLY[i] = p.y; nadeLZ[i] = p.z; }
 
 	// it goes off where it is: BD22's own blast (its Explode state's FragGrenadeExplosion), credited to the thrower
 	void Shoot(int i, String how)
@@ -119,15 +148,18 @@ class RSG_Handler : EventHandler
 		if (g.target && g.target.player && RSR.Debug(g.target.player))
 			Console.Printf("RSG shot t%d: %s, %s, %d tics out of the hand", g.Level.maptime, how, air ? "in the air (skeet)" : "on the ground", g.Level.maptime - nadeTic[i]);
 		g.Destroy();
-		nades.Delete(i); nadeTic.Delete(i); nadeBoost.Delete(i);
+		DropNade(i);
 	}
 
-	// a hitscan of the console player's: both hands' rays (only this machine knows them), sent as an event
-	override bool WorldHitscanPreFired(WorldEvent e)
+	// a hitscan of the console player's: both hands' rays (only this machine knows them), sent as an event naming the
+	// grenade. The railgun (A_RailAttack, BD's RailGun) does not call the hitscan hook on 4.14.3: its own hook, the same.
+	override bool WorldRailgunPreFired(WorldEvent e) { ShotTest(e, 1); return false; }
+	override bool WorldHitscanPreFired(WorldEvent e) { ShotTest(e, 0); return false; }
+	void ShotTest(WorldEvent e, int rail)
 	{
 		let mo = PlayerPawn(e.Thing);
-		if (!mo || !mo.player || mo.PlayerNumber() != consoleplayer || !CanShoot() || nades.Size() == 0) return false;
-		if (e.AttackDistance > 0 && e.AttackDistance <= 128) return false;
+		if (!mo || !mo.player || mo.PlayerNumber() != consoleplayer || !CanShoot() || nades.Size() == 0) return;
+		if (e.AttackDistance > 0 && e.AttackDistance <= 128) return;
 		double dist = e.AttackDistance > 0 ? e.AttackDistance : 8192;
 		double ps = mo.Level.pixelstretch > 0 ? mo.Level.pixelstretch : 1.2;
 		Vector3 a0, d0, a1, d1;
@@ -154,28 +186,32 @@ class RSG_Handler : EventHandler
 				Vector3 rd = r == 0 ? d0 : d1;
 				Vector3 c = g.pos + (0, 0, g.height * 0.5) - ra;
 				double along = c dot rd;
-				if (along < 0 || along > dist || (c - rd * along).Length() > SHOT_R) continue;
+				if (along < 0 || along > dist) continue;
+				double miss = (c - rd * along).Length();
+				if (miss > ShotR())
+				{
+					if (miss < 2 * SHOT_R && RSR.Debug(mo.player)) Console.Printf("RSG shot missed t%d: %.1f units off its centre, reach %.1f", mo.Level.maptime, miss, ShotR());
+					continue;
+				}
+				if (RSR.Debug(mo.player)) Console.Printf("RSG shot ray t%d: %.1f units off its centre, reach %.1f", mo.Level.maptime, miss, ShotR());
 				if (mo.Level.maptime - nadeTic[i] < SHOT_GRACE)
 				{
 					if (RSR.Debug(mo.player)) Console.Printf("RSG shot ignored t%d: the grenade is %d tics out of the hand (grace %d)", mo.Level.maptime, mo.Level.maptime - nadeTic[i], SHOT_GRACE);
 					continue;
 				}
-				EventHandler.SendNetworkEvent("rsg_shoot", int(g.pos.x * 8), int(g.pos.y * 8), int(g.pos.z * 8));
-				return false;
+				EventHandler.SendNetworkEvent("rsg_shoot", nadeId[i], rail);
+				return;
 			}
 		}
-		return false;
+		return;
 	}
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
 		if (e.IsManual || e.Name != "rsg_shoot" || !CanShoot()) return;
-		Vector3 at = (e.Args[0], e.Args[1], e.Args[2]) / 8.0;
-		int best = -1;
-		double bd = 32;
+		// the grenade by its serial, validated: still tracked, live, a player's
 		for (int i = 0; i < nades.Size(); i++)
-			if (nades[i] && !nades[i].bDestroyed && (nades[i].pos - at).Length() < bd) { bd = (nades[i].pos - at).Length(); best = i; }
-		if (best >= 0) Shoot(best, "hitscan");
+			if (nadeId[i] == e.Args[0] && nades[i] && !nades[i].bDestroyed && nades[i].target && nades[i].target.player) { Shoot(i, e.Args[1] == 1 ? "railgun" : "hitscan"); break; }
 	}
 
 	// 2026-10-23: rsr/vreload.zs InputProcess asks this before it decides what to do with the Use

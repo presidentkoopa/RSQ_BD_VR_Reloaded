@@ -149,6 +149,18 @@ the pack. It has not yet been confirmed in a headset.
   has a round chambered loads exactly as before. The reload-button and auto-reload paths already waited for the pump.
 - On the rig, on the owner's full load order. Logs: `renders/2.0.3q/`.
 
+### Shot Grenade Reach (2.0.3t; rig only, not headset-confirmed)
+- Options → BD22 VR Weapons, under Shoot Thrown Grenades: **Shot Grenade Reach (m)**, 0.35 by default (12 map units,
+  as 2.0.3r), down to 0.10. It only tightens: a shot must pass this close to a thrown grenade to set it off. (BD22 VR's
+  menu has no Reset All; the default is 0.35.)
+- Two fixes to shooting thrown grenades: a fast shot or projectile is now caught along its whole path through the tic
+  (it could pass between two tic-end positions unseen), and a shot names the grenade itself, not where it was (a fast
+  grenade had moved on by the time the shot was handled). The railgun now sets grenades off too (it has its own hook).
+- On the rig (`renders/2.0.3t/`): reach 0.10: a pistol shot 5 units (0.15 m) off the grenade's centre set nothing off,
+  one dead on (0.7 units) did; the default 0.35: 8.5 units off set it off, 15.3 units off did not. A rocket at 20 a tic
+  and one at 100 a tic crossing a grenade in flight both set it off (the fast one's tic-end positions were 50 units
+  either side of it); the railgun set off a grenade held in the air.
+
 ### The teeth pin pull at your mouth; shoot thrown grenades (2.0.3r; rig only, not headset-confirmed)
 - The owner never saw the teeth pull fire in his headset. It looked for the grenade within 0.47 m of `player.viewz`,
   the pawn's fixed eye (1.55 m for BD's player), not your headset; and it counted only the trigger. QuestZDoom's

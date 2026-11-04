@@ -17,6 +17,7 @@ user float rsg_face_far = 0.71;		// m it must have been clear of your mouth befo
 user int rsg_face_hold = 12;		// tics it must stay at your face
 // 2.0.3r (owner 2026-11-03 19:43): shoot a thrown grenade and it goes off on the spot (zscript/rsg/grenade.zs RSG_Handler)
 server int rsg_shoot = 1;			// a player's shot or projectile within 0.35 m sets off a thrown grenade, 6 tics out of the hand
+server float rsg_shot_r = 0.35;		// 2.0.3t: m a shot must pass within to set a thrown grenade off (0.10 to 0.35; never more)
 server int rsg_shoot_slowmo = 0;	// ...only while RSQ SlowMo has the world slowed
 server int rsg_slowmo_fast = 0;		// in slow motion a thrown grenade runs faster than the world (still slow)
 server float rsg_slowmo_speed = 0.5;	// ...this much of the way from the world's speed up to real speed

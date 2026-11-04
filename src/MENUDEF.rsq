@@ -95,6 +95,7 @@ OptionMenu "RSQ_Options"
 	Slider "Teeth: Again Beyond (m)", "rsg_face_far", 0.30, 1.50, 0.01, 2
 	Slider "Teeth: Hold (tics)", "rsg_face_hold", 2, 40, 1, 0
 	Option "Shoot Thrown Grenades", "rsg_shoot", "OnOff"	// 2.0.3r: zscript/rsg/grenade.zs RSG_Handler
+	Slider "Shot Grenade Reach (m)", "rsg_shot_r", 0.10, 0.35, 0.01, 2	// 2.0.3t: tightens only
 	Option "Only in Slow Motion", "rsg_shoot_slowmo", "OnOff"
 	Option "Faster Grenades in Slow Motion", "rsg_slowmo_fast", "OnOff"
 	Slider "Grenade Speed in Slow Motion", "rsg_slowmo_speed", 0.0, 1.0, 0.05, 2
