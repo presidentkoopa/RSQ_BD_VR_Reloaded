@@ -109,7 +109,7 @@ class RSQ_FistHand play
 		if (vu <= 0)
 			vu = 34;
 
-		Vector3 d = hand - mo.pos;
+		Vector3 d = hand - RSVR_HandSync.Body(mo);	// 2.0.3s: off the view's height, not the feet (vrhand.zs)
 		double c = cos(mo.angle), s = sin(mo.angle);
 		double lf = d.x * c + d.y * s;
 		double ll = -d.x * s + d.y * c;
