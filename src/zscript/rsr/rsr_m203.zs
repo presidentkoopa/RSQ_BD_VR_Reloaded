@@ -271,7 +271,10 @@ class RSM_State play
 			if (!ac || mo.CountInv(ac) <= 0)
 				break;
 			Vector3 breech = ((RSM_Geo.FrameFront(gun) + seatF) / 2, RSM_Geo.AxisL(gun), RSM_Geo.AxisU(gun));
-			if ((palm - breech).Length() < RSM.POUCH_MIN)
+			int rp = RSR.RigPouch(mo);		// 2.0.3u: the rig's ammo pouch only (vreload.zs RSR.RigPouch)
+			if (rp == 0)
+				break;
+			if (rp < 0 && (palm - breech).Length() < RSM.POUCH_MIN)
 				break;
 			hand = RSM.CARRY;
 			geo.Buzz(mo);

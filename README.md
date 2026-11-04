@@ -149,6 +149,19 @@ the pack. It has not yet been confirmed in a headset.
   has a round chambered loads exactly as before. The reload-button and auto-reload paths already waited for the pump.
 - On the rig, on the owner's full load order. Logs: `renders/2.0.3q/`.
 
+### Ammo From the Rig's Pouch Only (2.0.3u; rig only, not headset-confirmed)
+- Options → BD22 VR Weapons, under New magazine from: **Ammo From the Rig's Pouch Only**, On. With RSQ Tactical Rig loaded
+  and its Ammo Pouch on, every reload that fetches from the belt takes ONLY from the rig's pouch, the one just left of
+  its belt buckle (the right for a left-hander): magazines, drums and boxes, shotgun shells, break-open and cylinder rounds,
+  the 40 mm under the Rifle and the Machinegun. A press anywhere else, the buckle and every other rig holster included,
+  gives nothing. Without the rig (or with the rig's pouch off, or this row off) every reload keeps its own rule exactly.
+  Found by name (the rig's "pouch.at" service): BD22 VR needs nothing loaded.
+- On the rig, the Brutal Doom order with RSQ Tactical Rig and RSQ FnF (TacticalRig `tools/rigtest/holsterprobe/evidence`,
+  `trh_POUCH*`): a Rifle emptied, its magazine out; off-hand presses at the buckle, the off hip, the off chest holster and
+  the flare holster each refused ("the rig's pouch only"), at the pouch a magazine taken (EMPTY -> CARRY); a Shot_Gun:
+  the buckle refused, the pouch gave a shell. Left-handed the same. BD22 alone: every one of those presses took one, as
+  2.0.3t did.
+
 ### Shot Grenade Reach (2.0.3t; rig only, not headset-confirmed)
 - Options → BD22 VR Weapons, under Shoot Thrown Grenades: **Shot Grenade Reach (m)**, 0.35 by default (12 map units,
   as 2.0.3r), down to 0.10. It only tightens: a shot must pass this close to a thrown grenade to set it off. (BD22 VR's

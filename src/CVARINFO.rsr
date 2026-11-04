@@ -2,6 +2,7 @@
 user string rsr_grip_keys = "443 436";	// key codes that are the off-hand grip (it grabs only 50 cm or more from the gun hand, or with vr_two_handed_weapons 0): 443 KEY_PAD_RTHUMB, 436 KEY_PAD_DPAD_UP (with the main grip held as a shift)
 user int rsr_grab_buttons = 67108864;	// usercmd buttons that grab anywhere: BT_OFFHANDATTACK (off-hand trigger); 0 = none
 user int rsr_magrelease = 268435456;	// usercmd buttons that drop the magazine: BT_OFFHANDRELOAD; the gun's own reload always does
+user int rsr_rig_pouch = 1;			// 2.0.3u: with RSQ Tactical Rig's Ammo Pouch, every reload takes from that pouch only (no effect without the rig)
 user int rsr_pouch = 0;				// where a new magazine is taken: 0 anywhere 20 cm from the gun, 1 low (40 cm below the eyes)
 user bool rsr_eat_grip = true;		// while a reload has the off hand, its grip key does nothing else (rthumb is +speed in some layouts)
 user bool rsr_debug = false;		// print every key code pressed, and each reload step

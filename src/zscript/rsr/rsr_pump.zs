@@ -574,6 +574,13 @@ class RSP_State play
 				Log(mo, "no shells left to take");
 			return false;
 		}
+		int rp = RSR.RigPouch(mo);		// 2.0.3u: the rig's ammo pouch only (vreload.zs RSR.RigPouch)
+		if (rp >= 0)
+		{
+			if (!quiet && rp == 0)
+				Log(mo, "the rig's pouch only: the off hand is not in it");
+			return rp == 1;
+		}
 		Vector3 palm = geo.OffPoint(RSR.PalmGrab());
 		if ((palm - RSP_Guns.Port(gun)).Length() < RSP.POUCH_MIN)
 			return false;

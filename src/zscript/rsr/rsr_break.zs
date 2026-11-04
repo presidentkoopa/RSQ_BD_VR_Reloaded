@@ -493,6 +493,13 @@ class RSB_State play
 		int need = RSB_Guns.ReserveHoldsLoaded(i) ? LiveCount() + 1 : 1;
 		if (res < need * RSB_Guns.ReservePer(i))		// 2026-10-28: the Moonlight's round costs 3 pistol rounds
 			return false;
+		int rp = RSR.RigPouch(mo);		// 2.0.3u: the rig's ammo pouch only (vreload.zs RSR.RigPouch)
+		if (rp >= 0)
+		{
+			if (RSR.Debug(mo.player))
+				Console.Printf("rsb t%d gun %d: the rig's pouch %s", mo.Level.maptime, i, rp == 1 ? "gives a round" : "only: the off hand is not in it");
+			return rp == 1;
+		}
 		Vector3 palm = OffPoint(RSR.PalmGrab());
 		Vector3 mid = RSB.HingeTurn(i, (RSB_Guns.Base(i, 0) + RSB_Guns.Tip(i, 0)) / 2, theta);
 		if ((palm - mid).Length() < RSB.POUCH_MIN)

@@ -65,6 +65,7 @@ OptionMenu "RSQ_Options"
 	Option "Reload Non-Standard Guns", "rsq_reload_nonstd", "OnOff"
 	Option "Grab ammo with", "rsr_grab_with", "RSR_GrabWith"
 	Option "New magazine from", "rsr_pouch", "RSR_Pouch"
+	Option "Ammo From the Rig's Pouch Only", "rsr_rig_pouch", "OnOff"
 	Option "Shotgun Shells Per Insert", "rsr_shell_credit", "RSR_ShellCredit"
 	Slider "Reload assist", "rsr_assist", 0.5, 3.0, 0.1
 	Option "Pistol Semi Auto", "rsa_pistol_semi", "OnOff"

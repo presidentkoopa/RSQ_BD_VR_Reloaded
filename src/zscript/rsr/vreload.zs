@@ -89,6 +89,24 @@ class RSR abstract
 		return cv ? cv.GetInt() : def;
 	}
 
+	// 2.0.3u THE RIG'S AMMO POUCH (owner 2026-11-03 20:46): with RSQ Tactical Rig loaded and its Ammo Pouch on, every reload
+	// that fetches from the belt -- magazines, drums and boxes (vreload), shotgun shells (rsr_pump), break-open and cylinder
+	// rounds (rsr_break), the rifle's underbarrel grenade (rsr_m203) -- takes ONLY from the pouch, left of the rig's belt
+	// buckle: a press anywhere else, other rig places included, gives nothing. Asked by name (RSQTR_RigService "pouch.at",
+	// the OFF hand: 1 in the pouch, 0 not, -1 no pouch), so this mod needs nothing loaded; with no answer (no rig, its pouch
+	// off, out of VR) and with "Ammo From the Rig's Pouch Only" off (rsr_rig_pouch), each reload keeps its own rule exactly.
+	// Returns 1 take it, 0 refuse, -1 the reload's own rule decides.
+	play static int RigPouch(PlayerPawn mo)
+	{
+		if (!mo || !mo.player || PlayerInt(mo.player, 'rsr_rig_pouch', 1) == 0)
+			return -1;
+		let it = ServiceIterator.Find("RSQTR_RigService");
+		Service s;
+		while (s = it.Next())
+			return s.GetInt("pouch.at", "", 1, 0, mo);
+		return -1;
+	}
+
 	// 1.17 (owner): "Grab ammo with" (rsr_grab_with): 0 the off trigger, 1 the off grip (away
 	// from the engine's steadying range, as 1.14), 2 the Use key (intercepted only while a reload
 	// has the hand). One of the three, never a mix. The grenade ring keeps the off trigger.
@@ -345,6 +363,13 @@ class RSR_State play
 				Console.Printf("rsr t%d gun %d: no magazine to take, reserve %s is empty",
 					mo.Level.maptime, i, res);
 			return false;
+		}
+		int rp = RSR.RigPouch(mo);
+		if (rp >= 0)
+		{
+			if (RSR.Debug(mo.player))
+				Console.Printf("rsr t%d gun %d: the rig's pouch %s", mo.Level.maptime, i, rp == 1 ? "gives a magazine" : "only: the off hand is not in it");
+			return rp == 1;
 		}
 		Vector3 hand = OffPoint(RSR.PalmGrab());
 		if ((hand - RSR_Guns.MagCentre(i)).Length() < RSR.POUCH_MIN)
