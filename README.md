@@ -35,7 +35,7 @@ To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERS
 ## Changelog: 2.0.3h to 2.0.3x
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3x.pk3`. Builds marked
-*rig only* were tested on the development rig and still need a headset check.
+*rig only* were tested on the development rig.
 
 - **2.0.3x** (11-05, *rig only*): with an RSQ series item in the off hand (the saber or Force hand, the Zippo or
   cigarette, the ShieldSaw, the flare or flashlight, the whip, a grenade or a glove), flicking the main gun down reloads
