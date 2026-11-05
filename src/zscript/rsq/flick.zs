@@ -1,6 +1,7 @@
 // RS VR flick reload (1.17, owner). With a GUN IN EACH HAND, snapping a gun's barrel down
 // reloads THAT gun with BD22's own reload, and only that one. With one gun (off hand free or
-// a fist) nothing here runs: VR reloading (rsr) has the gun as before.
+// a fist) nothing here runs: VR reloading (rsr) has the gun as before. An RSQ series off-hand item
+// (saber, Zippo, ShieldSaw...) closes the hand reload, so then the main gun flicks (2.0.3x).
 //
 // The flick is read from the barrel's elevation, which turning and walking do not change:
 //   fast    the barrel drops FLICK_DEG within FLICK_TICS;
@@ -37,6 +38,30 @@ class RSQ_Flick : EventHandler
 		return w.FindState("Reload") != null;
 	}
 
+	// 2.0.3x (owner 11-05 01:12): "When the saber or Zippo or ShieldSaw is in the off hand, we need to be
+	// able to flick reload our main-hand weapon." With one of the RSQ series' off-hand items there, the hand
+	// reload is closed (vreload.zs Wanted: the off hand must be RSQ_Hands to hold the magazine), so the main
+	// gun flicks into BD22's own Reload, which needs no off hand. Matched by class name, no dependency.
+	static bool IsSeriesOffItem(Weapon w)
+	{
+		if (!w)
+			return false;
+		static const Name items[] = {
+			'UBQS_SaberBase', 'UBQS_ForceHand',			// RSQ Saber: off-hand saber, Force hand
+			'SSQ_ShieldSaw',					// RSQ ShieldSaw
+			'RSQTR_ZippoWeapon', 'RSQTR_CigWeapon',			// RSQ Tactical Rig
+			'RSQFF_Held', 'RSQFF_Torch',				// RSQ Flash & Flare
+			'RSQWP_WhipWeapon', 'RSQGN_Grenade', 'RSQ_Glove'	// Whip, Grenade, Melee gloves in the off hand
+		};
+		for (int i = 0; i < items.Size(); i++)
+		{
+			class<Actor> c = items[i];
+			if (c && w is c)
+				return true;
+		}
+		return false;
+	}
+
 	override void WorldTick()
 	{
 		for (int n = 0; n < MAXPLAYERS; n++)
@@ -56,13 +81,15 @@ class RSQ_Flick : EventHandler
 			// 2.0.2a (owner 20:09): "ssg should always flick down to reload even if we allow for our vr
 			// reload". A lone SSG flicks too (SSG.dec RSQ_FlickReload); the hand reload is still there.
 			bool loneSSG = live && !on && p.ReadyWeapon is 'SSG';
+			// 2.0.3x: a series off-hand item (saber, Zippo, shield...) in the off hand: the main gun flicks
+			bool offItem = live && !on && IsSeriesOffItem(p.OffhandWeapon) && IsGun(p.ReadyWeapon);
 			double ps = mo.Level.pixelstretch;
 			if (ps <= 0)
 				ps = 1.2;
 			for (int h = 0; h < 2; h++)
 			{
 				// the main gun flicks only when the off hand has a gun too (one gun alone: VR reload)
-				bool run = on && (h != 0 || IsGun(p.ReadyWeapon)) || h == 0 && loneSSG;
+				bool run = on && (h != 0 || IsGun(p.ReadyWeapon)) || h == 0 && (loneSSG || offItem);
 				bool m203Only = !run && h == 0 && loneM203;	// a lone rifle: the launcher only
 				if (!run && !m203Only)
 				{
@@ -121,7 +148,17 @@ class RSQ_Flick : EventHandler
 		State st = w.FindState("Reload");
 		if (!st)
 			return;
+		// 2.0.3x: RSQ Saber / ShieldSaw carry their own copy of this flick (UBQS_OffFlick, SSQ_OffFlick); if one
+		// of them already entered the Reload this tic, don't restart it, and clear the ready flag after ours so
+		// theirs (later this tic) sees the gun busy: one flick, one reload.
+		let rp = p.GetPSprite(h == 0 ? PSP_WEAPON : PSP_OFFHANDWEAPON);
+		if (rp && rp.CurState == st)
+			return;
 		p.SetPsprite(h == 0 ? PSP_WEAPON : PSP_OFFHANDWEAPON, st, false, w);
+		p.WeaponState &= ~ready;
+		if (CVar.GetCVar('rsq_switch_log', p).GetInt() > 0)
+			Console.Printf("RSQ flick t%d: %s hand %d flick reload (off hand %s)", level.maptime, w.GetClassName(), h,
+				p.OffhandWeapon ? p.OffhandWeapon.GetClassName() : 'none');
 		// 1.30 (owner: "flick down to reload both barrels"): a rifle's empty M203 loads with it
 		if (RSM.IsAnyRifle(w) && p.mo)
 			RSM.FlickLoad(p.mo, h != 0);

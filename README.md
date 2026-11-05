@@ -32,11 +32,14 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.3w
+## Changelog: 2.0.3h to 2.0.3x
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3w.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3x.pk3`. Builds marked
 *rig only* were tested on the development rig and still need a headset check.
 
+- **2.0.3x** (11-05, *rig only*): with an RSQ series item in the off hand (the saber or Force hand, the Zippo or
+  cigarette, the ShieldSaw, the flare or flashlight, the whip, a grenade or a glove), flicking the main gun down reloads
+  it with BD22's own reload; the hand reload still needs the free off hand, as before.
 - **2.0.3w** (11-04, *rig only*): on PCVR (SteamVR), walking and strafing with the hands still no longer swing the axe
   or any melee. 2.0.3s fixed this for the way Quest places the hands; PCVR places them off the eye, which trails the
   body by up to a step between frames.
