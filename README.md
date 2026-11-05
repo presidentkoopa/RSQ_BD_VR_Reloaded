@@ -32,11 +32,14 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.3v
+## Changelog: 2.0.3h to 2.0.3w
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3v.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3w.pk3`. Builds marked
 *rig only* were tested on the development rig and still need a headset check.
 
+- **2.0.3w** (11-04, *rig only*): on PCVR (SteamVR), walking and strafing with the hands still no longer swing the axe
+  or any melee. 2.0.3s fixed this for the way Quest places the hands; PCVR places them off the eye, which trails the
+  body by up to a step between frames.
 - **2.0.3v** (11-04, *rig only*): Shoot Thrown Grenades tests only the ray of the hand that fired (a hand that was just
   pointing no longer sets a grenade off), and the kill goes to whoever shot the grenade.
 - **2.0.3u** (11-03, *rig only*): **Ammo From the Rig's Pouch Only** (On). With RSQ Tactical Rig's ammo pouch (just

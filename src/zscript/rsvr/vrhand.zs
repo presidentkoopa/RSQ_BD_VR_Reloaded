@@ -128,8 +128,8 @@ class RSVR_VRHand play
 //
 // THE FIX, two layers:
 //  1. EXACT, per frame (RSQ Whip's climb and lash already do this, input.zs / whip.zs): the machine with the hands
-//     measures each FRAME the controller against that same frame's pawn (flat) and that frame's eye
-//     (RenderEvent.ViewPos, height) -- the controller's own offset, with nothing of the body's motion in it -- and
+//     measures each FRAME the controller against that same frame's pawn (flat; on PCVR the frame's eye, 2.0.3w) and
+//     that frame's eye (RenderEvent.ViewPos, height) -- the controller's own offset, with nothing of the body's motion in it -- and
 //     sends it when it changes. The last one before a tic is the one the tic uses. Body() + that offset is the hand.
 //  2. Without a fresh one (menus, the first tics, a renderer that never calls RenderOverlay): the play-side estimate.
 //     The world ticks (p_tick.cpp:168-173) run the players' input, then WorldTick, then the movers, and an item's
@@ -182,14 +182,23 @@ class RSVR_HandSync : StaticEventHandler
 		// BD22 VR: in the BODY's frame (forward, left, up), turned back by the body's yaw this frame drew with, so a
 		// snap turn is no swing: the pawn takes the turn a tic before the next frame turns the hands (rig, 2026-11-03:
 		// the off hand read 13 units round the body for the one tic of a 45-degree snap, and the axe whooshed)
-		int a = Pack(Flat(mo.AttackPos - (mo.pos.x, mo.pos.y, e.ViewPos.z), -mo.angle));
-		int b = Pack(Flat(mo.OffhandPos - (mo.pos.x, mo.pos.y, e.ViewPos.z), -mo.angle));
+		// 2.0.3w: measured from what THIS renderer hung the hands on. PCVR (vr_mode 10, OpenVR) hangs them off the
+		// frame's interpolated eye in X/Y as well (gl_openvr.cpp:1282 GetHandTransform: r_viewpoint.CenterEyePos, which
+		// is RenderEvent.ViewPos), so against the pawn they wobbled by up to a tic of walking every frame: rig 2026-11-04,
+		// the OpenVR placement emulated on 2.0.3v, his MAP01 stairs with the axe out: 21 false Axe/Swing in 8 walks, 0
+		// with this. OpenXR (Quest, the rig: hw_openxrdevice.cpp:593-608) uses the pawn's X/Y, as before.
+		Vector3 ref = OpenVR() ? e.ViewPos : (mo.pos.x, mo.pos.y, e.ViewPos.z);
+		int a = Pack(Flat(mo.AttackPos - ref, -mo.angle));
+		int b = Pack(Flat(mo.OffhandPos - ref, -mo.angle));
 		if (a == 0 || b == 0) return;			// out of range: not a hand
 		int yw = int(round(Actor.Normalize180(mo.angle) * 100));
 		if (sentAny && a == sent0 && b == sent1 && yw == sentYaw && level.maptime - sentTic < RESEND && level.maptime >= sentTic) return;
 		sent0 = a; sent1 = b; sentYaw = yw; sentAny = true; sentTic = level.maptime;
 		EventHandler.SendNetworkEvent("RSVR_hs", a, b, yw);
 	}
+
+	// QuestZDoom 17.3's VR_OPENVR (hw_vrmodes.h): PCVR through SteamVR
+	static ui bool OpenVR() { let c = CVar.FindCVar('vr_mode'); return c && c.GetInt() == 10; }
 
 	override void NetworkProcess(ConsoleEvent e)
 	{
