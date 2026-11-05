@@ -9,11 +9,12 @@ class RSLDP_Converter : Thinker
 {
 	Inventory src;
 	int slot, tics;
+	bool dropped;	// the player's own legendary, let go (never suppressed)
 
-	static void Watch(Inventory ldPickup, int slot)
+	static void Watch(Inventory ldPickup, int slot, bool dropped = false)
 	{
 		let c = new("RSLDP_Converter");
-		c.src = ldPickup; c.slot = slot; c.tics = 0;
+		c.src = ldPickup; c.slot = slot; c.tics = 0; c.dropped = dropped;
 	}
 
 	override void Tick()
@@ -30,6 +31,20 @@ class RSLDP_Converter : Thinker
 		string eff = RSLDP_Effects.EffectOf(src, slot);
 		if ((rarity < 0 || eff == "") && tics < 12) return;	// LegenDoom rolls in 1-2 tics
 		vector3 at = src.pos, v = src.vel;
+		// Bossfights the only source (handler.zs BossfightOnly): a monster's legendary weapon from outside one drops nothing
+		if (!dropped && RSLDP_Handler.BossfightOnly())
+		{
+			let hb = RSLDP_Handler(EventHandler.Find("RSLDP_Handler"));
+			int from = hb ? hb.DropFromBossfight(at) : -1;
+			if (from == 0)
+			{
+				if (RSLDP_Handler.Debug()) Console.Printf("RSLDP drop: %s suppressed (not from a Bossfight; LegenDoom + Champions + RSQ Miniboss)", src.GetClassName());
+				src.Destroy();
+				Destroy();
+				return;
+			}
+			if (RSLDP_Handler.Debug()) Console.Printf("RSLDP drop: %s kept (%s)", src.GetClassName(), from == 1 ? "from a Bossfight" : "no legendary death matched");
+		}
 		// LegenDoom tossed it from (0,0) + 4 because the monster actor was gone (handler.zs WorldThingDied)
 		if (abs(src.pos.x) < 64 && abs(src.pos.y) < 64)
 		{

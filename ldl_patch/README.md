@@ -90,6 +90,7 @@ Hoarder, Survivor, Scrounger, Medic, ...), because BD22's own items are kept. Wi
 - Legendary Info Screen (LegenDoom's own screen of all your legendaries)
 - Drop Held Gun's Legendary (drops the power as a pickup, the gun stays; use it to swap powers)
 - Legendary Name on Screen (Off: the held gun's legendary name at the top of the view; RSQ Wheel's card names it)
+- Legendary Guns Only From Bossfights (On: with Champions and RSQ Miniboss's Bossfights, see below)
 - Re-roll Effects BD22 VR Can't Use (On)
 - Debug Log (Off)
 - LegenDoom Options (LegenDoom's own menu)
@@ -99,6 +100,15 @@ Hoarder, Survivor, Scrounger, Medic, ...), because BD22's own items are kept. Wi
 Champions works by tokens on monsters and by its own event handler; the patch touches neither. With Champions'
 "Legendoom Compatibility Enabled?" on (champion_legendoom), every legendary monster is also a champion, boosted when
 "Boosted Legendary Champions?" is on: the stack works as it does without the patch (rig proof in the report).
+
+**Bossfights are the only source of legendary weapons (owner, 11-05).** With LegenDoom 3.0 AND Champions loaded, and RSQ
+Miniboss's Bossfights on, a legendary weapon drops only from a monster that came with a Bossfight (its miniboss or
+thralls; the patch asks RSQ Miniboss by name, RSQMB_Service "bossfight"). Other legendaries stay Champions' boosted
+champions with their own loot, and their weapon drop is removed. A legendary you dropped yourself is never touched.
+LegenDoom without Champions, or without RSQ Miniboss, is unchanged. Row: Legendary Guns Only From Bossfights (on).
+Rig (doom2 + BD22 VR 2.0.3x + XMVE + LegenDoom 3.0 + Champions + patch + RSQ Miniboss, 11-05): a legendary Imp's drop
+"suppressed (not from a Bossfight)"; three legendary Bossfight thralls and the Bossfight miniboss each dropped theirs
+("kept (from a Bossfight)"). Rig only, not headset-confirmed.
 
 ## Rig results (rig only, not headset-confirmed)
 

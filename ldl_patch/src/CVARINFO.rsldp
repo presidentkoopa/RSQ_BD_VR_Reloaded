@@ -2,4 +2,5 @@
 server bool rsldp_reroll = true;	// a legendary drop whose effect BD22 VR guns can't use is re-rolled (same slot, same rarity)
 user bool rsldp_screen_name = false;	// the held gun's legendary name at the top of the screen (owner 11-05 00:54: off, it is in the way in VR;
 					// RSQ Wheel's card names it). A new name, so an rsldp_hud = true archived in an ini does not keep it on
+server bool rsldp_bossfight_only = true;	// with Champions and RSQ Miniboss's Bossfights: legendary weapons drop only from a Bossfight
 server noarchive int rsldp_debug = 0;	// log replacements, drops, effects

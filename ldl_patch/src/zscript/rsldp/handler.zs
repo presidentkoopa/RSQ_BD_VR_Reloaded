@@ -23,6 +23,7 @@ class RSLDP_Handler : EventHandler
 
 	Array<double> deathX, deathY, deathZ;
 	Array<int> deathT;
+	Array<int> deathBF;	// 1: the legendary came with an RSQ Miniboss Bossfight (RSQMB_Service "bossfight")
 	Array<class<Weapon> > famCls;
 	Array<int> famSlot;
 	Array<string> rcFrom;
@@ -144,7 +145,7 @@ class RSLDP_Handler : EventHandler
 		{
 			string a = "LD" .. RSLDP_Data.Slots[s] .. "PickupLegendary";
 			string b = "LD" .. RSLDP_Data.Slots[s] .. "PickupDroppedLegendary";
-			if (n ~== a || n ~== b) { RSLDP_Converter.Watch(it, s); return; }
+			if (n ~== a || n ~== b) { RSLDP_Converter.Watch(it, s, n ~== b); return; }
 		}
 	}
 
@@ -448,8 +449,12 @@ class RSLDP_Handler : EventHandler
 		if (!t || !t.bIsMonster) return;
 		class<Inventory> tok = (class<Inventory>)(RSLDP_Data.AC("LDLegendaryMonsterToken"));
 		if (!tok || t.CountInv(tok) == 0) return;
-		deathX.Push(t.pos.x); deathY.Push(t.pos.y); deathZ.Push(t.pos.z); deathT.Push(level.maptime);
-		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); }
+		let mb = ServiceIterator.Find("RSQMB_Service").Next();
+		int bf = (mb && mb.GetInt("bossfight", "", 0, 0, t) == 1) ? 1 : 0;
+		while (deathBF.Size() < deathT.Size()) deathBF.Insert(0, -1);	// a save from before deathBF
+		deathX.Push(t.pos.x); deathY.Push(t.pos.y); deathZ.Push(t.pos.z); deathT.Push(level.maptime); deathBF.Push(bf);
+		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); deathBF.Delete(0); }
+		if (Debug() && bf) Console.Printf("RSLDP legendary died: %s came with a Bossfight", t.GetClassName());
 	}
 
 	// a drop that landed at the map origin -> the most recent legendary death within 3 seconds
@@ -464,6 +469,36 @@ class RSLDP_Handler : EventHandler
 			return true;
 		}
 		return false;
+	}
+
+	// BOSSFIGHTS ARE THE ONLY SOURCE (owner 11-05): with LegenDoom AND Champions loaded and RSQ Miniboss's Bossfights on
+	// (asked by name: RSQMB_Service "bossfights"), a legendary weapon drops only from a monster that came with a
+	// Bossfight (its miniboss or thralls). rsldp_bossfight_only, on. LegenDoom without Champions, or without RSQ
+	// Miniboss: unchanged. A drop the player let go of (LD<Slot>PickupDroppedLegendary) is never touched.
+	static bool BossfightOnly()
+	{
+		cvar c = cvar.FindCvar("rsldp_bossfight_only");
+		if (c && !c.GetBool()) return false;
+		if (!RSLDP_Data.AC("champion_Token")) return false;
+		let mb = ServiceIterator.Find("RSQMB_Service").Next();
+		return mb && mb.GetInt("bossfights", "", 0, 0, null) == 1;
+	}
+
+	// the legendary death this drop came from: within 3 s, the nearest to where it landed (LegenDoom tosses it from the
+	// body, + 4); at the map's origin (the body was gone), the newest. -1: none found (not ours to judge), else 0 / 1.
+	int DropFromBossfight(vector3 at)
+	{
+		bool origin = abs(at.x) < 64 && abs(at.y) < 64;
+		int best = -1; double bd = 1e12;
+		for (int i = deathT.Size() - 1; i >= 0; i--)
+		{
+			if (level.maptime - deathT[i] > 105) break;
+			if (origin) return i < deathBF.Size() ? deathBF[i] : -1;
+			double dx = deathX[i] - at.x, dy = deathY[i] - at.y, d = dx * dx + dy * dy;
+			if (d < bd) { bd = d; best = i; }
+		}
+		if (best < 0 || bd > 256.0 * 256.0 || best >= deathBF.Size()) return -1;
+		return deathBF[best];
 	}
 
 	// ---------------------------------------------------------------- 4. menu actions
