@@ -1,0 +1,265 @@
+Log started: 2026-11-05 00:51:17
+QZDoom version 4.14.3
+W_Init: Init WADfiles.
+adding res/qzdoom.pk3, 709 lumps
+adding res/game_support.pk3, 3308 lumps
+adding /home/claude/iwad/doom2/doom2.wad, 2919 lumps
+adding game_widescreen_gfx.pk3, 214 lumps
+adding /home/claude/scratch/lo2/01_brutal22test6.pk3, 22264 lumps
+adding /home/claude/scratch/lo2/01_brutal22test6.pk3:bddmmaps.wad, 130 lumps
+adding /home/claude/scratch/lo2/01_brutal22test6.pk3:bdhordemodemaps.wad, 65 lumps
+adding /home/claude/scratch/lo2/01_brutal22test6.pk3:bdpsxmaps.wad, 42 lumps
+adding /home/claude/rs_brutal22weaponsq/pk3/02_BD22_VoxelPack.pk3, 257 lumps
+adding /home/claude/rs_brutal22weaponsq/pk3/03_BD22_VR-Reloaded_2.0.3w.pk3, 792 lumps
+adding /mnt/user-data/uploads/Desktop/LegenDoom_3.0.pk3, 2717 lumps
+adding /mnt/user-data/attachments/01ebc270-3953-5301-831b-c73a8b1320ca/a09b1892-mk-champions20210309.pk3, 140 lumps
+adding /home/claude/rs_brutal22weaponsq/pk3/LDL_BD22VR_Patch.pk3, 10 lumps
+adding /tmp/claude-0/-home-claude/01ebc270-3953-5301-831b-c73a8b1320ca/scratchpad/ldbug/probe.pk3, 2 lumps
+adding /tmp/claude-0/-home-claude/01ebc270-3953-5301-831b-c73a8b1320ca/scratchpad/ldbug/probe_g.pk3, 2 lumps
+S_Init: Setting up sound.
+GL_VENDOR: Mesa
+GL_RENDERER: llvmpipe (LLVM 20.1.2, 256 bits)
+GL_VERSION: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4 (Compatibility profile)
+GL_SHADING_LANGUAGE_VERSION: OpenGL ES GLSL ES 3.20
+GL_EXTENSIONS: GL_ANDROID_extension_pack_es31a GL_ANGLE_pack_reverse_row_order GL_ANGLE_texture_compression_dxt3 GL_ANGLE_texture_compression_dxt5 GL_APPLE_sync GL_APPLE_texture_max_level GL_ARM_shader_framebuffer_fetch_depth_stencil GL_EXT_EGL_image_storage GL_EXT_EGL_image_storage_compression GL_EXT_base_instance GL_EXT_blend_func_extended GL_EXT_blend_minmax GL_EXT_buffer_storage GL_EXT_clear_texture GL_EXT_clip_control GL_EXT_clip_cull_distance GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_compressed_ETC1_RGB8_sub_texture GL_EXT_conservative_depth GL_EXT_copy_image GL_EXT_debug_label GL_EXT_depth_clamp GL_EXT_discard_framebuffer GL_EXT_disjoint_timer_query GL_EXT_draw_buffers GL_EXT_draw_buffers_indexed GL_EXT_draw_elements_base_vertex GL_EXT_draw_instanced GL_EXT_float_blend GL_EXT_frag_depth GL_EXT_geometry_point_size GL_EXT_geometry_shader GL_EXT_gpu_shader5 GL_EXT_instanced_arrays GL_EXT_map_buffer_range GL_EXT_memory_object GL_EXT_memory_object_fd GL_EXT_multi_draw_arrays GL_EXT_multi_draw_indirect GL_EXT_occlusion_query_boolean GL_EXT_polygon_offset_clamp GL_EXT_primitive_bounding_box GL_EXT_read_format_bgra GL_EXT_render_snorm GL_EXT_robustness GL_EXT_sRGB_write_control GL_EXT_separate_shader_objects GL_EXT_shader_clock GL_EXT_shader_framebuffer_fetch GL_EXT_shader_framebuffer_fetch_non_coherent GL_EXT_shader_group_vote GL_EXT_shader_implicit_conversions GL_EXT_shader_integer_mix GL_EXT_shader_io_blocks GL_EXT_shadow_samplers GL_EXT_tessellation_point_size GL_EXT_tessellation_shader GL_EXT_texture_border_clamp GL_EXT_texture_buffer GL_EXT_texture_compression_bptc GL_EXT_texture_compression_dxt1 GL_EXT_texture_compression_rgtc GL_EXT_texture_compression_s3tc GL_EXT_texture_compression_s3tc_srgb GL_EXT_texture_cube_map_array GL_EXT_texture_filter_anisotropic GL_EXT_texture_filter_minmax GL_EXT_texture_format_BGRA8888 GL_EXT_texture_mirror_clamp_to_edge GL_EXT_texture_norm16 GL_EXT_texture_query_lod GL_EXT_texture_rg GL_EXT_texture_sRGB_R8 GL_EXT_texture_sRGB_RG8 GL_EXT_texture_sRGB_decode GL_EXT_texture_shadow_lod GL_EXT_texture_storage GL_EXT_texture_storage_compression GL_EXT_texture_type_2_10_10_10_REV GL_EXT_texture_view GL_EXT_unpack_subimage GL_KHR_blend_equation_advanced GL_KHR_blend_equation_advanced_coherent GL_KHR_context_flush_control GL_KHR_debug GL_KHR_no_error GL_KHR_parallel_shader_compile GL_KHR_robust_buffer_access_behavior GL_KHR_robustness GL_KHR_texture_compression_astc_ldr GL_KHR_texture_compression_astc_sliced_3d GL_MESA_bgra GL_MESA_framebuffer_flip_y GL_MESA_sampler_objects GL_MESA_shader_integer_functions GL_NV_alpha_to_coverage_dither_control GL_NV_conditional_render GL_NV_draw_buffers GL_NV_fbo_color_attachments GL_NV_generate_mipmap_sRGB GL_NV_image_formats GL_NV_pack_subimage GL_NV_pixel_buffer_object GL_NV_read_buffer GL_NV_read_depth GL_NV_read_depth_stencil GL_NV_read_stencil GL_NV_shader_noperspective_interpolation GL_NV_texture_barrier GL_OES_EGL_image GL_OES_EGL_image_external GL_OES_EGL_image_external_essl3 GL_OES_EGL_sync GL_OES_compressed_ETC1_RGB8_texture GL_OES_copy_image GL_OES_depth24 GL_OES_depth_texture GL_OES_depth_texture_cube_map GL_OES_draw_buffers_indexed GL_OES_draw_elements_base_vertex GL_OES_element_index_uint GL_OES_fbo_render_mipmap GL_OES_geometry_point_size GL_OES_geometry_shader GL_OES_get_program_binary GL_OES_gpu_shader5 GL_OES_mapbuffer GL_OES_packed_depth_stencil GL_OES_primitive_bounding_box GL_OES_required_internalformat GL_OES_rgb8_rgba8 GL_OES_sample_shading GL_OES_sample_variables GL_OES_shader_image_atomic GL_OES_shader_io_blocks GL_OES_shader_multisample_interpolation GL_OES_standard_derivatives GL_OES_stencil8 GL_OES_surfaceless_context GL_OES_tessellation_point_size GL_OES_tessellation_shader GL_OES_texture_3D GL_OES_texture_border_clamp GL_OES_texture_buffer GL_OES_texture_cube_map_array GL_OES_texture_float GL_OES_texture_float_linear GL_OES_texture_half_float GL_OES_texture_half_float_linear GL_OES_texture_npot GL_OES_texture_stencil8 GL_OES_texture_storage_multisample_2d_array GL_OES_texture_view GL_OES_vertex_array_object GL_OES_vertex_half_float GL_OES_viewport_array GL_OVR_multiview GL_OVR_multiview2
+Max. texture size: 16384
+Max. texture units: 32
+Max. combined shader storage blocks: 80
+Max. vertex shader storage blocks: 16
+Resolution: 1400 x 1400
+I_Init: Setting up machine state.
+CPU Vendor ID: GenuineIntel
+  Name: Intel(R) Xeon(R) Processor @ 2.80GHz
+  Family 6, Model 85, Stepping 7
+  Features: SSE2 SSE3 SSSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512 F16C FMA3 BMI1 BMI2 HyperThreading
+V_Init: allocate screen.
+ST_Init: Init startup screen.
+Checking cmd-line parameters...
+S_InitData: Load sound definitions.
+G_ParseMapInfo: Load map definitions.
+Texman.Init: Init texture manager.
+ParseTeamInfo: Load team definitions.
+LoadActors: Load actor definitions.
+Script warning, "01_brutal22test6.pk3:actors/gore/limbs.dec" line 205:
+Bad hex number: Al
+Script warning, "01_brutal22test6.pk3:actors/gore/limbs.dec" line 6164:
+Bad hex number: Al
+Attempt to get invalid state BBled1 from actor AlienBloodSplasher.
+Attempt to get invalid state Flash from actor BrutalWeapon.
+Attempt to get invalid state Flash from actor BrutalWeapon.
+Attempt to get invalid state Flash from actor BrutalWeapon.
+Attempt to get invalid state Flash from actor BrutalWeapon.
+Attempt to get invalid state Flash from actor BrutalWeapon.
+Attempt to get invalid state Flash from actor BrutalWeapon.
+Attempt to get invalid state Missile from actor BDMummy.
+Attempt to get invalid state Crush from actor Actor.
+Script warning, "01_brutal22test6.pk3:actors/enemies/wcs/eeevilll.dec" line 2213:
+Tried to define class 'Deh_Actor_153' more than once. Renaming class to 'Deh_Actor_153@01_brutal22test6.pk3@actors/enemies/wcs/eeevilll.dec'
+Script warning, "01_brutal22test6.pk3:actors/enemies/wcs/aaliens.dec" line 134:
+Bad hex number: Al
+Script warning, "01_brutal22test6.pk3:actors/enemies/wcs/aaliens.dec" line 603:
+Bad hex number: Al
+Script warning, "01_brutal22test6.pk3:actors/enemies/wcs/aaliens.dec" line 664:
+Bad hex number: Al
+Script warning, "01_brutal22test6.pk3:actors/enemies/wcs/aaliens.dec" line 723:
+Bad hex number: Al
+Script warning, "01_brutal22test6.pk3:actors/enemies/wcs/aaliens.dec" line 839:
+Bad hex number: Al
+Attempt to get invalid state Missile from actor BrutalNightmareDemon.
+Script warning, "LDL_BD22VR_Patch.pk3:zscript/rsldp/effects.zs" line 21:
+Comparison between signed and unsigned value
+Script warning, "02_BD22_VoxelPack.pk3:sphere.txt" line 69:
+Unknown class name 'DeathSphereHealth' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 52:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 105:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 111:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 118:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 124:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 131:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 137:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 144:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 150:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 157:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 160:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 163:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 166:
+Self pointer used in ambiguous context; VM execution may abort!
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 202:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 203:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 204:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 205:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 206:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 207:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 208:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/baseweaponpickups.dec" line 209:
+Unknown class name 'LDWSPistolGiver' of type 'Inventory'
+Script warning, "LegenDoom_3.0.pk3:decorate/epicspecialeffects.dec" line 2197:
+Unknown class name 'Robot_Base' of type 'Actor'
+Script warning, "LegenDoom_3.0.pk3:decorate/epicspecialeffects.dec" line 2282:
+Unknown class name 'Robot_Base' of type 'Actor'
+Script warning, "LegenDoom_3.0.pk3:decorate/epicspecialeffects.dec" line 2295:
+Unknown class name 'Robot_BlueSparkShower' of type 'Actor'
+34 warnings while parsing scripts
+Undefined drop item class NormalWeaponStarter referenced from actor Doomer
+script parsing took 2032.85 ms
+R_Init: Init Doom refresh subsystem.
+DecalLibrary: Load decals.
+DistX in slider decal Drops is unsupported
+M_Init: Init menus.
+P_Init: Init Playloop state.
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 66:
+No sprites specified for voxel.
+
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 72:
+No sprites specified for voxel.
+
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 77:
+No sprites specified for voxel.
+
+Script error, "02_BD22_VoxelPack.pk3:voxeldef.txt" line 892:
+No sprites specified for voxel.
+
+ParseSBarInfo: Loading custom status bar definition.
+D_CheckNetGame: Checking network game status.
+player 1 of 1 (1 nodes)
+
+----------------------------------------
+
+MAP01 - Entryway
+
+
+----------------------------------------
+TIP 9: The berserk pack strengthens your melee damage. A LOT. Rip and tear your foes whenever you come across one!
+----------------------------------------
+B22 FRAME 1 t 1 playinvr 1
+RSQ moon: map MAP01, moonlight_pistol 0 two 0: in the world Pistol 0, Shotvolver 0, Moonlight 0; pistols swapped for the Moonlight this map 0; map bullet pickups 2, Minigun ammo boxes put beside 0
+B22 PCLASS 0 Doomer2
+B22 PCLASS 1 BDoomer
+B22 PCLASS 2 Doomer3
+B22 PCLASS 3 TacticalDoomer
+B22 PCLASS 4 Purist
+B22 MYCLASS BDoomer purist 0
+B22 PALM -1.500 2.000 -4.500
+B22 GUN 1 well 17.669 2.668 6.708 axis -0.0230 -0.1920 0.9810 mouth 8.800 top -0.703 3.900 12.399 centre 17.654 4.007 -0.088 handle 1 grab -1.001 1.551 9.616 pull -0.9960 -0.0680 -0.0590 travel 7.300 rule 1 reserve Clip2
+B22 GUN 2 well 5.324 1.418 3.020 axis 0.1080 -0.1800 0.9770 mouth 12.700 top 0.690 3.937 2.560 centre 4.376 1.870 0.124 handle 1 grab 1.355 0.788 4.653 pull -0.9960 -0.0670 -0.0590 travel 4.700 rule 1 reserve Clip1
+B22 GUN 3 well 22.384 3.230 -0.313 axis 0.2550 -0.1640 0.9530 mouth 13.600 top 6.947 3.901 15.937 centre 18.329 4.780 -10.081 handle 1 grab 26.687 5.480 2.471 pull -0.9780 0.2090 -0.0030 travel 10.800 rule 1 reserve Clip1
+B22 GUN 4 well 35.546 4.753 8.153 axis -0.0450 -0.1950 0.9800 mouth 6.200 top -0.680 3.922 13.478 centre 35.775 5.987 1.812 handle 1 grab 26.725 5.073 9.243 pull -0.9960 -0.0670 -0.0590 travel 17.100 rule 1 reserve Mauser9mm
+B22 GUN 5 well 20.411 8.574 -8.472 axis -0.0450 -0.1920 0.9800 mouth 0.900 top -0.577 3.877 4.202 centre 19.567 8.155 -7.249 handle 1 grab 16.429 6.969 -5.502 pull -0.9960 -0.0670 -0.0590 travel 10.200 rule 1 reserve AmmoShell
+B22 GUN 6 well 27.148 5.069 2.879 axis -0.0440 -0.1940 0.9800 mouth 4.400 top -0.419 3.857 5.100 centre 26.261 5.810 -1.071 handle 0 grab 4.979 2.908 5.013 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve AmmoCell
+B22 GUN 7 well 17.246 5.774 -2.566 axis -0.2450 -0.0720 0.9670 mouth 3.600 top -5.958 3.656 5.045 centre 23.781 7.129 -6.892 handle 0 grab 4.250 2.991 6.495 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve AmmoCell
+B22 GUN 8 well 19.377 2.969 6.784 axis -0.1370 -0.2020 0.9700 mouth 5.900 top -0.703 3.900 7.946 centre 20.055 3.969 1.976 handle 1 grab 20.370 0.445 5.776 pull -0.9910 -0.1200 -0.0620 travel 9.500 rule 1 reserve SniperAmmo
+B22 GUN 9 well -8.132 1.790 13.686 axis -0.0560 0.9820 -0.1780 mouth 9.100 top 0.861 25.727 -12.016 centre -7.310 -9.096 16.355 handle 0 grab 4.488 1.754 7.417 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve AmmoRocket
+B22 GUN 10 well 16.075 5.448 14.188 axis 0.0770 -0.9790 -0.1900 mouth 6.030 top -3.048 -1.440 3.163 centre 16.063 9.873 13.845 handle 0 grab 2.740 2.743 6.318 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve Clip2
+B22 GUN 11 well 36.788 0.507 -3.364 axis -0.0320 0.0000 1.0000 mouth 14.890 top 10.500 3.518 -1.909 centre 36.189 0.560 -9.220 handle 0 grab 0.000 0.000 0.000 pull -1.0000 0.0000 0.0000 travel 0.000 rule 0 reserve Gas
+B22 GUN 12 well 20.118 17.633 -6.253 axis -0.0770 0.9790 0.1900 mouth 19.040 top 1.910 20.464 -1.190 centre 20.514 9.730 -7.613 handle 0 grab 5.793 7.997 -4.510 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve AmmoM202
+B22 GUN 13 well 17.004 0.968 13.979 axis 0.0450 0.1940 -0.9800 mouth 5.470 top -3.433 12.510 -6.607 centre 16.405 -0.544 16.589 handle 0 grab 6.372 0.704 6.843 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve SoulAmmo
+B22 GUN 14 well 19.198 13.229 15.878 axis -0.0770 0.9790 0.1900 mouth 7.840 top -0.700 10.899 -3.672 centre 19.293 10.740 17.103 handle 0 grab 2.629 2.628 4.553 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve DevastatorAmmo
+B22 GUN 15 well 37.890 1.404 27.641 axis -0.0450 -0.1940 0.9800 mouth 21.520 top 4.299 15.519 3.125 centre 45.216 3.924 18.162 handle 0 grab 2.272 1.895 11.207 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve Nuke
+B22 GUN 16 well 1.126 9.630 16.598 axis -0.0770 0.9790 0.1900 mouth 23.980 top 1.121 27.337 -11.852 centre 1.169 -2.782 16.788 handle 0 grab 7.417 -1.597 9.651 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve MiniHellRocketAmmo
+B22 GUN 17 well 39.627 5.602 -16.435 axis 0.0490 -0.0670 -0.9970 mouth 6.760 top 0.730 4.938 -1.662 centre 39.474 5.824 -15.837 handle 0 grab 4.987 3.169 4.837 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve RSQ_MinigunAmmo
+B22 GUN 18 well 18.700 5.695 -6.539 axis 0.0450 0.1940 -0.9800 mouth 13.110 top -0.696 3.710 -14.212 centre 18.352 4.353 0.917 handle 0 grab 3.847 2.625 4.723 pull -0.9960 -0.0670 -0.0590 travel 0.000 rule 0 reserve Clip2
+B22 W 5 mag 0 -> 31 fp 0 btn 0 refire 0 spr 875 frame 0
+B22 PSP 5 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 10 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 15 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 20 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 25 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 30 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 GS gamestate 0 menu 0 cls BDoomer health 100 camera BDoomer
+B22 S 35 main Rifle off rsq_hands invr 1 wanted 1 mag 31 btn 0
+B22 PSP 35 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 40 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 45 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 FRAME 21 t 50 playinvr 1
+B22 PSP 50 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 55 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PUMP 1 port 23.187 7.333 -3.842 push 0.9960 0.0670 0.0590 depth 6.000 shell 1.489 2.834 -2.439 axis 0.5370 -0.0090 0.8440 grab 44.203 8.748 -2.605 pull -0.9960 -0.0670 -0.0610 travel 6.400
+B22 PSP 60 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 65 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 GS gamestate 0 menu 0 cls BDoomer health 100 camera BDoomer
+B22 S 70 main Rifle off rsq_hands invr 1 wanted 1 mag 31 btn 0
+B22 BASIS t 70 off 0.00 50.00 0.00 ex 1.000 -0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 70 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 75 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 80 off 0.00 50.00 0.00 ex 1.000 -0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 80 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 85 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 FRAME 41 t 88 playinvr 1
+B22 BASIS t 90 off 0.00 50.00 0.00 ex 1.000 -0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 90 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 95 x 0.0 y 32.0 flashes 0 vel 0.0
+Degreelessness Mode ON 
+(Please tell me that's just for testing purposes...)
+No Target ON 
+(OooOoo, I'm a ghost!)
+LGB spawned LDShotgunPickupLegendary angle 90
+B22 BASIS t 100 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 100 x 0.0 y 32.0 flashes 0 vel 0.0
+RSLDP reroll: Shotgun Common Quickdraw -> Pristine
+RSLDP drop: LDShotgunPickupLegendary -> RSLDP_LegendaryPickup slot Shotgun rarity Common effect Pristine
+B22 GS gamestate 0 menu 0 cls BDoomer health 100 camera BDoomer
+B22 S 105 main Rifle off rsq_hands invr 1 wanted 1 mag 31 btn 0
+B22 PSP 105 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 110 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 110 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 115 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 120 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 120 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 125 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 130 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 130 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 FRAME 61 t 132 playinvr 1
+B22 PSP 135 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 GS gamestate 0 menu 0 cls BDoomer health 100 camera BDoomer
+B22 S 140 main Rifle off rsq_hands invr 1 wanted 1 mag 31 btn 0
+B22 BASIS t 140 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 140 x 0.0 y 32.0 flashes 0 vel 0.0
+LGB RSLDP_LegendaryPickup angle 90.0 sprite 1634 frame 0 pos -96 912 8
+LGB LDLegendaryCommonPickupEffect angle 90.0 sprite 1634 frame 0 pos -96 912 8
+LGB LDLegendaryCommonPickupEffect angle 90.0 sprite 1634 frame 0 pos -96 912 8
+LGB LDLegendaryCommonPickupEffect angle 90.0 sprite 1634 frame 0 pos -96 912 8
+LGB view from bearing 0 dist 56
+GV A
+B22 PSP 145 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 150 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 150 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 155 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 160 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 160 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 165 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 170 off 0.00 79.41 0.00 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 170 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 FRAME 81 t 175 playinvr 1
+LGB view from bearing 300 dist 56
+B22 GS gamestate 0 menu 0 cls BDoomer health 100 camera BDoomer
+B22 S 175 main Rifle off rsq_hands invr 1 wanted 1 mag 31 btn 0
+B22 PSP 175 x 0.0 y 32.0 flashes 0 vel 0.0
+GV B
+B22 BASIS t 180 off 0.08 80.72 0.05 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 180 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 185 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 190 off 0.08 80.72 0.05 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 190 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 195 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 BASIS t 200 off 0.08 80.72 0.05 ex 1.000 0.000 0.000 ey 0.000 -1.000 0.000 ez 0.000 -0.000 1.000
+B22 PSP 200 x 0.0 y 32.0 flashes 0 vel 0.0
+B22 PSP 205 x 0.0 y 32.0 flashes 0 vel 0.0

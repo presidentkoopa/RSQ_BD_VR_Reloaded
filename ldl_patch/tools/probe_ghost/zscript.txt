@@ -1,0 +1,44 @@
+version "4.10"
+// TEST ONLY (never ships). Ghost-angle probe: lg_spawn <slot> <angle> drops LegenDoom's LD<slot>PickupLegendary 128 ahead;
+// lg_view <dist> <deg> puts the player <dist> from the patch's pickup at bearing <deg>, facing it; lg_dump prints angles.
+class LGBProbe : EventHandler
+{
+	static const string slots[] = { "Fists", "Chainsaw", "Pistol", "Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher", "PlasmaRifle", "BFG9000" };
+	Actor Find(string cn)
+	{
+		let it = ThinkerIterator.Create("Actor");
+		Actor a, best;
+		while ((a = Actor(it.Next()))) if (a.GetClassName() == cn) best = a;
+		return best;
+	}
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		let p = players[e.Player].mo; if (!p) return;
+		if (e.Name == "lg_spawn")
+		{
+			class<Actor> c = "LD" .. slots[e.Args[0]] .. "PickupLegendary";
+			if (!c) { Console.Printf("LGB no class"); return; }
+			let a = Actor.Spawn(c, p.Vec3Angle(128, p.angle, 0));
+			if (a) { a.angle = e.Args[1]; Console.Printf("LGB spawned %s angle %.0f", a.GetClassName(), a.angle); }
+		}
+		else if (e.Name == "lg_view")
+		{
+			let pk = Find("RSLDP_LegendaryPickup"); if (!pk) { Console.Printf("LGB no pickup"); return; }
+			vector3 at = pk.Vec3Angle(e.Args[0], e.Args[1], 0);
+			p.SetOrigin((at.x, at.y, p.floorz), false);
+			p.angle = e.Args[1] + 180; p.pitch = 20;
+			Console.Printf("LGB view from bearing %d dist %d", e.Args[1], e.Args[0]);
+		}
+		else if (e.Name == "lg_dump")
+		{
+			let it = ThinkerIterator.Create("Actor");
+			Actor a; int n = 0;
+			while ((a = Actor(it.Next())))
+			{
+				string cn = a.GetClassName();
+				if (cn == "RSLDP_LegendaryPickup" || (cn.IndexOf("PickupEffect") >= 0 && n++ < 3))
+					Console.Printf("LGB %s angle %.1f sprite %d frame %d pos %.0f %.0f %.0f", cn, a.angle, int(a.sprite), a.frame, a.pos.x, a.pos.y, a.pos.z);
+			}
+		}
+	}
+}

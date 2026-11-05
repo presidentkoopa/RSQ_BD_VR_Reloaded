@@ -119,8 +119,11 @@ class RSLDP_LegendaryPickup : Inventory
 		if (gp && gp.GetInt() == 0) return;
 		class<Actor> fx = "LDLegendary" .. RSLDP_Data.Rarities[rarity] .. "PickupEffect";
 		if (!fx) return;
+		// LegenDoom spawns it with A_SpawnItemEx, which gives it the pickup's angle; a voxel (BD_VoxelPack) is drawn turned
+		// by its actor's angle, so without the angle the ghost lay at angle 0 across a pickup dropped at any other angle
+		// (owner 11-05 00:23: "the ghost voxel is perpendicular with the real pickup voxel")
 		let g = Spawn(fx, pos);
-		if (g) { g.sprite = sprite; g.frame = frame; g.scale = scale; }
+		if (g) { g.sprite = sprite; g.frame = frame; g.scale = scale; g.angle = angle; g.pitch = pitch; g.roll = roll; }
 	}
 
 	override bool TryPickup(in out Actor toucher)
