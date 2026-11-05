@@ -501,8 +501,8 @@ class RSLDP_Handler : EventHandler
 	// ---------------------------------------------------------------- HUD
 	override void RenderOverlay(RenderEvent e)
 	{
-		cvar on = cvar.FindCvar("rsldp_hud");
-		if (on && !on.GetBool()) return;
+		cvar on = cvar.FindCvar("rsldp_screen_name");	// off by default (owner 11-05 00:54); Wheel's card still names the gun
+		if (!on || !on.GetBool()) return;
 		int pn = consoleplayer;
 		string eff = curEffect[pn];
 		if (eff == "" || automapactive) return;

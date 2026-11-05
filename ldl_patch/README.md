@@ -41,7 +41,7 @@ drops, rarities, effect names, pickup screen and info screen, on BD22 VR's guns.
    drop that rolls an effect BD22 guns can't use is re-rolled within the same slot and rarity (option, on by
    default), so you never get a dead legendary.
 5. **HUD.** BD22 VR's status bar stays (LegenDoom ships its own SBARINFO, which would replace it). The held gun's
-   legendary name shows at the top of the view in its rarity colour. LegenDoom's info screen opens from the menu. RSQ Wheel
+   legendary name can show at the top of the view in its rarity colour ("Legendary Name on Screen", off by default). LegenDoom's info screen opens from the menu. RSQ Wheel
    (its 11-04 build) shows it on the gun's data card: the card in the rarity colour, "EPIC  MURDEROUS SHOTGUN" and
    LegenDoom's description (rig only, not headset-confirmed).
 
@@ -89,7 +89,7 @@ Hoarder, Survivor, Scrounger, Medic, ...), because BD22's own items are kept. Wi
 
 - Legendary Info Screen (LegenDoom's own screen of all your legendaries)
 - Drop Held Gun's Legendary (drops the power as a pickup, the gun stays; use it to swap powers)
-- Legendary Name On HUD (On)
+- Legendary Name on Screen (Off: the held gun's legendary name at the top of the view; RSQ Wheel's card names it)
 - Re-roll Effects BD22 VR Can't Use (On)
 - Debug Log (Off)
 - LegenDoom Options (LegenDoom's own menu)

@@ -16,7 +16,7 @@ OptionMenu "RSLDP_Options"
 	Command "Legendary Info Screen", "pukename LDMenuToggle", 0, 1
 	Command "Drop Held Gun's Legendary", "netevent rsldp_drop", 0, 1
 	StaticText " "
-	Option "Legendary Name On HUD", "rsldp_hud", "OnOff"
+	Option "Legendary Name on Screen", "rsldp_screen_name", "OnOff"
 	Option "Re-roll Effects BD22 VR Can't Use", "rsldp_reroll", "OnOff"
 	Option "Debug Log", "rsldp_debug", "OnOff"
 	StaticText " "
