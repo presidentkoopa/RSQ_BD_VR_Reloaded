@@ -1,0 +1,38 @@
+version "4.14"
+// TEST ONLY (wheelbug lane): what RSQ Wheel's ring actually lists (rig.mTypes) and its data sheet rows, on open.
+class RSWBR_Probe : EventHandler
+{
+	bool wasOpen; int openTic; string lastSheet;
+	override void WorldTick()
+	{
+		let pmo = players[consoleplayer].mo; if (!pmo) return;
+		let rig = wr_Rig.Get(); if (!rig) return;
+		int t = level.maptime;
+		if (rig.mOpen && !wasOpen) openTic = t;
+		if (rig.mOpen && t == openTic + 8)
+		{
+			string l = "";
+			for (int i = 0; i < rig.mTypes.Size(); i++) l = l .. String.Format(" %d:%s", i < rig.mCardSlots.Size() ? rig.mCardSlots[i] : -1, rig.mTypes[i] ? rig.mTypes[i].GetClassName() : 'none');
+			Console.Printf("WR ring t%d fans=%d cards:%s", t, rig.mFansEnabled, l);
+			Vector3 d = wr_Rig.handDir(pmo, 0);
+			for (int i = 0; i < rig.mTypes.Size() && i < rig.mCardX.Size(); i++)
+			{
+				Vector3 u = (rig.mCardX[i], rig.mCardY[i], rig.mCardZ[i]) - wr_Rig.handPos(pmo, 0);
+				Console.Printf("WR aim %d %s dyaw=%.1f dpitch=%.1f", i, rig.mTypes[i] ? rig.mTypes[i].GetClassName() : 'none',
+					Actor.deltaangle(atan2(d.y, d.x), atan2(u.y, u.x)), atan2(u.z, u.xy.Length()) - atan2(d.z, d.xy.Length()));
+			}
+		}
+		if (rig.mOpen)
+		{
+			string sh = "";
+			let bb = wr_BB.Get();
+			for (int i = 0; bb && i < rig.mSheetUsed && i < rig.mSheetRows.Size(); i++)
+			{
+				int id = rig.mSheetRows[i];
+				if (bb.mRecs.CheckKey(id)) sh = sh .. " | " .. bb.mRecs.Get(id).text;
+			}
+			if (sh != lastSheet) { lastSheet = sh; Console.Printf("WR sheet t%d hovered=%s:%s", t, rig.HoveredClass() ? rig.HoveredClass().GetClassName() : 'none', sh); }
+		}
+		wasOpen = rig.mOpen;
+	}
+}

@@ -194,4 +194,11 @@ class RSLDP_Service : Service
 	{
 		return request ~== "ld_prefix" ? Prefix(stringArg) : "";
 	}
+
+	// the same answer from any scope: RSQ Wheel's LegenDoom reader is a data-scope class (it can call neither the
+	// play nor the ui getter)
+	override String GetStringData(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
+	{
+		return request ~== "ld_prefix" ? Prefix(stringArg) : "";
+	}
 }

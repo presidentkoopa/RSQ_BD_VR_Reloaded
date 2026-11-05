@@ -1,9 +1,7 @@
 version "4.14"
 // TEST ONLY (never ships). Pickup / inventory / slot probe (owner bug 11-04 22:20). netevent wb_rep (inventory weapons, slot of each,
 // what Wheel can list), wb_spawn n (vanilla weapon with replacement), wb_legspawn n (LegenDoom legendary drop of slot n), wb_face 0 (walk
-// into the nearest pickup by velocity: the engine's own touch), wb_go (touch every pickup), wb_legend/wb_kill, wb_tokens, wb_slots.
-class RSWBP_Probe : EventHandler
-{
+// into the nearest pickup by velocity: the engine's own touch), wb_go (touch every pickup), wb_legend/wb_kill, wb_tokens, wb_strip.
 	static const string vw[] = { "Chainsaw", "Pistol", "Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher", "PlasmaRifle", "BFG9000" };
 	PlayerPawn P() { return players[consoleplayer].mo; }
 	State wprev; Weapon wprevW; int wprevT; Actor pushTo; int pushTics; int legendWait; vector3 legendAt; Weapon lastW;
@@ -111,6 +109,23 @@ class RSWBP_Probe : EventHandler
 			string l = "";
 			for (let i = p.Inv; i; i = i.Inv) { string n = i.GetClassName(); if (n.IndexOf("EffectActive") >= 0 || n.IndexOf("Effect_") >= 0 || (n.IndexOf("Legendary") >= 0 && n.Left(2) == "LD" && n.IndexOf("Display") < 0)) l = l .. " " .. n; }
 			Console.Printf("WB tokens:%s", l);
+		}
+		else if (e.Name == "wb_strip")	// a fixed loadout for frames: the hand/melee weapons, grenades and the BD22 pistol only
+		{
+			static const string keep[] = { "Melee_Attacks", "rsq_hands", "UBQS_Saber", "UBQS_ForceHand", "SSQ_ShieldSaw", "RSQWP_WhipWeapon", "HandGrenades", "AmmoDroper" };
+			Array<Inventory> gone;
+			for (let i = p.Inv; i; i = i.Inv)
+			{
+				if (!(i is "Weapon")) continue;
+				string n = i.GetClassName(); bool k = false;
+				for (int j = 0; j < keep.Size(); j++) if (n ~== keep[j]) k = true;
+				if (!k && n.Left(7) != "RSQ_Off") gone.Push(i);
+			}
+			string pcn = "BrutalPistol"; class<Weapon> pc = pcn; p.GiveInventory(pc, 1);
+			string hgn = "HandGrenades"; class<Weapon> hg = hgn; if (hg && !p.FindInventory(hg)) p.GiveInventory(hg, 1);
+			p.player.PendingWeapon = Weapon(p.FindInventory(pc));
+			for (int i = 0; i < gone.Size(); i++) if (gone[i] && gone[i] != p.player.PendingWeapon) { if (p.player.ReadyWeapon == gone[i]) p.player.ReadyWeapon = null; p.RemoveInventory(gone[i]); gone[i].Destroy(); }
+			Console.Printf("WB strip: %d weapons taken", gone.Size());
 		}
 		else if (e.Name == "wb_class") Console.Printf("WB class %s", p.GetClassName());
 		else if (e.Name == "wb_slots") Slots();

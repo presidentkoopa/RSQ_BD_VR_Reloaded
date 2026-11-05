@@ -1,0 +1,4 @@
+gameinfo
+{
+	AddEventHandlers = "RSWBR_Probe"
+}

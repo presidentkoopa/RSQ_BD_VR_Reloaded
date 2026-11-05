@@ -1,7 +1,10 @@
 # RSQ Wheel: showing a LegenDoom legendary on a BD22 VR gun's card (proposal, no Wheel edits)
 
-Status: proposal only. Nothing in `RSQ_UBQSeries/Wheel/` was changed. Rig findings below are "rig only, not
-headset-confirmed".
+Status (11-04): **built** in RSQ Wheel (`wr_compat_legendoom.zs` PrefixOf / TitleOf / DescrLines, the sheet in
+`zscript.zs`), owner's go 11-04. Wheel asks the patch with `GetStringData` (the clearscope getter: Wheel's reader is a
+data-scope class and may call neither `GetString` nor `GetStringUI`), which the patch answers from its 11-04 build.
+Frames: `evidence/key/wb_wheel_card_*`; logs `wb_hover3` (after), `wb_hover_before` (before). Rig only, not
+headset-confirmed. The text below is the proposal as written.
 
 ## What the card shows today (with LegenDoom 3.0 + this patch)
 
