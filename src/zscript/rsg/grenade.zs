@@ -119,7 +119,7 @@ class RSG_Handler : EventHandler
 				double ll = dr dot dr;
 				double k = ll > 0 ? clamp(-(r0 dot dr) / ll, 0.0, 1.0) : 1.0;
 				if ((r0 + dr * k).Length() > ShotR() + t.radius) continue;
-				Shoot(i, String.Format("projectile %s", t.GetClassName()));
+				Shoot(i, String.Format("projectile %s", t.GetClassName()), t.target);
 				hit = true;
 				break;
 			}
@@ -133,8 +133,10 @@ class RSG_Handler : EventHandler
 	void DropNade(int i) { nades.Delete(i); nadeTic.Delete(i); nadeBoost.Delete(i); nadeId.Delete(i); nadeLX.Delete(i); nadeLY.Delete(i); nadeLZ.Delete(i); }
 	void SetNadeLast(int i, Vector3 p) { nadeLX[i] = p.x; nadeLY[i] = p.y; nadeLZ[i] = p.z; }
 
-	// it goes off where it is: BD22's own blast (its Explode state's FragGrenadeExplosion), credited to the thrower
-	void Shoot(int i, String how)
+	// it goes off where it is: BD22's own blast (its Explode state's FragGrenadeExplosion), credited to the player whose
+	// shot set it off (2.0.3v, owner 2026-11-04: anyone can shoot any thrown grenade in co-op and the shooter gets the
+	// kill; it was the thrower's), the thrower when no shooter is known
+	void Shoot(int i, String how, Actor by = null)
 	{
 		let g = nades[i];
 		if (!g || g.bDestroyed) return;
@@ -142,7 +144,7 @@ class RSG_Handler : EventHandler
 		let ex = Actor.Spawn('FragGrenadeExplosion', g.pos, ALLOW_REPLACE);
 		if (ex)
 		{
-			ex.target = g.target;
+			ex.target = (by && by.player) ? by : g.target;
 			if (air) ex.GiveInventory('RSG_Skeet', 1);
 		}
 		if (g.target && g.target.player && RSR.Debug(g.target.player))
@@ -151,8 +153,11 @@ class RSG_Handler : EventHandler
 		DropNade(i);
 	}
 
-	// a hitscan of the console player's: both hands' rays (only this machine knows them), sent as an event naming the
-	// grenade. The railgun (A_RailAttack, BD's RailGun) does not call the hitscan hook on 4.14.3: its own hook, the same.
+	// a hitscan of the console player's: the ray of the hand that fired (only this machine knows the hands), sent as an
+	// event naming the grenade. 2.0.3v (RSQ 0.99a bug 54): it tested both hands' rays, so a hand that only pointed could
+	// set a grenade off. The shot says which hand: QuestZDoom 17.3's weapon attacks mark an off-hand one (A_FireBullets
+	// LAF_ISOFFHAND, A_RailAttack RGF_ISOFFHAND; P_LineAttack starts it from OffhandPos for that flag), and this mod's
+	// own re-fires keep it (rsq/muzzle.zs, rsq/playerrounds.zs). The railgun (A_RailAttack, BD's RailGun) does not call the hitscan hook on 4.14.3: its own hook, the same.
 	override bool WorldRailgunPreFired(WorldEvent e) { ShotTest(e, 1); return false; }
 	override bool WorldHitscanPreFired(WorldEvent e) { ShotTest(e, 0); return false; }
 	void ShotTest(WorldEvent e, int rail)
@@ -162,13 +167,12 @@ class RSG_Handler : EventHandler
 		if (e.AttackDistance > 0 && e.AttackDistance <= 128) return;
 		double dist = e.AttackDistance > 0 ? e.AttackDistance : 8192;
 		double ps = mo.Level.pixelstretch > 0 ? mo.Level.pixelstretch : 1.2;
-		Vector3 a0, d0, a1, d1;
-		int rays = 1;
+		Vector3 a0, d0;
 		if (RSVR_VRHand.InVR(mo))
 		{
-			a0 = RSVR_VRHand.HandPos(mo); d0 = RSVR_VRHand.HandDir(mo, 0, 0, ps);
-			a1 = RSVR_VRHand.OffPos(mo); d1 = RSVR_VRHand.OffDir(mo, 0, 0, ps);
-			rays = 2;
+			bool off = rail == 1 ? (e.RailParams.flags & RGF_ISOFFHAND) != 0 : (e.AttackLineFlags & LAF_ISOFFHAND) != 0;
+			if (off) { a0 = RSVR_VRHand.OffPos(mo); d0 = RSVR_VRHand.OffDir(mo, 0, 0, ps); }
+			else { a0 = RSVR_VRHand.HandPos(mo); d0 = RSVR_VRHand.HandDir(mo, 0, 0, ps); }
 		}
 		else
 		{
@@ -180,10 +184,10 @@ class RSG_Handler : EventHandler
 		{
 			let g = nades[i];
 			if (!g || g.bDestroyed || !g.target || !g.target.player) continue;
-			for (int r = 0; r < rays; r++)
+			for (int r = 0; r < 1; r++)		// one ray, the firing hand's (a loop so a miss can `continue` to the next grenade)
 			{
-				Vector3 ra = r == 0 ? a0 : a1;
-				Vector3 rd = r == 0 ? d0 : d1;
+				Vector3 ra = a0;
+				Vector3 rd = d0;
 				Vector3 c = g.pos + (0, 0, g.height * 0.5) - ra;
 				double along = c dot rd;
 				if (along < 0 || along > dist) continue;
@@ -211,7 +215,7 @@ class RSG_Handler : EventHandler
 		if (e.IsManual || e.Name != "rsg_shoot" || !CanShoot()) return;
 		// the grenade by its serial, validated: still tracked, live, a player's
 		for (int i = 0; i < nades.Size(); i++)
-			if (nadeId[i] == e.Args[0] && nades[i] && !nades[i].bDestroyed && nades[i].target && nades[i].target.player) { Shoot(i, e.Args[1] == 1 ? "railgun" : "hitscan"); break; }
+			if (nadeId[i] == e.Args[0] && nades[i] && !nades[i].bDestroyed && nades[i].target && nades[i].target.player) { Shoot(i, e.Args[1] == 1 ? "railgun" : "hitscan", (e.Player >= 0 && e.Player < MAXPLAYERS && playeringame[e.Player]) ? players[e.Player].mo : null); break; }
 	}
 
 	// 2026-10-23: rsr/vreload.zs InputProcess asks this before it decides what to do with the Use

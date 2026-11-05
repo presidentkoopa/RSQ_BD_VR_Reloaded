@@ -32,11 +32,13 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.3u
+## Changelog: 2.0.3h to 2.0.3v
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3u.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3v.pk3`. Builds marked
 *rig only* were tested on the development rig and still need a headset check.
 
+- **2.0.3v** (11-04, *rig only*): Shoot Thrown Grenades tests only the ray of the hand that fired (a hand that was just
+  pointing no longer sets a grenade off), and the kill goes to whoever shot the grenade.
 - **2.0.3u** (11-03, *rig only*): **Ammo From the Rig's Pouch Only** (On). With RSQ Tactical Rig's ammo pouch (just
   left of the belt-buckle grenade), every belt reload takes from the pouch only: magazines, drums, boxes, shotgun
   shells, break-open and cylinder rounds, the underbarrel 40 mm. A press at a holster, the buckle or the flare holster
@@ -224,7 +226,8 @@ the pack. It has not yet been confirmed in a headset.
 - Options → BD22 VR Weapons: **Teeth: At** is now **Teeth: Mouth Reach** (0.15 m round the lips-to-chin line). Pin
   With Your Teeth, Teeth: Again Beyond and Teeth: Hold are unchanged. The off-hand ring is unchanged.
 - **Shoot thrown grenades** (Options → BD22 VR Weapons, **Shoot Thrown Grenades**, On): a bullet or a projectile of
-  yours (a rocket, plasma) passing within 0.35 m of a thrown grenade sets it off where it is, credited to you; shot in
+  yours (a rocket, plasma) passing within 0.35 m of a thrown grenade sets it off where it is, credited to you (in co-op
+  anyone can shoot anyone's thrown grenade, and the shooter gets the kill); only the hand that fired counts; shot in
   the air it counts as a skeet for RSQ Score's Trap Shot. It must be 6 tics (0.17 s) out of your hand first. Punches
   never set one off; a grenade in your hand cannot be hit. **Only in Slow Motion** (Off): only while RSQ SlowMo has the
   world slowed.
