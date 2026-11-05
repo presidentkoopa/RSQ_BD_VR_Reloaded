@@ -35,7 +35,7 @@ drops, rarities, effect names, pickup screen and info screen, on BD22 VR's guns.
    chance, so BD22 and XMVE monsters become legendary, glow, evolve at half health and drop a legendary weapon.
 3. **The drop is a BD22 VR gun.** LegenDoom rolls rarity and effect with its own randomizer; the patch then swaps the
    sprite pickup for one that shows the BD22 gun's own pickup sprite (the voxel from BD_VoxelPack where there is one)
-   and LegenDoom's rarity glow. Picking it up gives the BD22 gun (only if you carry none of that kind yet) and
+   and LegenDoom's rarity glow. Picking it up gives that BD22 gun (unless you already have it, or its Purist/Dual copy) and
    LegenDoom's own tokens, and shows LegenDoom's pickup screen. One legendary per gun, as in LegenDoom.
 4. **The power works on the gun in your hand.** 56 of LegenDoom's 180 effects are carried; see the table below. A
    drop that rolls an effect BD22 guns can't use is re-rolled within the same slot and rarity (option, on by

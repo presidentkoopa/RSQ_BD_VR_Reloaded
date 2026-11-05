@@ -7,7 +7,7 @@
 //   plus their Purist/Dual variants (KEYCONF setslot), BD22's starting Rifle in the Chaingun family (the bullet
 //   gun of BD22's slot 4, which every player starts with) and BD22 VR's Moonlight (BrutalRevolver, which takes the
 //   pistol's place with "Moonlight Replaces Pistol").
-// Give: what a legendary pickup hands over when the player owns no gun of the family yet (the spawner's gun).
+// Give: the gun a legendary pickup shows and hands over when the player does not have it yet (the spawner's gun; Same).
 class RSLDP_Data
 {
 	static const string Slots[] = { "Fists", "Chainsaw", "Pistol", "Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher", "PlasmaRifle", "BFG9000" };
@@ -24,6 +24,17 @@ class RSLDP_Data
 		"6|Rocket_Launcher", "6|PuristRocket_Launcher",
 		"7|Plasma_Gun", "7|DualPlasmaRifles", "7|PuristPlasma_Gun",
 		"8|BIG_FUCKING_GUN", "8|PuristBIG_FUCKING_GUN"
+	};
+	// Same: the guns that count as already owning the gun a legendary pickup SHOWS (Give, or the Moonlight): the given
+	// gun and its own Purist/Dual copies. The Family's stand-ins are left out (the Rifle stands in for the Chaingun
+	// family, the Moonlight for the pistol): owning a Rifle must not stop a legendary Minigun drop giving the Minigun
+	// (owner 11-04 22:20, "when I pick up weapons ... I cannot switch to them": every BD22 class starts with the Rifle,
+	// so a legendary chaingun never gave its Minigun; rig wb_wr1). The legendary still powers the whole Family.
+	static const string Same[] =
+	{
+		"Melee_Attacks", "Chain_Saw", "BrutalPistol|DualPistols|PuristPistol", "Shot_Gun|PuristShot_Gun", "SSG|PuristSSG",
+		"MiniGun|PuristMiniGun", "Rocket_Launcher|PuristRocket_Launcher", "Plasma_Gun|DualPlasmaRifles|PuristPlasma_Gun",
+		"BIG_FUCKING_GUN|PuristBIG_FUCKING_GUN"
 	};
 	static const string Rarities[] = { "Common", "Uncommon", "Rare", "Epic" };
 	// LegenDoom's rarityColors[] (LEGENDINF.acs): CR_GREEN, CR_BLUE, CR_PURPLE, CR_ORANGE

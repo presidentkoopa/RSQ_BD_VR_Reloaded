@@ -1,0 +1,184 @@
+version "4.14"
+// TEST ONLY (never ships). Pickup / inventory / slot probe (owner bug 11-04 22:20). netevent wb_rep (inventory weapons, slot of each,
+// what Wheel can list), wb_spawn n (vanilla weapon with replacement), wb_legspawn n (LegenDoom legendary drop of slot n), wb_face 0 (walk
+// into the nearest pickup by velocity: the engine's own touch), wb_go (touch every pickup), wb_legend/wb_kill, wb_tokens, wb_slots.
+class RSWBP_Probe : EventHandler
+{
+	static const string vw[] = { "Chainsaw", "Pistol", "Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher", "PlasmaRifle", "BFG9000" };
+	PlayerPawn P() { return players[consoleplayer].mo; }
+	State wprev; Weapon wprevW; int wprevT; Actor pushTo; int pushTics; int legendWait; vector3 legendAt; Weapon lastW;
+	override void WorldTick()
+	{
+		let p = P(); if (!p) return;
+		if (p.player.ReadyWeapon != lastW) { lastW = p.player.ReadyWeapon; Console.Printf("WB ready -> %s", lastW ? lastW.GetClassName() : 'none'); }
+		{
+			let q = p.player.FindPSprite(PSP_WEAPON);
+			State cs = q ? q.CurState : null;
+			if (cs != wprev)
+			{
+				if (!cs) Console.Printf("WB WEAPON LAYER GONE on %s (psprite %s): last state %s tics %d, pending=%s", wprevW ? wprevW.GetClassName() : 'none', q ? "kept, state null" : "destroyed", wprev ? new("RSWBP_Dummy").St(wprev, wprevW) : "none", wprevT, p.player.PendingWeapon == WP_NOCHANGE ? 'nochange' : (p.player.PendingWeapon ? p.player.PendingWeapon.GetClassName() : 'null'));
+				wprev = cs; wprevW = p.player.ReadyWeapon;
+			}
+			if (q) wprevT = q.tics;
+		}
+		if (pushTics > 0)
+		{
+			pushTics--;
+			if (pushTo && pushTics % 8 == 0) Console.Printf("WB push dist=%.0f dz=%.0f vel=%.1f special=%d thru=%d", pushTo.Distance2D(p), pushTo.pos.z - p.pos.z, p.vel.xy.Length(), pushTo.bSPECIAL, pushTo.bTHRUACTORS);
+			if (pushTo && !pushTo.bDestroyed && pushTo.bSPECIAL) { vector2 d = pushTo.pos.xy - p.pos.xy; double l = d.Length(); if (l > 1) p.vel.xy = d / l * min(8, l); }
+			else { if (pushTics > 0) Console.Printf("WB walked into it (gone/taken)"); pushTics = 0; p.vel.xy = (0,0); }
+		}
+		if (legendWait > 0 && --legendWait == 0)
+		{
+			Actor best; double bd = 1e9;
+			let it = ThinkerIterator.Create("Actor"); Actor a;
+			while (a = Actor(it.Next())) if (a.bIsMonster && a.health > 0 && (a.pos - legendAt).Length() < bd) { bd = (a.pos - legendAt).Length(); best = a; }
+			if (best) { best.ACS_NamedExecuteAlways("LDMonsterInit", 0); Console.Printf("WB legendary init on %s at (%.0f,%.0f) t=%d", best.GetClassName(), best.pos.x, best.pos.y, level.maptime); }
+		}
+	}
+	void Wheel(string tag)
+	{
+		let p = P(); let ws = p.player.weapons; string l = "";
+		for (int s = 0; s < 10; s++) for (int j = 0; j < ws.SlotSize(s); j++) { class<Weapon> c = ws.GetWeapon(s, j); if (c && p.FindInventory(c)) l = l .. String.Format(" %d:%s", s, c.GetClassName()); }
+		Console.Printf("WB wheel-candidates %s:%s", tag, l);
+	}
+
+	void Report(string tag)
+	{
+		let p = P(); if (!p) return;
+		let pl = p.player;
+		Console.Printf("WB %s flags pickup=%d cheats=%x frozen=%d speed=%.2f viewh=%.0f health=%d nointeraction=%d solid=%d shootable=%d nogravity=%d thru=%d", tag, p.bPICKUP, pl.cheats, p.IsFrozen(), p.Speed, pl.viewheight, p.health, p.bNOINTERACTION, p.bSOLID, p.bSHOOTABLE, p.bNOGRAVITY, p.bTHRUACTORS);
+		Console.Printf("WB %s class=%s ready=%s pending=%s", tag, p.GetClassName(), pl.ReadyWeapon ? pl.ReadyWeapon.GetClassName() : 'none', pl.PendingWeapon == WP_NOCHANGE ? 'nochange' : (pl.PendingWeapon ? pl.PendingWeapon.GetClassName() : 'null'));
+		for (let q = pl.psprites; q; q = q.Next) Console.Printf("WB  layer %d state=%s tics=%d caller=%s", q.id, q.CurState ? new("RSWBP_Dummy").St(q.CurState, Weapon(q.Caller)) : "null", q.tics, q.Caller ? q.Caller.GetClassName() : 'none');
+		let ps = pl.FindPSprite(PSP_WEAPON);
+		if (ps && ps.CurState) Console.Printf("WB  psp state=%s tics=%d wstate=%d sprite=%s", new("RSWBP_Dummy").St(ps.CurState, pl.ReadyWeapon), ps.tics, pl.WeaponState, "");
+		for (let i = p.Inv; i; i = i.Inv)
+		{
+			if (Weapon(i) == null && tag == "full") Console.Printf("WB  inv %s x%d", i.GetClassName(), i.Amount);
+			let w = Weapon(i); if (!w) continue;
+			bool f; int s, x;
+			[f, s, x] = pl.weapons.LocateWeapon(w.GetClass());
+			Console.Printf("WB  weap %s amt=%d slot=%s owner=%s sisterof=%s", w.GetClassName(), w.Amount, f ? String.Format("%d/%d", s, x) : "NONE", w.Owner ? w.Owner.GetClassName() : 'none', w.SisterWeapon ? w.SisterWeapon.GetClassName() : 'none');
+		}
+	}
+
+	void Slots()
+	{
+		let ws = players[consoleplayer].weapons;
+		for (int s = 0; s < 10; s++)
+		{
+			string l = "";
+			for (int j = 0; j < ws.SlotSize(s); j++) { class<Weapon> c = ws.GetWeapon(s, j); l = l .. " " .. (c ? c.GetClassName() : 'null'); }
+			Console.Printf("WBSLOT %d:%s", s, l);
+		}
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		let p = P(); if (!p) return;
+		if (e.Name == "wb_full") Report("full");
+		else if (e.Name == "wb_rep") { Report("rep"); Wheel("rep"); }
+		else if (e.Name == "wb_legend")
+		{
+			class<Actor> c = "Zombieman";
+			let mo = Actor.Spawn(c, p.Vec3Angle(160, p.angle, 0), ALLOW_REPLACE);
+			if (mo) { legendAt = mo.pos; legendWait = 3; }
+		}
+		else if (e.Name == "wb_kill")
+		{
+			let it = ThinkerIterator.Create("Actor"); Actor a;
+			while (a = Actor(it.Next())) if (a.bIsMonster && a.health > 0 && a.Distance3D(p) < 600) a.DamageMobj(p, p, 100000, 'None');
+		}
+		else if (e.Name == "wb_face")	// face the nearest unowned weapon spawner/weapon (args[0]: teleport to 120 units from it)
+		{
+			let it = ThinkerIterator.Create("Inventory"); Inventory a, best; double bd = 1e9;
+			while (a = Inventory(it.Next())) { string an = a.GetClassName(); if (!a.Owner && a.bSPECIAL && (a is "Weapon" || (an.IndexOf("Spawner") >= 0 && an.IndexOf("Replacer") < 0) || an.Left(5) == "RSLDP") && a.Distance2D(p) < bd) { bd = a.Distance2D(p); best = a; } }
+			if (!best) { Console.Printf("WB face: none"); return; }
+			if (e.Args[0]) { vector2 d = (p.pos.xy - best.pos.xy).Unit() * 120; p.SetOrigin((best.pos.xy + d, best.floorz), false); }
+			p.A_Face(best, 0, 0); p.pitch = 0; p.vel = (0,0,0); pushTo = best; pushTics = 40;
+			Console.Printf("WB face %s at %.0f", best.GetClassName(), best.Distance2D(p));
+		}
+		else if (e.Name == "wb_legspawn")	// LegenDoom's own legendary drop of slot n, 96 ahead (what a dying legendary spawns)
+		{
+			static const string sl[] = { "Fists", "Chainsaw", "Pistol", "Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher", "PlasmaRifle", "BFG9000" };
+			string cn = "LD" .. sl[clamp(e.Args[0], 0, 8)] .. "PickupLegendary";
+			class<Actor> c = cn;
+			let mo = c ? Actor.Spawn(c, p.Vec3Angle(96, p.angle, 0)) : null;
+			Console.Printf("WB legspawn %s -> %s", cn, mo ? mo.GetClassName() : 'none');
+		}
+		else if (e.Name == "wb_tokens")
+		{
+			string l = "";
+			for (let i = p.Inv; i; i = i.Inv) { string n = i.GetClassName(); if (n.IndexOf("EffectActive") >= 0 || n.IndexOf("Effect_") >= 0 || (n.IndexOf("Legendary") >= 0 && n.Left(2) == "LD" && n.IndexOf("Display") < 0)) l = l .. " " .. n; }
+			Console.Printf("WB tokens:%s", l);
+		}
+		else if (e.Name == "wb_class") Console.Printf("WB class %s", p.GetClassName());
+		else if (e.Name == "wb_slots") Slots();
+		else if (e.Name == "wb_spawn")	// spawn vanilla weapon n with replacement 96 ahead
+		{
+			string cn = vw[clamp(e.Args[0], 0, vw.Size() - 1)];
+			class<Actor> c = cn;
+			let mo = Actor.Spawn(c, p.Vec3Angle(96, p.angle, 0), ALLOW_REPLACE);
+			Console.Printf("WB spawn %s -> %s repl=%s", cn, mo ? mo.GetClassName() : 'none', Actor.GetReplacement(c).GetClassName());
+		}
+		else if (e.Name == "wb_go")	// touch every unowned Weapon/WeaponGiver within 400
+		{
+			let it = ThinkerIterator.Create("Inventory");
+			Inventory a; Array<Inventory> l;
+			while (a = Inventory(it.Next())) { string an = a.GetClassName(); bool lg = an.IndexOf("Legendary") >= 0 || an.Left(5) == "RSLDP"; if (lg && !a.Owner && an.IndexOf("Token") < 0) Console.Printf("WB legendary-on-map %s at %.0f (%.0f,%.0f)", an, a.Distance3D(p), a.pos.x, a.pos.y); if (!a.Owner && (a.Distance3D(p) < 400 || lg) && (a is "Weapon" || a is "WeaponGiver" || a is "CustomInventory" || an.IndexOf("Legendary") >= 0 || an.Left(5) == "RSLDP")) l.Push(a); }
+			for (int i = 0; i < l.Size(); i++)
+			{
+				if (!l[i] || l[i].Owner) continue;
+				string n = l[i].GetClassName();
+				p.SetOrigin(l[i].pos, false);
+				l[i].Touch(p);
+				Console.Printf("WB touched %s -> %s", n, (!l[i] || l[i].Owner || l[i].bDestroyed) ? "taken" : "LEFT");
+			}
+			Report("after-go"); Wheel("after-go");
+		}
+		else if (e.Name == "wb_mapweap")	// list unowned weapons on the map
+		{
+			let it = ThinkerIterator.Create("Inventory");
+			Inventory a;
+			while (a = Inventory(it.Next())) if (!a.Owner && (a is "Weapon" || a is "WeaponGiver" || a is "CustomInventory")) Console.Printf("WB mapweap %s at %.0f", a.GetClassName(), a.Distance3D(p));
+		}
+		else if (e.Name == "wb_all")	// walk onto every map weapon
+		{
+			let it = ThinkerIterator.Create("Inventory");
+			Inventory a; Array<Inventory> l;
+			while (a = Inventory(it.Next())) if (!a.Owner && (a is "Weapon" || a is "WeaponGiver" || a is "CustomInventory")) l.Push(a);
+			for (int i = 0; i < l.Size(); i++) { if (!l[i] || l[i].Owner) continue; string n = l[i].GetClassName(); p.SetOrigin(l[i].pos, false); l[i].Touch(p); Console.Printf("WB touched %s -> %s", n, (!l[i] || l[i].Owner || l[i].bDestroyed) ? "taken" : "LEFT"); }
+			Report("after-all");
+		}
+	}
+
+	override void WorldThingDied(WorldEvent e)
+	{
+		if (!e.Thing || !e.Thing.bIsMonster) return;
+		name tok = "LDLegendaryMonsterToken"; class<Inventory> tc = tok;
+		Console.Printf("WB died %s legendary=%d at (%.0f,%.0f) t=%d", e.Thing.GetClassName(), (tc && e.Thing.CountInv(tc)) ? 1 : 0, e.Thing.pos.x, e.Thing.pos.y, level.maptime);
+	}
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		string sn = e.Thing.GetClassName();
+		if (sn.IndexOf("PickupLegendary") >= 0 || sn.IndexOf("LegendaryMonsterDed") >= 0 || sn.IndexOf("RandomLegendaryDrop") >= 0) Console.Printf("WB spawnL %s at (%.0f,%.0f) t=%d", sn, e.Thing.pos.x, e.Thing.pos.y, level.maptime);
+		if ((e.Thing is "Weapon" || e.Thing is "CustomInventory") && level.maptime > 2) Console.Printf("WB spawned %s owner=%s", e.Thing.GetClassName(), Inventory(e.Thing).Owner ? "yes" : "no");
+	}
+}
+
+class RSWBP_Dummy play
+{
+	string St(State s, Weapon w)
+	{
+		if (!w) return "?";
+		static const string lb[] = { "Ready", "Select", "Deselect", "Fire", "AltFire", "Reload", "Zoom", "User1", "User2", "User3", "User4", "Spawn", "Flash", "AltFlash", "ReadyLoop", "SelectAnimation", "DeselectAnimation", "Deselect2", "Select2", "Ready2", "Ready3", "Steady", "WeaponReady", "Unload", "Kick", "Taunt", "Grenade" };
+		string r = "?";
+		for (int i = 0; i < lb.Size(); i++)
+		{
+			State b = w.FindStateByString(lb[i], true);
+			if (!b) continue;
+			for (int k = 0; k < 400 && b; k++) { if (b == s) return String.Format("%s+%d", lb[i], k); b = b.NextState; }
+		}
+		return r;
+	}
+}

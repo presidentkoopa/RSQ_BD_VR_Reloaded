@@ -111,6 +111,16 @@ class RSLDP_Handler : EventHandler
 		return false;
 	}
 
+	// the player already has the gun a legendary pickup of slot s shows (give), or one of its own copies (Data.Same)
+	static bool OwnsGun(Actor a, int s, class<Weapon> give)
+	{
+		if (!give || a.CountInv(give) > 0) return true;
+		if (give.GetClassName() == "BrutalRevolver") return false;	// the Moonlight: only itself
+		Array<string> l; RSLDP_Data.Same[s].Split(l, "|");
+		for (int i = 0; i < l.Size(); i++) { class<Inventory> c = l[i]; if (c && a.CountInv(c) > 0) return true; }
+		return false;
+	}
+
 	static class<Weapon> GiveClassFor(int s, Actor who)
 	{
 		if (s == 2)	// BD22 VR "Moonlight Replaces Pistol": the Moonlight stands in for the pistol
@@ -161,10 +171,10 @@ class RSLDP_Handler : EventHandler
 			if (!w) continue;
 			bool held = (pl.ReadyWeapon == w || pl.PendingWeapon == w);
 			class<Inventory> act = "LD" .. RSLDP_Data.Slots[s] .. "EffectActive";
-			if (act && p.CountInv(act) > 0 && !OwnsFamily(p, s))
+			if (act && p.CountInv(act) > 0)
 			{
 				class<Weapon> g = GiveClassFor(s, p);
-				if (g) p.GiveInventory(g, 1);
+				if (g && !OwnsGun(p, s, g)) p.GiveInventory(g, 1);
 			}
 			if (Debug()) Console.Printf("RSLDP: took LegenDoom's %s from player %d", w.GetClassName(), pn);
 			p.RemoveInventory(w);

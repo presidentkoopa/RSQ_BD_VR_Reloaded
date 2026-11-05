@@ -3,7 +3,7 @@
 // compat checks) rolls the rarity and the effect into the pickup's inventory within two tics. RSLDP_Converter waits for
 // those tokens, then swaps the LegenDoom sprite pickup for RSLDP_LegendaryPickup, which looks like the BD22 VR gun
 // (its own spawn sprite, so BD_VoxelPack's voxel when there is one), glows in LegenDoom's rarity effect, carries the
-// same tokens, and on touch hands over the BD22 VR gun (only if the player has none of its family) plus the tokens.
+// same tokens, and on touch hands over the BD22 VR gun it shows (unless the player has that gun) plus the tokens.
 
 class RSLDP_Converter : Thinker
 {
@@ -139,9 +139,10 @@ class RSLDP_LegendaryPickup : Inventory
 			}
 			return false;
 		}
-		// the gun: only when the player has none of this slot's family (a legendary is a power for the gun you carry)
+		// the gun it shows, unless the player has that gun already (or its Purist/Dual copy); the power then works on
+		// every gun of the slot's family. Owning only a stand-in (the Rifle for the Minigun) no longer withholds it.
 		class<Weapon> give = RSLDP_Handler.GiveClassFor(slot, toucher);
-		if (give && !RSLDP_Handler.OwnsFamily(toucher, slot)) toucher.GiveInventory(give, 1);
+		if (give && !RSLDP_Handler.OwnsGun(toucher, slot, give)) toucher.GiveInventory(give, 1);
 		for (let i = Inv; i; i = i.Inv) toucher.GiveInventory(i.GetClass(), 1);
 		class<Inventory> unlock = "LD" .. sn .. "_Unlock";
 		if (unlock) toucher.GiveInventory(unlock, 1);
