@@ -25,19 +25,21 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  BD22_VR-Reloaded_2.0.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.3y.pk3
 ```
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.3x
+## Changelog: 2.0.3h to 2.0.3y
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3x.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3y.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
-- **2.0.3y** (11-06, *not boot-checked with Brutal Doom*; parts *rig only* with stand-in guns):
+- **2.0.3y** (11-06, *rig only*, not headset-confirmed: loads on the full order with no script error from the pack; the
+  off-hand versions, the off-hand pistol whip on a door, the pump, the Silvergun, No Trigger Punch and the grenade
+  stand-down shown on Brutal Doom's own guns):
   - **One gun, either hand.** Picking up a gun that has an off-hand version gives you both (the off-hand one loaded). Whatever puts it in your off hand (a holster, the wheel, Distance Grab, switch hand) it is the
     off-hand version there, and back in the main hand it is the main gun, rounds and all. With its Dual Options row off,
     a gun is in one hand at a time. The off-hand versions now pass between hands, and stay in the off hand until you
@@ -107,7 +109,7 @@ the pack. It has not yet been confirmed in a headset.
 - **The FlameCannon** is worn: your hand goes in through the slit at the back, and the flame now
   starts at the nozzle (it used to start 27 cm away). Open palm under the barrel.
 - **Fists, the free off hand, the grenade hand and all 25 reload holds** (every magazine, shell,
-  rocket, the Unmaker skull, the Moonlight round) use the same hands.
+  rocket, the Unmaker skull, the Silvergun round) use the same hands.
 - **Hand Skin Tone:** 18 steps, from porcelain to ebony, plus grey, green, blue, purple, red, gold
   and a black glove.
 
@@ -127,11 +129,11 @@ the pack. It has not yet been confirmed in a headset.
 - **Dual wield:** off-hand shots now leave the off-hand gun's muzzle.
 
 ### Revolvers and ammo
-- Two revolvers: the **Shotvolver** (its slug alt fire is now on by default) and the **Moonlight**.
-  The Moonlight takes the Brutal Pistol's ammo (2.0.1): each shot costs 3 pistol rounds, so a full
+- Two revolvers: the **Shotvolver** (its slug alt fire is now on by default) and the **Silvergun** (called the
+  Moonlight until it was renamed). The Silvergun takes the Brutal Pistol's ammo (2.0.1): each shot costs 3 pistol rounds, so a full
   six-shot cylinder is 18. A reload moves 3 pistol rounds per chamber from your pistol reserve; two
-  Moonlights share that reserve. Its HUD reads shots in the cylinder (0-6) | pistol rounds in reserve.
-- Options: **Moonlight Replaces Pistol** (start, pickups, drops) and **Start With Two Moonlights**.
+  Silverguns share that reserve. Its HUD reads shots in the cylinder (0-6) | pistol rounds in reserve.
+- Options: **Silvergun Replaces Pistol** (start, pickups, drops) and **Start With Two Silverguns**.
   Both are off by default.
 - **HUD Ammo:** the magazine and the reserve (e.g. 24 | 120), or Reserve Only.
 - **Ammo on top:** a loaded magazine never counts against what you can carry.
@@ -148,14 +150,15 @@ the pack. It has not yet been confirmed in a headset.
 - The grenade was drawn 1.45 cm off. Fixed, and the throw now leaves from the grenade in your hand.
 
 ### Options and melee (2.0.2, rig only, not headset-confirmed)
-- **Pistol Whip** (on by default): swing a pistol or revolver (Shotvolver or Moonlight) into something. It has its own
+- **Pistol Whip** (on by default): swing a pistol or revolver (Shotvolver or Silvergun) into something. It has its own
   option row. The kick-key "Gun Bash" is gone; the kick key is Brutal Doom's boot again.
 - **Melee hit flash** is a small spark where the blow lands (about 38 cm across; it was 2.3 to
   2.8 m).
 - **Two axes, never two hands.** The axe no longer goes two-handed. Get the axe and a second one
   comes with it; press the Dual key to hold one in each hand. Each axe swings, cuts and throws from
   its own hand (VR throwing: hold that hand's trigger, swing, let go). A thrown off-hand axe comes
-  back when you pick an axe up. Dual Options > Axe turns it off.
+  back when you pick an axe up. Dual Options > Axe turns it off. (Since 2.0.3i there is no free second axe: one
+  per hand, from pickups.)
 - **Sword:** a blow needs a deliberate swing: the blade's point must travel about a metre at
   speed, and after a swing there is a third of a second before the next one, so one swing is one
   attack. In VR the sword's trigger does nothing (no Brutal Doom combo, lunge or view turn); flat
@@ -280,7 +283,7 @@ as Brutal Doom made them.
 | Cylinder | Incendiary Launcher (six shots) |
 | Bay or block | Devastator loading bay, Nuker warhead block |
 | Pump | Shotgun |
-| Break-open | Super Shotgun, Grenade Launcher, Shotvolver, Revolver (Moonlight), and the 40 mm under the Rifle and the Machinegun |
+| Break-open | Super Shotgun, Grenade Launcher, Shotvolver, Revolver (Silvergun), and the 40 mm under the Rifle and the Machinegun |
 
 Pull the part out with your off hand, reach to your belt for a fresh one, and push it home.
 
@@ -370,12 +373,13 @@ These are behind the **Ballistics** switch. Stock is Brutal Doom's own.
 
 ## Options
 **Options → BD22 VR Weapons.** Here you'll find reloading (VR or Brutal Doom's stock reload), what
-grabs the ammo, where a new magazine comes from, checking the chamber by hand, the scopes,
-ballistics, real casings, throwing, punching, gun bash and butt strike, the dual-wield
-and voxel pages, and a tuning and debug page for reloading.
+grabs the ammo, where a new magazine comes from, the scopes, ballistics, real casings, throwing
+and the grenade, punching (VR Punching, No Trigger Punch, Punch Switches Open), the pistol whip and
+butt strike, the dual-wield and voxel pages, and a tuning and debug page for reloading.
 
 Every option defaults to how Brutal Doom behaves, or to the gentler setting, except the VR hands
-and reloading themselves. Set Reloading to "Stock (BD22)" and every gun reloads the way it always
+and reloading themselves, the live scopes, Shoot Thrown Grenades, Ammo From the Rig's Pouch Only (it
+does nothing without RSQ Tactical Rig) and No Trigger Punch, which are on. Set Reloading to "Stock (BD22)" and every gun reloads the way it always
 did.
 
 ## Known gaps

@@ -1,4 +1,4 @@
-# LegenDoom x BD22 VR: compatibility patch (LDL_BD22VR_Patch.pk3)
+# LegenDoom x BD22 VR: compatibility patch (LD_BD22VR_Patch.pk3)
 
 A small patch that lets **LegenDoom 3.0** run on top of **BD22 VR Weapons 2.0.x** (Brutal Doom v22 in VR on
 QuestZDoom 17.3), with **Champions** alongside. LegenDoom's legendary monsters still spawn, still evolve and still
@@ -11,7 +11,7 @@ Everything below was checked on the test rig only. **Nothing here is headset-con
 
 ```
 doom2.wad -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> BD22_VR-Reloaded_2.0.x.pk3 -> (XMVE 04-07, optional)
-          -> LegenDoom_3.0.pk3 -> Champions (mk-champions) -> LDL_BD22VR_Patch.pk3
+          -> LegenDoom_3.0.pk3 -> Champions (mk-champions) -> LD_BD22VR_Patch.pk3
 ```
 
 The patch goes **last**. It works without Champions and without XMVE.
@@ -51,7 +51,7 @@ drops, rarities, effect names, pickup screen and info screen, on BD22 VR's guns.
 |---|---|---|
 | Fists | Melee_Attacks | Melee_Attacks |
 | Chainsaw | Chain_Saw | Chain_Saw |
-| Pistol | BrutalPistol (BrutalRevolver with "Moonlight Replaces Pistol") | BrutalPistol, DualPistols, PuristPistol, BrutalRevolver |
+| Pistol | BrutalPistol (BrutalRevolver, the Silvergun, with "Silvergun Replaces Pistol") | BrutalPistol, DualPistols, PuristPistol, BrutalRevolver |
 | Shotgun | Shot_Gun | Shot_Gun, PuristShot_Gun |
 | Super Shotgun | SSG | SSG, PuristSSG |
 | Chaingun | MiniGun | MiniGun, PuristMiniGun, Rifle, DualRifles, PuristRifle |
@@ -133,6 +133,9 @@ effects one by one, and anything in a headset.
 ```
 python ldl_patch/build.py        -> pk3/LDL_BD22VR_Patch.pk3
 ```
+
+The build still writes the old name; the file in `pk3/` was renamed `LD_BD22VR_Patch.pk3` on 11-05. Rename a new
+build the same way.
 
 It regenerates `src/zscript/rsldp/tables.zs` from `tools/parsed/` (`tools/gen_tables.py`) and copies BD22 VR's
 `src/SBARINFO.rsq` in. To re-measure: `tools/parse_ld.py` (LegenDoom's replacements, tokens and rolls) and the probe
