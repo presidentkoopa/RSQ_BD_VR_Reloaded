@@ -81,8 +81,8 @@ class RSQ_Dual : EventHandler
 	// "anytime an axe goes into my offhand it becomes the offhand axe. picking up one axe grants both axes (but i only
 	// need to see one in wheel since the code knows what hand is choosing) -- this should be the rule for all weapons
 	// in bd22." So, for every gun in RSQ_DualTable (the ones with an off-hand version):
-	//   - owning the gun means owning both versions: the off-hand version is given with it (an EMPTY magazine: one
-	//     pickup is one gun's rounds; Pistol Start and BD22's own second-pickup tokens still give a loaded one, above);
+	//   - owning the gun means owning both versions: the off-hand version is given with it, loaded (owner 11-06:
+	//     "Give it loaded");
 	//   - whatever puts the gun in the OFF hand (a holster draw, the Wheel, a Distance Grab catch, QuestZDoom's switch
 	//     hand, a pickup), it is the off-hand version there; whatever puts it in the MAIN hand, the main version. The
 	//     rounds in the magazine go with it (the two magazines swap), so moving a gun never loads or empties it;
@@ -323,30 +323,55 @@ class RSQ_Dual : EventHandler
 		}
 	}
 
-	// owning a gun means owning its off-hand version (empty); the axe's only on a pickup (a thrown axe stays thrown)
+	// 2.0.3y (owner 11-06: "we need to start with some revolver ammo, whatever it is. each time i get a silvergun i have
+	// to reload it"). The Silvergun (BrutalRevolver) fires BD22's pistol rounds (Clip1, 3 a shot) from its own cylinder
+	// (BrutalRevolverCylinder, 0-6 shots), and a picked-up one arrived with the cylinder EMPTY (Inventory.Amount 0,
+	// AmmoGive2 0: only the 18 reserve rounds, so a reload first). Now:
+	//   - a Silvergun you did not have arrives loaded (a full cylinder, as the off-hand version does);
+	//   - every player starts with one Silvergun pickup's rounds (18 Clip1, BrutalRevolver.dec AmmoGive1) on top of
+	//     BD22's own start, once a life, at the start of a map (RSQ_StartRounds remembers it).
+	void Silvergun(PlayerPawn mo, int n)
+	{
+		int MOON = 10;	// RSQ_DualTable index of BrutalRevolver
+		if (primed[n] && !had[n][MOON] && Have(mo, RSQ_DualTable.Gun(MOON)))
+		{
+			Name cn = 'BrutalRevolverCylinder';
+			class<Inventory> cc = cn;
+			if (cc && mo.CountInv(cc) < 6)
+				mo.SetInventory(cc, 6);
+			if (Logs(mo))
+				Console.Printf("RSQ silvergun t%d: picked up, cylinder loaded (6)", mo.Level.maptime);
+		}
+		if (mo.CountInv('RSQ_StartRounds') == 0 && mo.Level.maptime < 35)
+		{
+			mo.GiveInventory('RSQ_StartRounds', 1);
+			Name an = 'Clip1';
+			class<Inventory> ac = an;
+			if (ac)
+				mo.GiveInventory(ac, 18);
+			if (Logs(mo))
+				Console.Printf("RSQ silvergun t%d: start rounds, Clip1 +18 -> %d", mo.Level.maptime, ac ? mo.CountInv(ac) : -1);
+		}
+	}
+
+	// owning a gun means owning its off-hand version (loaded); the axe's only on a pickup (a thrown axe stays thrown)
 	void GrantBoth(PlayerPawn mo, int n)
 	{
 		for (int i = 0; i < RSQ_DualTable.COUNT; i++)
 		{
 			bool own = Have(mo, RSQ_DualTable.Gun(i)) != null;	// the gun itself (not BD22's Purist subclass)
 			if (own && (i != RSQ_DualTable.AXE || primed[n] && !had[n][i]))
-				GiveCopyEmpty(mo, i);
+				GiveCopyLoaded(mo, i);
 		}
 	}
 
-	static void GiveCopyEmpty(PlayerPawn mo, int i)
+	// 2.0.3y (owner 11-06, "Give it loaded"): the off-hand version comes with a full magazine (GiveCopy's own fill)
+	static void GiveCopyLoaded(PlayerPawn mo, int i)
 	{
 		class<Inventory> cc = (class<Inventory>)(RSQ_DualTable.Copy(i));
 		if (!cc || mo.FindInventory(cc))
 			return;
-		let p = mo.player;
-		let pend = p.PendingWeapon;
-		mo.GiveInventory(cc, 1);
-		if (p.PendingWeapon != pend)
-			p.PendingWeapon = pend;
-		class<Inventory> mc = (class<Inventory>)(RSQ_DualTable.Mag(i));
-		if (mc)
-			mo.SetInventory(mc, 0);
+		GiveCopy(mo, i);
 		if (Logs(mo))
 			Console.Printf("RSQ offhand rule t%d: %s picked up: its off-hand version comes with it", mo.Level.maptime, RSQ_DualTable.Nice(i));
 	}
@@ -384,6 +409,7 @@ class RSQ_Dual : EventHandler
 				primed[n] = true;
 			}
 			GrantBoth(mo, n);
+			Silvergun(mo, n);
 			Hands(mo);
 			OneAtATime(mo, n);
 			Tidy(mo);
@@ -551,3 +577,5 @@ class RSQ_BD22OffhandService : Service
 		return 1;
 	}
 }
+
+class RSQ_StartRounds : RSVR_Token {}	// 2.0.3y: this life's start rounds were given (RSQ_Dual.Silvergun)

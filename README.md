@@ -38,8 +38,7 @@ Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3
 *rig only* were tested on the development rig.
 
 - **2.0.3y** (11-06, *not boot-checked with Brutal Doom*; parts *rig only* with stand-in guns):
-  - **One gun, either hand.** Picking up a gun that has an off-hand version gives you both (the off-hand one with an
-    empty magazine). Whatever puts it in your off hand (a holster, the wheel, Distance Grab, switch hand) it is the
+  - **One gun, either hand.** Picking up a gun that has an off-hand version gives you both (the off-hand one loaded). Whatever puts it in your off hand (a holster, the wheel, Distance Grab, switch hand) it is the
     off-hand version there, and back in the main hand it is the main gun, rounds and all. With its Dual Options row off,
     a gun is in one hand at a time. The off-hand versions now pass between hands, and stay in the off hand until you
     move them. An axe pulled with Distance Grab into the off hand is always the off-hand axe, equipped.
@@ -47,6 +46,10 @@ Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3
     Use; the line's action counts, not its texture), with "Punch Switches Open".
   - Butt strike: reaches half as far again, a straight shove counts as well as the pivot, and **Butt Strike: Swing
     Needed** (2.4 m/s, was a fixed 3.6).
+  - A Silvergun you pick up arrives loaded, and you start with 18 pistol rounds more (the Silvergun's ammo).
+  - The off trigger no longer throws an automatic animated jab from the free off fist, and **No Trigger Punch** (On):
+    in VR, BD22's fists throw no canned jab or cross on trigger / alt fire (throwing a grabbed enemy or barrel,
+    the shield and fatalities still work). Punches are the ones you swing yourself.
   - The pump shotgun ejects no shell on the pump after you load it from empty.
   - **Use RSQ Grenade Instead** (Off): with RSQ Grenade loaded, Brutal Doom's grenade stands down.
 - **2.0.3x** (11-05, *rig only*): with an RSQ series item in the off hand (the saber or Force hand, the Zippo or

@@ -103,6 +103,7 @@ OptionMenu "RSQ_Options"
 	Slider "Grenade Speed in Slow Motion", "rsg_slowmo_speed", 0.0, 1.0, 0.05, 2
 	Option "Two-Hand Grip (engine)", "vr_two_handed_weapons", "OnOff"	// 2.0.2: QuestZDoom's own two-hand cvar, unchanged; the row only says so
 	Option "VR Punching", "rsq_punch", "OnOff"
+	Option "No Trigger Punch", "rsq_no_trigger_punch", "OnOff"	// 2.0.3y (owner 11-06, on): BD22's fists throw no canned punch on trigger / alt fire in VR; grabs, throws and fatalities unchanged
 	Option "Punch Switches Open", "rsq_punch_use", "OnOff"
 	Option "Pistol Whip", "rsq_pistol_whip", "OnOff"	// 2.0.2 (owner r3 item 39): swing a pistol or revolver into something (zscript/rsvr/melee.zs); the kick-key gun bash is gone
 	Slider "Pistol Whip: Swing Needed", "rsq_whip_speed", 2.0, 10.0, 0.5, 1	// 2.0.3g: higher = whip harder (was 3.2)

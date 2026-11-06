@@ -880,6 +880,11 @@ class RSQ_Hands : Weapon
 			// 1.99x: behind rsq_punch, as the owner decided (2026-10-25: "off-hand punch stays behind
 			// rsq_punch, off by default"). It was not: with the option off, an off-trigger press away
 			// from the gun still swung (Melee/Swing) and punched -- 1.92 never did that with a gun out.
+			// 2.0.3y (owner 11-06: "in bd my hands animate a punch, which isn't good... i just don't need the
+			// swinging fist automatically, when i swing it myself"): the off TRIGGER no longer throws the animated
+			// jab. The off fist still punches when you swing it (rsq_punch, fists.zs RSQ_FistHand, and RSQ Melee).
+			if (true)
+				return;
 			if (!press || !freeFist || RSQ.PlayerInt(mo, 'rsq_punch', 0) == 0)
 				return;
 			if (RSVR_VRHand.SteadyGap(mo) < 30.0)	// cm: at the gun, so that press is the reload's

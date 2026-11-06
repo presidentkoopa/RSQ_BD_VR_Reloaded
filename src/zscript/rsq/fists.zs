@@ -96,6 +96,9 @@ class RSQ_Fists : EventHandler
 				mainH[n] = new('RSQ_FistHand');
 			if (!offH[n])
 				offH[n] = new('RSQ_FistHand');
+			// 2.0.3y "No Trigger Punch" (owner 11-06): the button swallower rides on the player (RSQ_NoTrigPunch below)
+			if (!mo.FindInventory('RSQ_NoTrigPunch'))
+				mo.GiveInventory('RSQ_NoTrigPunch', 1);
 			bool vr = RSVR_VRHand.InVR(mo) && p.playerstate == PST_LIVE && mo.health > 0
 				&& RSQ.PlayerInt(mo, 'rsq_punch', 0) != 0;
 			bool mainFist = vr && p.ReadyWeapon && fw && p.ReadyWeapon == fw;
@@ -214,5 +217,53 @@ class RSQ_FistHand play
 		a.vel = dir * REACH;
 		RSQ_Fists.PunchUse(mo, hand, dir);
 		mo.A_StartSound("Melee/Swing", CHAN_AUTO, CHANF_OVERLAP);
+	}
+}
+
+// 2.0.3y NO TRIGGER PUNCH (owner 11-06: "in bd my hands animate a punch, which isn't good... i just don't need the
+// swinging fist automatically, when i swing it myself"; he chose "Nothing (option, on)"). rsq_no_trigger_punch, on, in VR:
+// BD22's fists (Melee_Attacks, brutal22test6 actors/Weapons/Melee.dec, not redefined here) throw no canned punch on the
+// trigger or alt fire. Read from Melee.dec: Fire is the jab (Hold -> Jab; a long hold -> LeftCrossHold; PSeq combos to
+// RedoJab / LeftCross / Upper) and AltFire is the cross (A_Recoil(-2) -> Cross). Both spend at least two tics on their
+// wind-up frames before the swing sound and the MeleeStrike, so when the fists' layer has just gone into the Fire
+// sequence or the Cross sequence, it is put straight back to Ready (DoEffect runs after the player's think, the same tic).
+// The buttons themselves are untouched (every mod still reads them), and so is everything else they do on the fists:
+// Fire and AltFire with a grabbed enemy, a barrel, a fatality trophy, a Lost Soul or a fatality pending (GoFatality)
+// jump to THEIR states (throw, shield, eat...), which this never touches. Punches you throw with your arm are untouched
+// (fists.zs RSQ_FistHand with VR Punching, RSQ Melee's punch).
+class RSQ_NoTrigPunch : Inventory
+{
+	Default { Inventory.MaxAmount 1; +INVENTORY.UNDROPPABLE; +INVENTORY.UNTOSSABLE; +INVENTORY.QUIET }
+	override void DoEffect()
+	{
+		Super.DoEffect();
+		let mo = PlayerPawn(Owner);
+		if (!mo || !mo.player)
+			return;
+		let p = mo.player;
+		let w = p.ReadyWeapon;
+		if (!w || w.GetClassName() != 'Melee_Attacks' || !RSVR_VRHand.InVR(mo)
+			|| RSQ.PlayerInt(mo, 'rsq_no_trigger_punch', 1) == 0)
+			return;
+		let psp = p.FindPSprite(PSP_WEAPON);
+		if (!psp || !psp.CurState)
+			return;
+		State f = w.FindState('Fire');
+		State c = w.FindState('Cross');
+		if (!(f && Actor.InStateSequence(psp.CurState, f)) && !(c && Actor.InStateSequence(psp.CurState, c)))
+			return;
+		State r = w.FindState('Ready');
+		if (!r)
+			return;
+		p.SetPsprite(PSP_WEAPON, r);
+		psp = p.FindPSprite(PSP_WEAPON);
+		if (psp)
+		{
+			psp.x = 0;
+			psp.y = WEAPONTOP;	// Fire's wind-up moved the layer (OffSet 0, 38)
+		}
+		p.refire = 0;
+		if (RSQ.PlayerInt(mo, 'rsq_switch_log', 0) > 0)
+			Console.Printf("RSQ no trigger punch t%d: BD22's canned punch stopped", mo.Level.maptime);
 	}
 }
