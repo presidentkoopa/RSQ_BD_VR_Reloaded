@@ -610,3 +610,15 @@ explosions chain (section 5).
 16. **Build order:** (a) the order in section 3. (b) first the groups that bring the most effects with no hand-code
     risk (G0, G2, G3), then the rest. (c) the owner picks the order.
 
+
+## 8. The owner's answers (2026-11-06)
+
+- **Q1 Where:** inside BD22 VR (an LD mode that switches on when LegenDoom is loaded).
+- **Q6 Fire rate vs hand actions:** the trigger cycle gets faster; the gun's own shot counter decides, and the hand
+  action stays where it is in the cycle. "A burst pump shotgun isn't unreasonable, and a break-action burst super
+  shotgun should still work": a burst fires its shots from what's loaded, then the pump / break waits for the hand
+  as now. Any gun that misbehaves gets its own patch (the weapon code is ours).
+- **Q7 Ammo effects:** they act on the magazine. A free shot takes no round from it: "say my gun holds 15 shots
+  before reload, but i get four free shots. well now it holds 19 before i reload." Hand reload as normal after.
+- Checked for the owner: no LegenDoom effect raises magazine capacity (LegenDoom's guns have no magazines; only the
+  pistol's Advanced has its own magazine, which maps onto ours).
