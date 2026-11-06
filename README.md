@@ -37,6 +37,18 @@ To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERS
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3x.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **2.0.3y** (11-06, *not boot-checked with Brutal Doom*; parts *rig only* with stand-in guns):
+  - **One gun, either hand.** Picking up a gun that has an off-hand version gives you both (the off-hand one with an
+    empty magazine). Whatever puts it in your off hand (a holster, the wheel, Distance Grab, switch hand) it is the
+    off-hand version there, and back in the main hand it is the main gun, rounds and all. With its Dual Options row off,
+    a gun is in one hand at a time. The off-hand versions now pass between hands, and stay in the off hand until you
+    move them. An axe pulled with Distance Grab into the off hand is always the off-hand axe, equipped.
+  - The pistol whip works in the off hand. The pistol whip and the butt strike work a switch or door they hit (like
+    Use; the line's action counts, not its texture), with "Punch Switches Open".
+  - Butt strike: reaches half as far again, a straight shove counts as well as the pivot, and **Butt Strike: Swing
+    Needed** (2.4 m/s, was a fixed 3.6).
+  - The pump shotgun ejects no shell on the pump after you load it from empty.
+  - **Use RSQ Grenade Instead** (Off): with RSQ Grenade loaded, Brutal Doom's grenade stands down.
 - **2.0.3x** (11-05, *rig only*): with an RSQ series item in the off hand (the saber or Force hand, the Zippo or
   cigarette, the ShieldSaw, the flare or flashlight, the whip, a grenade or a glove), flicking the main gun down reloads
   it with BD22's own reload; the hand reload still needs the free off hand, as before.

@@ -265,7 +265,9 @@ class RSVR_MeleeHandler : EventHandler
 			bool has = mo.FindInventory(Inv('BrutalAxe'), false) != null;	// the axe itself, not its off-hand copy
 			bool want = RSQ.PlayerInt(mo, 'rsq_dual_axe', 1) != 0;
 			// 2.0.3i (owner 2026-10-29 07:00, "player gets max one axe in each hand at a time"): no free second
-			// axe with the first. The off-hand axe comes only from picking up a second axe (below).
+			// axe with the first. 2.0.3y (owner, BUGS_1.0 item 5): superseded -- "picking up one axe grants both
+			// axes": RSQ_Dual.GrantBoth (dual.zs) gives the off-hand axe with a picked-up axe. A thrown axe is still
+			// gone until an axe is picked up (here, below, and Axe.dec's wall axe).
 			hadAxe[n] = has;
 			// 2.0.3j: an axe taken off a wall (BrutalAxeOnWall) while the main hand had one: the off hand's
 			if (mo.CountInv('RSVR_GiveOffAxe') > 0)
@@ -370,8 +372,14 @@ class RSVR_Hand play
 	// controller in VR (p_mobj.cpp: AttackPos). 30 x 2 = 60 units of travel, 12 of radius:
 	// 72 map units, 2.1 m. A hit still needs the blow itself (speed, butt leading, two hands)
 	// and a clear line from the hand (Clear), so nothing is struck through a wall.
-	const BUTT_REACH = 60.0;
-	const BUTT_PAD = 12.0;
+	// 2.0.3y (owner, BUGS_1.0 item 33: "needs a larger range, i feel like im in these peoples faces and im still not
+	// connecting consistently"): half as far again ahead of the stock (60 -> 90 map units, 2.6 m at 34 a metre) and
+	// a fatter envelope (12 -> 16). The speed it needs is now its own row (rsq_butt_speed, below), and a straight shove
+	// counts as well as the pivot (Tick, isButt).
+	const BUTT_REACH = 90.0;
+	const BUTT_PAD = 16.0;
+	const BUTT_LEAD = 1.25;		// 2.0.3y: the muzzle may not outrun the butt by more than this (it is leading, not the butt)
+	const WHIP_USE = 30.0;		// 2.0.3y: a whip's reach for a switch past the gun (RSQ_Fists.USE_REACH, a fist's)
 	const THROW_MIN = 2.5;
 	const SAW_EVERY = 2;		// r6: tics between cuts on one body (BD22's held saw: A_CustomPunch(7) a tic)
 	const SAW_PAD = 4.0;		// r6: the bar's half-height, Chain_saw.md3 surface Cube.002_Cube z -11.3..1.0,
@@ -439,6 +447,7 @@ class RSVR_Hand play
 	int calmTics;
 	int whooshWait;
 	int sawWait;		// r6: tics until the bar may cut the same body again
+	bool usedLine;		// 2.0.3y: this swing has worked a switch / door already (one Use per swing)
 	// 2.0.2 (owner r3 item 38) THE SWORD'S DELIBERATE SWING: see SWORD_* below and Tick
 	double arc;			// map units the point has travelled in this swing, above the speed threshold
 	bool armed;			// the swing has covered SWORD_ARC: it may cut
@@ -667,7 +676,20 @@ class RSVR_Hand play
 		let p = mo.player;
 		if (!p || !p.OffhandWeapon || mo.health <= 0)
 			return 0;
-		return p.OffhandWeapon is 'RSQ_Off_BrutalAxe' ? AXE : 0;
+		if (p.OffhandWeapon is 'RSQ_Off_BrutalAxe')
+			return AXE;
+		// 2.0.3y (owner, BUGS_1.0 item 34: "i sometimes move weapons between hands, but i cannot pistol whip in
+		// offhand?"): a pistol or revolver in the off hand whips like the main hand's (same points, same swing,
+		// "Pistol Whip" and its Swing Needed row). With the off-hand rule (dual.zs) the off hand holds the off-hand
+		// version; the main versions are listed too, for a moment before it is swapped in.
+		if (RSQ.PlayerInt(mo, 'rsq_pistol_whip', 1) == 0)
+			return 0;
+		Name n = p.OffhandWeapon.GetClassName();
+		if (n == 'RSQ_Off_BrutalPistol' || n == 'BrutalPistol')
+			return PISTOL;
+		if (n == 'RSQ_Off_Revolver' || n == 'Revolver' || n == 'RSQ_Off_BrutalRevolver' || n == 'BrutalRevolver')
+			return REVOLVER;
+		return 0;
 	}
 
 	int KindFor(PlayerPawn mo)
@@ -829,6 +851,7 @@ class RSVR_Hand play
 		arc = 0;
 		armed = false;
 		inWall = false;
+		usedLine = false;
 		struck.Clear();
 	}
 
@@ -920,7 +943,8 @@ class RSVR_Hand play
 
 		bool isButt = k == RIFLEBUTT || k == SGBUTT || k == SSGBUTT || k == ASGBUTT || k == MP40BUTT || k == SMGBUTT || k == MGBUTT || k == MG42BUTT;
 		double thr = (k == AXE ? AXE_SWING : k == SWORD ? SWORD_SWING
-			: isButt ? BUTT_SWING : clamp(Cv(mo, 'rsq_whip_speed', 5.0), 1.0, 12.0)) * vu / 35.	// 2.0.3g (owner 00:42, "pistol whip is too sensitive, make me whip harder"): was WHIP_SWING 3.2
+			: isButt ? clamp(Cv(mo, 'rsq_butt_speed', 2.4), 1.0, 8.0)	// 2.0.3y (owner item 33: "i need to do the motion extremely fast"): was BUTT_SWING 3.6
+			: clamp(Cv(mo, 'rsq_whip_speed', 5.0), 1.0, 12.0)) * vu / 35.	// 2.0.3g (owner 00:42, "pistol whip is too sensitive, make me whip harder"): was WHIP_SWING 3.2
 			* max(0.2, Cv(mo, 'rsvr_melee_swing', 1.0))
 			* ((k == AXE || k == SWORD) ? 1.5 : 1.0);	// F11 (owner): "swing sensitivity seems too high"
 		// 1.11 (owner: "goes insane with attacks just when I move around"). The blade is measured
@@ -981,10 +1005,15 @@ class RSVR_Hand play
 			// the front hand, so the stock outruns the muzzle. Walking moves both ends alike
 			// (and the body frame has already cancelled it) and raising the gun moves both;
 			// only the pivot does this.
+			// 2.0.3y (owner item 33): A SHOVE COUNTS TOO. The butt had to outrun the muzzle by 1.3x (rsvr_butt_lead,
+			// no menu row), so only a pivot struck and a straight shove -- both ends moving alike -- missed about half
+			// the time, by a hair either way. Now the blow only must not be MUZZLE-led (the muzzle more than BUTT_LEAD
+			// times the butt's speed): a pivot and a straight shove both strike; swinging the barrel round does not.
+			// Walking still moves nothing (the body frame), and raising the gun still fails the forward test.
 			double fwd = speed > 0 ? vel.x / speed : 0;
 			backswing = !RSVR_VRHand.Steadied(mo)
 				|| fwd < clamp(Cv(mo, 'rsvr_butt_fwd', 0.5), 0.0, 1.0)
-				|| velIn.Length() * clamp(Cv(mo, 'rsvr_butt_lead', 1.3), 1.0, 4.0) > speed;
+				|| velIn.Length() > speed * BUTT_LEAD;
 		}
 
 		// 2.0.2 (owner r3 item 38): the sword cuts only on a deliberate swing (SWORD_ARC, SWORD_COOL above)
@@ -1055,22 +1084,28 @@ class RSVR_Hand play
 			}
 			else
 				Sweep(mo, k, prevIn, prevOut, bin, bout, power);
-			if (isButt)
+			Vector3 sd = bout - prevOut;
+			double sl = sd.Length();
+			if (sl > 0)
+				sd /= sl;
+			if (isButt && sl > 0)
 			{
 				// r4: the reach ahead of the stock (BUTT_REACH above)
-				Vector3 sd = bout - prevOut;
-				double sl = sd.Length();
-				if (sl > 0)
-				{
-					sd /= sl;
-					Sweep(mo, k, prevOut, prevOut + sd * BUTT_REACH, bout, bout + sd * BUTT_REACH, power, BUTT_PAD);
-				}
+				Sweep(mo, k, prevOut, prevOut + sd * BUTT_REACH, bout, bout + sd * BUTT_REACH, power, BUTT_PAD);
 			}
+			// 2.0.3y (owner, BUGS_1.0 item 13: "punch, jab, hook, uppercut, whip, pistol whip, gun butt-shove all
+			// activate switches"): the pistol whip and the butt strike work a switch or door they hit, once a swing,
+			// as a Use press on that line (RSQ_Fists.LineUse: the line's special decides, never its texture). The gun
+			// itself (hand to striking end), then on along the blow: a fist's reach for the whip, the butt's reach
+			// for the butt. "Punch Switches Open" (rsq_punch_use) switches it off with the punches.
+			if ((isButt || k == PISTOL || k == REVOLVER) && !usedLine && sl > 0)
+				usedLine = RSQ_Fists.LineUse(mo, fH, prevOut, bout, isButt ? BUTT_REACH : WHIP_USE, isButt ? "butt strike" : off ? "off-hand pistol whip" : "pistol whip");
 		}
 		else if (++calmTics > 2)
 		{
 			swingTics = 0;
 			struck.Clear();
+			usedLine = false;
 		}
 		WallCheck(mo, bout, power);
 

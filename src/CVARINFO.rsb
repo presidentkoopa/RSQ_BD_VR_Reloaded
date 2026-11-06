@@ -24,3 +24,6 @@ server float rsg_slowmo_speed = 0.5;	// ...this much of the way from the world's
 
 // 1.97: Shot/Revolver Reload -- 0 the speedloader (as 1.96b shipped), 1 a round at a time
 server int rsb_revolver_feed = 0;
+// 2.0.3y (owner, BUGS_1.0 item 21): "Use RSQ Grenade Instead": with RSQ Grenade loaded (found by name), BD22's grenade
+// stands down (zscript/rsg/grenade.zs StandDown). RSQ Grenade's own "Replace Brutal Doom's Grenade" (rsqgn_replace_bd) does the same.
+server int rsg_rsq_nade = 0;

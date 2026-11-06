@@ -77,6 +77,280 @@ class RSQ_Dual : EventHandler
 			mo.SetInventory(mc, RSQ_DualTable.MagMax(i));
 	}
 
+	// ---- 2.0.3y THE OFF-HAND RULE (owner, BUGS_1.0 items 5 and 16, 2026-11-06) --------------------------------------
+	// "anytime an axe goes into my offhand it becomes the offhand axe. picking up one axe grants both axes (but i only
+	// need to see one in wheel since the code knows what hand is choosing) -- this should be the rule for all weapons
+	// in bd22." So, for every gun in RSQ_DualTable (the ones with an off-hand version):
+	//   - owning the gun means owning both versions: the off-hand version is given with it (an EMPTY magazine: one
+	//     pickup is one gun's rounds; Pistol Start and BD22's own second-pickup tokens still give a loaded one, above);
+	//   - whatever puts the gun in the OFF hand (a holster draw, the Wheel, a Distance Grab catch, QuestZDoom's switch
+	//     hand, a pickup), it is the off-hand version there; whatever puts it in the MAIN hand, the main version. The
+	//     rounds in the magazine go with it (the two magazines swap), so moving a gun never loads or empties it;
+	//   - with its Dual Options row off, the gun is in one hand at a time: taking it into one hand takes it out of the
+	//     other (that hand gets its empty hand), as before this rule.
+	// Done here once a tic for every player, so every mod that moves weapons gets it without asking: they flip
+	// bOffhandWeapon on the gun and raise it, as QuestZDoom does, and this swaps in the right version (Hands). Other
+	// mods may also ask RSQ_BD22OffhandService (below). Weapons with no off-hand version (the chainsaw, the sword...)
+	// are left to the engine: they go into the off hand as themselves.
+	Weapon prevMain[MAXPLAYERS];
+	Weapon prevOff[MAXPLAYERS];
+	bool primed[MAXPLAYERS];	// had[] read once this level before any gift (a level start is no pickup)
+
+	static bool Logs(PlayerPawn mo) { return RSQ.PlayerInt(mo, 'rsq_switch_log', 0) > 0; }
+
+	// index of the MAIN version, by exact class (BD22's Purist guns are subclasses and are left alone)
+	static int MainIndex(Weapon w)
+	{
+		if (!w)
+			return -1;
+		Name n = w.GetClassName();
+		for (int i = 0; i < RSQ_DualTable.COUNT; i++)
+			if (n == RSQ_DualTable.Gun(i))
+				return i;
+		return -1;
+	}
+
+	static int OffIndex(Weapon w)
+	{
+		if (!w)
+			return -1;
+		Name n = w.GetClassName();
+		for (int i = 0; i < RSQ_DualTable.COUNT; i++)
+			if (n == RSQ_DualTable.Copy(i))
+				return i;
+		return -1;
+	}
+
+	static Weapon Have(PlayerPawn mo, Name n)
+	{
+		class<Inventory> c = n;
+		return c ? Weapon(mo.FindInventory(c)) : null;
+	}
+
+	// a weapon given with no ammo of its own and no switch to it (as the Rig gives BD22's single gun)
+	static Weapon GiveBare(PlayerPawn mo, Name n)
+	{
+		let w = Have(mo, n);
+		if (w)
+			return w;
+		class<Actor> c = n;
+		if (!c)
+			return null;
+		let p = mo.player;
+		let pend = p.PendingWeapon;
+		let g = Weapon(Actor.Spawn(c, mo.pos, NO_REPLACE));
+		if (!g)
+			return null;
+		g.AmmoGive1 = 0;
+		g.AmmoGive2 = 0;
+		if (!g.CallTryPickup(mo))
+		{
+			g.Destroy();
+			return null;
+		}
+		if (p.PendingWeapon != pend)
+			p.PendingWeapon = pend;		// getting it never switches to it
+		return Have(mo, n);
+	}
+
+	// the rounds in one gun's magazine go into the other's (the moved gun keeps its own rounds)
+	static void SwapMags(Weapon a, Weapon b)
+	{
+		if (!a || !b || !a.Ammo2 || !b.Ammo2 || a.Ammo2 == b.Ammo2)
+			return;
+		int x = a.Ammo2.Amount, y = b.Ammo2.Amount;
+		a.Ammo2.Amount = min(y, a.Ammo2.MaxAmount);
+		b.Ammo2.Amount = min(x, b.Ammo2.MaxAmount);
+	}
+
+	static Weapon EmptyHandOf(PlayerPawn mo, bool off)
+	{
+		let w = Have(mo, off ? 'RSQ_Hands' : 'Melee_Attacks');
+		if (!w && off)
+		{
+			mo.GiveInventory('RSQ_Hands', 1);
+			w = Have(mo, 'RSQ_Hands');
+		}
+		return w;
+	}
+
+	// The version of gun i for that hand, owned (given bare if missing). When the other version must be given, the
+	// one gun is moving: the version it leaves is taken, so a thrown gun stays thrown.
+	static Weapon VersionFor(PlayerPawn mo, int i, bool off, Weapon from)
+	{
+		Name want = off ? RSQ_DualTable.Copy(i) : RSQ_DualTable.Gun(i);
+		let w = Have(mo, want);
+		if (w)
+			return w;
+		w = GiveBare(mo, want);
+		if (w && from && from != w)
+		{
+			SwapMags(from, w);
+			from.bOffhandWeapon = !off;
+			mo.TakeInventory(from.GetClass(), 1);
+		}
+		return w;
+	}
+
+	// a hand's weapon turned into its other version, in place (no lowering): it rises from where it is
+	void Become(PlayerPawn mo, Weapon was, Weapon now, bool off)
+	{
+		let p = mo.player;
+		was.bOffhandWeapon = !off;
+		now.bOffhandWeapon = off;
+		if (off)
+		{
+			p.OffhandWeapon = now;
+			if (p.ReadyWeapon == now)
+				p.ReadyWeapon = null;
+		}
+		else
+		{
+			p.ReadyWeapon = now;
+			if (p.OffhandWeapon == now)
+				p.OffhandWeapon = null;
+		}
+		p.SetPsprite(off ? PSP_OFFHANDWEAPON : PSP_WEAPON, now.GetUpState(), false, now);
+		if (p.PendingWeapon == now)
+			p.PendingWeapon = WP_NOCHANGE;
+		if (Logs(mo))
+			Console.Printf("RSQ offhand rule t%d: %s in the %s hand -> %s", mo.Level.maptime, was.GetClassName(), off ? "off" : "main", now.GetClassName());
+	}
+
+	void Hands(PlayerPawn mo)
+	{
+		let p = mo.player;
+		// 1. on its way into a hand (PendingWeapon): the right version is raised instead
+		let pend = p.PendingWeapon;
+		if (pend && pend != WP_NOCHANGE)
+		{
+			bool off = pend.bOffhandWeapon;
+			int i = off ? MainIndex(pend) : OffIndex(pend);
+			if (i >= 0)
+			{
+				let w = VersionFor(mo, i, off, pend);
+				if (w && w != pend)
+				{
+					if (pend.Owner == mo)	// (not taken by VersionFor: both versions owned)
+					{
+						SwapMags(pend, w);
+						pend.bOffhandWeapon = !off;
+					}
+					w.bOffhandWeapon = off;
+					p.PendingWeapon = (off ? p.OffhandWeapon : p.ReadyWeapon) == w ? WP_NOCHANGE : w;
+					if (Logs(mo))
+						Console.Printf("RSQ offhand rule t%d: %s on its way to the %s hand -> %s", mo.Level.maptime, pend.GetClassName(), off ? "off" : "main", w.GetClassName());
+				}
+			}
+		}
+		// 2. already raised in the wrong version (QuestZDoom's switch hand and the Wheel raise at once)
+		let o = p.OffhandWeapon;
+		let r = p.ReadyWeapon;
+		int oi = MainIndex(o);
+		int ri = OffIndex(r);
+		if (oi >= 0 && oi == ri)
+		{
+			// the two versions of one gun swapped hands: each is the right one now, the rounds stay put
+			o.bOffhandWeapon = false;
+			r.bOffhandWeapon = true;
+			p.ReadyWeapon = o;
+			p.OffhandWeapon = r;
+			p.SetPsprite(PSP_WEAPON, o.GetUpState(), false, o);
+			p.SetPsprite(PSP_OFFHANDWEAPON, r.GetUpState(), false, r);
+			return;
+		}
+		if (oi >= 0)
+		{
+			let w = VersionFor(mo, oi, true, o);
+			if (w && w != o)
+			{
+				if (o.Owner == mo)
+					SwapMags(o, w);
+				Become(mo, o, w, true);
+			}
+		}
+		if (ri >= 0)
+		{
+			let w = VersionFor(mo, ri, false, r);
+			if (w && w != r)
+			{
+				if (r.Owner == mo)
+					SwapMags(r, w);
+				Become(mo, r, w, false);
+			}
+		}
+	}
+
+	// Dual Options off for a gun: one hand at a time. The hand that just took it keeps it; the other gets its
+	// empty hand, and the rounds come with the gun.
+	void OneAtATime(PlayerPawn mo, int n)
+	{
+		let p = mo.player;
+		let r = p.ReadyWeapon;
+		let o = p.OffhandWeapon;
+		int i = MainIndex(r);
+		if (i < 0 || i != OffIndex(o) || p.PendingWeapon != WP_NOCHANGE)
+			return;
+		if (RSQ.PlayerInt(mo, RSQ_DualTable.CVarName(i), 0) != 0)
+			return;		// dual wield allowed: a gun in each hand
+		bool mainNew = prevMain[n] != r;
+		bool offNew = prevOff[n] != o;
+		if (mainNew == offNew)
+			return;		// both at once (a level start, a load): leave it
+		let e = EmptyHandOf(mo, mainNew);
+		if (!e)
+			return;
+		SwapMags(mainNew ? o : r, mainNew ? r : o);
+		p.PendingWeapon = e;
+		if (Logs(mo))
+			Console.Printf("RSQ offhand rule t%d: %s is one gun (Dual Options off): it moved to the %s hand", mo.Level.maptime, RSQ_DualTable.Nice(i), mainNew ? "main" : "off");
+	}
+
+	// A version not in a hand and not on its way there carries its own hand's flag again: a main version left flagged
+	// for the off hand (a draw that was queued and dropped) would otherwise rise in the off hand from a slot key
+	// (QuestZDoom raises by the flag). Every mod that moves a gun sets the flag again when it raises it.
+	static void Tidy(PlayerPawn mo)
+	{
+		let p = mo.player;
+		for (int i = 0; i < RSQ_DualTable.COUNT; i++)
+		{
+			let m = Have(mo, RSQ_DualTable.Gun(i));
+			if (m && m.bOffhandWeapon && m != p.ReadyWeapon && m != p.OffhandWeapon && m != p.PendingWeapon)
+				m.bOffhandWeapon = false;
+			let c = Have(mo, RSQ_DualTable.Copy(i));
+			if (c && !c.bOffhandWeapon && c != p.ReadyWeapon && c != p.OffhandWeapon && c != p.PendingWeapon)
+				c.bOffhandWeapon = true;
+		}
+	}
+
+	// owning a gun means owning its off-hand version (empty); the axe's only on a pickup (a thrown axe stays thrown)
+	void GrantBoth(PlayerPawn mo, int n)
+	{
+		for (int i = 0; i < RSQ_DualTable.COUNT; i++)
+		{
+			bool own = Have(mo, RSQ_DualTable.Gun(i)) != null;	// the gun itself (not BD22's Purist subclass)
+			if (own && (i != RSQ_DualTable.AXE || primed[n] && !had[n][i]))
+				GiveCopyEmpty(mo, i);
+		}
+	}
+
+	static void GiveCopyEmpty(PlayerPawn mo, int i)
+	{
+		class<Inventory> cc = (class<Inventory>)(RSQ_DualTable.Copy(i));
+		if (!cc || mo.FindInventory(cc))
+			return;
+		let p = mo.player;
+		let pend = p.PendingWeapon;
+		mo.GiveInventory(cc, 1);
+		if (p.PendingWeapon != pend)
+			p.PendingWeapon = pend;
+		class<Inventory> mc = (class<Inventory>)(RSQ_DualTable.Mag(i));
+		if (mc)
+			mo.SetInventory(mc, 0);
+		if (Logs(mo))
+			Console.Printf("RSQ offhand rule t%d: %s picked up: its off-hand version comes with it", mo.Level.maptime, RSQ_DualTable.Nice(i));
+	}
+
 	override void WorldTick()
 	{
 		for (int n = 0; n < MAXPLAYERS; n++)
@@ -101,6 +375,20 @@ class RSQ_Dual : EventHandler
 				if (tc && mo.CountInv(tc) > 0 && Owns(mo, i))
 					GiveCopy(mo, i);
 			}
+
+			// 2.0.3y the off-hand rule (above)
+			if (!primed[n])
+			{
+				for (int i = 0; i < RSQ_DualTable.COUNT; i++)
+					had[n][i] = Owns(mo, i);
+				primed[n] = true;
+			}
+			GrantBoth(mo, n);
+			Hands(mo);
+			OneAtATime(mo, n);
+			Tidy(mo);
+			prevMain[n] = p.ReadyWeapon;
+			prevOff[n] = p.OffhandWeapon;
 
 			// 1.21 (owner): with a gun in each hand only the flick reloads. BD22's own "no auto
 			// reload" token is forced on while both hands hold guns, and set back to the player's
@@ -180,5 +468,86 @@ class RSQ_Dual : EventHandler
 			if (mo.Distance3D(a) <= mo.radius + a.radius + 16)
 				GiveCopy(mo, i);
 		}
+	}
+}
+
+// 2.0.3y THE OFF-HAND RULE FOR OTHER MODS (owner, BUGS_1.0 items 5 and 16). Find it by name, never by class:
+//   let it = ServiceIterator.Find("RSQ_BD22OffhandService"); let s = it.Next();   // null without BD22 VR Reloaded
+// Nothing has to call it: RSQ_Dual swaps in the right version every tic for whatever mod moved the gun. It is here so
+// a list of weapons (the Wheel) can show ONE entry per gun and so a mod can put a gun in a hand the BD22 way at once.
+//   GetString/GetStringUI("main.of", class)   the gun an off-hand version stands for ("RSQ_Off_BrutalAxe" -> "BrutalAxe");
+//                                             any other class name comes back as it is
+//   GetString/GetStringUI("off.of", class)    the off-hand version of a gun ("BrutalAxe" -> "RSQ_Off_BrutalAxe"), "" if none
+//   GetInt/GetIntUI("is.off", class)          1: an off-hand version (leave it out of a list; show its gun's entry)
+//   GetInt("equip", class, hand, 0, pawn)     (play, on every machine: from a network event) the gun (either version's
+//                                             name) into hand 0 main / 1 off, as its version for that hand. 1 done or
+//                                             already there, 0 not a BD22 gun with an off-hand version (do your own).
+class RSQ_BD22OffhandService : Service
+{
+	clearscope static int Find(String cls, bool off)
+	{
+		Name n = cls;
+		for (int i = 0; i < RSQ_DualTable.COUNT; i++)
+			if (n == (off ? RSQ_DualTable.Copy(i) : RSQ_DualTable.Gun(i)))
+				return i;
+		return -1;
+	}
+
+	static clearscope String Answer(String request, String cls)
+	{
+		Name n = cls;
+		for (int i = 0; i < RSQ_DualTable.COUNT; i++)
+		{
+			if (request ~== "main.of" && n == RSQ_DualTable.Copy(i))
+				return RSQ_DualTable.Gun(i);
+			if (request ~== "off.of" && n == RSQ_DualTable.Gun(i))
+				return RSQ_DualTable.Copy(i);
+		}
+		return request ~== "main.of" ? cls : "";
+	}
+
+	override String GetString(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
+	{
+		return Answer(request, stringArg);
+	}
+
+	override String GetStringUI(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
+	{
+		return Answer(request, stringArg);
+	}
+
+	override int GetIntUI(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
+	{
+		if (request ~== "is.off")
+			return Answer("main.of", stringArg) != stringArg ? 1 : 0;
+		return 0;
+	}
+
+	override int GetInt(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
+	{
+		if (request ~== "is.off")
+			return Answer("main.of", stringArg) != stringArg ? 1 : 0;
+		if (!(request ~== "equip"))
+			return 0;
+		let mo = PlayerPawn(objectArg);
+		if (!mo || !mo.player || mo.health <= 0)
+			return 0;
+		bool off = intArg == 1;
+		int i = Find(stringArg, false);
+		if (i < 0)
+			i = Find(stringArg, true);
+		if (i < 0)
+			return 0;
+		let p = mo.player;
+		let w = RSQ_Dual.VersionFor(mo, i, off, null);
+		if (!w)
+			return 0;
+		if ((off ? p.OffhandWeapon : p.ReadyWeapon) == w)
+			return 1;
+		w.bOffhandWeapon = off;
+		p.PendingWeapon = w;
+		if (RSQ_Dual.Logs(mo))
+			Console.Printf("RSQ offhand service t%d: %s into the %s hand as %s", mo.Level.maptime, stringArg, off ? "off" : "main", w.GetClassName());
+		return 1;
 	}
 }

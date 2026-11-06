@@ -3,12 +3,12 @@ class RSQ_DualTable play
 {
 	const COUNT = 12;	// 2.0.2: index 11, the axe (BrutalAxe, owner r3 item 37: dual axes)
 	const AXE = 11;	// 2026-10-27 lane rev-unmaker, BY HAND (gen_dual.py is not in this repo): index 10, the Moonlight (BrutalRevolver)
-	static Name Gun(int i)
+	clearscope static Name Gun(int i)
 	{
 		static const Name v[] = { 'BrutalPistol', 'Revolver', 'BrutalSMG', 'MP40', 'Rifle', 'Plasma_Gun', 'Shot_Gun', 'SSG', 'AssaultShotgun', 'RailGun', 'BrutalRevolver', 'BrutalAxe' };
 		return v[i];
 	}
-	static Name Copy(int i)
+	clearscope static Name Copy(int i)
 	{
 		static const Name v[] = { 'RSQ_Off_BrutalPistol', 'RSQ_Off_Revolver', 'RSQ_Off_BrutalSMG', 'RSQ_Off_MP40', 'RSQ_Off_Rifle', 'RSQ_Off_Plasma_Gun', 'RSQ_Off_Shot_Gun', 'RSQ_Off_SSG', 'RSQ_Off_AssaultShotgun', 'RSQ_Off_RailGun', 'RSQ_Off_BrutalRevolver', 'RSQ_Off_BrutalAxe' };
 		return v[i];

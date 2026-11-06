@@ -91,6 +91,7 @@ OptionMenu "RSQ_Options"
 	Option "Dual Flick to Reload", "rsq_flick", "OnOff"
 	StaticText " "
 	Option "VR Throwing", "rsg_vr", "OnOff"
+	Option "Use RSQ Grenade Instead", "rsg_rsq_nade", "OnOff"	// 2.0.3y (owner item 21): with RSQ Grenade loaded, this grenade stands down (rsg/grenade.zs)
 	Option "Pin With Your Teeth", "rsg_face", "OnOff"	// 2.0.3p: RSQ Grenade's teeth pull (zscript/rsg/grenade.zs Face); the off-hand ring works either way
 	Slider "Teeth: Mouth Reach (m)", "rsg_mouth_r", 0.05, 0.30, 0.01, 2	// 2.0.3r: round the mouth (lips to under the chin), from the headset
 	Slider "Teeth: Again Beyond (m)", "rsg_face_far", 0.30, 1.50, 0.01, 2
@@ -108,6 +109,7 @@ OptionMenu "RSQ_Options"
 	Option "Instant Weapon Switch", "rsq_instant_switch", "OnOff"	// 2.0.2a (owner 19:47): no raise / lower (zscript/rsq/switch.zs)
 	Option "Lift Doors by Hand", "rsq_door", "OnOff"	// 2.0.3f: from RSQ_DistanceGrab (zscript/rsvr/door.zs)
 	Option "Two-Handed Butt Strike", "rsq_butt", "OnOff"
+	Slider "Butt Strike: Swing Needed", "rsq_butt_speed", 1.0, 6.0, 0.1, 1	// 2.0.3y (owner item 33): higher = shove harder (was a fixed 3.6)
 	Option "Real Casing Models", "rsq_casing_models", "OnOff"
 	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
 	Option "Melee Hit Flash", "rsq_bash_flash", "OnOff"

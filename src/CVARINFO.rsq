@@ -46,7 +46,8 @@ user int rsq_bash_tint = 0;		// recolours the RSH0 flash only; 0 is the art as d
 // posture, so it is the player's choice to turn on.
 user int rsq_butt = 0;
 user float rsvr_butt_fwd = 0.5;		// of the butt's speed that must point forward
-user float rsvr_butt_lead = 1.3;	// how much faster the butt must be than the muzzle
+user float rsvr_butt_lead = 1.3;	// 2.0.3y: no longer read (a straight shove counts too: melee.zs BUTT_LEAD)
+user float rsq_butt_speed = 2.4;	// 2.0.3y (owner, BUGS_1.0 item 33): m/s at the stock a butt strike needs (was 3.6, fixed)
 
 // 1.97 F5: per-gun recoil. Its own row, not the ballistics dial -- this costs one
 // float a tic, the effects cost a frame budget, and they are not the same decision.

@@ -73,20 +73,21 @@ class RSVR_AxeGrabEventService : Service play
 			if (mo.CountInv('RSVR_GiveOffAxe') > 0)
 			{
 				mo.TakeInventory('RSVR_GiveOffAxe', 999);
-				GiveOff(mo, true);
+				GiveOff(mo, true, h == 1);
 				Say(mo, h, "off hand (main had one)");
 				return 0;
 			}
 			if (!HasMain(mo) || hadMain[h])
 				return 0;	// not an axe after all, or nothing new
-			if (h == 1 && !hadOff[h] && RSQ.PlayerInt(mo, 'rsq_dual_axe', 1) != 0)
+			if (h == 1)
 			{
-				// pulled with the OFF hand: it is the off hand's, not the main's
-				mo.TakeInventory(RSVR_MeleeHandler.Inv('BrutalAxe'), 1);
+				// 2.0.3y (owner, BUGS_1.0 item 16: "distance-grabbing the axe to the offhand must auto-equip every
+				// time"; item 5: one axe picked up is both axes): pulled with the OFF hand, the off hand holds the
+				// off-hand axe now, whatever it held; the main axe that came with it is stored, the main hand keeps its gun
 				if (p.PendingWeapon && p.PendingWeapon.GetClassName() == 'BrutalAxe')
 					p.PendingWeapon = WP_NOCHANGE;
-				GiveOff(mo, true);
-				Say(mo, h, "off hand");
+				GiveOff(mo, true, true);
+				Say(mo, h, "off hand (equipped)");
 				return 0;
 			}
 			// the main hand's: held at once if the main hand was free, else stored and the gun kept
@@ -99,7 +100,15 @@ class RSVR_AxeGrabEventService : Service play
 		let a = Actor(objectArg);
 		bool main = HasMain(mo), off = HasOff(mo);
 		bool offOk = RSQ.PlayerInt(mo, 'rsq_dual_axe', 1) != 0;
-		if (h == 1 && !off && offOk || h == 0 && main && !off && offOk)
+		// 2.0.3y (owner, BUGS_1.0 item 16): an axe pulled with the OFF hand is always equipped there as the off-hand
+		// axe (given if missing). Only when the off hand holds the off-hand axe already does Distance Grab keep carrying it.
+		if (h == 1 && !(p.OffhandWeapon && p.OffhandWeapon.GetClassName() == 'RSQ_Off_BrutalAxe'))
+		{
+			GiveOff(mo, true, true);
+			a.Destroy();
+			Say(mo, h, off ? "off hand (equipped, carried -> held)" : "off hand (carried -> held)");
+		}
+		else if (h == 0 && main && !off && offOk)
 		{
 			GiveOff(mo, true);
 			a.Destroy();
@@ -129,8 +138,10 @@ class RSVR_AxeGrabEventService : Service play
 			p.PendingWeapon = WP_NOCHANGE;	// the engine's switch-on-pickup: the gun stays
 	}
 
-	// the off-hand axe; held at once (equip) only if the off hand is the off fist or free
-	static void GiveOff(PlayerPawn mo, bool equip)
+	// the off-hand axe; equip: held in the off hand at once, whatever the off hand held (2.0.3y, owner BUGS_1.0 item 16:
+	// "every time"; it was only into a free off hand). What it held stays in the inventory.
+	// force false (a MAIN-hand pull handing the axe across): only into a free off hand, as before
+	static void GiveOff(PlayerPawn mo, bool equip, bool force = false)
 	{
 		RSQ_Dual.GiveCopy(mo, RSQ_DualTable.AXE);
 		if (!equip)
@@ -138,8 +149,11 @@ class RSVR_AxeGrabEventService : Service play
 		let p = mo.player;
 		let ow = p.OffhandWeapon;
 		let w = Weapon(mo.FindInventory(RSVR_MeleeHandler.Inv('RSQ_Off_BrutalAxe')));
-		if (w && (!ow || ow is 'RSQ_Hands'))
+		if (w && ow != w && (force || !ow || ow is 'RSQ_Hands'))
+		{
+			w.bOffhandWeapon = true;
 			p.PendingWeapon = w;
+		}
 	}
 
 	static void Say(PlayerPawn mo, int h, String what)

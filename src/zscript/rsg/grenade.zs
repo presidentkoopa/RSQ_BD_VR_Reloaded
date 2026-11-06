@@ -245,17 +245,99 @@ class RSG_Handler : EventHandler
 		}
 	}
 
+	// 2.0.3y (owner, BUGS_1.0 item 21: "right now we stand down, i want option for them to stand down as well"):
+	// with RSQ Grenade loaded (its RSQGN_Handler, found by a String at run time: nothing of it is named when this
+	// compiles) and "Use RSQ Grenade Instead" (rsg_rsq_nade, off) or RSQ Grenade's own "Replace Brutal Doom's Grenade"
+	// (rsqgn_replace_bd, read by name) on, BRUTAL DOOM'S GRENADE STANDS DOWN: its weapon (HandGrenades) is put away
+	// out of the inventory, so no slot key, wheel card or the VR pin and throw reach it, and BD22's grenade key
+	// (TossGrenade) throws nothing. Its GrenadeAmmo is left as it is. Turned off again (or RSQ Grenade gone), the
+	// weapon comes back with no ammo of its own (RSG_StoodDown remembers it across levels).
+	static bool StandDown()
+	{
+		String n = "RSQGN_Handler";
+		class<Object> c = n;
+		if (!c)
+			return false;
+		if (CvOn('rsg_rsq_nade', false))
+			return true;
+		let cv = CVar.FindCVar('rsqgn_replace_bd');
+		return cv && cv.GetInt() != 0;
+	}
+
+	void StandTick(PlayerPawn mo, bool down)
+	{
+		let p = mo.player;
+		Name wn = 'HandGrenades';
+		class<Inventory> wc = wn;
+		if (!wc || p.playerstate != PST_LIVE)
+			return;
+		let w = Weapon(mo.FindInventory(wc));
+		if (down)
+		{
+			String tn = "TossGrenade";	// BD22's grenade key's token (DEFAULTWEAPON.dec TossGrenade): no throw; by name at run time
+			class<Inventory> tc = tn;
+			if (tc)
+				mo.SetInventory(tc, 0);
+			if (p.PendingWeapon == w && w)
+				p.PendingWeapon = WP_NOCHANGE;
+			if (!w)
+				return;
+			if (p.ReadyWeapon == w)
+			{
+				// put it away first (the fists), then out of the inventory
+				if (p.PendingWeapon == WP_NOCHANGE)
+				{
+					Name fn = 'Melee_Attacks';
+					class<Inventory> fc = fn;
+					let f = fc ? Weapon(mo.FindInventory(fc)) : null;
+					if (f)
+						p.PendingWeapon = f;
+					else
+						p.mo.PickNewWeapon(null);
+				}
+				return;
+			}
+			if (p.OffhandWeapon == w)
+				return;		// (QuestZDoom's switch hand put it there: wait for it to leave)
+			mo.TakeInventory(wc, 1);
+			mo.SetInventory('RSG_StoodDown', 1);
+			if (RSR.PlayerInt(p, 'rsq_switch_log', 0) > 0)
+				Console.Printf("RSG t%d: RSQ Grenade is loaded and replaces this grenade: BD22's HandGrenades put away", mo.Level.maptime);
+			return;
+		}
+		if (mo.CountInv('RSG_StoodDown') > 0)
+		{
+			mo.SetInventory('RSG_StoodDown', 0);
+			if (w)
+				return;
+			let pend = p.PendingWeapon;
+			let g = Weapon(Actor.Spawn(wc, mo.pos, NO_REPLACE));
+			if (g)
+			{
+				g.AmmoGive1 = 0;
+				g.AmmoGive2 = 0;
+				if (!g.CallTryPickup(mo))
+					g.Destroy();
+			}
+			if (p.PendingWeapon != pend)
+				p.PendingWeapon = pend;
+		}
+	}
+
 	override void WorldTick()
 	{
 		ShotTick();
+		bool down = StandDown();
 		for (int n = 0; n < MAXPLAYERS; n++)
 		{
 			if (!playeringame[n] || !players[n].mo)
 				continue;
 			let mo = players[n].mo;
+			StandTick(mo, down);
 			if (!st[n])
 				st[n] = new('RSG_State');
-			st[n].Tick(mo);
+			if (!down)
+				st[n].Tick(mo);
 		}
 	}
 }
@@ -653,3 +735,4 @@ class RSG_Spoon : RSVR_Token {}
 class RSG_Thrown : RSVR_Token {}
 class RSG_RingHand : RSVR_Token {}
 class RSG_Skeet : Inventory {}	// 2.0.3r: on the blast of a grenade shot in the air (RSG_Handler.Shoot)
+class RSG_StoodDown : RSVR_Token {}	// 2.0.3y: BD22's HandGrenades was put away for RSQ Grenade (RSG_Handler.StandTick)

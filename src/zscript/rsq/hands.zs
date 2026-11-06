@@ -326,8 +326,10 @@ class RSQ_Hands : Weapon
 		// switchhand, the QuestSaber, the ShieldSaw, a holstered gun) is left alone.
 		// 2.0.3i (owner 07:00): the off-hand AXE is an off-hand weapon of its own, never stale: it may be
 		// cycled into the off hand whatever the main hand holds (melee.zs puts it away once on a switch)
-		bool stale = off && RSQ_Dual.CopyIndex(off) >= 0 && RSQ_Dual.CopyIndex(off) != RSQ_DualTable.AXE
-			&& RSQ_Dual.CopyIndex(off) != RSQ_Dual.GunIndex(p.ReadyWeapon);
+		// 2.0.3y (owner, BUGS_1.0 item 5: the off-hand rule, dual.zs): every gun in the off hand is its off-hand version
+		// now, put there on purpose (a holster, the Wheel, a catch, switch hand), so no copy is stale any more: it stays
+		// until the player moves it. (A copy whose gun left the main hand used to be swapped for the fist here.)
+		bool stale = false;
 		if (h && (!off || stale) && p.PendingWeapon == WP_NOCHANGE)
 			p.PendingWeapon = h;
 	}

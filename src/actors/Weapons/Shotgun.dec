@@ -40,8 +40,14 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHTN A 0 A_JumpIfInventory("RSP_ShellIn", 1, "RSP_Feed")		// more credits queued
 		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, 1)				// 2.0.3q (owner 2026-11-03): nothing chambered... (1: a Goto is not a state)
 		Goto Ready
-		SHTN A 0 A_JumpIfInventory("ShotgunAmmo", 1, "Pump2")			// ...and a shell in the tube: the gun waits for the pump now (RSP_P2), no trigger pull first
+		SHTN A 0 A_JumpIfInventory("ShotgunAmmo", 1, "RSP_NoCase")		// ...and a shell in the tube: the gun waits for the pump now (RSP_P2), no trigger pull first
 		Goto Ready
+	RSP_NoCase:	// 2.0.3y (owner, BUGS_1.0 item 6: "we pump the shotgun after loading a full set of rounds, good, but the
+				// eject shell animation still plays, that's bad"): the pump that chambers a gun you just loaded from empty
+				// throws no spent shell out. BD22's own "unloaded" token says the chamber is empty: its Pump2 and our
+				// RSP_P2Back then skip the casing (as after BD22's own Unload), and the pump forward takes it again.
+		SHTN A 0 A_GiveInventory("HasUnloadedShotgun", 1)
+		Goto Pump2
 	RSP_VRIns:	// RSR-PUMP: the VR insert's OWN entry, skipping BD22's Reload chain.
 				// BD22 drives reload from a "Reloading" token its ACS sets -- its A_WeaponReady
 				// has WRF_ALLOWRELOAD commented out -- and its pump-wait states never look at
@@ -100,7 +106,7 @@ ACTOR Shot_Gun : BrutalWeapon
 	RSP_LoadEnd:	// FinishedInsertingShells, without its lowering frames (the gun never tilted)
 		SHTN A 0 A_TakeInventory("RSP_ShellIn", 999)	// 2026-10-16: credits past a full tube are dropped, never saved for later
 		SHTN A 0 A_Takeinventory("Reloading", 1)
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump2")
+		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "RSP_NoCase")	// 2.0.3y: was Pump2 (its pump ejected a shell)
 		Goto ReadyToFireAgain
 	RSP_Kick:		// DoKickReloading, the gun held (the hand keeps what it has)
 		SHTN A 0 A_GunFlash("ReloadingKickFlash")
@@ -110,9 +116,7 @@ ACTOR Shot_Gun : BrutalWeapon
 		SHTN A 0 A_TakeInventory("RSP_Back", 1)
 		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "RSP_LBack1")
 		Goto RSP_LoadWait			// a live round in: BD22's inspect pump, nothing comes out
-	RSP_LBack1:
-		SHTN A 0 A_JumpIfInventory("HasUnloadedShotgun", 1, "RSP_LoadWait")
-		SHTN A 0 A_GiveInventory("RSP_CaseOut", 1)	// 2026-10-16: out of the ejection port (rsr_pump.zs CaseOut)
+	RSP_LBack1:	// 2.0.3y (owner item 6): the pump worked while loading an empty gun throws no shell out either
 		Goto RSP_LoadWait
 	RSP_LFwd:		// forward again: the reload ends, chambered (Pump2 N)
 		SHTN A 0 A_TakeInventory("RSP_Fwd", 1)

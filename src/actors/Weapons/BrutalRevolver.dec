@@ -263,7 +263,7 @@ ACTOR RSQ_Off_BrutalRevolver : BrutalRevolver
 	Weapon.AmmoGive2 0
 	Weapon.SelectionOrder 99999
 	+WEAPON.OFFHANDWEAPON
-	+WEAPON.NOHANDSWITCH
+	-WEAPON.NOHANDSWITCH	// 2.0.3y (owner, BUGS_1.0 item 5): it passes between hands; in the main hand it becomes its gun (dual.zs Hands)
 	+WEAPON.CHEATNOTWEAPON
 	-INVENTORY.ALWAYSPICKUP
 	Weapon.AmmoType1 "Clip1"

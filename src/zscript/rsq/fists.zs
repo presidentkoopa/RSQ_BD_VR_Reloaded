@@ -40,6 +40,43 @@ class RSQ_Fists : EventHandler
 			d.HitLine.Activate(mo, d.LineSide, SPAC_Push);	// some lines are push, not use
 	}
 
+	// 2.0.3y (owner, BUGS_1.0 item 13): the same for a gun swung as a club (melee.zs: the pistol whip, the butt
+	// strike). "what do we do about wads with custom switch textures, isn't the logic the same?" -- yes: as above, the
+	// LINE'S SPECIAL decides (Line.Activate runs it, as the Use key does), never the texture, so a WAD's own switch
+	// art works the same. Two traces: along the gun (hand -> its striking end), then the striking end's own path this
+	// tic (where it was -> where it is) and on along the blow for `reach` -- the hand can pass through a wall in VR, so
+	// the path is traced from where the end was, on the near side. The first usable line met is worked. True when one was.
+	static bool LineUse(PlayerPawn mo, Vector3 hand, Vector3 prevTip, Vector3 tip, double reach, String what)
+	{
+		if (!mo || RSQ.PlayerInt(mo, 'rsq_punch_use', 1) == 0)
+			return false;
+		Vector3 g = tip - hand;
+		double gl = g.Length();
+		if (gl > 1 && UseAlong(mo, hand, g / gl, gl, what))
+			return true;
+		Vector3 m = tip - prevTip;
+		double ml = m.Length();
+		if (ml <= 0)
+			return false;
+		return UseAlong(mo, prevTip, m / ml, ml + reach, what);
+	}
+
+	static bool UseAlong(PlayerPawn mo, Vector3 from, Vector3 dir, double reach, String what)
+	{
+		FLineTraceData d;
+		double ang = VectorAngle(dir.x, dir.y);
+		double pit = -asin(clamp(dir.z, -1, 1));
+		if (!mo.LineTrace(ang, reach, pit, TRF_ABSPOSITION | TRF_THRUACTORS, from.z, from.x, from.y, d))
+			return false;
+		if (d.HitType != TRACE_HitWall || !d.HitLine || d.HitLine.special == 0)
+			return false;
+		bool done = d.HitLine.Activate(mo, d.LineSide, SPAC_Use) || d.HitLine.Activate(mo, d.LineSide, SPAC_Push);
+		if (RSQ.PlayerInt(mo, 'rsq_switch_log', 0) > 0)
+			Console.Printf("RSQ melee use t%d: %s hit line %d (special %d) at %.0f units: %s", mo.Level.maptime, what,
+				d.HitLine.Index(), d.HitLine.special, d.Distance, done ? "worked" : "not usable from here");
+		return done;
+	}
+
 	override void WorldTick()
 	{
 		for (int n = 0; n < MAXPLAYERS; n++)
