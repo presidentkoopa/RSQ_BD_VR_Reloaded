@@ -643,3 +643,17 @@ explosions chain (section 5).
   share with friendly marines; Comrade scales with them). Owner also floated: the effect spawns a marine ally like
   BD's rescuable marines (open; built as "allies count" first).
 - LegenDoom bugs: the intended rule, not the bugs.
+
+### Round 3 answers (2026-11-06 evening)
+- Co-op marines: friendly BD22 marines within 1024 units (as built).
+- Upgrading: a full-ammo pickup of BD22-only ammo is worth what its gun's ammo is worth (grenades like rockets,
+  gas like cells, ...).
+- Perfect on DualPistols / DualRifles: copy BD22's dual-gun code into ours and add the jam.
+- Plasmatic on the rocket launcher: swap our rocket for LegenDoom's plasma rocket at our damage ratio, our sounds.
+- Passives (Q9): only the legendary gun IN HAND gives its passive (not every owned one).
+- Alt-fire collisions (Q12): BD22 VR's toggleable secondaries stand down in favour of the legendary power when the
+  held gun's power uses that input (e.g. Seeker vs RL lock-on, Burst vs pistol burst, Chargeup vs plasma charge).
+- Melee (Q11): no pushes (keep damage parts). Borrow ideas from RSQ Melee (RSQ_UBQSeries/Melee: punch kinds, swing
+  speed) into BD22 VR's own melee WITHOUT depending on RSQ Melee being loaded.
+- LegenDoom's non-gun sounds (pickup jingle, pickup screen, legendary aura): a toggle in BD22 VR's options, if the
+  engine allows it (check).
