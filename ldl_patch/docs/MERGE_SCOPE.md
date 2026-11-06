@@ -622,3 +622,15 @@ explosions chain (section 5).
   before reload, but i get four free shots. well now it holds 19 before i reload." Hand reload as normal after.
 - Checked for the owner: no LegenDoom effect raises magazine capacity (LegenDoom's guns have no magazines; only the
   pistol's Advanced has its own magazine, which maps onto ours).
+
+### Round 2 answers (2026-11-06 afternoon)
+- Plasmatic / Gyrojet: our True Bullets rounds are projectiles already; these effects swap the round for a plasma
+  ball / mini-rocket from the drawn muzzle, our sounds (True Bullets off: the gun fires that projectile).
+- Visuals: LegenDoom's own visuals for its effects (no VR camera quakes). A later Ballistics / CombatFX pass adds
+  optional Low / Max ballistic settings.
+- Perfect: a miss jams both hands (LegenDoom's per-player rule).
+- Choked: our own tight pattern with our pellet count, built the way LegenDoom built its pattern.
+- Load order: LegenDoom 3.0 loads right after doom2 (before brutal22test6), so BD's title map, HUD and sounds win.
+- Off-hand copies (Q8): both hands carry the legendary power. A "Weapon Bond" design (GBOVR) is for the GBOVR pass.
+- Machine: LegenDoom's own 17.5 shots a second.
+- Bloody: as LegenDoom's description says, +20% damage every 5 kills.
