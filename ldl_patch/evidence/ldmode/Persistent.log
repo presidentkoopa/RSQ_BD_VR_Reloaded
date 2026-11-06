@@ -1,0 +1,25 @@
+# Persistent: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch debuff.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Persistent on Shot_Gun slot Shotgun rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 303 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 303 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 303 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 303 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 304 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 304 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 304 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 304 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD 304 Persistent p4 main Shot_Gun: Persistent on BaronofHell2
+RSLD probe: target BaronofHell2 has Health x0 health 29838 speed 0.0
+RSLD 442 Persistent: bleed BaronofHell2 29748 -> 29743 (4 left)
+RSLD 442 Persistent: bleed BaronofHell2 29743 -> 29738 (4 left)
+RSLD 442 Persistent: bleed BaronofHell2 29738 -> 29733 (4 left)
+RSLD 442 Persistent: bleed BaronofHell2 29733 -> 29728 (4 left)
+RSLD 443 Persistent: bleed BaronofHell2 29728 -> 29723 (4 left)
+RSLD 443 Persistent: bleed BaronofHell2 29723 -> 29718 (4 left)
+RSLD 443 Persistent: bleed BaronofHell2 29718 -> 29713 (4 left)
+RSLD 443 Persistent: bleed BaronofHell2 29713 -> 29708 (4 left)
+RSLD 443 Persistent: bleed BaronofHell2 29708 -> 29703 (4 left)
+RSLD probe: target BaronofHell2 has Health x0 health 29658 speed 0.0

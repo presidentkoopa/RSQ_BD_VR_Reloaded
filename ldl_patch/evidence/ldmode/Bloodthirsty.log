@@ -1,0 +1,8 @@
+# Bloodthirsty: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0 (ORDER=full). Batch kill.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Bloodthirsty on Shot_Gun slot Shotgun rarity Epic
+RSLD probe: health 50
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 194 Bloodthirsty p2 main Shot_Gun: kill BaronofHell2: gave LDBloodthirstyEffectDeath
+RSLD probe: player BDoomer has LDBloodthirstyEffectDeath x0 health 55 speed 8.0

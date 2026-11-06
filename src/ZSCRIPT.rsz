@@ -1,0 +1,26 @@
+version "4.14"
+// Named .rsz so it compiles after ZSCRIPT.rsvr and ZSCRIPT.rsx (lumps compile in name order): effects read RSQ_Muzzle, RSVR_VRHand.
+// LD mode: LegenDoom 3.0 x BD22 VR (zscript/rsld). Runs only when LegenDoom 3.0 is loaded (RSLD.On).
+// Agent A owns this list; effect groups add their files here (/home/claude/ldmerge/INTERFACE.md).
+#include "zscript/rsld/core.zs"
+#include "zscript/rsld/data.zs"
+#include "zscript/rsld/tables.zs"
+#include "zscript/rsld/handler.zs"
+#include "zscript/rsld/pickup.zs"
+#include "zscript/rsld/menu.zs"
+#include "zscript/rsld/numbers_g0.zs"
+#include "zscript/rsld/fx_g0.zs"
+#include "zscript/rsld/fx_g9.zs"
+// Agent C (G2 shared bullet path): NEEDS_C.md v3
+#include "zscript/rsld/ld_g2_spread.zs"
+#include "zscript/rsld/ld_g2_core.zs"
+#include "zscript/rsld/ld_g2_fx.zs"
+#include "zscript/rsld/numbers_g2.zs"
+// Agent B (G1 damage rules, G8 pickup passives, G10 alerts): NEEDS_B.md v1
+#include "zscript/rsld/numbers_g1.zs"
+#include "zscript/rsld/numbers_g8.zs"
+#include "zscript/rsld/numbers_g10.zs"
+#include "zscript/rsld/ld_g8_rules.zs"
+#include "zscript/rsld/ld_g8_fx.zs"
+#include "zscript/rsld/ld_g1_fx.zs"
+#include "zscript/rsld/ld_g10_fx.zs"

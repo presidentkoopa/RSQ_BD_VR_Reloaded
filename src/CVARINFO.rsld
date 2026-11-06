@@ -1,0 +1,11 @@
+// LD mode (LegenDoom 3.0 x BD22 VR): zscript/rsld. Only read when LegenDoom 3.0 is loaded.
+server bool rsld_reroll = true;			// a legendary drop whose effect the LD mode does not carry yet is re-rolled (same slot, same rarity)
+user bool rsld_screen_name = false;		// the held gun's legendary name at the top of the view (owner 11-05: off; RSQ Wheel's card names it)
+server bool rsld_bossfight_only = true;		// with Champions and RSQ Miniboss's Bossfights: legendary weapons drop only from a Bossfight
+server bool rsld_offhand_legendary = true;	// scope Q8 (OPEN): an off-hand copy of a legendary gun carries that slot's legendary too (on, as
+						// the patch did: every shot got the held slot's effect); off = main hand only
+server bool rsld_slug_primary = true;		// Agent C (scope Q12 open): LegenDoom's Slug replaces the pump/SSG's primary fire only; BD22 VR's
+						// Slug alt fire stays as it ships. Off = Slug is not applied (re-rolled)
+server int rsld_q13 = 0;			// Agent B, scope Q13 (OPEN): Marksman / Decaying on fixed-damage guns: 0 = LegenDoom's rule literally, 1 = its average gain as a ratio
+server int rsld_q14 = 0;			// Agent B, scope Q14 (OPEN): Favoured counts 0 = the nine LegenDoom families owned, 1 = every BD22 weapon carried
+server noarchive int rsld_debug = 0;		// 1: what each effect did; 2: every hook call

@@ -1,0 +1,7 @@
+# Gravitic: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch debuff.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Gravitic on Shot_Gun slot Shotgun rarity Common
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 317 Gravitic p4 main Shot_Gun: Gravitic on BaronofHell2
+RSLD probe: target BaronofHell2 has LDGraviticSpeedDebuff x1 (128 tics) health 29883 speed 0.0

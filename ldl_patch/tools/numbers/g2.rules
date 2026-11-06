@@ -1,0 +1,129 @@
+# G2 (Agent C): LegenDoom 3.0 numbers for the shared bullet path effects. Every key is read from LegenDoom's pk3.
+# effect     key        file                                   state label     call            arg [scale]
+# --- the base guns the ratios are taken against (LD's NormalFire)
+Base         pi_dmg     decorate/Pistol/Pistol.dec             NormalFire      A_FireBullets   3
+Base         pi_spread  decorate/Pistol/Pistol.dec             NormalFire      A_FireBullets   0
+Base         sg_n       decorate/Shotgun/Shotgun.dec           NormalFire      A_FireBullets   2
+Base         sg_dmg     decorate/Shotgun/Shotgun.dec           NormalFire      A_FireBullets   3
+Base         sg_spread  decorate/Shotgun/Shotgun.dec           NormalFire      A_FireBullets   0
+Base         ss_n       decorate/SuperShotgun/SuperShotgun.dec NormalFire      A_FireBullets   2
+Base         ss_dmg     decorate/SuperShotgun/SuperShotgun.dec NormalFire      A_FireBullets   3
+Base         cg_dmg     decorate/Chaingun/Chaingun.dec         NormalFire      A_FireBullets   3
+Base         cg_spread  decorate/Chaingun/Chaingun.dec         NormalFire      A_FireBullets   0
+# LD's per-bullet damage is 5*random(1,3) (A_FireBullets without FBF_NORANDOM; LD writes it out in FireGauss): max x3
+Base         rnd_max    decorate/Shotgun/Shotgun.dec           re  "(?s)FireGauss:.*?A_RailAttack \(5\*random\(1,\s*(\d+)\)"
+# --- Blastwave: an invisible 1-tic missile that explodes ahead (CommonSpecialEffects.dec), per slot
+Blastwave    pi_dmg     decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDBlastwavePistol\s*\{.*?A_Explode \((\d+)"
+Blastwave    sg_dmg     decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDBlastwaveShotgun\s*:.*?A_Explode \((\d+)"
+Blastwave    ss_dmg     decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDBlastwaveSuperShotgun\s*:.*?A_Explode \((\d+)"
+Blastwave    cg_dmg     decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDBlastwavePistol\s*\{.*?A_Explode \((\d+)"
+Blastwave    radius     decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDBlastwavePistol\s*\{.*?A_Explode \(\d+,\s*(\d+)"
+Blastwave    speed      decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDBlastwavePistol\s*\{.*?Speed (\d+)"
+Blastwave    tics       decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDBlastwavePistol\s*\{.*?Spawn:\s*TNT1 A (\d+)"
+# --- Choked: fixed patterns (h, v per pellet) Shotgun 7, SuperShotgun 20
+Choked       sg_h0      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#1 0
+Choked       sg_v0      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#1 1
+Choked       sg_h1      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#2 0
+Choked       sg_v1      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#2 1
+Choked       sg_h2      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#3 0
+Choked       sg_v2      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#3 1
+Choked       sg_h3      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#4 0
+Choked       sg_v3      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#4 1
+Choked       sg_h4      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#5 0
+Choked       sg_v4      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#5 1
+Choked       sg_h5      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#6 0
+Choked       sg_v5      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#6 1
+Choked       sg_h6      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#7 0
+Choked       sg_v6      decorate/Shotgun/Shotgun.dec           FireChoked      A_FireBullets#7 1
+Choked       ss_h0      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#1 0
+Choked       ss_v0      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#1 1
+Choked       ss_h1      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#2 0
+Choked       ss_v1      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#2 1
+Choked       ss_h2      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#3 0
+Choked       ss_v2      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#3 1
+Choked       ss_h3      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#4 0
+Choked       ss_v3      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#4 1
+Choked       ss_h4      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#5 0
+Choked       ss_v4      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#5 1
+Choked       ss_h5      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#6 0
+Choked       ss_v5      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#6 1
+Choked       ss_h6      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#7 0
+Choked       ss_v6      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#7 1
+Choked       ss_h7      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#8 0
+Choked       ss_v7      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#8 1
+Choked       ss_h8      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#9 0
+Choked       ss_v8      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#9 1
+Choked       ss_h9      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#10 0
+Choked       ss_v9      decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#10 1
+Choked       ss_h10     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#11 0
+Choked       ss_v10     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#11 1
+Choked       ss_h11     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#12 0
+Choked       ss_v11     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#12 1
+Choked       ss_h12     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#13 0
+Choked       ss_v12     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#13 1
+Choked       ss_h13     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#14 0
+Choked       ss_v13     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#14 1
+Choked       ss_h14     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#15 0
+Choked       ss_v14     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#15 1
+Choked       ss_h15     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#16 0
+Choked       ss_v15     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#16 1
+Choked       ss_h16     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#17 0
+Choked       ss_v16     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#17 1
+Choked       ss_h17     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#18 0
+Choked       ss_v17     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#18 1
+Choked       ss_h18     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#19 0
+Choked       ss_v18     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#19 1
+Choked       ss_h19     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#20 0
+Choked       ss_v19     decorate/SuperShotgun/SuperShotgun.dec FireChoked      A_FireBullets#20 1
+# --- Cursed: x4 damage (20 vs 5); a pull with no monster hit and a miss: 5 self damage (cooldown 2 tics, 1-tic delay)
+Cursed       dmg        decorate/Shotgun/Shotgun.dec           FireCursed      A_FireBullets   3
+Cursed       self       decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDCursedEffectDamage.*?A_DamageSelf \((\d+)"
+Cursed       cooldown   decorate/SpecialEffects.dec            re  "(?s)ACTOR LDEffectStackingCooldown.*?Powerup.Duration (\d+)"
+Cursed       hitguard   decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDCursedEffectHit.*?Powerup.Duration (\d+)"
+# --- Explosive: every bullet's puff explodes: A_Explode (15, 64, 0, 1, 64)
+Explosive    dmg        decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDExplosiveBulletPuff.*?A_Explode \((\d+)"
+Explosive    radius     decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDExplosiveBulletPuff.*?A_Explode \(\d+,\s*(\d+)"
+Explosive    full       decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDExplosiveBulletPuff.*?A_Explode \(\d+,\s*\d+,\s*\d+,\s*\d+,\s*(\d+)"
+# --- Flak: a hit on a NOGRAVITY target (not a barrel): 5 x A_Explode(random(16,32),128) at the target +32 z, random(1,4) tics apart
+Flak         lo         decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDFlakDamage.*?A_Explode \(random\((\d+)"
+Flak         hi         decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDFlakDamage.*?A_Explode \(random\(\d+,\s*(\d+)"
+Flak         radius     decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDFlakDamage.*?A_Explode \(random\(\d+,\s*\d+\),\s*(\d+)"
+Flak         z          decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDFlakDamage.*?A_Warp \(AAPTR_TRACER, 0,0,(\d+)"
+Flak         gaplo      decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDFlakDamage.*?TNT1 A random\((\d+)"
+Flak         gaphi      decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDFlakDamage.*?TNT1 A random\(\d+,\s*(\d+)"
+# --- Heavy: the puff's ProjectileKickBack
+Heavy        kick       decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDHeavyBulletPuff.*?ProjectileKickBack (\d+)"
+# --- Perfect: 30 (2x LD's max 5*3), spread 0, a miss jams (Powerup.Duration -1 = 1 s), a hit guards 6 tics
+Perfect      dmg        decorate/Pistol/Pistol.dec             re  "(?s)FirePerfect:.*?A_FireBullets \(0, 0, -1, \((\d+)\)"
+Perfect      spread     decorate/Pistol/Pistol.dec             FirePerfect     A_FireBullets   0
+Perfect      jam_s      decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDPerfectJammed.*?Powerup.Duration -(\d+)"
+Perfect      hitguard   decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDPerfectHit.*?Powerup.Duration (\d+)"
+# --- PointBlank: shots free, a miss takes 1; spread Pistol 5.6 (as normal), Chaingun 16.8 (3x)
+PointBlank   pi_spread  decorate/Pistol/Pistol.dec             FirePointBlank  A_FireBullets   0
+PointBlank   cg_spread  decorate/Chaingun/Chaingun.dec         FirePointBlank  A_FireBullets   0
+PointBlank   take       decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDPointBlankBulletPuff.*?A_TakeInventory \(\"Clip\", (\d+)"
+# --- Renegade: 11 pellets for 7, 30 for 20
+Renegade     sg_n       decorate/Shotgun/Shotgun.dec           FireRenegade    A_FireBullets   2
+Renegade     ss_n       decorate/SuperShotgun/SuperShotgun.dec FireRenegade    A_FireBullets   2
+Renegade     scream     decorate/Shotgun/Shotgun.dec           FireRenegade    A_Jump          0
+# --- ShortRange: the shot three times at 200 / 150 / 100
+ShortRange   r1         decorate/Shotgun/Shotgun.dec           FireShortRange  A_FireBullets#1 6
+ShortRange   r2         decorate/Shotgun/Shotgun.dec           FireShortRange  A_FireBullets#2 6
+ShortRange   r3         decorate/Shotgun/Shotgun.dec           FireShortRange  A_FireBullets#3 6
+# --- Slug: Shotgun one bullet 7*random(5,15) spread 1.6; SuperShotgun two bullets 10*random(5,15) at frandom(+-1.6..3.2)
+Slug         sg_spread  decorate/Shotgun/Shotgun.dec           FireSlug        A_FireBullets   0
+Slug         sg_k       decorate/Shotgun/Shotgun.dec           re  "(?s)FireSlug:.*?A_FireBullets \([^,]*,[^,]*,[^,]*, (\d+)\*random"
+Slug         lo         decorate/Shotgun/Shotgun.dec           re  "(?s)FireSlug:.*?\*random\((\d+)"
+Slug         hi         decorate/Shotgun/Shotgun.dec           re  "(?s)FireSlug:.*?\*random\(\d+,\s*(\d+)"
+Slug         ss_k       decorate/SuperShotgun/SuperShotgun.dec re  "(?s)FireSlug:.*?A_FireBullets \(frandom\([^)]*\), 0, -1, (\d+)\*random"
+Slug         ss_alo     decorate/SuperShotgun/SuperShotgun.dec re  "(?s)FireSlug:.*?A_FireBullets \(frandom\(([\d.]+)"
+Slug         ss_ahi     decorate/SuperShotgun/SuperShotgun.dec re  "(?s)FireSlug:.*?A_FireBullets \(frandom\([\d.]+,\s*([\d.]+)"
+# --- Sniper: spread 0
+Sniper       spread     decorate/Shotgun/Shotgun.dec           FireSniper      A_FireBullets   0
+# --- Suspenseful: x (count + 5) / 5, count max 20, +1 per missed pull, a hit empties it
+Suspenseful  base       source/LEGNDLIB.acs                    re  "LDSuspensefulCounter\"\)\+(\d+)\),"
+Suspenseful  max        decorate/RareSpecialEffects.dec        re  "(?s)Actor LDSuspensefulCounter.*?maxamount (\d+)"
+# --- TripleThreat: two more copies at +-15 deg (fresh spread)
+TripleThreat offset     decorate/Shotgun/Shotgun.dec           re  "(?s)FireTripleThreat:.*?A_FireBullets \((\d+)\+frandom"
+# --- TwinShot: 14 pellets for 7
+TwinShot     sg_n       decorate/Shotgun/Shotgun.dec           FireTwinShot    A_FireBullets   2

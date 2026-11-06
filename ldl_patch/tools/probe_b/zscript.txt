@@ -1,0 +1,92 @@
+version "4.14"
+// TEST ONLY (never ships). Agent B's rig probe for G1/G8/G10 proofs: walk the player into an item by the engine's
+// own touch (velocity push, as probe_pickup wb_face), set health/armor, fill ammo, report the player's state.
+//   netevent b_take:<Class>     spawn <Class> 64 ahead (no replacement) and push the player into it until it is taken
+//   netevent b_hp:<n>           set health n          netevent b_ap:<n>   set armor to n (BasicArmor amount)
+//   netevent b_fill:<Ammo>      that ammo to its max  netevent b_zero:<Ammo>  that ammo to 0
+//   netevent b_give:<Class>:<n> GiveInventory          netevent b_report  health, armor, powerups, ammo
+//   netevent b_mon:<Class>:<d>  spawn a monster d ahead facing the player (no replacement), logs its health
+class RSLDB_Probe : EventHandler
+{
+	Actor pushTo; int pushTics; string pushCls;
+	PlayerPawn P() { return players[consoleplayer].mo; }
+
+	override void WorldTick()
+	{
+		let p = P(); if (!p || pushTics <= 0) return;
+		pushTics--;
+		if (pushTo && !pushTo.bDestroyed && pushTo.bSPECIAL)
+		{
+			vector2 d = pushTo.pos.xy - p.pos.xy; double l = d.Length();
+			if (l > 1) p.vel.xy = d / l * min(8, l);
+			if (pushTics == 0) Console.Printf("B probe: %s NOT taken (dist %.0f)", pushCls, l);
+		}
+		else { Console.Printf("B probe: %s taken at t=%d", pushCls, level.maptime); pushTics = 0; p.vel.xy = (0, 0); }
+	}
+
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		let p = P(); if (!p) return;
+		Array<string> a; e.Name.Split(a, ":");
+		string c = a[0];
+		if (c == "b_take" && a.Size() > 1)
+		{
+			class<Actor> cls = a[1];
+			if (!cls) { Console.Printf("B probe: no class %s", a[1]); return; }
+			vector3 at = p.Vec3Angle(64, p.angle, 0);
+			pushTo = Actor.Spawn(cls, at, NO_REPLACE); pushCls = a[1]; pushTics = 70;
+			Console.Printf("B probe: %s spawned, %s", a[1], Rep(p));
+		}
+		else if (c == "b_hp" && a.Size() > 1) { p.A_SetHealth(a[1].ToInt()); Console.Printf("B probe: health %d", p.health); }
+		else if (c == "b_ap" && a.Size() > 1)
+		{
+			let ba = p.FindInventory("BasicArmor");
+			if (ba) ba.Amount = a[1].ToInt();
+			Console.Printf("B probe: armor %d", p.CountInv("BasicArmor"));
+		}
+		else if ((c == "b_fill" || c == "b_zero") && a.Size() > 1)
+		{
+			class<Inventory> cls = a[1];
+			if (!cls) return;
+			if (!p.FindInventory(cls)) p.GiveInventory(cls, 1);
+			let it = p.FindInventory(cls);
+			if (it) it.Amount = c == "b_fill" ? it.MaxAmount : 0;
+			Console.Printf("B probe: %s %d/%d", a[1], it ? it.Amount : -1, it ? it.MaxAmount : -1);
+		}
+		else if (c == "b_give" && a.Size() > 2)
+		{
+			class<Inventory> cls = a[1];
+			if (cls) p.GiveInventory(cls, a[2].ToInt());
+			Console.Printf("B probe: gave %s %s -> %d", a[1], a[2], cls ? p.CountInv(cls) : -1);
+		}
+		else if (c == "b_mon" && a.Size() > 1)
+		{
+			class<Actor> cls = a[1];
+			if (!cls) return;
+			double d = a.Size() > 2 ? a[2].ToDouble() : 160;
+			let m = Actor.Spawn(cls, p.Vec3Angle(d, p.angle, 0), NO_REPLACE);
+			if (m) { m.angle = m.AngleTo(p); Console.Printf("B probe: %s spawned at %.0f, health %d", a[1], d, m.health); }
+		}
+		else if (c == "b_report") Console.Printf("B probe report: %s", Rep(p));
+		else if (c == "b_alert" && a.Size() > 1)
+		{
+			// how many sectors one A_AlertMonsters(dist) of the player reaches (sector SoundTarget), from a clean slate
+			for (int i = 0; i < level.Sectors.Size(); i++) level.Sectors[i].SoundTarget = null;
+			p.A_AlertMonsters(a[1].ToDouble());
+			int n = 0;
+			for (int i = 0; i < level.Sectors.Size(); i++) if (level.Sectors[i].SoundTarget == p) n++;
+			Console.Printf("B probe: A_AlertMonsters(%s) from (%.0f %.0f) -> %d of %d sectors", a[1], p.pos.x, p.pos.y, n, level.Sectors.Size());
+		}
+	}
+
+	static string Rep(PlayerPawn p)
+	{
+		string s = String.Format("health %d armor %d", p.health, p.CountInv("BasicArmor"));
+		for (let i = p.Inv; i; i = i.Inv)
+		{
+			if (i is "Powerup") s = s .. String.Format(" | %s %d", i.GetClassName(), Powerup(i).EffectTics);
+			else if (i is "Ammo" && i.Amount > 0) s = s .. String.Format(" | %s %d/%d", i.GetClassName(), i.Amount, i.MaxAmount);
+		}
+		return s;
+	}
+}

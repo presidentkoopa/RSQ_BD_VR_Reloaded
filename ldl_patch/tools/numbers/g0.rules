@@ -1,0 +1,81 @@
+# G0: the 56 effects carried from the old patch. LegenDoom 3.0's numbers, read from its own code.
+# effect        key           file                                        label / mode            call / what        arg
+# --- damage x (the LD shotgun's normal pellet is 5 x random(1,3); multipliers are LD's damage / that base)
+Pristine        base          decorate/Shotgun/Shotgun.dec                FirePristine            A_FireBullets#1    3
+Pristine        dmg           decorate/Shotgun/Shotgun.dec                PristineStronk          A_FireBullets#1    3
+Pristine        hp            decorate/Shotgun/Shotgun.dec                FirePristine            A_JumpIfHealthLower#1 0
+Raging          base          decorate/Shotgun/Shotgun.dec                FireRaging              A_FireBullets#1    3
+Raging          dmg           decorate/Shotgun/Shotgun.dec                FireRagingActive        A_FireBullets#1    3
+Rampaging       base          decorate/Shotgun/Shotgun.dec                FireRampaging           A_FireBullets#1    3
+Rampaging       dmg           decorate/Shotgun/Shotgun.dec                FireRampaging           A_FireBullets#2    3
+Serious         base          decorate/Shotgun/Shotgun.dec                FireSerious             A_FireBullets#1    3
+Serious         dmg           decorate/Shotgun/Shotgun.dec                FireSerious             A_FireBullets#2    3
+ProStrat        base          decorate/Shotgun/Shotgun.dec                FireProStrat            A_FireBullets#1    3
+ProStrat        dmg           decorate/Shotgun/Shotgun.dec                FireProStrat            A_FireBullets#2    3
+Berserker       base          decorate/Shotgun/Shotgun.dec                FireBerserker           A_FireBullets#1    3
+Berserker       top           decorate/Shotgun/Shotgun.dec                FireBerserker           A_FireBullets#11   3
+Berserker       hp1           decorate/Shotgun/Shotgun.dec                FireBerserker           A_JumpIfHealthLower#1 0
+Berserker       hp2           decorate/Shotgun/Shotgun.dec                FireBerserker           A_JumpIfHealthLower#2 0
+Lucky           chance        decorate/Shotgun/Shotgun.dec                FireLucky               A_Jump#1           0
+Lucky           base          decorate/Shotgun/Shotgun.dec                FireLucky               A_FireBullets#1    3
+Lucky           dmg           decorate/Shotgun/Shotgun.dec                FireLucky               A_FireBullets#2    3
+CQC             base          decorate/Shotgun/Shotgun.dec                NormalFire              A_FireBullets#1    3
+CQC             dmg           decorate/Shotgun/Shotgun.dec                FireCQC                 A_FireBullets#1    3
+CQC             spreadbase    decorate/Shotgun/Shotgun.dec                NormalFire              A_FireBullets#1    0
+CQC             spread        decorate/Shotgun/Shotgun.dec                FireCQC                 A_FireBullets#1    0
+SteadyShot      base          decorate/Pistol/Pistol.dec                  FireSteadyShot          A_FireBullets#1    3
+SteadyShot      dmg           decorate/Pistol/Pistol.dec                  FireSteadyShot          A_FireBullets#2    3
+SteadyShot      spread        decorate/Pistol/Pistol.dec                  FireSteadyShot          A_FireBullets#2    0
+SteadyShot      viewheight    decorate/Pistol/Pistol.dec                  re  "LDSteadyShotCrouchCheck\"\)\s*<=\s*(\d+)"
+Machine         base          decorate/Pistol/Pistol.dec                  NormalFire              A_FireBullets#1    3
+Machine         dmg           decorate/Pistol/Pistol.dec                  FireMachineAttack       A_FireBullets#1    3
+Machine         shottics      decorate/Pistol/Pistol.dec                  FireMachineAttack       tics
+Machine         normaltics    decorate/Pistol/Pistol.dec                  NormalFire              tics
+Machine         normalend     decorate/Pistol/Pistol.dec                  CommonFireEnd           tics
+Annoying        dmg           decorate/Shotgun/Shotgun.dec                FireAnnoying            A_FireBullets#1    3
+Patient         div           source/LEGNDLIB.acs                         re  "LDPatientCounter\"\)\+(\d+)\),\d+"
+Patient         every         decorate/Shotgun/Shotgun.dec                ReadyPatient            tics
+Bloody          div           source/LEGNDLIB.acs                         re  "LDBloodyCounter\"\)\+(\d+)\),\d+"
+# --- monster groups: LegenDoom's DamageFactor on its own monsters
+Exorcist        mult          decorate/MonsterResistance.dec              re  "DamageFactor \"Exorcist\",\s*([\d.]+)"
+Extinguishing   mult          decorate/MonsterResistance.dec              re  "DamageFactor \"Extinguishing\",\s*([\d.]+)"
+Wrangler        mult          decorate/MonsterResistance.dec              re  "DamageFactor \"Wrangler\",\s*([\d.]+)"
+Antiair         mult          decorate/MonsterResistance.dec              re  "DamageFactor \"Antiair\",\s*([\d.]+)"
+Scrapper        mult          decorate/MonsterResistance.dec              re  "DamageFactor \"Scrapper\",\s*([\d.]+)"
+Blessed         mult          decorate/MonsterResistance.dec              re  "DamageFactor \"Blessed\",\s*([\d.]+)"
+Heroic          mult          decorate/MonsterResistance.dec              re  "DamageFactor \"Heroic\",\s*([\d.]+)"
+DemonSlayer     mult          decorate/MonsterResistance.dec              re  "DamageFactor \"DemonSlayer\",\s*([\d.]+)"
+# --- ammo (A_Jump chance out of 256 to the shot without FBF_USEAMMO)
+Unlikely        chance        decorate/Shotgun/Shotgun.dec                FireUnlikely            A_Jump#1           0
+Improbable      chance        decorate/Shotgun/Shotgun.dec                FireImprobable          A_Jump#1           0
+Impossible      chance        decorate/Shotgun/Shotgun.dec                FireImpossible          A_Jump#1           0
+Impossible      gen           decorate/Shotgun/Shotgun.dec                FireImpossible          A_GiveInventory#1  1
+Efficient       take          decorate/SuperShotgun/SuperShotgun.dec      FireEfficient           A_TakeInventory#1  1
+Efficient       use           decorate/SuperShotgun/SuperShotgun.dec      re  "Weapon.AmmoUse1\s+(\d+)"
+# --- while held (LegenDoom's Ready loops: 35 tics of A_WeaponReady between gifts)
+Replicating     every         decorate/Shotgun/Shotgun.dec                ReadyReplicating        tics
+Replicating     amount        decorate/Shotgun/Shotgun.dec                ReadyReplicating        A_GiveInventory#1  1
+Regenerating    every         decorate/Shotgun/Shotgun.dec                ReadyRegenerating       tics
+Sensing         every         decorate/Shotgun/Shotgun.dec                ReadySensing            tics
+Sensing         radius        decorate/Shotgun/Shotgun.dec                ReadySensing            A_RadiusGive#1     1
+Desperate       hp            decorate/Shotgun/Shotgun.dec                FireDesperate           A_JumpIfHealthLower#1 0
+# --- on hit
+Vampiric        steal         decorate/Fist/Fist.dec                      FireVampiric            A_CustomPunch#1    5
+Vampiric        stealberserk  decorate/Fist/Fist.dec                      FireVampiric            A_CustomPunch#2    5
+Scavenging      steal         decorate/Fist/Fist.dec                      FireScavenging          A_CustomPunch#1    5
+Scavenging      stealberserk  decorate/Fist/Fist.dec                      FireScavenging          A_CustomPunch#2    5
+Thieving        chance        decorate/UncommonSpecialEffects.dec         LDThievingEffect/Pickup A_Jump#1           0
+Thieving        skipclip      decorate/UncommonSpecialEffects.dec         LDThievingEffect/GiveClip A_Jump#1         0
+Thieving        skipshell     decorate/UncommonSpecialEffects.dec         LDThievingEffect/GiveShell A_Jump#1        0
+Thieving        skiprocket    decorate/UncommonSpecialEffects.dec         LDThievingEffect/GiveRocket A_Jump#1       0
+# --- on kill / corpse
+Violent         dmg           decorate/CommonSpecialEffects.dec           LDViolentExplosion/Spawn A_Explode#1       0
+Violent         radius        decorate/CommonSpecialEffects.dec           LDViolentExplosion/Spawn A_Explode#1       1
+Violent         fear          decorate/CommonSpecialEffects.dec           LDViolentEffectChecker/ActivateEffect A_RadiusGive#1 1
+WarmUp          kills         decorate/UncommonSpecialEffects.dec         prop LDWarmUpCounter inventory.maxamount
+Patient         max           decorate/RareSpecialEffects.dec             prop LDPatientCounter inventory.maxamount
+# Persistent: LegenDoom's LDPersistentBulletPuff spawns one LDPersistentBleedingEffectDamage per pellet hit: 8 bleeds,
+# one every 35 tics, each an LDPersistentBleedingDamage missile of Damage (5), +PAINLESS +NODAMAGETHRUST
+Persistent      bleeds        decorate/EpicSpecialEffects.dec             re  "user_persistenttimer\",\s*(\d+)\)"
+Persistent      every         decorate/EpicSpecialEffects.dec             re  "user_dottimer\",\s*(\d+)\)"
+Persistent      dmg           decorate/EpicSpecialEffects.dec             re  "ACTOR LDPersistentBleedingDamage\s*\{[^}]*?Damage \((\d+)\)"

@@ -1,0 +1,53 @@
+# Lucky: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0 (ORDER=ldfirst). Batch kill.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Lucky on Shot_Gun slot Shotgun rarity Rare
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 263 Lucky p3 main Shot_Gun: lucky pull: x5
+RSLD 263 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 263 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 263 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 263 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 264 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 264 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 264 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 264 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 264 Lucky p3 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 318 Lucky p4 main Shot_Gun: lucky pull: x5
+RSLD 318 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 318 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 318 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 318 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 319 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 319 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 319 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 319 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 319 Lucky p4 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 374 Lucky p5 main Shot_Gun: plain pull
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 431 Lucky p6 main Shot_Gun: lucky pull: x5
+RSLD 431 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 431 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 431 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 431 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 432 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 432 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 432 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 432 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD 432 Lucky p6 main Shot_Gun: damage 13 -> 65 (x5.00) on BaronofHell2
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 486 Lucky p7 main Shot_Gun: plain pull
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 542 Lucky p8 main Shot_Gun: plain pull
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 599 Lucky p9 main Shot_Gun: plain pull
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0

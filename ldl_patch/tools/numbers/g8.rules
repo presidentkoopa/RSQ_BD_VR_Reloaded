@@ -1,0 +1,68 @@
+# G8 pickup passives (Agent B): LegenDoom 3.0's item-script rules (source/LEGENDITM.acs LD_<Item>Activate) and item
+# numbers. Read line by line; 'nth' counts every match in the file (LEGENDITM.acs:527-586 is a commented-out copy of
+# LD_ClipActivate, so the live script's lines are the 7th..9th "Clip" matches).
+# effect       key          file                        re  "regex"                                          nth
+#
+# Scrounger: +20% per copy. Clip 10 -> +2 (LD_ClipActivate, LEGENDITM.acs:598/601); shell 4 -> +1, rocket 1 -> +1:
+# LegenDoom's extra is ceil(20%) (the shell and rocket rows show the rounding).
+Scrounger      clip_base    source/LEGENDITM.acs        re  "GiveInventory\(.Clip., (\d+)\);"               7
+Scrounger      clip_add     source/LEGENDITM.acs        re  "GiveInventory\(.Clip., (\d+)\);"               8
+Scrounger      shell_base   source/LEGENDITM.acs        re  "GiveInventory\(.Shell., (\d+)\);"              3
+Scrounger      shell_add    source/LEGENDITM.acs        re  "GiveInventory\(.Shell., (\d+)\);"              4
+Scrounger      rocket_base  source/LEGENDITM.acs        re  "GiveInventory\(.RocketAmmo., (\d+)\);"         3
+Scrounger      rocket_add   source/LEGENDITM.acs        re  "GiveInventory\(.RocketAmmo., (\d+)\);"         4
+# Hoarder: +100% for each Hoarder slot whose gun uses that ammo (LD_ClipActivate: pistol slot and chaingun slot)
+Hoarder        clip_add     source/LEGENDITM.acs        re  "GiveInventory\(.Clip., (\d+)\);"               9
+#
+# Upgrading meter: points per LegenDoom pickup (DECORATE constants) and that pickup's amount (LD_<Item>Activate)
+Upgrading      clip_pts     DECORATE                    re  "clipupgradingvalue = (\d+);"                   1
+Upgrading      clipbox_pts  DECORATE                    re  "clipboxupgradingvalue = (\d+);"                1
+Upgrading      shell_pts    DECORATE                    re  "shellupgradingvalue = (\d+);"                  1
+Upgrading      shellbox_pts DECORATE                    re  "shellboxupgradingvalue = (\d+);"               1
+Upgrading      rocket_pts   DECORATE                    re  "rocketupgradingvalue = (\d+);"                 1
+Upgrading      rocketbox_pts DECORATE                   re  "rocketboxupgradingvalue = (\d+);"              1
+Upgrading      cell_pts     DECORATE                    re  "cellupgradingvalue = (\d+);"                   1
+Upgrading      cellpack_pts DECORATE                    re  "cellpackupgradingvalue = (\d+);"               1
+Upgrading      backpack_pts DECORATE                    re  "backpackupgradingvalue = (\d+);"               1
+Upgrading      clip_amt     source/LEGENDITM.acs        re  "GiveInventory\(.Clip., (\d+)\);"               7
+Upgrading      clipbox_amt  source/LEGENDITM.acs        re  "GiveInventory\(.Clip., (\d+)\);"               11
+Upgrading      shell_amt    source/LEGENDITM.acs        re  "GiveInventory\(.Shell., (\d+)\);"              3
+Upgrading      shellbox_amt source/LEGENDITM.acs        re  "GiveInventory\(.Shell., (\d+)\);"              7
+Upgrading      rocket_amt   source/LEGENDITM.acs        re  "GiveInventory\(.RocketAmmo., (\d+)\);"         3
+Upgrading      rocketbox_amt source/LEGENDITM.acs       re  "GiveInventory\(.RocketAmmo., (\d+)\);"         6
+Upgrading      cell_amt     source/LEGENDITM.acs        re  "GiveInventory\(.Cell., (\d+)\);"               3
+Upgrading      cellpack_amt source/LEGENDITM.acs        re  "GiveInventory\(.Cell., (\d+)\);"               7
+# Upgrading damage per level, per LegenDoom slot: bullets 5 -> 6 per level (Fire*UpgradingDamage0/10), plasma ball
+# 5 -> 6 -> 7, rocket 22 -> 24 (base 20), BFG ball 110 -> 120 (base 100), saw/fists x1.1 per level
+Upgrading      pi_d0        decorate/Pistol/Pistol.dec               FireUpgradingDamage0   A_FireBullets  3
+Upgrading      pi_d1        decorate/Pistol/Pistol.dec               FireUpgradingDamage10  A_FireBullets  3
+Upgrading      sg_d0        decorate/Shotgun/Shotgun.dec             FireUpgradingDamage0   A_FireBullets  3
+Upgrading      sg_d1        decorate/Shotgun/Shotgun.dec             FireUpgradingDamage10  A_FireBullets  3
+Upgrading      ss_d0        decorate/SuperShotgun/SuperShotgun.dec   FireUpgradingDamage0   A_FireBullets  3
+Upgrading      ss_d1        decorate/SuperShotgun/SuperShotgun.dec   FireUpgradingDamage10  A_FireBullets  3
+Upgrading      cg_d0        decorate/Chaingun/Chaingun.dec           FireUpgradingDamage0   A_FireBullets  3
+Upgrading      cg_d1        decorate/Chaingun/Chaingun.dec           FireUpgradingDamage10  A_FireBullets  3
+Upgrading      rl_d1        decorate/CommonSpecialEffects.dec   re  "^\s*Damage (\d+)\s*$"                      11
+Upgrading      rl_d2        decorate/CommonSpecialEffects.dec   re  "^\s*Damage (\d+)\s*$"                      12
+Upgrading      pr_d1        decorate/CommonSpecialEffects.dec   re  "^\s*Damage (\d+)\s*$"                      16
+Upgrading      pr_d2        decorate/CommonSpecialEffects.dec   re  "^\s*Damage (\d+)\s*$"                      17
+Upgrading      bf_d1        decorate/CommonSpecialEffects.dec   re  "^\s*Damage (\d+)\s*$"                      21
+Upgrading      bf_d2        decorate/CommonSpecialEffects.dec   re  "^\s*Damage (\d+)\s*$"                      22
+Upgrading      cs_mult1     decorate/Chainsaw/Chainsaw.dec      re  "A_Saw \(.., .., \(2 \* random\(1,10\)\) \* (\d\.\d+)"  1
+Upgrading      fi_mult1     decorate/Fist/Fist.dec              re  "A_CustomPunch \(\(2 \* random\(1, 10\)\*(\d\.\d+)\)"  1
+# Upgrading free shot: levels 3-4 A_Jump(32) to the no-ammo shot, level 5 A_Jump(64)
+Upgrading      free34       decorate/Shotgun/Shotgun.dec             FireUpgradingDamage30  A_Jump         0
+Upgrading      free5        decorate/Shotgun/Shotgun.dec             FireUpgradingDamage50  A_Jump         0
+#
+# Sustained: item powerups are given as (2 + Sustained) half-length givers (LD_RadsuitActivate): +1/2 per copy
+Sustained      halves       source/LEGENDITM.acs        re  "i < (\d+)\+LD_CountEffect\(0, EFFECT_SUSTAINED\)"  13
+# Champion: (2 + Sustained) of each LegenDoom giver (LD_BerserkActivate)
+Champion       givers       source/LEGENDITM.acs        re  "i < (\d+)\+LD_CountEffect\(0, EFFECT_SUSTAINED\)"  1
+# Soulstorm on a megasphere: (2 + Sustained) LDInvulnerabilitySphereGiver (LD_MegasphereActivate)
+Soulstorm      givers       source/LEGENDITM.acs        re  "i < (\d+)\+LD_CountEffect\(0, EFFECT_SUSTAINED\)"  4
+# Spiritual: (1 + Spiritual) bonuses per bonus (LD_HealthBonusActivate)
+Spiritual      base         source/LEGENDITM.acs        re  "GiveInventory\(.HealthBonus., (\d+)\+LD_CountEffect"  1
+# Augmented: (1 + Sustained) 5-second givers per bonus (LD_HealthBonusActivate)
+Augmented      givers       source/LEGENDITM.acs        re  "GiveInventory\(.LDAugmentedDamageGiver., (\d+)\+"  1
+# Survivor: (1 + Survivor) heals per stimpack / medikit (LD_StimpackActivate)
+Survivor       base         source/LEGENDITM.acs        re  "i < (\d+)\+LD_CountEffect\(0, EFFECT_SURVIVOR\)"  1

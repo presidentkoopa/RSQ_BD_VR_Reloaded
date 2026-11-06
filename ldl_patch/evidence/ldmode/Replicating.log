@@ -1,0 +1,6 @@
+# Replicating: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0 (ORDER=full). Batch ammo.
+RSLD probe: Replicating on Shot_Gun slot Shotgun rarity Common
+RSLD probe: Shot_Gun magazine 9 reserve 40
+RSLD 154 Replicating: +1 AmmoShell
+RSLD 189 Replicating: +1 AmmoShell
+RSLD probe: Shot_Gun magazine 9 reserve 42

@@ -1,0 +1,20 @@
+# Machine: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch melee.
+RSLD probe: cleared slot Pistol
+RSLD probe: Machine on BrutalPistol slot Pistol rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 748 Machine p3 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 759 Machine p4 main BrutalPistol: the gun's own gap: 11 tics
+RSLD 759 Machine p4 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 760 Machine p5 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 761 Machine p6 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 762 Machine p7 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 763 Machine p8 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 764 Machine p9 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 765 Machine p10 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 766 Machine p11 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 767 Machine p12 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 768 Machine p13 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 769 Machine p14 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 770 Machine p15 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 771 Machine p16 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2

@@ -1,0 +1,8 @@
+# Sensing: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch ammo.
+RSLD probe: Sensing on Shot_Gun slot Shotgun rarity Uncommon
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (208 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: 0 actors LDSensingEffectVisual*
+RSLD 155 Sensing: pulse
+RSLD 190 Sensing: pulse
+RSLD probe: 25 actors LDSensingEffectVisual*

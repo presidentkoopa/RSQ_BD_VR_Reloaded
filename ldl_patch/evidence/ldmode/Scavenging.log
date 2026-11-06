@@ -1,0 +1,8 @@
+# Scavenging: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch melee.
+RSLD probe: cleared slot Fists
+RSLD probe: Scavenging on Melee_Attacks slot Fists rarity Rare
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-144 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 394 Scavenging p7 main Melee_Attacks: +5 armor
+RSLD 428 Scavenging p8 main Melee_Attacks: +5 armor
+RSLD probe: player BDoomer has BasicArmor x10 health 100 speed 8.0

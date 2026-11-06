@@ -1,0 +1,157 @@
+// LD mode (LegenDoom 3.0 x BD22 VR). Nothing here is reachable without LegenDoom: zscript/rsld/menu.zs puts these
+// in place at run time only when LegenDoom 3.0 is loaded. LegenDoom's MENUDEF replaces the main menu (its own art) and
+// the whole options menu (dropping QuestZDoom's VR Options and BD22 VR's row); owner 11-06 07:31: "I still want BD Main
+// Menu, not LD, but with a button for LD Options so we don't leave them out".
+
+OptionValue "RSLD_Q13"
+{
+	0, "LegenDoom's rule (max / random to 2x)"
+	1, "LegenDoom's average gain (x1.5)"
+}
+
+OptionValue "RSLD_Q14"
+{
+	0, "LegenDoom's nine weapon families"
+	1, "Every weapon carried"
+}
+
+OptionMenu "RSLD_Options"
+{
+	Title "LEGENDOOM x BD22 VR"
+	Command "Legendary Info Screen", "pukename LDMenuToggle", 0, 1
+	Command "Drop Held Gun's Legendary", "netevent rsld_drop", 0, 1
+	StaticText " "
+	Option "Legendary Name on Screen", "rsld_screen_name", "OnOff"
+	Option "Re-roll Effects Not Carried Yet", "rsld_reroll", "OnOff"
+	Option "Legendary Guns Only From Bossfights", "rsld_bossfight_only", "OnOff"
+	Option "Off-hand Copy Carries the Legendary", "rsld_offhand_legendary", "OnOff"
+	Option "Slug Legendary: Primary Fire Only", "rsld_slug_primary", "OnOff"
+	Option "Marksman / Decaying on Fixed-damage Guns", "rsld_q13", "RSLD_Q13"
+	Option "Favoured Counts", "rsld_q14", "RSLD_Q14"
+	Option "Debug Log", "rsld_debug", "OnOff"
+	StaticText " "
+	Submenu "LegenDoom Options", "LegenDoom"
+}
+
+// Brutal Doom v22's own main menu (brutal22test6 MENUDEF.TXT, ListMenu "MainMenu"), plus the LegenDoom Options button
+ListMenu "RSLD_BDMainMenu"
+{
+	IfGame(Doom, Chex)
+	{
+		StaticPatch 94, 2, "graphics/MISC/M_DOOM.png"	// BD22's own logo by its full path: LegenDoom's TEXTURES redefines M_DOOM
+		Position 97, 72
+		IfOption(ReadThis)
+		{
+			Position 97, 64
+		}
+	}
+	IfGame(Strife)
+	{
+		StaticPatch 84, 2, "M_STRIFE"
+		Position 97, 45
+	}
+	IfGame(Heretic)
+	{
+		StaticPatch 88, 0, "M_HTIC"
+		StaticPatch 40, 10, "M_SKL01"
+		StaticPatch 232, 10, "M_SKL00"
+		Position 110, 56
+	}
+	IfGame(Hexen)
+	{
+		StaticPatch 88, 0, "M_HTIC"
+		StaticPatch 37, 80, "FBULB0"
+		StaticPatch 278, 80, "FBULA0"
+		Position 110, 56
+	}
+
+	IfGame(Doom, Strife, Chex)
+	{
+		StaticTextCentered 155, 45, "$BD_ShowVerNum"
+		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
+		ifOption(SwapMenu)
+		{
+			TextItem "$MNU_LOADGAME", "l", "LoadGameMenu"
+			TextItem "$MNU_SAVEGAME", "s", "SaveGameMenu"
+			TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
+			TextItem "$MNU_BDOPTIONS", "b", "BrutalMenu"
+			TextItem "LegenDoom Options", "e", "LegenDoom"
+			TextItem "$MNU_CREDITS", "c", "BrutalCreditsMenu"
+		}
+		else
+		{
+			TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
+			TextItem "$MNU_BDOPTIONS", "b", "BrutalMenu"
+			TextItem "LegenDoom Options", "e", "LegenDoom"
+			TextItem "$MNU_LOADGAME", "l", "LoadGameMenu"
+			TextItem "$MNU_SAVEGAME", "s", "SaveGameMenu"
+			TextItem "$MNU_CREDITS", "c", "BrutalCreditsMenu"
+		}
+		ifOption(ReadThis)
+		{
+			TextItem "$MNU_INFO","r", "ReadThisMenu"
+		}
+		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
+	}
+
+	IfGame(Heretic, Hexen)
+	{
+		TextItem "$MNU_NEWGAME", "n", "PlayerclassMenu"
+		TextItem "$MNU_OPTIONS", "o", "OptionsMenu"
+		TextItem "$MNU_BDOPTIONS", "b", "BrutalMenu"
+			TextItem "LegenDoom Options", "e", "LegenDoom"
+		TextItem "$MNU_CREDITS", "c", "BrutalCreditsMenu"
+		TextItem "$MNU_GAMEFILES", "g", "GameFilesMenu"
+		TextItem "$MNU_INFO", "i", "ReadThisMenu"
+		TextItem "$MNU_QUITGAME", "q", "QuitMenu"
+	}
+}
+
+// QuestZDoom 17.3's own options menu (qzdoom.pk3 menudef.txt, OptionMenu "OptionsMenu"), plus BD22 VR's row and the
+// two LegenDoom rows. Rows other mods added to LegenDoom's options menu are kept at the end (menu.zs).
+OptionMenu "RSLD_OptionsMenuBD" protected
+{
+	Title "$OPTMNU_TITLE"
+	Submenu "Info & Credits", 			"InfoAndCreditsMenu"
+	Submenu "Quick Menu",				"QuickMenu"
+	Submenu "VR Options",				"VROptionsMenu"
+	Submenu "BD22 VR Weapons",			"RSQ_Options"
+	Submenu "LegenDoom Options",			"LegenDoom"
+	Submenu "LegenDoom x BD22 VR",		"RSLD_Options"
+	StaticText " "
+	Submenu "$OPTMNU_CONTROLS",			"CustomizeControls"
+	IfNotOption(OpenXR)
+	{
+	Submenu "$OPTMNU_MOUSE",			"MouseOptions"
+	Submenu "$OPTMNU_JOYSTICK",			"JoystickOptions"
+	}
+	StaticText " "
+	Submenu "$OPTMNU_PLAYER",			"NewPlayerMenu"
+	Submenu "$OPTMNU_GAMEPLAY",			"GameplayOptions"
+	Submenu "$OPTMNU_COMPATIBILITY",	"CompatibilityOptions"
+	Submenu "$OPTMNU_AUTOMAP",			"AutomapOptions"
+	Submenu "$OPTMNU_HUD",				"HUDOptions"
+	Submenu "$OPTMNU_MISCELLANEOUS",	"MiscOptions"
+	Submenu "$OPTMNU_NETWORK",			"NetworkOptions"
+	Submenu "$OPTMNU_SOUND",			"SoundOptions"
+	Submenu "$OPTMNU_DISPLAY",			"VideoOptions"
+	Submenu "$OPTMNU_VIDEO",			"VideoModeMenu"
+	IfOption(Experimental)
+	{
+		Submenu "$OPTMNU_EXPERIMENTAL",	"ExperimentalMenu", 0, 0, Gold
+	}
+	StaticText " "
+	Submenu "$OS_TITLE", "os_Menu"
+	Option "$OPTMNU_SIMPLEON",			"m_simpleoptions", "OnOff"
+	LabeledSubmenu "Active profile", "cmdlineprofile", "CommandLineProfileMenu"
+	StaticText " "
+	SafeCommand	"$OPTMNU_DEFAULTS",		"reset2defaults"
+	SafeCommand	"$OPTMNU_RESETTOSAVED",	"reset2saved"
+	SafeCommand	"$OPTMNU_WRITEINI",		"writeini"
+	
+	Command "$OPTMNU_CONSOLE",			"menuconsole"
+	//Command "$OPTMNU_OPENCONFIG",		"openconfig"
+	//Command "$OPTMNU_OPENSCREENSHOTS",	"openscreenshots"
+	//Command "$OPTMNU_OPENSAVES",		"opensaves"
+	StaticText " "
+}

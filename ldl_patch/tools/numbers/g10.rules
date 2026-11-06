@@ -1,0 +1,6 @@
+# G10 alerts and cosmetics (Agent B): LegenDoom 3.0 numbers, read from its pk3.
+# Stealth: A_AlertMonsters(64) instead of the full alert; its own fire sound at volume 0.1 (Shotgun.dec FireStealth)
+Stealth      alert      decorate/Shotgun/Shotgun.dec           FireStealth        A_AlertMonsters   0
+Stealth      vol        decorate/Shotgun/Shotgun.dec           FireStealth        A_PlaySound#1     2
+# Agitating: SetMugShotState("Ouch") on every attack (LEGNDLIB.acs LDAgitatingScreaming); its sounds are not used
+# (owner 11-06: mechanics only, silent). No number.

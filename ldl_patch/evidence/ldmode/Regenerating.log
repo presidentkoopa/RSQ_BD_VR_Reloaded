@@ -1,0 +1,9 @@
+# Regenerating: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch ammo.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Regenerating on Shot_Gun slot Shotgun rarity Common
+RSLD probe: health 50
+RSLD 1755 Regenerating: health bonus, 51
+RSLD 1790 Regenerating: health bonus, 52
+RSLD 1825 Regenerating: health bonus, 53
+RSLD probe: player BDoomer has Health x0 health 53 speed 8.0
+RSLD probe: health 100

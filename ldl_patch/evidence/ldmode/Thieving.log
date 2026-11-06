@@ -1,0 +1,15 @@
+# Thieving: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch melee.
+RSLD probe: Thieving on Melee_Attacks slot Fists rarity Uncommon
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-144 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 140 Thieving p1 main Melee_Attacks: +10 Clip2 (LegenDoom Clip)
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-144 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-144 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 224 Thieving p3 main Melee_Attacks: +10 Clip2 (LegenDoom Clip)
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-144 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 266 Thieving p4 main Melee_Attacks: +4 AmmoShell (LegenDoom Shell)
+RSLD probe: player BDoomer has Clip2 x20 health 100 speed 8.0
+RSLD probe: player BDoomer has AmmoShell x4 health 100 speed 8.0

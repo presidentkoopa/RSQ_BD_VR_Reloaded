@@ -1,0 +1,26 @@
+# Improbable: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch ammo.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Improbable on Shot_Gun slot Shotgun rarity Rare
+RSLD probe: Shot_Gun magazine 4 reserve 50
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 591 Improbable p9 main Shot_Gun: free shot (1)
+RSLD 591 Improbable p9 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 647 Improbable p10 main Shot_Gun: paid shot (1)
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 703 Improbable p11 main Shot_Gun: free shot (1)
+RSLD 703 Improbable p11 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 759 Improbable p12 main Shot_Gun: paid shot (1)
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 816 Improbable p13 main Shot_Gun: free shot (1)
+RSLD 816 Improbable p13 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 871 Improbable p14 main Shot_Gun: paid shot (1)
+RSLD probe: Shot_Gun magazine 1 reserve 50

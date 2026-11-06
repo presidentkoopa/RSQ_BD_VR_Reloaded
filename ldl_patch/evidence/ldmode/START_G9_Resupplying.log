@@ -1,0 +1,18 @@
+# START: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch start.
+RSLD 370 start visual LDRestoringVisual: LegenDoom's sound silenced, BD22's MEGAPKUP
+RSLD 370 start visual LDVanguardVisual: LegenDoom's sound silenced, BD22's Pickup/HeavyArmor
+RSLD 370 start visual LDResupplyingVisual: LegenDoom's sound silenced, BD22's BACKPACK
+RSLD 370 start visual LDWildfireVisual: LegenDoom's sound silenced, BD22's misc/p_pkup
+RSLD 370 start visual LDChronostrikeVisual: LegenDoom's sound silenced, BD22's SLOWON
+RSLD 373 Scrambling: start: LDScramblingEffect held, player +CANTSEEK 1
+RSLD 373 Vanguard: start: armor 200 HeavyArmor (50%), was BlueArmor
+RSLD 373 Resupplying: filled 6 BD22 reserves
+RSLD 373 Restoring: start: health 140 (LegenDoom's LDSoulspherePickup)
+RSLD 373 Wildfire: start: invulnerable yes, 347 tics left (Sustained copies 0)
+RSLD 373 Chronostrike: start: time freeze yes, 348 tics left (Sustained copies 0)
+RSLD probe: player BDoomer has Health x0 health 140 speed 8.0
+RSLD probe: player BDoomer has BasicArmor x200 health 140 speed 8.0
+RSLD probe: player BDoomer has PowerInvulnerable x1 (337 tics) health 140 speed 8.0
+RSLD probe: player BDoomer has PowerTimeFreezer x1 (338 tics) health 140 speed 8.0
+RSLD probe: player BDoomer has LDScramblingEffect x1 (2147483600 tics) health 140 speed 8.0
+RSLD probe: Plasma_Gun magazine 50 reserve 300

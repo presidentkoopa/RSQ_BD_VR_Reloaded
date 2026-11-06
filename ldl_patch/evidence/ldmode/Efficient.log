@@ -1,0 +1,10 @@
+# Efficient: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0. Batch ammo.
+RSLD probe: Efficient on SSG slot SuperShotgun rarity Uncommon
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: SSG magazine 2 reserve 50
+RSLD 1393 Efficient p21 main SSG: half ammo: 1 of 2 back
+RSLD 1393 Efficient p21 main SSG: refund 1 -> SSGAmmo
+RSLD 1466 Efficient p22 main SSG: half ammo: 1 of 2 back
+RSLD 1466 Efficient p22 main SSG: refund 1 -> SSGAmmo
+RSLD probe: SSG magazine 2 reserve 46

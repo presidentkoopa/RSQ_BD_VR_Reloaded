@@ -1,0 +1,9 @@
+# Violent: rig only, not headset-confirmed. QuestZDoom 17.3 rig, full order doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 -> LegenDoom 3.0 (ORDER=ldfirst). Batch kill.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Violent on Shot_Gun slot Shotgun rarity Common
+RSLD probe: 0 targets removed
+RSLD probe: target RifleZombie (RifleZombie) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: target Imp (Imp) at 260 (68 -192), health 500; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: target Imp has LDViolentFear x0 health 500 speed 0.0
+RSLD 191 Violent p2 main Shot_Gun: kill RifleZombie: blast 64 r128, fear r256
+RSLD probe: target Imp has LDViolentFear x804 health 500 speed 0.0 frightened

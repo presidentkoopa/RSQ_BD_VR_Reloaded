@@ -1,0 +1,5 @@
+// LD mode (zscript/rsld): its handler returns at once when LegenDoom 3.0 is not loaded
+gameinfo
+{
+	AddEventHandlers = "RSLD_Handler", "RSLD_Interface"
+}

@@ -1,3 +1,7 @@
+> **2026-11-06: moving into BD22 VR.** The LegenDoom x BD22 VR merge puts this patch inside BD22 VR as its "LD mode"
+> (`src/zscript/rsld/`, `src/ZSCRIPT.rsz`, `src/*.rsld`; interface `docs/INTERFACE.md`; proofs `evidence/ldmode/`).
+> This folder's patch is the old version, kept for reference; do not load both (class RSLDP_Service would be defined twice).
+
 # LegenDoom x BD22 VR: compatibility patch (LD_BD22VR_Patch.pk3)
 
 A small patch that lets **LegenDoom 3.0** run on top of **BD22 VR Weapons 2.0.x** (Brutal Doom v22 in VR on
