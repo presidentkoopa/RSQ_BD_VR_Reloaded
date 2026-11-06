@@ -3,7 +3,8 @@
 // states (decorate/<Gun>/<Gun>.dec Fire<Effect>); here they act on our gun's own damage through ModifyDamage.
 
 // Comrade: "Increases in damage the more players are in the game": LegenDoom's shot damage x PlayerCount()
-// (Shotgun.dec FireComrade: (5 * random(1, 3)) * CallACS("PlayerCount")). x1 in single player (scope Q15).
+// (Shotgun.dec FireComrade: (5 * random(1, 3)) * CallACS("PlayerCount")). Owner 2026-11-06 round 2: BD22's friendly
+// marines near you count as players (RSLD.Allies). Counted once per pull.
 class RSLD_Fx_Comrade : RSLD_Effect
 {
 	static int Players()
@@ -12,8 +13,12 @@ class RSLD_Fx_Comrade : RSLD_Effect
 		for (int i = 0; i < MAXPLAYERS; i++) if (playeringame[i]) n++;
 		return n;
 	}
-	override void OnPull(RSLD_Shot s) { s.Log(String.Format("damage x%d (%d player(s) in game)", Players(), Players())); }
-	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h) { h.mult *= Players(); }
+	override void OnPull(RSLD_Shot s)
+	{
+		s.i1 = RSLD.AllyCount(s.mo);
+		s.Log(String.Format("damage x%d (%d player(s) in game + %d friendly marine(s) within %d)", Players() + s.i1, Players(), s.i1, RSLD.ALLY_RADIUS));
+	}
+	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h) { h.mult *= Players() + (s.pull > 0 ? s.i1 : RSLD.AllyCount(s.mo)); }
 }
 
 // Thematic: "Does more damage the more Thematic weapons you have": damage x the Thematic legendaries owned
@@ -101,19 +106,12 @@ class RSLD_Fx_Convincing : RSLD_Effect
 	}
 }
 
-// Marksman / Decaying on BD22's fixed-damage guns: scope Q13 (open). Switch rsld_q13 (server):
-//   0 = (a) literal: LegenDoom's rule on our numbers. Marksman = the maximum of the gun's damage roll: no change on
-//       our fixed-damage hitscan (FBF_NORANDOM), x8-roll maximum on a projectile hit (LDMarksmanRocket 160 = 20 x 8);
-//       Decaying = random(1, 2 x max) per pull (LegenDoom random(1,30) where the max roll is 15; rocket
-//       random(1,320) = 2 x 160): our damage x random(1,30)/15, averaging our damage.
-//   1 = (b) LegenDoom's average gain as a ratio on hitscan/melee: Marksman x15/10 = x1.5 (max 15 vs LegenDoom's
-//       average 5 x 2 = 10), Decaying x random(1,30)/10. Projectile hits as in (a).
+// Marksman / Decaying on BD22's fixed-damage guns: owner 2026-11-06 round 2 (scope Q13 b, fixed behaviour; the
+// rsld_q13 switch is gone): LegenDoom's average gain as a ratio on hitscan / melee: Marksman x15/10 = x1.5 (its max 15
+// vs LegenDoom's average 5 x random(1,3) = 10), Decaying x random(1,30)/10 per pull. A direct projectile hit: the top of
+// its x random(1,8) roll (Marksman; LDMarksmanRocket 160 = 20 x 8) / random(1, 2 x that) (Decaying), as LegenDoom.
 class RSLD_Fx_Marksman : RSLD_Effect
 {
-	static int Q13() { cvar c = cvar.FindCvar("rsld_q13"); return c ? c.GetInt() : 0; }
-
-	override void OnPull(RSLD_Shot s) { s.Log(String.Format("rsld_q13 %d (%s)", Q13(), Q13() == 1 ? "b: x1.5 on fixed damage" : "a: max roll; fixed damage unchanged")); }
-
 	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h)
 	{
 		let inf = h.inflictor;
@@ -123,12 +121,9 @@ class RSLD_Fx_Marksman : RSLD_Effect
 			s.Log(String.Format("%s hit: max roll %d (event %d)", inf.GetClassName(), h.setDamage, h.damage));
 			return;
 		}
-		if (Q13() == 1)
-		{
-			double mx = Num("dmg"), nm = Num("normal");
-			double avg = nm * (1.0 + (nm > 0 ? mx / nm : 0)) / 2.0;	// LegenDoom's average: 5 * random(1, 3) -> 10
-			if (avg > 0) h.mult *= mx / avg;
-		}
+		double mx = Num("dmg"), nm = Num("normal");
+		double avg = nm * (1.0 + (nm > 0 ? mx / nm : 0)) / 2.0;	// LegenDoom's average: 5 * random(1, 3) -> 10
+		if (avg > 0) h.mult *= mx / avg;
 	}
 }
 
@@ -137,7 +132,9 @@ class RSLD_Fx_Decaying : RSLD_Effect
 	override void OnPull(RSLD_Shot s)
 	{
 		s.i1 = random(1, max(1, int(Num("hi"))));	// one roll per pull (LegenDoom's expression is read once per call)
-		s.Log(String.Format("roll %d of %d (rsld_q13 %d)", s.i1, int(Num("hi")), RSLD_Fx_Marksman.Q13()));
+		double mk = RSLD.Num("Marksman", "dmg"), nm = RSLD.Num("Marksman", "normal");
+		double avg = nm * (1.0 + (nm > 0 ? mk / nm : 0)) / 2.0;
+		s.Log(String.Format("roll %d of %d: damage x%.2f (%d / LegenDoom's average %g)", s.i1, int(Num("hi")), avg > 0 ? s.i1 / avg : 1, s.i1, avg));
 	}
 
 	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h)
@@ -151,59 +148,10 @@ class RSLD_Fx_Decaying : RSLD_Effect
 			h.setDamage = max(1, int(inf.GetMissileDamage(0, 8) * r + 0.5));
 			return;
 		}
-		if (RSLD_Fx_Marksman.Q13() == 1)
-		{
-			double mk = RSLD.Num("Marksman", "dmg"), nm = RSLD.Num("Marksman", "normal");
-			double avg = nm * (1.0 + (nm > 0 ? mk / nm : 0)) / 2.0;
-			if (avg > 0) h.mult *= s.i1 / avg;
-			return;
-		}
-		h.setDamage = max(1, int(h.damage * r + 0.5));
+		double mk = RSLD.Num("Marksman", "dmg"), nm = RSLD.Num("Marksman", "normal");
+		double avg = nm * (1.0 + (nm > 0 ? mk / nm : 0)) / 2.0;
+		if (avg > 0) h.mult *= s.i1 / avg;
 	}
 }
 
-// Favoured: "Does more damage the less weapons you have": (50 - 5 x LDFavouredCount) x random(1,3) per pellet
-// against LegenDoom's normal 5 x random(1,3): x (50 - 5n) / 5. Scope Q14 (open) is what n counts. Switch rsld_q14:
-//   0 = (a) the nine LegenDoom families: a slot counts when the player owns any of its BD22 guns (Fists..BFG)
-//   1 = (b) every BD22 weapon the player carries (off-hand copies not counted); the multiplier stops at 0
-class RSLD_Fx_Favoured : RSLD_Effect
-{
-	static int Q14() { cvar c = cvar.FindCvar("rsld_q14"); return c ? c.GetInt() : 0; }
-
-	int Owned(PlayerPawn p)
-	{
-		int n = 0;
-		if (Q14() == 1)
-		{
-			for (let i = p.Inv; i; i = i.Inv)
-			{
-				if (!(i is "Weapon")) continue;
-				string c = i.GetClassName();
-				if (c.Left(8) == "RSQ_Off_") continue;
-				n++;
-			}
-			return n;
-		}
-		for (int s = 0; s < 9; s++)
-		{
-			for (int k = 0; k < RSLD_Data.Family.Size(); k++)
-			{
-				Array<string> f; RSLD_Data.Family[k].Split(f, "|");
-				if (f[0].ToInt() != s) continue;
-				let c = RSLD.IC(f[1]);
-				if (c && p.CountInv(c) > 0) { n++; break; }
-			}
-		}
-		return n;
-	}
-
-	double Mult(PlayerPawn p, out int n)
-	{
-		n = Owned(p);
-		double nm = Num("normal");
-		return nm > 0 ? max(0.0, Num("base") - Num("per") * n) / nm : 1.0;
-	}
-
-	override void OnPull(RSLD_Shot s) { int n; double m = Mult(s.mo, n); s.Log(String.Format("rsld_q14 %d: %d weapons -> damage x%.1f", Q14(), n, m)); }
-	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h) { int n; h.mult *= Mult(s.mo, n); }
-}
+// Favoured: dropped by the owner (2026-11-06 round 2): it never rolls (pickup.zs RSLD_Reroll.IsDropped); no class.

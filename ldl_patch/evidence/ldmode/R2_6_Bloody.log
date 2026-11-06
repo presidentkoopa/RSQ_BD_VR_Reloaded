@@ -1,0 +1,67 @@
+# R2_6_Bloody: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: LegenDoom has no LDShotgunEffect_Bloody token: the effect is forced for the probe only
+RSLD probe: Bloody on Shot_Gun slot Shotgun rarity Common (LegenDoom never rolls it on this slot)
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 1761 Bloody p21 main Shot_Gun: 0 kills counted: damage x1.00 (+20% per 5 kills)
+RSLD 1761 Bloody p21 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 1812 Bloody p22 main Shot_Gun: 1 kills counted: damage x1.00 (+20% per 5 kills)
+RSLD 1812 Bloody p22 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 1914 Bloody p23 main Shot_Gun: 2 kills counted: damage x1.00 (+20% per 5 kills)
+RSLD 1914 Bloody p23 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 1966 Bloody p24 main Shot_Gun: 3 kills counted: damage x1.00 (+20% per 5 kills)
+RSLD 1966 Bloody p24 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2017 Bloody p25 main Shot_Gun: 4 kills counted: damage x1.00 (+20% per 5 kills)
+RSLD 2017 Bloody p25 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2067 Bloody p26 main Shot_Gun: 5 kills counted: damage x1.20 (+20% per 5 kills)
+RSLD 2067 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2067 Bloody p26 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD 2067 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on DyingBaron1
+RSLD 2067 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on DyingBaron1
+RSLD 2067 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on DyingBaron1
+RSLD 2068 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on DyingBaron1
+RSLD 2068 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on DyingBaron1
+RSLD 2068 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on DyingBaron1
+RSLD 2068 Bloody p26 main Shot_Gun: damage 13 -> 15 (x1.20) on DyingBaron1
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2169 Bloody p27 main Shot_Gun: 6 kills counted: damage x1.20 (+20% per 5 kills)
+RSLD 2169 Bloody p27 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2169 Bloody p27 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2220 Bloody p28 main Shot_Gun: 7 kills counted: damage x1.20 (+20% per 5 kills)
+RSLD 2220 Bloody p28 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2220 Bloody p28 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2271 Bloody p29 main Shot_Gun: 8 kills counted: damage x1.20 (+20% per 5 kills)
+RSLD 2271 Bloody p29 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2271 Bloody p29 main Shot_Gun: kill BaronofHell2: gave LDBloodyEffectDeath
+RSLD probe: player BDoomer has LDBloodyCounter x9 health 100 speed 8.0
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2322 Bloody p30 main Shot_Gun: 9 kills counted: damage x1.20 (+20% per 5 kills)
+RSLD 2322 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2322 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2322 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2322 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2323 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2323 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2323 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2323 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2
+RSLD 2323 Bloody p30 main Shot_Gun: damage 13 -> 15 (x1.20) on BaronofHell2

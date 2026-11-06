@@ -127,3 +127,13 @@ Suspenseful  max        decorate/RareSpecialEffects.dec        re  "(?s)Actor LD
 TripleThreat offset     decorate/Shotgun/Shotgun.dec           re  "(?s)FireTripleThreat:.*?A_FireBullets \((\d+)\+frandom"
 # --- TwinShot: 14 pellets for 7
 TwinShot     sg_n       decorate/Shotgun/Shotgun.dec           FireTwinShot    A_FireBullets   2
+# --- round 2 (2026-11-06): Choked's grid is scaled by our spread / LegenDoom's SuperShotgun spread (g2_choked.py)
+Base         ss_spread  decorate/SuperShotgun/SuperShotgun.dec NormalFire      A_FireBullets   0
+# --- round 2: LegenDoom's own Gauss rail look (A_RailAttack (..., "None", "White", RGF_SILENT|RGF_EXPLICITANGLE, 0,
+#     "LDGaussBulletPuff", spread, 0, range 0, duration 1, sparsity 2.0, drift 0.0)); colors "None" = -1, "White" in code
+Gauss        duration   decorate/Pistol/Pistol.dec             FireGauss       A_RailAttack    11
+Gauss        sparsity   decorate/Pistol/Pistol.dec             FireGauss       A_RailAttack    12
+Gauss        drift      decorate/Pistol/Pistol.dec             FireGauss       A_RailAttack    13
+# --- round 2: Plasmatic / Gyrojet: one LegenDoom projectile per pellet (LD: Shotgun 1 + 6 balls for its 7 pellets,
+#     SuperShotgun 1 + 19 for 20, Pistol / Chaingun 1); their Damage (x random(1,8)) and Speed are read from the loaded
+#     classes at run time; LegenDoom's bullet they replace: Base sg_dmg x random(1, Base rnd_max)

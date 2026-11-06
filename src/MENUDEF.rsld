@@ -3,18 +3,6 @@
 // the whole options menu (dropping QuestZDoom's VR Options and BD22 VR's row); owner 11-06 07:31: "I still want BD Main
 // Menu, not LD, but with a button for LD Options so we don't leave them out".
 
-OptionValue "RSLD_Q13"
-{
-	0, "LegenDoom's rule (max / random to 2x)"
-	1, "LegenDoom's average gain (x1.5)"
-}
-
-OptionValue "RSLD_Q14"
-{
-	0, "LegenDoom's nine weapon families"
-	1, "Every weapon carried"
-}
-
 OptionMenu "RSLD_Options"
 {
 	Title "LEGENDOOM x BD22 VR"
@@ -26,8 +14,6 @@ OptionMenu "RSLD_Options"
 	Option "Legendary Guns Only From Bossfights", "rsld_bossfight_only", "OnOff"
 	Option "Off-hand Copy Carries the Legendary", "rsld_offhand_legendary", "OnOff"
 	Option "Slug Legendary: Primary Fire Only", "rsld_slug_primary", "OnOff"
-	Option "Marksman / Decaying on Fixed-damage Guns", "rsld_q13", "RSLD_Q13"
-	Option "Favoured Counts", "rsld_q14", "RSLD_Q14"
 	Option "Debug Log", "rsld_debug", "OnOff"
 	StaticText " "
 	Submenu "LegenDoom Options", "LegenDoom"

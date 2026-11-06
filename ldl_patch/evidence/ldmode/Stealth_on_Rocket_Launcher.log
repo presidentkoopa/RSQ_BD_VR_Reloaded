@@ -1,0 +1,38 @@
+# Stealth@Rocket_Launcher: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: Stealth on Rocket_Launcher slot RocketLauncher rarity Common
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Rocket_Launcher magazine 6 reserve 38
+RSLD 3388 Stealth p53 main Rocket_Launcher: pull
+RSLD 3388 Stealth p53 main Rocket_Launcher: pull: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 1 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3388 Stealth p53 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 3388 Stealth p53 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29850
+RSLD 3389 Stealth p53 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 3389 Stealth p53 main Rocket_Launcher: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3390 Stealth p53 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 5 reserve 38
+RSLD 3459 Stealth p54 main Rocket_Launcher: pull
+RSLD 3459 Stealth p54 main Rocket_Launcher: pull: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 1 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3459 Stealth p54 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 3459 Stealth p54 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29602
+RSLD 3460 Stealth p54 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 3460 Stealth p54 main Rocket_Launcher: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3461 Stealth p54 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 4 reserve 38
+RSLD 3530 Stealth p55 main Rocket_Launcher: pull
+RSLD 3530 Stealth p55 main Rocket_Launcher: pull: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 1 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3530 Stealth p55 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 3530 Stealth p55 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29354
+RSLD 3531 Stealth p55 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 3531 Stealth p55 main Rocket_Launcher: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3532 Stealth p55 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 3 reserve 38
+RSLD 3601 Stealth p56 main Rocket_Launcher: pull
+RSLD 3601 Stealth p56 main Rocket_Launcher: pull: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 1 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3601 Stealth p56 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 3601 Stealth p56 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29106
+RSLD 3602 Stealth p56 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 3602 Stealth p56 main Rocket_Launcher: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 3603 Stealth p56 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 2 reserve 38

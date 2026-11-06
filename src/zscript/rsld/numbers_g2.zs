@@ -114,7 +114,11 @@ class RSLD_Numbers_g2 : RSLD_NumberTable
 		"Suspenseful|base|5|source/LEGNDLIB.acs:80|SetResultValue(FixedDiv((CheckInventory('LDSuspensefulCounter')+5),5)); // Maximum is 20, so 4x damage",
 		"Suspenseful|max|20|decorate/RareSpecialEffects.dec:2912|inventory.maxamount 20 // Divided by 5, so maximum of 4x damage",
 		"TripleThreat|offset|15|decorate/Shotgun/Shotgun.dec:1800|TNT1 AAAAAAA 0 A_FireBullets (15+frandom(-5.6,5.6), 0, -1, 5, 'LDBulletPuff', FBF_EXPLICITANGLE)",
-		"TwinShot|sg_n|14|decorate/Shotgun/Shotgun.dec:1810|TNT1 A 0 A_FireBullets (5.6, 0, 14, 5, 'LDBulletPuff', FBF_USEAMMO)"
+		"TwinShot|sg_n|14|decorate/Shotgun/Shotgun.dec:1810|TNT1 A 0 A_FireBullets (5.6, 0, 14, 5, 'LDBulletPuff', FBF_USEAMMO)",
+		"Base|ss_spread|11.2|decorate/SuperShotgun/SuperShotgun.dec:343|TNT1 A 0 A_FireBullets (11.2, 7.1, 20, 5, 'LDBulletPuff', FBF_USEAMMO)",
+		"Gauss|duration|1|decorate/Pistol/Pistol.dec:1795|TNT1 A 0 A_RailAttack (5*random(1,3), 0, 1, 'None', 'White', RGF_SILENT | RGF_EXPLICITANGLE, 0, 'LDGaussBulletPuff', 0, 0, 0, 1, 2.0, 0.0)",
+		"Gauss|sparsity|2.0|decorate/Pistol/Pistol.dec:1795|TNT1 A 0 A_RailAttack (5*random(1,3), 0, 1, 'None', 'White', RGF_SILENT | RGF_EXPLICITANGLE, 0, 'LDGaussBulletPuff', 0, 0, 0, 1, 2.0, 0.0)",
+		"Gauss|drift|0.0|decorate/Pistol/Pistol.dec:1795|TNT1 A 0 A_RailAttack (5*random(1,3), 0, 1, 'None', 'White', RGF_SILENT | RGF_EXPLICITANGLE, 0, 'LDGaussBulletPuff', 0, 0, 0, 1, 2.0, 0.0)"
 	};
 	override int Count() { return Rows.Size(); }
 	override string Row(int i) { return Rows[i]; }

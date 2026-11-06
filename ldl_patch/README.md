@@ -20,6 +20,13 @@ doom2.wad -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> BD22_VR-Reloaded_2.0.x.pk3
 
 The patch goes **last**. It works without Champions and without XMVE.
 
+**Replaced (2026-11-06):** the LD mode now lives inside BD22 VR (src/zscript/rsld) and this patch is not loaded. The
+owner's load order for it (round 2): `doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 ->
+BD22 VR -> (XMVE 04-07)`: LegenDoom right after doom2, so Brutal Doom's title map, HUD and sounds win. The rig tools
+(`tools/ldrig.sh`, `tools/ldprove.py`) use that order by default (ORDER=full; ORDER=ldlast for the old one).
+`build.py` and `tools/rig.sh` (this patch's own build and rig runner) are retired: build.py refuses unless
+RSLD_OLD_PATCH=1. Remove `LD_BD22VR_Patch.pk3` from the load order when using a BD22 VR build with the LD mode.
+
 ## What "LDL BD edition" means here
 
 Neither LegenDoom 3.0 nor LegenDoom Lite 4.2 has a Brutal Doom mode, branch or cvar (no "brutal" anywhere in either

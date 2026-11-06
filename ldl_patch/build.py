@@ -8,6 +8,10 @@ Before packing it regenerates src/zscript/rsldp/tables.zs (tools/gen_tables.py) 
 bridge claims is handled by name in the code.
 """
 import os, sys, zipfile, subprocess, re
+# RETIRED (2026-11-06): the LD mode lives inside BD22 VR now (src/zscript/rsld, built by the repo's build.py); this
+# separate patch would double up with it. Kept for reference; it builds only with RSLD_OLD_PATCH=1.
+if not os.environ.get('RSLD_OLD_PATCH'):
+    sys.exit('ldl_patch/build.py is retired: the LD mode is inside BD22 VR (python3 build.py). RSLD_OLD_PATCH=1 to build the old patch anyway.')
 here = os.path.dirname(os.path.abspath(__file__))
 repo = os.path.dirname(here)
 src = os.path.join(here, 'src')

@@ -1,0 +1,21 @@
+# R2_2 load order summary: rig only, not headset-confirmed. Engine launch 7 (prove_round2), ORDER=full = doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR 2.0.3z -> XMVE 04-07 (+ probe_b).
+# containers by lump size: 4 = LegenDoom_3.0.pk3 (MAPINFO 1533, SBARINFO 215934, SNDINFO 25768, TITLEMAP 52759), 5 = brutal22test6.pk3 (MAPINFO.txt 12638, SBARINFO.BD 35935, titlemap.wad 104246), 10 = BD22 VR (SBARINFO.rsq 37408, SNDINFO.rsq 17419)
+RSLD loadorder: TITLEMAP's MAPINFO name "Titlemap"
+RSLD loadorder: maps/titlemap.wad in load order (the last read last): [container 4, 52759 bytes] [container 5, 104246 bytes]
+RSLD loadorder: SBARINFO in load order (the last read last): [container 0, 444 bytes] [container 4, 215934 bytes] [container 5, 35935 bytes] [container 10, 37408 bytes]
+RSLD loadorder: SNDINFO in load order (the last read last): [container 0, 7563 bytes] [container 0, 13670 bytes] [container 4, 25768 bytes] [container 5, 26102 bytes] [container 5, 13910 bytes] [container 5, 1975 bytes] [container 5, 3300 bytes] [container 5, 14131 bytes] [container 5, 4574 bytes] [container 5, 1031 bytes] [container 5, 5193 bytes] [container 5, 2809 bytes] [container 10, 17419 bytes] [container 10, 931 bytes] [container 11, 10458 bytes]
+RSLD loadorder: MAPINFO in load order (the last read last): [container 4, 1533 bytes] [container 5, 12638 bytes] [container 10, 47 bytes] [container 10, 154 bytes] [container 10, 570 bytes] [container 10, 236 bytes] [container 15, 47 bytes]
+# the 13 sound names both LegenDoom and brutal22test6 define (/tmp/ldrig/r2_snd_expect.txt: LD's lump vs BD's): the engine's soundlist plays BD's lump for every one
+414. caco/pain (DSCACPAI)   [LD LDCACPAN | BD DSCACPAI]
+651. chaingun/fire (MP40)   [LD None  | BD MP40]
+648. chaingun/fire1 (MP40A)   [LD LDCHAIN1 | BD MP40A]
+649. chaingun/fire2 (MP40B)   [LD LDCHAIN2 | BD MP40B]
+650. chaingun/fire3 (MP40C)   [LD LDCHAIN3 | BD MP40C]
+587. chainsaw/draw (CSAWDRAW)   [LD LDSAWUP | BD CSAWDRAW]
+586. chainsaw/idle (CSAWREDY)   [LD LDSAWIDL | BD CSAWREDY]
+590. chainsaw/start (CSAWSTRT)   [LD LDSAWSTR | BD CSAWSTRT]
+589. chainsaw/stop (CSAWSTOP)   [LD LDSAWSTP | BD CSAWSTOP]
+608. pistol/draw (PISTUP)   [LD LDPISTUP | BD PISTUP]
+606. pistol/fire (PFIRE)   [LD LDPISTOL | BD PFIRE]
+613. shotgun/fire (SGFIRE)   [LD LDSHOTFI | BD sgfire]
+614. shotgun/pump (STGNPUMP)   [LD LDSHOTPU | BD STGNPUMP]

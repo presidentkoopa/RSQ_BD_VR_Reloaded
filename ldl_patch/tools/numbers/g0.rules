@@ -79,3 +79,5 @@ Patient         max           decorate/RareSpecialEffects.dec             prop L
 Persistent      bleeds        decorate/EpicSpecialEffects.dec             re  "user_persistenttimer\",\s*(\d+)\)"
 Persistent      every         decorate/EpicSpecialEffects.dec             re  "user_dottimer\",\s*(\d+)\)"
 Persistent      dmg           decorate/EpicSpecialEffects.dec             re  "ACTOR LDPersistentBleedingDamage\s*\{[^}]*?Damage \((\d+)\)"
+# round 2 (owner 2026-11-06): Bloody as its description says: "Every 5 enemies killed with this increases damage"
+Bloody          every         LANGUAGE.effectdesc                         re  "LD_FX_DESCR_Bloody = \"Every (\d+) enemies"

@@ -6,6 +6,4 @@ server bool rsld_offhand_legendary = true;	// scope Q8 (OPEN): an off-hand copy 
 						// the patch did: every shot got the held slot's effect); off = main hand only
 server bool rsld_slug_primary = true;		// Agent C (scope Q12 open): LegenDoom's Slug replaces the pump/SSG's primary fire only; BD22 VR's
 						// Slug alt fire stays as it ships. Off = Slug is not applied (re-rolled)
-server int rsld_q13 = 0;			// Agent B, scope Q13 (OPEN): Marksman / Decaying on fixed-damage guns: 0 = LegenDoom's rule literally, 1 = its average gain as a ratio
-server int rsld_q14 = 0;			// Agent B, scope Q14 (OPEN): Favoured counts 0 = the nine LegenDoom families owned, 1 = every BD22 weapon carried
 server noarchive int rsld_debug = 0;		// 1: what each effect did; 2: every hook call

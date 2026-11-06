@@ -1,4 +1,6 @@
 #!/bin/bash
+# RETIRED (2026-11-06): this runs the OLD separate LDL_BD22VR_Patch.pk3. The LD mode is inside BD22 VR now: use
+# ldl_patch/tools/ldrig.sh / ldprove.py (LegenDoom right after doom2, BD22 VR test build from python3 build.py).
 # TEST ONLY (never ships). Runs the LDL/BD22 VR patch on the real QuestZDoom 17.3 rig
 # (RSQ_UBQSeries/tools/rig17/run17.sh, shared with other lanes: serialized with flock on /home/claude/rig.lock).
 #   tools/rig.sh <name> <secs> "<console script>"

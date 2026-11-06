@@ -200,8 +200,18 @@ class RSLD_Reroll play
 		return "";
 	}
 
+	// effects the owner dropped: they never roll (always re-rolled, whatever rsld_reroll says)
+	static bool IsDropped(string e)	// owner 2026-11-06 round 2: Favoured (a static function cannot read a static array on QZD 17.3)
+	{
+		string dl = "Favoured";	// a method call on a string literal crashed the VM (rig, round 2)
+		Array<string> l; dl.Split(l, "|");
+		for (int i = 0; i < l.Size(); i++) if (l[i] ~== e) return true;
+		return false;
+	}
+
 	static bool Carried(string e)
 	{
+		if (IsDropped(e)) return false;
 		let h = RSLD.H();
 		return h && h.FindFx(e) != null;
 	}
@@ -212,7 +222,7 @@ class RSLD_Reroll play
 	{
 		if (Carried(e) || r < 0) return e;
 		cvar cv = cvar.FindCvar("rsld_reroll");
-		if (cv && !cv.GetBool()) return e;
+		if (cv && !cv.GetBool() && !IsDropped(e)) return e;
 		Array<string> pool;
 		string key = RSLD_Data.Slots[s] .. "|" .. RSLD_Data.Rarities[r] .. "|";
 		for (int i = 0; i < RSLD_Tables.Rolls.Size(); i++)

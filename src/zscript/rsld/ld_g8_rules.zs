@@ -285,8 +285,8 @@ class RSLD_B play
 	{
 		class<Ammo> parent = item.GetParentAmmo();
 		if (RSLD.DebugLevel() > 1) Log(p, "ammo", String.Format("%s amount %d at (%.0f %.0f %.0f) dist %.0f dropped %d", item.GetClassName(), item.Amount, item.pos.x, item.pos.y, item.pos.z, p.Distance3D(item), item.bDropped));
-		int k = KindOf(st, parent);
-		if (k < 0) return false;	// not one of LegenDoom's four ammo kinds (BD22's gas, grenades...): Q14 note
+		int k = KindOf(st, parent);	// -1: not one of LegenDoom's four kinds (BD22's gas, grenades, ...): owner 2026-11-06
+		if (!parent) return false;	// round 2: EVERY BD22 ammo pickup counts (Scrounger, ActionHero, Collector, Quartermaster)
 		let owned = p.FindInventory(parent);
 		cvar ul = cvar.FindCvar("sv_unlimited_pickup");
 		bool full = owned && owned.Amount >= owned.MaxAmount && !(ul && ul.GetBool());
@@ -295,8 +295,10 @@ class RSLD_B play
 		{
 			// LegenDoom: a pickup of maxed ammo only feeds Upgrading (Items/Clip.dec NoPickup -> LD_UpgradingUpgrader);
 			// it is taken if any Upgrading weapon can still level, else it stays on the floor
-			int pts = UpgradePoints(k, base);
-			if (RSLD.Count(p, "Upgrading") > 0 && Upgrade(st, p, pts, parent.GetClassName()))
+			// a maxed BD22-only ammo (k -1) has no LegenDoom points rate: it stays on the floor (owner question in the
+			// round 2 report)
+			int pts = k >= 0 ? UpgradePoints(k, base) : 0;
+			if (pts > 0 && RSLD.Count(p, "Upgrading") > 0 && Upgrade(st, p, pts, parent.GetClassName()))
 			{
 				item.bPickupGood = true;
 				return true;
@@ -508,12 +510,12 @@ class RSLD_B play
 			else if (k == K_BACKPACK) Backpack(st, p, cn);
 			else if (k == K_ARMOR && taken)
 			{
-				if (!st.sharing && multiplayer && AnyPlayerHas("Armorer")) ShareItem(st, p, cn, 0, "Armorer");
+				if (!st.sharing && Team(p) && AnyPlayerHas("Armorer")) ShareItem(st, p, cn, 0, "Armorer");
 				else if (RSLD.Count(p, "Armorer") > 0) Log(p, "Armorer", String.Format("%s: %d other players (shared in multiplayer only)", cn, OtherPlayers(p)));
 			}
 			else if (k == K_SHAREPOW)
 			{
-				if (multiplayer && AnyPlayerHas("Shaman")) ShareItem(st, p, cn, 0, "Shaman");
+				if (Team(p) && AnyPlayerHas("Shaman")) ShareItem(st, p, cn, 0, "Shaman");
 				else if (RSLD.Count(p, "Shaman") > 0) Log(p, "Shaman", String.Format("%s: %d other players (shared in multiplayer only)", cn, OtherPlayers(p)));
 			}
 		}
@@ -633,14 +635,12 @@ class RSLD_B play
 		int sc = RSLD.Count(p, "Scrounger");
 		double r = N("Scrounger", "clip_add") / max(1.0, N("Scrounger", "clip_base"));
 		string done = "";
-		for (int k = 0; k < st.resCls.Size(); k++)
+		// round 2 (owner 2026-11-06): every BD22 ammo the backpack fills counts (gas, grenades...), not only LD's four
+		for (let it = p.Inv; it; it = it.Inv)
 		{
-			String n = st.resCls[k];
-			bool seen = false;
-			for (int j = 0; j < k; j++) if (st.resCls[j] == n) seen = true;
-			if (seen) continue;
-			let am = Ammo(p.FindInventory(RSLD.IC(n)));
-			if (!am) continue;
+			let am = Ammo(it);
+			if (!am || am.GetParentAmmo() != am.GetClass()) continue;
+			String n = am.GetClassName();
 			int ba = am.BackpackAmount;
 			int add = sc * int(ceil(ba * r - 0.0001));
 			for (int s = 0; s < 9; s++) if (RSLD.EffectOf(p, s) ~== "Hoarder" && SlotUses(st, s, n)) add += ba;
@@ -658,6 +658,9 @@ class RSLD_B play
 
 	// Quartermaster / Armorer / Medic / Shaman: every other player gets the same BD22 item, with their own passives
 	// (LegenDoom's LD_<Item>_Shared gives LD_<Item>_Shared2 to players 1-8; the picker already has it)
+	// someone to share with: another player, or (owner 2026-11-06 round 2) a friendly BD22 marine near the picker
+	static bool Team(PlayerPawn p) { return multiplayer || RSLD.AllyCount(p) > 0; }
+
 	static void ShareItem(RSLD_BState st, PlayerPawn p, string cls, int amount, string eff)
 	{
 		class<Inventory> c = cls;
@@ -678,8 +681,26 @@ class RSLD_B play
 			if (it.CallTryPickup(o)) n++; else { it.Destroy(); continue; }
 			if (isHealth && o.health > h0) HealthTaken(st, o, cls);	// Medic: the receiver's own Survivor
 		}
+		// BD22's friendly marines near the picker (owner round 2): the same item at the marine, picked up by it. Not
+		// ammo or backpacks (BD22's marines fire without ammo) and not a computer map (it would reveal the map again)
+		int nm = 0;
+		Array<Actor> al;
+		RSLD.Allies(p, al);
+		bool skip = (class<Ammo>)(c) != null || (class<BackpackItem>)(c) != null || (class<MapRevealer>)(c) != null;
+		for (int i = 0; i < al.Size() && !skip; i++)
+		{
+			let m = al[i];
+			let it = Inventory(Actor.Spawn(c, m.pos));
+			if (!it) continue;
+			it.ClearCounters();
+			if (amount > 0) it.Amount = amount;
+			int h0 = m.health, a0 = m.CountInv("BasicArmor");
+			if (!it.CallTryPickup(m)) { it.Destroy(); continue; }
+			nm++;
+			Log(p, eff, String.Format("%s shared with friendly %s: health %d -> %d, armor %d -> %d", cls, m.GetClassName(), h0, m.health, a0, m.CountInv("BasicArmor")));
+		}
 		st.sharing = sh;
-		Log(p, eff, String.Format("%s shared with %d other player(s)", cls, n));
+		Log(p, eff, String.Format("%s shared with %d other player(s) and %d friendly marine(s)%s", cls, n, nm, skip && al.Size() > 0 ? " (marines carry no ammo / map)" : ""));
 	}
 
 	// ================================================================ items with no HandlePickup (watched)
@@ -737,7 +758,7 @@ class RSLD_B play
 			p.GiveBody(def.Amount * sv, def.MaxAmount);
 			Log(p, "Survivor", String.Format("%s +%d x %d more (%d copies): health %d -> %d", cn, def.Amount, sv, sv, h0, p.health));
 		}
-		if (!st.sharing && multiplayer && AnyPlayerHas("Medic")) ShareItem(st, p, cn, 0, "Medic");
+		if (!st.sharing && Team(p) && AnyPlayerHas("Medic")) ShareItem(st, p, cn, 0, "Medic");
 		else if (RSLD.Count(p, "Medic") > 0) Log(p, "Medic", String.Format("%s: %d other players (shared in multiplayer only)", cn, OtherPlayers(p)));
 	}
 
@@ -749,7 +770,7 @@ class RSLD_B play
 			GiveLD(st, p, "LDScannerActive", 1);
 			Log(p, "Scanner", String.Format("%s: LDScannerActive given: PowerScanner %s", cn, p.FindInventory("PowerScanner", true) ? "on" : "MISSING"));
 		}
-		if (!st.sharing && multiplayer && AnyPlayerHas("Shaman")) ShareItem(st, p, cn, 0, "Shaman");
+		if (!st.sharing && Team(p) && AnyPlayerHas("Shaman")) ShareItem(st, p, cn, 0, "Shaman");
 		else if (RSLD.Count(p, "Shaman") > 0) Log(p, "Shaman", String.Format("%s: %d other players (shared in multiplayer only)", cn, OtherPlayers(p)));
 	}
 

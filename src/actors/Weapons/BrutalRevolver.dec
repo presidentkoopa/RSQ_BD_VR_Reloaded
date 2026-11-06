@@ -115,7 +115,11 @@ ACTOR BrutalRevolver : BrutalWeapon
 		RVMA A 0 A_JumpIfInventory("RSQ_SemiLock", 1, "RSQ_SemiWait")
 		Goto Ready
 
+	RSLD_Jammed:	// LD mode: LegenDoom's Perfect jammed this hand (1 s): no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
 	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam blocks the trigger (zscript/rsld/handler.zs tokens; never given without LegenDoom)
 		RVMA A 0 A_JumpIfInventory("RSQ_SemiLock", 1, "RSQ_SemiWait")
 		RVMA A 0 A_Takeinventory("Reloading",1)
 		RVMA A 0 A_JumpIfInventory("BrutalRevolverCylinder",1,1)
@@ -284,7 +288,11 @@ ACTOR RSQ_Off_BrutalRevolver : BrutalRevolver
 		RVMA A 0 A_JumpIfInventory("RSQ_SemiLockOff", 1, "RSQ_SemiWait")
 		Goto Ready
 
+	RSLD_Jammed:	// LD mode: LegenDoom's Perfect jammed this hand (1 s): no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
 	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam blocks the trigger (zscript/rsld/handler.zs tokens; never given without LegenDoom)
 		RVMA A 0 A_JumpIfInventory("RSQ_SemiLockOff", 1, "RSQ_SemiWait")
 		RVMA A 0 A_JumpIfInventory("BrutalRevolverCylinderOff",1,1)
 		Goto NoAmmo

@@ -1,0 +1,16 @@
+# R2_7_Perfect_Rifle: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Perfect on Rifle slot Chaingun rarity Rare
+RSLD probe: 0 targets removed
+RSLD probe: Rifle magazine 30 reserve 400
+RSLD 2647 Perfect p34 main Rifle: pellet 0 reshaped: angle 0.23 -> 0.00 pitch -0.41 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 2655 Perfect p34 main Rifle: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 2656 Perfect: main hand JAMMED (trigger blocked)
+RSLD probe: Rifle magazine 29 reserve 400
+RSLD probe: Rifle magazine 29 reserve 400
+RSLD 2690 Perfect: main hand jam cleared
+RSLD 2709 Perfect p35 main Rifle: pellet 0 reshaped: angle -0.59 -> 0.00 pitch 0.23 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 2713 Perfect p36 main Rifle: pellet 0 reshaped: angle -0.20 -> 0.00 pitch 0.03 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 2717 Perfect p35 main Rifle: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 2718 Perfect: main hand JAMMED (trigger blocked)
+RSLD 2721 Perfect p36 main Rifle: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD probe: Rifle magazine 27 reserve 400

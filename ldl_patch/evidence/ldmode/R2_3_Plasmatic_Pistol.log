@@ -1,0 +1,8 @@
+# R2_3_Plasmatic_Pistol: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Plasmatic on BrutalPistol slot Pistol rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 491 Plasmatic p4 main BrutalPistol: pellet 0 (14 dmg) -> LDPlasmaticShotgunBall2 from the main muzzle (-174 -200 39) at 3.3 / -3.2, speed 25, damage 7 x random(1,8) (mean 31.5 = 14 x 2.25)
+RSLD 491 Plasmatic p4 main BrutalPistol: pellet 0 dropped
+RSLD 492 Plasmatic p4 main BrutalPistol: LDPlasmaticShotgunBall2 hit BaronofHell2 for 35
+RSLD 493 Plasmatic p4 main BrutalPistol: 1 pellets became 1 LDPlasmaticShotgunBall2; hits 1 kills 0

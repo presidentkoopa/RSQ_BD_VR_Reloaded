@@ -93,13 +93,29 @@ class RSLD_Fx_Unstoppable : RSLD_KillReward {}
 // Battlerage: LegenDoom's LDBattlerageSpeedBoost timer -> the engine's double firing speed (handler Battlerage)
 class RSLD_Fx_Battlerage : RSLD_KillReward {}
 
-// Bloody (Chainsaw): LegenDoom's death item fills LDBloodyCounter; damage x (counter + 5) / 5 (LEGNDLIB.acs LDBloodyCount)
+// Bloody (Chainsaw): owner 2026-11-06 round 2: as LegenDoom's description says, "Every 5 enemies killed with this
+// increases damage" (LANGUAGE.effectdesc, Bloody|every): +20% (LegenDoom's step 1 / Bloody|div = 1/5, LEGNDLIB.acs
+// LDBloodyCount) for every 5 kills. LegenDoom's own code adds the step on every kill; the kills are still counted in
+// LegenDoom's own LDBloodyCounter (its death item, its level reset): damage x (1 + floor(counter / 5) / 5).
 class RSLD_Fx_Bloody : RSLD_KillReward
 {
+	double Mult(PlayerPawn p, out int kills)
+	{
+		double d = Num("div"), every = Num("every");
+		kills = RSLD.Has(p, "LDBloodyCounter");
+		if (d <= 0 || every <= 0) return 1.0;
+		return 1.0 + int(kills / every) / d;
+	}
+	override void OnPull(RSLD_Shot s)
+	{
+		int k;
+		double m = Mult(s.mo, k);
+		s.Log(String.Format("%d kills counted: damage x%.2f (+%g%% per %d kills)", k, m, 100.0 / Num("div"), int(Num("every"))));
+	}
 	override void ModifyDamage(RSLD_Shot s, RSLD_Hit hit)
 	{
-		double d = Num("div");
-		if (d > 0) hit.mult *= (RSLD.Has(s.mo, "LDBloodyCounter") + d) / d;
+		int k;
+		hit.mult *= Mult(s.mo, k);
 	}
 }
 
@@ -385,11 +401,11 @@ class RSLD_Fx_CQC : RSLD_DamageRatio
 }
 
 // Machine (Pistol): 10 instead of 5 (x2), and "fires extremely rapidly": LegenDoom's machine pistol fires every 2 tics
-// (FireMachineAttack: MACP B 1, C 1, A_Refire) against its plain pistol's 19 (NormalFire 4 + CommonFireEnd 15).
-// On our gun: the trigger cycle is cut by that ratio (owner Q6: the trigger cycle gets faster, the gun's own shot
-// counter decides): while the trigger is held, the gun's Fire state is re-entered every max(1, round(our gap x 2/19))
-// tics, our gap being the gun's own measured gap between its first two shots of a hold. Fire does its own magazine
-// and reload checks, so an empty magazine stops it and the hand reload is unchanged.
+// (FireMachineAttack: MACP B 1, C 1, A_Refire): 35 / 2 = 17.5 shots a second. Owner 2026-11-06 round 2: LegenDoom's own
+// 17.5 a second on our gun: while the trigger is held, the gun's Fire state is re-entered every Machine|shottics (2)
+// tics (owner Q6: the trigger cycle gets faster, the gun's own shot counter decides). Fire does its own magazine and
+// reload checks, so an empty magazine stops it and the hand reload is unchanged. The gun's own first gap is still
+// measured (logged) before the fast cycle starts, as the first shot of a hold is the gun's own.
 class RSLD_Fx_Machine : RSLD_DamageRatio
 {
 	int gap[MAXPLAYERS * 2], first[MAXPLAYERS * 2], second[MAXPLAYERS * 2];
@@ -411,8 +427,7 @@ class RSLD_Fx_Machine : RSLD_DamageRatio
 	{
 		int k = c.pn * 2 + c.hand;
 		if (!c.attacking || gap[k] <= 0 || gw[k] != c.weapon) return;
-		double ratio = Num("shottics") / (Num("normaltics") + Num("normalend"));
-		int every = max(1, int(round(gap[k] * ratio)));
+		int every = max(1, int(Num("shottics")));	// LegenDoom's own cycle: 2 tics = 17.5 shots a second
 		int last = h.LastPull(c.pn, c.hand);
 		if (level.maptime - last < every) return;
 		let w = c.weapon;
@@ -424,7 +439,7 @@ class RSLD_Fx_Machine : RSLD_DamageRatio
 		State f = w.FindState("Fire");
 		if (!f) return;
 		pl.SetPsprite(c.hand == RSLD.OFF ? PSP_OFFHANDWEAPON : PSP_WEAPON, f);
-		if (RSLD.DebugLevel() > 1) Console.Printf("RSLD %d Machine: refire %s every %d (gap %d)", level.maptime, w.GetClassName(), every, gap[k]);
+		if (RSLD.Debug()) Console.Printf("RSLD %d Machine: refire %s every %d tics = %.1f a second (its own gap %d)", level.maptime, w.GetClassName(), every, 35.0 / every, gap[k]);
 	}
 }
 

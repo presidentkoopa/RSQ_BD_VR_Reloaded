@@ -1,0 +1,34 @@
+# Agitating@Rifle: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: cleared slot Chaingun
+RSLD probe: Agitating on Rifle slot Chaingun rarity Common
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Rifle magazine 13 reserve 200
+RSLD 1105 Agitating p21 main Rifle: pull
+RSLD 1105 Agitating p21 main Rifle: mugshot Ouch (LDAgitatingScreaming); silent (owner 11-06)
+RSLD 1105 Agitating p21 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1105 Agitating p21 main Rifle: hit BaronofHell2 dmg 20 hp 29980
+RSLD 1105 Agitating p21 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1107 Agitating p21 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 12 reserve 200
+RSLD 1151 Agitating p22 main Rifle: pull
+RSLD 1151 Agitating p22 main Rifle: mugshot Ouch (LDAgitatingScreaming); silent (owner 11-06)
+RSLD 1151 Agitating p22 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1151 Agitating p22 main Rifle: hit BaronofHell2 dmg 20 hp 29960
+RSLD 1151 Agitating p22 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1153 Agitating p22 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 11 reserve 200
+RSLD 1197 Agitating p23 main Rifle: pull
+RSLD 1197 Agitating p23 main Rifle: mugshot Ouch (LDAgitatingScreaming); silent (owner 11-06)
+RSLD 1197 Agitating p23 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1197 Agitating p23 main Rifle: hit BaronofHell2 dmg 20 hp 29940
+RSLD 1197 Agitating p23 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1199 Agitating p23 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 10 reserve 200
+RSLD 1243 Agitating p24 main Rifle: pull
+RSLD 1243 Agitating p24 main Rifle: mugshot Ouch (LDAgitatingScreaming); silent (owner 11-06)
+RSLD 1243 Agitating p24 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1243 Agitating p24 main Rifle: hit BaronofHell2 dmg 20 hp 29920
+RSLD 1243 Agitating p24 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1245 Agitating p24 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 9 reserve 200

@@ -1,0 +1,31 @@
+# NanoCircuit@Rocket_Launcher: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: NanoCircuit on Rocket_Launcher slot RocketLauncher rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Rocket_Launcher magazine 2 reserve 30
+RSLD 1916 NanoCircuit p33 main Rocket_Launcher: pull
+RSLD 1916 NanoCircuit p33 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 1916 NanoCircuit p33 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29850
+RSLD 1917 NanoCircuit p33 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 1918 NanoCircuit p33 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 1 reserve 30
+RSLD 1987 NanoCircuit p34 main Rocket_Launcher: pull
+RSLD 1987 NanoCircuit p34 main Rocket_Launcher: bonus (chance 174/256): health 108 -> 110, armor 8 -> 10
+RSLD 1987 NanoCircuit p34 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 1987 NanoCircuit p34 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29601
+RSLD 1988 NanoCircuit p34 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 1989 NanoCircuit p34 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 6 reserve 24
+RSLD 2058 NanoCircuit p35 main Rocket_Launcher: pull
+RSLD 2058 NanoCircuit p35 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2058 NanoCircuit p35 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29352
+RSLD 2059 NanoCircuit p35 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2060 NanoCircuit p35 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 5 reserve 24
+RSLD 2129 NanoCircuit p36 main Rocket_Launcher: pull
+RSLD 2129 NanoCircuit p36 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2129 NanoCircuit p36 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29103
+RSLD 2130 NanoCircuit p36 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2131 NanoCircuit p36 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 4 reserve 24

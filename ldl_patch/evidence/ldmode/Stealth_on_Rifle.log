@@ -1,0 +1,38 @@
+# Stealth@Rifle: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: cleared slot Chaingun
+RSLD probe: Stealth on Rifle slot Chaingun rarity Common
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Rifle magazine 9 reserve 200
+RSLD 1302 Stealth p25 main Rifle: pull
+RSLD 1302 Stealth p25 main Rifle: pull: alert taken back from 0 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 1 far echo removed; fire sound x0.1
+RSLD 1302 Stealth p25 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1302 Stealth p25 main Rifle: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 1302 Stealth p25 main Rifle: hit BaronofHell2 dmg 20 hp 29980
+RSLD 1302 Stealth p25 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1304 Stealth p25 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 8 reserve 200
+RSLD 1348 Stealth p26 main Rifle: pull
+RSLD 1348 Stealth p26 main Rifle: pull: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 1 far echo removed; fire sound x0.1
+RSLD 1348 Stealth p26 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1348 Stealth p26 main Rifle: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 1348 Stealth p26 main Rifle: hit BaronofHell2 dmg 20 hp 29960
+RSLD 1348 Stealth p26 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1350 Stealth p26 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 7 reserve 200
+RSLD 1394 Stealth p27 main Rifle: pull
+RSLD 1394 Stealth p27 main Rifle: pull: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 1 far echo removed; fire sound x0.1
+RSLD 1394 Stealth p27 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1394 Stealth p27 main Rifle: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 1394 Stealth p27 main Rifle: hit BaronofHell2 dmg 20 hp 29940
+RSLD 1394 Stealth p27 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1396 Stealth p27 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 6 reserve 200
+RSLD 1440 Stealth p28 main Rifle: pull
+RSLD 1440 Stealth p28 main Rifle: pull: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 1 far echo removed; fire sound x0.1
+RSLD 1440 Stealth p28 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1440 Stealth p28 main Rifle: after: alert taken back from 2 sector(s), A_AlertMonsters(64) -> 2 sector(s); 0 Alerter, 0 far echo removed; fire sound x0.1
+RSLD 1440 Stealth p28 main Rifle: hit BaronofHell2 dmg 20 hp 29920
+RSLD 1440 Stealth p28 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1442 Stealth p28 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 5 reserve 200

@@ -1,0 +1,38 @@
+# Decaying@Rifle: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: cleared slot Chaingun
+RSLD probe: Decaying on Rifle slot Chaingun rarity Rare
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Rifle magazine 23 reserve 30
+RSLD 527 Decaying p9 main Rifle: pull
+RSLD 527 Decaying p9 main Rifle: roll 2 of 30 (rsld_q13 0)
+RSLD 527 Decaying p9 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 527 Decaying p9 main Rifle: damage 20 -> 3 (x1.00) on BaronofHell2
+RSLD 527 Decaying p9 main Rifle: hit BaronofHell2 dmg 3 hp 29997
+RSLD 527 Decaying p9 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 529 Decaying p9 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 22 reserve 30
+RSLD 573 Decaying p10 main Rifle: pull
+RSLD 573 Decaying p10 main Rifle: roll 13 of 30 (rsld_q13 0)
+RSLD 573 Decaying p10 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 573 Decaying p10 main Rifle: damage 20 -> 17 (x1.00) on BaronofHell2
+RSLD 573 Decaying p10 main Rifle: hit BaronofHell2 dmg 17 hp 29980
+RSLD 573 Decaying p10 main Rifle: pellet 0 end: monster at (-120 -195 42)
+RSLD 575 Decaying p10 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 21 reserve 30
+RSLD 619 Decaying p11 main Rifle: pull
+RSLD 619 Decaying p11 main Rifle: roll 29 of 30 (rsld_q13 0)
+RSLD 619 Decaying p11 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 619 Decaying p11 main Rifle: damage 20 -> 39 (x1.00) on BaronofHell2
+RSLD 619 Decaying p11 main Rifle: hit BaronofHell2 dmg 39 hp 29941
+RSLD 619 Decaying p11 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 621 Decaying p11 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 20 reserve 30
+RSLD 665 Decaying p12 main Rifle: pull
+RSLD 665 Decaying p12 main Rifle: roll 10 of 30 (rsld_q13 0)
+RSLD 665 Decaying p12 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 665 Decaying p12 main Rifle: damage 20 -> 13 (x1.00) on BaronofHell2
+RSLD 665 Decaying p12 main Rifle: hit BaronofHell2 dmg 13 hp 29928
+RSLD 665 Decaying p12 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 667 Decaying p12 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 19 reserve 30

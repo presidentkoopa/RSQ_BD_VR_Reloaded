@@ -1,0 +1,88 @@
+# Upgrading@Rocket_Launcher: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: Upgrading on Rocket_Launcher slot RocketLauncher rarity Common
+RSLD 2502 Upgrading: probe: AmmoRocket filled to 50
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2502 pickup pickup p0: RSQ_HudRes x32 not a world pickup: no rule
+RSLD probe: Rocket_Launcher magazine 6 reserve 50
+RSLD 2510 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 2510 Upgrading p41 main Rocket_Launcher: pull
+RSLD 2510 Upgrading p41 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 2510 Upgrading p41 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2510 Upgrading p41 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 2510 Upgrading p41 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 29775
+RSLD 2511 Upgrading p41 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2512 Upgrading p41 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD 2512 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rocket_Launcher magazine 5 reserve 50
+RSLD 2581 Upgrading p42 main Rocket_Launcher: pull
+RSLD 2581 Upgrading p42 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256: FREE
+RSLD 2581 Upgrading p42 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2581 Upgrading p42 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 2581 Upgrading p42 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 29451
+RSLD 2582 Upgrading p42 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2583 Upgrading p42 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 4 reserve 50
+RSLD 2652 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 2652 Upgrading p43 main Rocket_Launcher: pull
+RSLD 2652 Upgrading p43 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 2652 Upgrading p43 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2652 Upgrading p43 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 2652 Upgrading p43 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 29127
+RSLD 2653 Upgrading p43 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2654 Upgrading p43 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD 2654 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rocket_Launcher magazine 3 reserve 50
+RSLD 2723 Upgrading p44 main Rocket_Launcher: pull
+RSLD 2723 Upgrading p44 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 2723 Upgrading p44 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2723 Upgrading p44 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 2723 Upgrading p44 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 28803
+RSLD 2724 Upgrading p44 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2725 Upgrading p44 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD 2725 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rocket_Launcher magazine 2 reserve 50
+RSLD 2794 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 2794 Upgrading p45 main Rocket_Launcher: pull
+RSLD 2794 Upgrading p45 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 2794 Upgrading p45 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2794 Upgrading p45 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 2794 Upgrading p45 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 28479
+RSLD 2795 Upgrading p45 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2796 Upgrading p45 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 1 reserve 50
+RSLD 2865 Upgrading p46 main Rocket_Launcher: pull
+RSLD 2865 Upgrading p46 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256: FREE
+RSLD 2865 Upgrading p46 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2865 Upgrading p46 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 2865 Upgrading p46 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 28155
+RSLD 2866 Upgrading p46 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2867 Upgrading p46 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD 2902 pickup pickup p0: RocketRounds x1 not a world pickup: no rule
+RSLD 2902 pickup pickup p0: RocketRounds x1 not a world pickup: no rule
+RSLD 2902 pickup pickup p0: RocketRounds x1 not a world pickup: no rule
+RSLD 2902 pickup pickup p0: RocketRounds x1 not a world pickup: no rule
+RSLD 2902 pickup pickup p0: RocketRounds x1 not a world pickup: no rule
+RSLD 2902 pickup pickup p0: RocketRounds x1 not a world pickup: no rule
+RSLD 2902 pickup pickup p0: RSQ_HudMag x6 not a world pickup: no rule
+RSLD probe: Rocket_Launcher magazine 6 reserve 44
+RSLD 2936 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 2936 Upgrading p47 main Rocket_Launcher: pull
+RSLD 2936 Upgrading p47 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 2936 Upgrading p47 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 2936 Upgrading p47 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 2936 Upgrading p47 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 27831
+RSLD 2937 Upgrading p47 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 2938 Upgrading p47 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD 2938 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rocket_Launcher magazine 5 reserve 44
+RSLD 3007 Upgrading p48 main Rocket_Launcher: pull
+RSLD 3007 Upgrading p48 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 3007 Upgrading p48 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 3007 Upgrading p48 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 3007 Upgrading p48 main Rocket_Launcher: hit BaronofHell2 dmg 225 hp 27507
+RSLD 3008 Upgrading p48 main Rocket_Launcher: after pull: pellets 0 missiles 1 hits 1 kills 0 ammo taken 0 (mag 0)
+RSLD 3009 Upgrading p48 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD 3009 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rocket_Launcher magazine 4 reserve 44

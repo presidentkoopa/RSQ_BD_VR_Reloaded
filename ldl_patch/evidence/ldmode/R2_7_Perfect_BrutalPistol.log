@@ -1,0 +1,12 @@
+# R2_7_Perfect_BrutalPistol: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Perfect on BrutalPistol slot Pistol rarity Rare
+RSLD probe: 0 targets removed
+RSLD probe: BrutalPistol magazine 16 reserve 200
+RSLD 97 Perfect p1 main BrutalPistol: pellet 0 reshaped: angle -0.12 -> 0.00 pitch 0.68 -> 0.00 dmg 14 -> 28 range 8192
+RSLD 106 Perfect p1 main BrutalPistol: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD probe: BrutalPistol magazine 15 reserve 200
+RSLD probe: BrutalPistol magazine 15 reserve 200
+RSLD 141 Perfect: main hand jam cleared
+RSLD 159 Perfect p2 main BrutalPistol: pellet 0 reshaped: angle 0.15 -> 0.00 pitch -0.60 -> 0.00 dmg 14 -> 28 range 8192
+RSLD 168 Perfect p2 main BrutalPistol: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD probe: BrutalPistol magazine 14 reserve 200

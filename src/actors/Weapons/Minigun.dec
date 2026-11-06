@@ -265,7 +265,11 @@ ACTOR MiniGun : BrutalWeapon
 		CHAF B 0 A_ReFire("HoldSpinEmpty")
 		Goto Ready2
 
+	RSLD_Jammed:	// LD mode: LegenDoom's Perfect jammed this hand (1 s): no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
 	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam blocks the trigger (zscript/rsld/handler.zs tokens; never given without LegenDoom)
 		CHAE A 0 A_JumpIfNoAmmo(2)
 		CHAG A 0
 		"####" A 0
@@ -276,12 +280,14 @@ ACTOR MiniGun : BrutalWeapon
 		"####" ABDF 1
 		"####" A 0 A_StopSound(5)
 	Hold:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam blocks the trigger (zscript/rsld/handler.zs tokens; never given without LegenDoom)
 		CHAV A 0 A_JumpIfInventory("IsPlayingAsPurist", 1,2)
 		CHAF A 0
 		"####" A 0 A_JumpIfInventory("Spin",1,"HoldSpin")
 		"####" A 0 A_JumpIfNoAmmo("HoldEmpty")
 		"####" "#" 0 A_JumpIfInventory("RSQ_Empty_Minigun", 1, "Reload")	// posefix rsr: the magazine is empty
 		//Fire 1
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam, before each shot of the 3-shot loop
 		"####" "#" 0 A_Quake(2,2,0,12,"")
 		"####" A 0 A_PlaySound("Chaingun/Fire", 1)
 		"####" A 0 A_PlaySound("FARMGN", 6)
@@ -302,6 +308,7 @@ ACTOR MiniGun : BrutalWeapon
 		"####" A 0 A_JumpIfNoAmmo("HoldEmpty")
 		"####" "#" 0 A_JumpIfInventory("RSQ_Empty_Minigun", 1, "Reload")	// posefix rsr: the magazine is empty
 		//fire 2
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam, before each shot of the 3-shot loop
 		"####" "#" 0 A_Quake(2,2,0,12,"")
 		"####" A 0 A_PlaySound("Chaingun/Fire", 1)
 		"####" A 0 A_PlaySound("FARMGN", 6)
@@ -321,6 +328,7 @@ ACTOR MiniGun : BrutalWeapon
 		"####" A 0 A_JumpIfNoAmmo("HoldEmpty")
 		"####" "#" 0 A_JumpIfInventory("RSQ_Empty_Minigun", 1, "Reload")	// posefix rsr: the magazine is empty
 		//fire 3
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam, before each shot of the 3-shot loop
 		"####" "#" 0 A_Quake(2,2,0,12,"")
 		"####" A 0 A_PlaySound("Chaingun/Fire", 1)
 		"####" A 0 A_PlaySound("FARMGN", 6)
@@ -425,6 +433,7 @@ ACTOR MiniGun : BrutalWeapon
 
 	HoldSpin:
 		//fire1
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam, before each shot of the 3-shot loop
 		CHAG A 0 A_JumpIfNoAmmo("HoldSpinEmpty")
 		"####" "#" 0 A_JumpIfInventory("RSQ_Empty_Minigun", 1, "Reload")	// posefix rsr: the magazine is empty
 		"####" "#" 0 A_Quake(2,2,0,12,"")
@@ -445,6 +454,7 @@ ACTOR MiniGun : BrutalWeapon
 		CHAG A 0 A_JumpIfNoAmmo("HoldSpinEmpty")
 		"####" "#" 0 A_JumpIfInventory("RSQ_Empty_Minigun", 1, "Reload")	// posefix rsr: the magazine is empty
 		//fire2
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam, before each shot of the 3-shot loop
 		"####" "#" 0 A_Quake(2,2,0,12,"")
 		CHAG A 0 A_PlaySound("Chaingun/Fire", 1)
 		CHAG A 0 A_PlaySound("FARMGN", 6)
@@ -462,6 +472,7 @@ ACTOR MiniGun : BrutalWeapon
 		CHAG A 0 A_JumpIfNoAmmo("HoldSpinEmpty")
 		"####" "#" 0 A_JumpIfInventory("RSQ_Empty_Minigun", 1, "Reload")	// posefix rsr: the magazine is empty
 		//fire3
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && CountInv("RSLD_JamOff") > 0) || (OverlayID() != 1000000 && CountInv("RSLD_JamMain") > 0), "RSLD_Jammed")	// LD mode (round 2): Perfect's jam, before each shot of the 3-shot loop
 		"####" "#" 0 A_Quake(2,2,0,12,"")
 		CHAG A 0 A_PlaySound("Chaingun/Fire", 1)
 		CHAG A 0 A_PlaySound("FARMGN", 6)

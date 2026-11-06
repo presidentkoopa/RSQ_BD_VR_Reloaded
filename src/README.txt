@@ -42,6 +42,10 @@ LOAD ORDER
 
 Doom 2, not Freedoom: BD_VoxelPack's voxeldef names Doom 2's own sprites and Freedoom fails on it.
 
+With LegenDoom 3.0 (the LD mode below), LegenDoom goes right after doom2, so Brutal Doom's title map, HUD and
+sounds win:
+    doom2.wad  ->  LegenDoom_3.0.pk3  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  BD22Q_199.pk3
+
 
 RELOADING, WITH YOUR HANDS
 --------------------------
@@ -55,7 +59,7 @@ stay as Brutal Doom made them.)
   cylinder    the Incendiary Launcher's six-shot cylinder
   bay / block the Devastator's loading bay, the Nuker's warhead block
   pump        the Shotgun
-  break-open  the SSG, the Grenade Launcher, the Shotvolver, and the Revolver (Moonlight),
+  break-open  the SSG, the Grenade Launcher, the Shotvolver, and the Revolver (Silvergun),
               plus the Rifle's and the Machinegun's underbarrel 40 mm
 
 Take the part out with your off hand, reach to your belt for a fresh one, push it home. Break

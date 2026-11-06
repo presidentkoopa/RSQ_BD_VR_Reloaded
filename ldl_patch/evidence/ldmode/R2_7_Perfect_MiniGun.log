@@ -1,0 +1,20 @@
+# R2_7_Perfect_MiniGun: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Perfect on Minigun slot Chaingun rarity Rare
+RSLD probe: 0 targets removed
+RSLD probe: Minigun magazine 0 reserve 800
+RSLD 286 Perfect p3 main Minigun: pellet 0 reshaped: angle 0.62 -> 0.00 pitch 1.58 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 289 Perfect p4 main Minigun: pellet 0 reshaped: angle -0.47 -> 0.00 pitch 1.61 -> 0.00 dmg 20 -> 40 range 8192
+RSLD probe: Minigun magazine 0 reserve 798
+RSLD 292 Perfect p5 main Minigun: pellet 0 reshaped: angle 1.16 -> 0.00 pitch 0.67 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 294 Perfect p3 main Minigun: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 297 Perfect p4 main Minigun: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 300 Perfect p5 main Minigun: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD probe: Minigun magazine 0 reserve 797
+RSLD 336 Perfect: main hand jam cleared
+RSLD 344 Perfect p6 main Minigun: pellet 0 reshaped: angle 1.05 -> 0.00 pitch -0.74 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 347 Perfect p7 main Minigun: pellet 0 reshaped: angle 0.62 -> 0.00 pitch -0.63 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 350 Perfect p8 main Minigun: pellet 0 reshaped: angle 0.18 -> 0.00 pitch 0.23 -> 0.00 dmg 20 -> 40 range 8192
+RSLD 352 Perfect p6 main Minigun: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 355 Perfect p7 main Minigun: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 358 Perfect p8 main Minigun: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD probe: Minigun magazine 0 reserve 794

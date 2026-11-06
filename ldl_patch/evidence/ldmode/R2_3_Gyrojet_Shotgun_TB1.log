@@ -1,0 +1,24 @@
+# R2_3_Gyrojet_Shotgun_TB1: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Gyrojet on Shot_Gun slot Shotgun rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 791 Gyrojet p6 main Shot_Gun: pellet 0 (13 dmg) -> LDGyrojetShotgunProjectile2 from the main muzzle (-158 -197 37) at 2.3 / -3.0, speed 30, damage 13 x random(1,8) (mean 58.5 = 13 x 4.50)
+RSLD 791 Gyrojet p6 main Shot_Gun: pellet 0 dropped
+RSLD 791 Gyrojet p6 main Shot_Gun: pellet 1 dropped
+RSLD 791 Gyrojet p6 main Shot_Gun: pellet 2 dropped
+RSLD 791 Gyrojet p6 main Shot_Gun: pellet 3 dropped
+RSLD 791 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 91
+RSLD 791 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 13
+RSLD 791 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 65
+RSLD 791 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 39
+RSLD 792 Gyrojet p6 main Shot_Gun: pellet 4 dropped
+RSLD 792 Gyrojet p6 main Shot_Gun: pellet 5 dropped
+RSLD 792 Gyrojet p6 main Shot_Gun: pellet 6 dropped
+RSLD 792 Gyrojet p6 main Shot_Gun: pellet 7 dropped
+RSLD 792 Gyrojet p6 main Shot_Gun: pellet 8 dropped
+RSLD 792 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 65
+RSLD 792 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 52
+RSLD 792 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 26
+RSLD 792 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 26
+RSLD 792 Gyrojet p6 main Shot_Gun: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 52
+RSLD 794 Gyrojet p6 main Shot_Gun: 9 pellets became 9 LDGyrojetShotgunProjectile2; hits 9 kills 0

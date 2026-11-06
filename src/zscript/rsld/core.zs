@@ -96,6 +96,48 @@ class RSLD play
 	}
 
 	static string HandName(int hand) { return hand == OFF ? "off" : "main"; }
+
+	// round 2 (owner 2026-11-06): LegenDoom's OWN visual for an effect, from the loaded LegenDoom pk3 by class name
+	// (never copied into BD22 VR). The actor is spawned and put straight into its visual state `label`, `skip` states
+	// further on (past LegenDoom's damage and its own sound calls), before its first tic: its Spawn state (and any
+	// A_Explode there) never runs. Its quakes are off (LD mode sets LegenDoom's LD_quakes off: handler.zs NoQuakes).
+	static Actor LDVisual(string cls, Vector3 at, statelabel label, int skip = 0, Actor owner = null)
+	{
+		class<Actor> c = AC(cls);
+		if (!c) return null;
+		let a = Actor.Spawn(c, at, NO_REPLACE);
+		if (!a) return null;
+		a.target = owner;
+		a.bNOINTERACTION = true;	// a visual: never touches anything
+		State st = a.FindState(label);
+		for (int i = 0; i < skip && st; i++) st = st.NextState;
+		if (!st) { a.Destroy(); return null; }
+		a.SetState(st);
+		return a;
+	}
+
+	// BD22's rescued / allied marines (owner 2026-11-06 round 2: they count as teammates for the co-op effects):
+	// alive, FRIENDLY, of BD22's Marine_Rifle family (brutal22test6 PlayerClasses/Marines.dec:107: every rescued or
+	// placed marine, Marine_Shotgun / _Minigun / _Rocket / _PlasmaGun / _BFG, HeavyMachinegunMarine, derive from it;
+	// a CapturedMarine freed becomes one, CapturedMarine.dec:140), within ALLY_RADIUS of the player.
+	const ALLY_RADIUS = 1024;	// "near you": the owner's pick (round 2 report question; 1024 = LegenDoom's Sensing radius)
+	static int AllyCount(Actor p) { Array<Actor> l; return Allies(p, l); }
+	static int Allies(Actor p, out Array<Actor> found)
+	{
+		found.Clear();
+		class<Actor> mc = AC("Marine_Rifle");
+		if (!p || !mc) return 0;
+		int n = 0;
+		let it = BlockThingsIterator.Create(p, ALLY_RADIUS);
+		while (it.Next())
+		{
+			let a = it.thing;
+			if (!a || a == p || a.health <= 0 || !a.bFRIENDLY || !(a is mc) || p.Distance2D(a) > ALLY_RADIUS) continue;
+			n++;
+			found.Push(a);
+		}
+		return n;
+	}
 }
 
 // One LegenDoom effect. Name the class RSLD_Fx_<LegenDoomName>; the handler makes one instance of every subclass.
@@ -211,10 +253,20 @@ class RSLD_Shot play
 	// a piercing rail of this pull (Gauss): mo.RailAttack with the angle/pitch as offsets from the body, no trail,
 	// RGF_SILENT, RGF_ISOFFHAND for the off hand; muzzle.zs turns it onto the drawn barrel. One OnPelletEnd per rail:
 	// RES_MONSTER if it damaged a monster, RES_THING another thing, else RES_WALL.
-	void FireRail(double angle, double pitch, int damage, class<Actor> puff, double range = 0)
+	// trail (round 2, LegenDoom's own rail look): color1 / color2 as A_RailAttack's (-1 none), duration, sparsity, drift
+	void FireRail(double angle, double pitch, int damage, class<Actor> puff, double range = 0, int color1 = -1, int color2 = -1,
+		int duration = 0, double sparsity = 1.0, double drift = 1.0)
 	{
 		let hh = RSLD.H();
-		if (hh && mo) hh.FireRail(self, angle, pitch, damage, puff, range);
+		if (hh && mo) hh.FireRail(self, angle, pitch, damage, puff, range, color1, color2, duration, sparsity, drift);
+	}
+
+	// round 2: a projectile this pull fires instead of a pellet (Plasmatic, Gyrojet): tagged to the pull, so its damage
+	// is this pull's (a LegenDoom class is otherwise taken for LegenDoom's own effect damage)
+	void TagMissile(Actor m)
+	{
+		let hh = RSLD.H();
+		if (hh && m) { missiles++; hh.Tag(m, self); }
 	}
 }
 

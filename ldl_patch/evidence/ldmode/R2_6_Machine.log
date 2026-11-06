@@ -1,0 +1,20 @@
+# R2_6_Machine: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Machine on BrutalPistol slot Pistol rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 1604 Machine p13 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 1615 Machine p14 main BrutalPistol: the gun's own gap: 11 tics
+RSLD 1615 Machine p14 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 1617 Machine: refire BrutalPistol every 2 tics = 17.5 a second (its own gap 11)
+RSLD 1617 Machine p15 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 1619 Machine: refire BrutalPistol every 2 tics = 17.5 a second (its own gap 11)
+RSLD 1619 Machine p16 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 1621 Machine: refire BrutalPistol every 2 tics = 17.5 a second (its own gap 11)
+RSLD 1621 Machine p17 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 1623 Machine: refire BrutalPistol every 2 tics = 17.5 a second (its own gap 11)
+RSLD 1623 Machine p18 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 1625 Machine: refire BrutalPistol every 2 tics = 17.5 a second (its own gap 11)
+RSLD 1625 Machine p19 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 1627 Machine: refire BrutalPistol every 2 tics = 17.5 a second (its own gap 11)
+RSLD 1627 Machine p20 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD probe: BrutalPistol magazine 8 reserve 200

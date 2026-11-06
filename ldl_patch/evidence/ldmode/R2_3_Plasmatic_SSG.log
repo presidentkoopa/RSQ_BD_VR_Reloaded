@@ -1,0 +1,42 @@
+# R2_3_Plasmatic_SSG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Plasmatic on SSG slot SuperShotgun rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 315 Plasmatic p3 main SSG: pellet 1 (13 dmg) -> LDPlasmaticShotgunBall2 from the main muzzle (-168 -198 36) at 4.2 / -2.9, speed 25, damage 7 x random(1,8) (mean 31.5 = 13 x 2.42)
+RSLD 315 Plasmatic p3 main SSG: pellet 1 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 2 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 3 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 4 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 5 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 6 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 7 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 8 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 9 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 10 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 11 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 12 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 13 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 14 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 15 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 16 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 17 dropped
+RSLD 315 Plasmatic p3 main SSG: pellet 18 dropped
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 7
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 56
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 42
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 14
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 21
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 7
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 56
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 14
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 7
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 49
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 14
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 56
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 28
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 28
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 42
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 56
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 21
+RSLD 316 Plasmatic p3 main SSG: LDPlasmaticShotgunBall2 hit BaronofHell2 for 35
+RSLD 317 Plasmatic p3 main SSG: 19 pellets became 18 LDPlasmaticShotgunBall2; hits 19 kills 0

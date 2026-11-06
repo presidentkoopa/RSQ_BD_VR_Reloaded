@@ -179,3 +179,20 @@ Status: v2. BUILT: core.zs/handler.zs/fx_g0.zs/fx_g9.zs compile on the rig (QZD 
 - ldrig.sh counts real errors only (`[1-9]+ errors`, `FATAL:`, script error, VM abort); BD22/XMVE's own
   "Unknown class name ...Fatality" lines are warnings (they matched "FATAL" case-insensitively before).
 - G0 (56) and G9 (5): rig-proven, one log each in ldl_patch/evidence/ldmode/ (rig only, not headset-confirmed).
+
+## 12. v4 (round 2, 2026-11-06 afternoon; one agent)
+- A missile starts a pull only if it carries damage and no ancestor class is named like a helper (`Helper()`: BD22's
+  RocketGlassBreaker is an Alerter; EmptyBrass, RedFlareSpawn, BackblastFlames*, LiquidExplosionEffectSpawner carry 0).
+  A helper's damage is no shot's (Outgoing / WorldThingDamaged skip it).
+- A pull's "before" ammo is the snapshot one tic earlier when the hand did not fire the tic before (the rocket launcher
+  takes its round a tic before the rocket).
+- `RSLD.LDVisual(cls, at, statelabel, skip, owner)`: LegenDoom's own visual actor by name, put straight into a visual
+  state (its Spawn/A_Explode never run). `RSLD.AllyCount(p)` / `RSLD.Allies(p, out list)`: BD22's friendly marines
+  (Marine_Rifle family) within RSLD.ALLY_RADIUS 1024. `s.TagMissile(m)`: a projectile a pull fires itself (an LD class
+  tagged this way is ours, not LegenDoom's effect damage). `s.FireRail(..., color1, color2, duration, sparsity, drift)`.
+- LD mode turns LegenDoom's LD_quakes off on every map (no camera quakes).
+- Perfect's jam: tokens RSLD_JamMain / RSLD_JamOff, read by the fire states of BrutalPistol, Rifle, MiniGun (and each
+  shot of its 3-shot loops), BrutalRevolver, RSQ_Off_BrutalRevolver, RSQ_Off_BrutalPistol, RSQ_Off_Rifle (Purist
+  variants inherit). NOT hooked: BD22's DualPistols / DualRifles (their .dec are not in BD22 VR's src).
+- NEVER call a method on a string literal (`"a|b".Split(...)`): it crashes the VM on QZD 17.3 (rig, round 2).
+- Removed: rsld_q13, rsld_q14 (fixed behaviour), RSLD_Fx_Favoured (never rolls: RSLD_Reroll.IsDropped).

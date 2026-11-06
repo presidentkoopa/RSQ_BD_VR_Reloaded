@@ -4,9 +4,12 @@
 #   ldl_patch/tools/ldrig.sh <name> <secs> "<console script>"
 # Env:
 #   PK3     the BD22 VR test build (default /tmp/ldrig/BD22_VR_ld.pk3: python3 build.py ld; mv BD22_VR-Reloaded_ld.pk3 there)
-#   ORDER   full    doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR -> XMVE 04-07 -> LegenDoom 3.0   (default)
+#   ORDER   full    doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR -> XMVE 04-07   (default:
+#                   the owner's order, 2026-11-06 round 2: LegenDoom right after doom2, so BD's title map, HUD and
+#                   sounds win)
+#           ldfirst the same as full (old name)
+#           ldlast  doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR -> XMVE 04-07 -> LegenDoom 3.0   (round 1 order)
 #           nold    doom2 -> brutal22test6 -> BD_VoxelPack -> BD22 VR -> XMVE 04-07                    (no LegenDoom)
-#           ldfirst doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR -> XMVE 04-07   (owner pick?)
 #   EXTRA   more pk3s after the order (e.g. a probe)
 #   FRAMES=n  dump every n-th frame (left eye) to /tmp/ldrig/frames/<name>/ as PNG; QZ_RES (default 200)
 #   SNDLOG=1  the rig's sound log (QZSND lines: every sound start with its source class)
@@ -20,9 +23,9 @@ LD=${LD:-/mnt/user-data/uploads/1f3eb79e-LegenDoom_3.0.pk3}
 PK3=${PK3:-/tmp/ldrig/BD22_VR_ld.pk3}
 XMVE="$P/04_XMVE_MonsterExpansion1.3.1-BD22.pk3 $P/05_XMVE_MonsterExpansion_TUD.pk3 $P/06_XMVE_MonsterExpansion_Doom2.pk3 $P/07_XMVE_MonstersNoDropGuns-BD22.pk3"
 case ${ORDER:-full} in
-  full)    L="$G/brutal22test6.pk3 $G/BD_VoxelPack.pk3 $PK3 $XMVE $LD";;
+  full|ldfirst) L="$LD $G/brutal22test6.pk3 $G/BD_VoxelPack.pk3 $PK3 $XMVE";;
+  ldlast)  L="$G/brutal22test6.pk3 $G/BD_VoxelPack.pk3 $PK3 $XMVE $LD";;
   nold)    L="$G/brutal22test6.pk3 $G/BD_VoxelPack.pk3 $PK3 $XMVE";;
-  ldfirst) L="$LD $G/brutal22test6.pk3 $G/BD_VoxelPack.pk3 $PK3 $XMVE";;
   *) echo "ORDER?"; exit 2;;
 esac
 L="$L ${EXTRA:-}"

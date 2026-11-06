@@ -1,0 +1,16 @@
+# R2_7_Perfect_OffPistol: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Perfect on BrutalPistol slot Pistol rarity Rare
+RSLD probe: 0 targets removed
+RSLD 527 Perfect p9 main BrutalPistol: pellet 0 reshaped: angle 0.60 -> 0.00 pitch 0.02 -> 0.00 dmg 14 -> 28 range 8192
+RSLD 536 Perfect p9 main BrutalPistol: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD probe: player BDoomer has BDPistolAmmoOff x16 health 100 speed 8.0
+RSLD probe: player BDoomer has BDPistolAmmoOff x16 health 100 speed 8.0
+RSLD 571 Perfect: main hand jam cleared
+RSLD 571 Perfect: off hand jam cleared
+RSLD 595 Perfect p10 off RSQ_Off_BrutalPistol: pellet 0 reshaped: angle -0.18 -> 0.00 pitch 0.11 -> 0.00 dmg 14 -> 28 range 8192
+RSLD 599 Perfect p11 off RSQ_Off_BrutalPistol: pellet 0 reshaped: angle -0.06 -> 0.00 pitch -0.55 -> 0.00 dmg 14 -> 28 range 8192
+RSLD 604 Perfect p10 off RSQ_Off_BrutalPistol: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 608 Perfect p11 off RSQ_Off_BrutalPistol: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD probe: player BDoomer has BDPistolAmmoOff x14 health 100 speed 8.0
+RSLD 623 Perfect: off hand jam cleared
+RSLD 644 Perfect: main hand jam cleared

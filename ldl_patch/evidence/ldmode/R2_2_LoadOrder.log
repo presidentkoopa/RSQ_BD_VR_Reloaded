@@ -1,0 +1,3007 @@
+# R2_2_LoadOrder: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+  0. { no sound } (DSEMPTY)
+  1. *pain -> #0 { *pain100  *pain75  *pain50  *pain25 }
+  2. *pain100 <<player sound 3>>
+  3. *pain75 <<player sound 4>>
+  4. *pain50 <<player sound 5>>
+  5. *pain25 <<player sound 6>>
+  6. misc/keytry (KEYFAIL)
+  7. *usefail <<player sound 11>>
+  8. misc/health_pkup -> misc/i_pkup
+  9. misc/i_pkup (DSITEMUP)
+ 10. misc/armor_pkup -> misc/i_pkup
+ 11. misc/ammo_pkup -> misc/i_pkup
+ 12. world/spark1 (SPARK1)
+ 13. world/spark2 (SPARK2)
+ 14. world/spark3 (SPARK3)
+ 15. world/spark -> #1 { world/spark1  world/spark2  world/spark3 }
+ 16. world/quake (DSQUAKE)
+ 17. misc/freeze (ICEDTH1)
+ 18. misc/icebreak (ICEBRK1A)
+ 19. dog/active (DSDGACT)
+ 20. dog/attack (DSDGATK)
+ 21. dog/death (DSDGDTH)
+ 22. dog/pain (DSDGPAIN)
+ 23. dog/sight (DSDGSIT)
+ 24. dehextra/sound000 **not present**
+ 25. dehextra/sound001 **not present**
+ 26. dehextra/sound002 **not present**
+ 27. dehextra/sound003 **not present**
+ 28. dehextra/sound004 **not present**
+ 29. dehextra/sound005 **not present**
+ 30. dehextra/sound006 **not present**
+ 31. dehextra/sound007 **not present**
+ 32. dehextra/sound008 **not present**
+ 33. dehextra/sound009 **not present**
+ 34. dehextra/sound010 **not present**
+ 35. dehextra/sound011 **not present**
+ 36. dehextra/sound012 **not present**
+ 37. dehextra/sound013 **not present**
+ 38. dehextra/sound014 **not present**
+ 39. dehextra/sound015 **not present**
+ 40. dehextra/sound016 **not present**
+ 41. dehextra/sound017 **not present**
+ 42. dehextra/sound018 **not present**
+ 43. dehextra/sound019 **not present**
+ 44. dehextra/sound020 **not present**
+ 45. dehextra/sound021 **not present**
+ 46. dehextra/sound022 **not present**
+ 47. dehextra/sound023 **not present**
+ 48. dehextra/sound024 **not present**
+ 49. dehextra/sound025 **not present**
+ 50. dehextra/sound026 **not present**
+ 51. dehextra/sound027 **not present**
+ 52. dehextra/sound028 **not present**
+ 53. dehextra/sound029 **not present**
+ 54. dehextra/sound030 **not present**
+ 55. dehextra/sound031 **not present**
+ 56. dehextra/sound032 **not present**
+ 57. dehextra/sound033 **not present**
+ 58. dehextra/sound034 **not present**
+ 59. dehextra/sound035 **not present**
+ 60. dehextra/sound036 **not present**
+ 61. dehextra/sound037 **not present**
+ 62. dehextra/sound038 **not present**
+ 63. dehextra/sound039 **not present**
+ 64. dehextra/sound040 **not present**
+ 65. dehextra/sound041 **not present**
+ 66. dehextra/sound042 **not present**
+ 67. dehextra/sound043 **not present**
+ 68. dehextra/sound044 **not present**
+ 69. dehextra/sound045 **not present**
+ 70. dehextra/sound046 **not present**
+ 71. dehextra/sound047 **not present**
+ 72. dehextra/sound048 **not present**
+ 73. dehextra/sound049 **not present**
+ 74. dehextra/sound050 **not present**
+ 75. dehextra/sound051 **not present**
+ 76. dehextra/sound052 **not present**
+ 77. dehextra/sound053 **not present**
+ 78. dehextra/sound054 **not present**
+ 79. dehextra/sound055 **not present**
+ 80. dehextra/sound056 **not present**
+ 81. dehextra/sound057 **not present**
+ 82. dehextra/sound058 **not present**
+ 83. dehextra/sound059 **not present**
+ 84. dehextra/sound060 **not present**
+ 85. dehextra/sound061 **not present**
+ 86. dehextra/sound062 **not present**
+ 87. dehextra/sound063 **not present**
+ 88. dehextra/sound064 **not present**
+ 89. dehextra/sound065 **not present**
+ 90. dehextra/sound066 **not present**
+ 91. dehextra/sound067 **not present**
+ 92. dehextra/sound068 **not present**
+ 93. dehextra/sound069 **not present**
+ 94. dehextra/sound070 **not present**
+ 95. dehextra/sound071 **not present**
+ 96. dehextra/sound072 **not present**
+ 97. dehextra/sound073 **not present**
+ 98. dehextra/sound074 **not present**
+ 99. dehextra/sound075 **not present**
+100. dehextra/sound076 **not present**
+101. dehextra/sound077 **not present**
+102. dehextra/sound078 **not present**
+103. dehextra/sound079 **not present**
+104. dehextra/sound080 **not present**
+105. dehextra/sound081 **not present**
+106. dehextra/sound082 **not present**
+107. dehextra/sound083 **not present**
+108. dehextra/sound084 **not present**
+109. dehextra/sound085 **not present**
+110. dehextra/sound086 **not present**
+111. dehextra/sound087 **not present**
+112. dehextra/sound088 **not present**
+113. dehextra/sound089 **not present**
+114. dehextra/sound090 **not present**
+115. dehextra/sound091 **not present**
+116. dehextra/sound092 **not present**
+117. dehextra/sound093 **not present**
+118. dehextra/sound094 **not present**
+119. dehextra/sound095 **not present**
+120. dehextra/sound096 **not present**
+121. dehextra/sound097 **not present**
+122. dehextra/sound098 **not present**
+123. dehextra/sound099 **not present**
+124. dehextra/sound100 **not present**
+125. dehextra/sound101 **not present**
+126. dehextra/sound102 **not present**
+127. dehextra/sound103 **not present**
+128. dehextra/sound104 **not present**
+129. dehextra/sound105 **not present**
+130. dehextra/sound106 **not present**
+131. dehextra/sound107 **not present**
+132. dehextra/sound108 **not present**
+133. dehextra/sound109 **not present**
+134. dehextra/sound110 **not present**
+135. dehextra/sound111 **not present**
+136. dehextra/sound112 **not present**
+137. dehextra/sound113 **not present**
+138. dehextra/sound114 **not present**
+139. dehextra/sound115 **not present**
+140. dehextra/sound116 **not present**
+141. dehextra/sound117 **not present**
+142. dehextra/sound118 **not present**
+143. dehextra/sound119 **not present**
+144. dehextra/sound120 **not present**
+145. dehextra/sound121 **not present**
+146. dehextra/sound122 **not present**
+147. dehextra/sound123 **not present**
+148. dehextra/sound124 **not present**
+149. dehextra/sound125 **not present**
+150. dehextra/sound126 **not present**
+151. dehextra/sound127 **not present**
+152. dehextra/sound128 **not present**
+153. dehextra/sound129 **not present**
+154. dehextra/sound130 **not present**
+155. dehextra/sound131 **not present**
+156. dehextra/sound132 **not present**
+157. dehextra/sound133 **not present**
+158. dehextra/sound134 **not present**
+159. dehextra/sound135 **not present**
+160. dehextra/sound136 **not present**
+161. dehextra/sound137 **not present**
+162. dehextra/sound138 **not present**
+163. dehextra/sound139 **not present**
+164. dehextra/sound140 **not present**
+165. dehextra/sound141 **not present**
+166. dehextra/sound142 **not present**
+167. dehextra/sound143 **not present**
+168. dehextra/sound144 **not present**
+169. dehextra/sound145 **not present**
+170. dehextra/sound146 **not present**
+171. dehextra/sound147 **not present**
+172. dehextra/sound148 **not present**
+173. dehextra/sound149 **not present**
+174. dehextra/sound150 **not present**
+175. dehextra/sound151 **not present**
+176. dehextra/sound152 **not present**
+177. dehextra/sound153 **not present**
+178. dehextra/sound154 **not present**
+179. dehextra/sound155 **not present**
+180. dehextra/sound156 **not present**
+181. dehextra/sound157 **not present**
+182. dehextra/sound158 **not present**
+183. dehextra/sound159 **not present**
+184. dehextra/sound160 **not present**
+185. dehextra/sound161 **not present**
+186. dehextra/sound162 **not present**
+187. dehextra/sound163 **not present**
+188. dehextra/sound164 **not present**
+189. dehextra/sound165 **not present**
+190. dehextra/sound166 **not present**
+191. dehextra/sound167 **not present**
+192. dehextra/sound168 **not present**
+193. dehextra/sound169 **not present**
+194. dehextra/sound170 **not present**
+195. dehextra/sound171 **not present**
+196. dehextra/sound172 **not present**
+197. dehextra/sound173 **not present**
+198. dehextra/sound174 **not present**
+199. dehextra/sound175 **not present**
+200. dehextra/sound176 **not present**
+201. dehextra/sound177 **not present**
+202. dehextra/sound178 **not present**
+203. dehextra/sound179 **not present**
+204. dehextra/sound180 **not present**
+205. dehextra/sound181 **not present**
+206. dehextra/sound182 **not present**
+207. dehextra/sound183 **not present**
+208. dehextra/sound184 **not present**
+209. dehextra/sound185 **not present**
+210. dehextra/sound186 **not present**
+211. dehextra/sound187 **not present**
+212. dehextra/sound188 **not present**
+213. dehextra/sound189 **not present**
+214. dehextra/sound190 **not present**
+215. dehextra/sound191 **not present**
+216. dehextra/sound192 **not present**
+217. dehextra/sound193 **not present**
+218. dehextra/sound194 **not present**
+219. dehextra/sound195 **not present**
+220. dehextra/sound196 **not present**
+221. dehextra/sound197 **not present**
+222. dehextra/sound198 **not present**
+223. dehextra/sound199 **not present**
+224. misc/unused (DSSKLDTH)
+225. *death <<player sound 0>>
+226. player"0"*death (DSPLDETH)
+227. *xdeath <<player sound 1>>
+228. player"0"*xdeath (DSPDIEHI)
+229. *gibbed <<player sound 2>>
+230. player"0"*gibbed (DSSLOP)
+231. player"0"*pain100 (DSPLPAIN)
+232. *grunt <<player sound 7>>
+233. player"0"*grunt (DSOOF)
+234. *land <<player sound 8>>
+235. *jump <<player sound 9>>
+236. player"0"*jump (DSJUMP)
+237. *fist <<player sound 10>>
+238. player"0"*fist (DSPUNCH)
+239. player"0"*usefail (DSNOWAY)
+240. player"1"*death **not present**
+241. player"1"*xdeath (DSFDIEHI)
+242. player"1"*gibbed (DSSLOP)
+243. player"1"*pain100 **not present**
+244. player"1"*grunt **not present**
+245. player"1"*jump **not present**
+246. player"1"*fist (DSPUNCH)
+247. player"1"*usefail **not present**
+248. player"3"*death **not present**
+249. player"3"*xdeath **not present**
+250. player"3"*gibbed (DSSLOP)
+251. player"3"*pain100 **not present**
+252. player"3"*grunt **not present**
+253. player"3"*jump **not present**
+254. player"3"*fist (DSPUNCH)
+255. player"3"*usefail **not present**
+256. player/male/death1 -> player"0"*death
+257. player/male/death2 -> player"0"*death
+258. player/male/death3 -> player"0"*death
+259. player/male/death4 -> player"0"*death
+260. player/male/xdeath1 -> player"0"*xdeath
+261. player/male/pain100_1 -> player"0"*pain100
+262. player/male/pain100_2 -> player"0"*pain100
+263. player/male/pain75_1 -> player"0"*pain100
+264. player/male/pain75_2 -> player"0"*pain100
+265. player/male/pain50_1 -> player"0"*pain100
+266. player/male/pain50_2 -> player"0"*pain100
+267. player/male/pain25_1 -> player"0"*pain100
+268. player/male/pain25_2 -> player"0"*pain100
+269. player/male/grunt1 -> player"0"*grunt
+270. player/male/land1 -> player"0"*grunt
+271. player/male/jump1 -> player"0"*jump
+272. player/male/gibbed -> player"0"*gibbed
+273. player/male/fist -> player"0"*fist
+274. player/female/death1 -> player"1"*death
+275. player/female/death2 -> player"1"*death
+276. player/female/death3 -> player"1"*death
+277. player/female/death4 -> player"1"*death
+278. player/female/xdeath1 -> player"1"*xdeath
+279. player/female/pain100_1 -> player"1"*pain100
+280. player/female/pain100_2 -> player"1"*pain100
+281. player/female/pain75_1 -> player"1"*pain100
+282. player/female/pain75_2 -> player"1"*pain100
+283. player/female/pain50_1 -> player"1"*pain100
+284. player/female/pain50_2 -> player"1"*pain100
+285. player/female/pain25_1 -> player"1"*pain100
+286. player/female/pain25_2 -> player"1"*pain100
+287. player/female/grunt1 -> player"1"*grunt
+288. player/female/land1 -> player"1"*grunt
+289. player/female/jump1 -> player"1"*jump
+290. player/female/gibbed -> player"1"*gibbed
+291. player/female/fist -> player"1"*fist
+292. player/cyborg/death1 -> player"3"*death
+293. player/cyborg/death2 -> player"3"*death
+294. player/cyborg/death3 -> player"3"*death
+295. player/cyborg/death4 -> player"3"*death
+296. player/cyborg/xdeath1 -> player"3"*xdeath
+297. player/cyborg/pain100_1 -> player"3"*pain100
+298. player/cyborg/pain100_2 -> player"3"*pain100
+299. player/cyborg/pain75_1 -> player"3"*pain100
+300. player/cyborg/pain75_2 -> player"3"*pain100
+301. player/cyborg/pain50_1 -> player"3"*pain100
+302. player/cyborg/pain50_2 -> player"3"*pain100
+303. player/cyborg/pain25_1 -> player"3"*pain100
+304. player/cyborg/pain25_2 -> player"3"*pain100
+305. player/cyborg/grunt1 -> player"3"*grunt
+306. player/cyborg/land1 -> player"3"*grunt
+307. player/cyborg/jump1 -> player"3"*jump
+308. player/cyborg/gibbed -> player"3"*gibbed
+309. player/cyborg/fist -> player"3"*fist
+310. weapons/sawup (DSSAWUP)
+311. weapons/sawidle (DSSAWIDL)
+312. weapons/sawfull (DSSAWFUL)
+313. weapons/sawhit (DSSAWHIT)
+314. weapons/pistol (DSPISTOL)
+315. weapons/shotgf (DSSHOTGN)
+316. weapons/shotgr (DSSGCOCK)
+317. weapons/sshotf (DSDSHTGN)
+318. weapons/sshoto (DSDBOPN)
+319. weapons/sshotc (DSDBCLS)
+320. weapons/sshotl (DSDBLOAD)
+321. weapons/chngun (DSPISTOL)
+322. weapons/rocklx (DSBAREXP)
+323. weapons/rocklf (DSRLAUNC)
+324. weapons/plasmaf (DSPLASMA)
+325. weapons/plasmax -> plasmarifle/impact
+326. weapons/bfgf (DSBFG)
+327. weapons/bfgx (DSRXPLOD)
+328. weapons/railgf (RAILGF1)
+329. weapons/grbnce (DSBOUNCE)
+330. weapons/grenlx (DSGRNEXP)
+331. weapons/grenlf (DSGLAUNC)
+332. misc/brainexplode -> weapons/rocklx
+333. misc/gibbed (DSSLOP)
+334. grunt/sight -> #2 { grunt/sight1  grunt/sight2  grunt/sight3 }
+335. grunt/sight1 (DSPOSIT1)
+336. grunt/sight2 (DSPOSIT2)
+337. grunt/sight3 (DSPOSIT3)
+338. grunt/death -> #229 { grunt/death1  grunt/death2  grunt/death3  grunt/death4  grunt/death5  grunt/death6  grunt/death7 }
+339. grunt/death1 (ZOMDTH1)
+340. grunt/death2 (ZOMDTH2)
+341. grunt/death3 (ZOMDTH3)
+342. grunt/active (DSPOSACT)
+343. grunt/pain -> #228 { grunt/pain1  grunt/pain2  grunt/pain3  grunt/pain4  grunt/pain5  grunt/pain6  grunt/pain7  grunt/pain8  grunt/pain9  grunt/pain10  grunt/pain11 }
+344. grunt/attack (DSPISTOL)
+345. shotguy/sight -> #4 { shotguy/sight1  shotguy/sight2  shotguy/sight3 }
+346. shotguy/sight1 (DSPOSIT1)
+347. shotguy/sight2 (DSPOSIT2)
+348. shotguy/sight3 (DSPOSIT3)
+349. shotguy/death -> #5 { shotguy/death1  shotguy/death2  shotguy/death3 }
+350. shotguy/death1 (DSPODTH1)
+351. shotguy/death2 (DSPODTH2)
+352. shotguy/death3 (DSPODTH3)
+353. shotguy/active (DSPOSACT)
+354. shotguy/pain (DSPOPAIN)
+355. shotguy/attack (DSSHOTGN)
+356. vile/sight (DSVILSIT)
+357. vile/active (DSVILACT)
+358. vile/pain (DSVIPAIN)
+359. vile/death (DSVILDTH)
+360. vile/raise (DSSLOP)
+361. vile/start (DSVILATK)
+362. vile/stop (DSBAREXP)
+363. vile/firestrt (DSFLAMST)
+364. vile/firecrkl (DSFLAME)
+365. skeleton/sight (DSSKESIT)
+366. skeleton/active (DSSKEACT)
+367. skeleton/pain (DSPOPAIN)
+368. skeleton/melee (DSSKEPCH)
+369. skeleton/swing (DSSKESWG)
+370. skeleton/death (DSSKEDTH)
+371. skeleton/attack (DSSKEATK)
+372. skeleton/tracex (DSBAREXP)
+373. fatso/sight (DSMANSIT)
+374. fatso/active (DSMANACT)
+375. fatso/pain (DSMNPAIN)
+376. fatso/raiseguns (DSMANATK)
+377. fatso/death (DSMANDTH)
+378. fatso/attack (DSFIRSHT)
+379. fatso/shotx (DSFIRXPL)
+380. chainguy/sight -> #6 { chainguy/sight1  chainguy/sight2  chainguy/sight3 }
+381. chainguy/sight1 (DSPOSIT1)
+382. chainguy/sight2 (DSPOSIT2)
+383. chainguy/sight3 (DSPOSIT3)
+384. chainguy/death -> #7 { chainguy/death1  chainguy/death2  chainguy/death3 }
+385. chainguy/death1 (DSPODTH1)
+386. chainguy/death2 (DSPODTH2)
+387. chainguy/death3 (DSPODTH3)
+388. chainguy/active (DSPOSACT)
+389. chainguy/pain (DSPOPAIN)
+390. chainguy/attack -> chaingun/fire
+391. imp/sight -> #8 { imp/sight1  imp/sight2 }
+392. imp/sight1 (DSBGSIT1)
+393. imp/sight2 (DSBGSIT2)
+394. imp/death -> #9 { imp/death1  imp/death2 }
+395. imp/death1 (DSBGDTH1)
+396. imp/death2 (DSBGDTH2)
+397. imp/active (DSBGACT)
+398. imp/pain (LDIMPPAN)
+399. imp/melee -> #129 { imp/melee1  imp/melee2  imp/melee3 }
+400. imp/attack -> #132 { ImpBall4  ImpBall5  ImpBall6 }
+401. imp/shotx -> #133 { ImpBall1  ImpBall2  ImpBall3 }
+402. demon/sight (DSSGTSIT)
+403. demon/active (DSDMACT)
+404. demon/pain (DSDMPAIN)
+405. demon/melee (DSSGTATK)
+406. demon/death (DSSGTDTH)
+407. spectre/sight (DSSGTSIT)
+408. spectre/active (DSDMACT)
+409. spectre/pain (DSDMPAIN)
+410. spectre/melee (DSSGTATK)
+411. spectre/death (DSSGTDTH)
+412. caco/sight (DSCACSIT)
+413. caco/active (DSCACACT)
+414. caco/pain (DSCACPAI)
+415. caco/death (DSCACDTH)
+416. caco/attack -> #135 { CacoBal4  CacoBal5  CacoBal6 }
+417. caco/shotx -> #136 { CacoBal1  CacoBal2  CacoBal3 }
+418. baron/sight (DSBRSSIT)
+419. baron/active (DSCYBACT)
+420. baron/pain (DSDMPAIN)
+421. baron/melee (DSCLAW)
+422. baron/death (DSBRSDTH)
+423. baron/attack -> #139 { BaroBal4  BaroBal5  BaroBal6 }
+424. baron/shotx -> #140 { BaroBal1  BaroBal2  BaroBal3 }
+425. knight/sight (DSKNTSIT)
+426. knight/active (DSKNTACT)
+427. knight/pain (DSDMPAIN)
+428. knight/death (DSKNTDTH)
+429. skull/active (DSSKLIDL)
+430. skull/pain (DSSKLPN)
+431. skull/melee (DSSKLATK)
+432. skull/death (DSFIRXPL)
+433. spider/sight (DSSPISIT)
+434. spider/active (DSDMACT)
+435. spider/pain (DSDMPAIN)
+436. spider/attack -> chaingun/fire
+437. spider/death (DSSPIDTH)
+438. spider/walk (DSMETAL)
+439. baby/sight (DSBSPSIT)
+440. baby/active (DSBSPACT)
+441. baby/pain (DSDMPAIN)
+442. baby/death (DSBSPDTH)
+443. baby/walk (DSBSPWLK)
+444. baby/attack -> plasmarifle/fire
+445. baby/shotx (DSFIRXPL)
+446. cyber/sight (DSCYBSIT)
+447. cyber/active (DSCYBACT)
+448. cyber/pain (DSDMPAIN)
+449. cyber/death (DSCYBDTH)
+450. cyber/hoof (DSHOOF)
+451. pain/sight (DSPESIT)
+452. pain/active (DSPEACT)
+453. pain/pain (DSPEPAIN)
+454. pain/death (DSPEDTH)
+455. wolfss/sight (DSSSSIT)
+456. wolfss/active (DSPOSACT)
+457. wolfss/pain (DSPOPAIN)
+458. wolfss/death (DSSSDTH)
+459. wolfss/attack (DSSHOTGN)
+460. keen/pain (DSKEENPN)
+461. keen/death (DSKEENDT)
+462. brain/sight (DSBOSSIT)
+463. brain/pain (DSBOSPN)
+464. brain/death (DSBOSDTH)
+465. brain/spit (DSBOSPIT)
+466. brain/cube (DSBOSCUB)
+467. brain/cubeboom (DSFIRXPL)
+468. brain/spawn -> misc/teleport
+469. misc/teleport (DSTELEPT)
+470. world/barrelx (DSBAREXP)
+471. world/drip **not present**
+472. world/watersplash -> #177 { water1  water2  water3  water4 }
+473. world/sludgegloop (DSPLOOSH)
+474. world/lavasizzle (DSLVSIZ)
+475. plats/pt1_strt (DSPSTART)
+476. plats/pt1_stop (DSPSTOP)
+477. plats/pt1_mid (DSSTNMOV)
+478. doors/dr1_open (DSDOROPN)
+479. doors/dr1_clos (DSDORCLS)
+480. doors/dr2_open (DSBDOPN)
+481. doors/dr2_clos (DSBDCLS)
+482. misc/secret (DSSECRET)
+483. misc/w_pkup (DSWPNUP)
+484. misc/p_pkup (DSGETPOW)
+485. misc/k_pkup (PICKCARD)
+486. misc/spawn (DSITMBK)
+487. misc/chat (DSRADIO)
+488. misc/chat2 (DSTINK)
+489. switches/normbutn (DSSWTCHN)
+490. switches/exitbutn (DSSWTCHX)
+491. menu/activate (LDMENU4)
+492. menu/backup (LDMENU5)
+493. menu/prompt (LDMENU7)
+494. menu/cursor (LDMENU1)
+495. menu/change (LDMENU2)
+496. menu/invalid (LDMENU6)
+497. menu/dismiss (LDMENU9)
+498. menu/choose (LDMENU8)
+499. menu/clear (LDMENU3)
+500. menu/advance -> menu/choose
+501. menu/quit1 (LDQUIT1)
+502. menu/quit2 (LDQUIT2)
+503. intermission/tick -> weapons/pistol
+504. intermission/cooptotal -> *death
+505. intermission/nextstage -> weapons/rocklx
+506. intermission/paststats -> weapons/shotgr
+507. intermission/pastcoopstats -> weapons/shotgr
+508. intermission/pastdmstats -> *gibbed
+509. weapons/incinerator/fire1 **not present**
+510. weapons/incinerator/fire2 **not present**
+511. weapons/incinerator/burn **not present**
+512. weapons/incinerator/hot1 **not present**
+513. weapons/incinerator/hot2 **not present**
+514. weapons/incinerator/hot3 **not present**
+515. weapons/calamityblade/charge **not present**
+516. weapons/calamityblade/shoot **not present**
+517. weapons/calamityblade/explode **not present**
+518. pistol/dryfire (LDDRY1)
+519. shotgun/dryfire (LDDRY2)
+520. supershotgun/dryfire -> shotgun/dryfire
+521. chaingun/dryfire -> pistol/dryfire
+522. rocketlauncher/dryfire -> shotgun/dryfire
+523. plasmarifle/dryfire (LDDRY3)
+524. bfg9000/dryfire (LDDRYBFG)
+525. bfg9000/raredryfire (LDDRYRBF)
+526. fists/swing1 (LDFISTW1)
+527. fists/swing2 (LDFISTW2)
+528. fists/swing3 (LDFISTW3)
+529. fists/swing -> #12 { fists/swing1  fists/swing2  fists/swing3 }
+530. fists/hitflesh1 (LDFISTH1)
+531. fists/hitflesh2 (LDFISTH2)
+532. fists/hitflesh3 (LDFISTH3)
+533. fists/hitflesh4 (LDFISTH4)
+534. fists/hitflesh5 (LDFISTH5)
+535. fists/hitflesh6 (LDFISTH6)
+536. fists/hitflesh7 (LDFISTH7)
+537. fists/hitflesh8 (LDFISTH8)
+538. fists/hitflesh9 (LDFISTH9)
+539. fists/hitflesh10 (LDFISTH0)
+540. fists/hitflesh -> #13 { fists/hitflesh1  fists/hitflesh2  fists/hitflesh3  fists/hitflesh4  fists/hitflesh5  fists/hitflesh6  fists/hitflesh7  fists/hitflesh8  fists/hitflesh9  fists/hitflesh10 }
+541. fists/hitwall1 (LDFISTM1)
+542. fists/hitwall2 (LDFISTM2)
+543. fists/hitwall3 (LDFISTM3)
+544. fists/hitwall -> #14 { fists/hitwall1  fists/hitwall2  fists/hitwall3 }
+545. fists/berserkflesh1 **not present**
+546. fists/berserkflesh2 **not present**
+547. fists/berserkflesh3 **not present**
+548. fists/berserkflesh -> #15 { fists/berserkflesh1  fists/berserkflesh2  fists/berserkflesh3 }
+549. fists/berserk1 **not present**
+550. fists/berserk2 **not present**
+551. fists/berserk -> #16 { fists/berserk1  fists/berserk2 }
+552. fists/commonpickup (LDKNIFPK)
+553. fists/commonswing1 (LDCFISW1)
+554. fists/commonswing2 (LDCFISW2)
+555. fists/commonswing3 (LDCFISW3)
+556. fists/commonswing4 (LDCFISW4)
+557. fists/commonswing -> #17 { fists/commonswing1  fists/commonswing2  fists/commonswing3  fists/commonswing4 }
+558. fists/commonhitflesh1 (LDCFISH1)
+559. fists/commonhitflesh2 (LDCFISH2)
+560. fists/commonhitflesh3 (LDCFISH3)
+561. fists/commonhitflesh4 (LDCFISH4)
+562. fists/commonhitflesh -> #18 { fists/commonhitflesh1  fists/commonhitflesh2  fists/commonhitflesh3  fists/commonhitflesh4 }
+563. fists/commonhitwall1 (LDCFISM1)
+564. fists/commonhitwall2 (LDCFISM2)
+565. fists/commonhitwall3 (LDCFISM3)
+566. fists/commonhitwall4 (LDCFISM4)
+567. fists/commonhitwall -> #19 { fists/commonhitwall1  fists/commonhitwall2  fists/commonhitwall3  fists/commonhitwall4 }
+568. fists/uncommonpickup (LDPFISPK)
+569. fists/uncommonswing1 (LDUFISW1)
+570. fists/uncommonswing2 (LDUFISW2)
+571. fists/uncommonswing3 (LDUFISW3)
+572. fists/uncommonswing -> #20 { fists/uncommonswing1  fists/uncommonswing2  fists/uncommonswing3 }
+573. fists/rareswing -> #21 { fists/uncommonswing1  fists/uncommonswing2  fists/uncommonswing3 }
+574. fists/epicswing -> #22 { fists/uncommonswing1  fists/uncommonswing2  fists/uncommonswing3 }
+575. fists/uncommonhitflesh1 (LDUFISH1)
+576. fists/uncommonhitflesh2 (LDUFISH2)
+577. fists/uncommonhitflesh3 (LDUFISH3)
+578. fists/uncommonhitflesh4 (LDUFISH4)
+579. fists/uncommonhitflesh -> #23 { fists/uncommonhitflesh1  fists/uncommonhitflesh2  fists/uncommonhitflesh3  fists/uncommonhitflesh4 }
+580. fists/uncommonhitwall1 (LDUFISM1)
+581. fists/uncommonhitwall2 (LDUFISM2)
+582. fists/uncommonhitwall3 (LDUFISM3)
+583. fists/uncommonhitwall4 (LDUFISM4)
+584. fists/uncommonhitwall -> #24 { fists/uncommonhitwall1  fists/uncommonhitwall2  fists/uncommonhitwall3  fists/uncommonhitwall4 }
+585. chainsaw/attack (LDSAWATK)
+586. chainsaw/idle (CSAWREDY)
+587. chainsaw/draw (CSAWDRAW)
+588. chainsaw/pickup (LDSAWPK)
+589. chainsaw/stop (CSAWSTOP)
+590. chainsaw/start (CSAWSTRT)
+591. chainsaw/hitflesh1 (LDSAW1)
+592. chainsaw/hitflesh2 (LDSAW2)
+593. chainsaw/hitflesh3 (LDSAW3)
+594. chainsaw/hitflesh4 (LDSAW4)
+595. chainsaw/hitflesh5 (LDSAW5)
+596. chainsaw/hitflesh6 (LDSAW6)
+597. chainsaw/hitflesh7 (LDSAW7)
+598. chainsaw/hitflesh8 (LDSAW8)
+599. chainsaw/hitflesh9 (LDSAW9)
+600. chainsaw/hitflesh10 (LDSAW0)
+601. chainsaw/hitflesh -> #25 { chainsaw/hitflesh1  chainsaw/hitflesh2  chainsaw/hitflesh3  chainsaw/hitflesh4  chainsaw/hitflesh5  chainsaw/hitflesh6  chainsaw/hitflesh7  chainsaw/hitflesh8  chainsaw/hitflesh9  chainsaw/hitflesh10 }
+602. chainsaw/hitwall1 (LDSAWAL1)
+603. chainsaw/hitwall2 (LDSAWAL2)
+604. chainsaw/hitwall3 (LDSAWAL3)
+605. chainsaw/hitwall -> #26 { chainsaw/hitwall1  chainsaw/hitwall2  chainsaw/hitwall3 }
+606. pistol/fire (PFIRE)
+607. pistol/pickup (LDPISTPK)
+608. pistol/draw (PISTUP)
+609. pistol/commonfire (LDCPIST)
+610. pistol/uncommonfire (LDUPIST)
+611. pistol/rarefire (LDRPIST)
+612. pistol/epicfire (LDEPIST)
+613. shotgun/fire (SGFIRE)
+614. shotgun/pump (STGNPUMP)
+615. shotgun/pickup (LDSHOTPK)
+616. shotgun/draw -> shotgun/pickup
+617. shotgun/commonfire (LDCSHTG)
+618. shotgun/commonpump (LDCSHTGP)
+619. shotgun/uncommonfire (LDUSHTG)
+620. shotgun/uncommonpump (LDUSHTGP)
+621. shotgun/rarefire (LDRSHTG)
+622. shotgun/rarepump (LDRSHTGP)
+623. shotgun/epicfire (LDESHTG)
+624. shotgun/epicpump (LDESHTGP)
+625. shotgun/rapidpump (LDRSHTGP)
+626. supershotgun/fire (LDSSG)
+627. supershotgun/open (LDSSGOPN)
+628. supershotgun/load (LDSSGLOD)
+629. supershotgun/close (LDSSGCLS)
+630. supershotgun/pickup (LDSSGPK)
+631. supershotgun/draw -> supershotgun/pickup
+632. supershotgun/commonfire (LDCSSG)
+633. supershotgun/commonopen -> supershotgun/open
+634. supershotgun/commonload -> supershotgun/load
+635. supershotgun/commonclose -> supershotgun/close
+636. supershotgun/uncommonfire (LDUSSG)
+637. supershotgun/uncommonopen -> supershotgun/open
+638. supershotgun/uncommonload -> supershotgun/load
+639. supershotgun/uncommonclose -> supershotgun/close
+640. supershotgun/rarefire (LDRSSG)
+641. supershotgun/rareopen (LDRSSGO)
+642. supershotgun/rareload (LDRSSGL)
+643. supershotgun/rareclose (LDRSSGC)
+644. supershotgun/epicfire (LDESSG)
+645. supershotgun/epicopen -> supershotgun/rareopen
+646. supershotgun/epicload -> supershotgun/rareload
+647. supershotgun/epicclose -> supershotgun/rareclose
+648. chaingun/fire1 (MP40A)
+649. chaingun/fire2 (MP40B)
+650. chaingun/fire3 (MP40C)
+651. chaingun/fire (MP40)
+652. chaingun/pickup (LDCGUNPK)
+653. chaingun/draw (LDCGUNUP)
+654. chaingun/commonfire1 (LDCCGUN1)
+655. chaingun/commonfire2 (LDCCGUN2)
+656. chaingun/commonfire3 (LDCCGUN3)
+657. chaingun/commonfire -> #28 { chaingun/commonfire1  chaingun/commonfire2  chaingun/commonfire3 }
+658. chaingun/uncommonfire (LDUCGUN)
+659. chaingun/rarefire1 (LDRCGUN1)
+660. chaingun/rarefire2 (LDRCGUN2)
+661. chaingun/rarefire3 (LDRCGUN3)
+662. chaingun/rarefire -> #29 { chaingun/rarefire1  chaingun/rarefire2  chaingun/rarefire3 }
+663. chaingun/epicfire1 (LDECGUN1)
+664. chaingun/epicfire2 (LDECGUN2)
+665. chaingun/epicfire -> #30 { chaingun/epicfire1  chaingun/epicfire2 }
+666. rocketlauncher/fire (LDROCKET)
+667. rocketlauncher/loop (LDROCKLP)
+668. rocketlauncher/explode (LDROCKXP)
+669. rocketlauncher/pickup (LDRLAUPK)
+670. rocketlauncher/draw (LDRLAUUP)
+671. rocketlauncher/commonfire (LDCRLA)
+672. rocketlauncher/commonexplode (LDCRLAXP)
+673. rocketlauncher/uncommonfire (LDURLA)
+674. rocketlauncher/uncommonexplode (LDROCKXP)
+675. rocketlauncher/rarefire (LDRRLA)
+676. rocketlauncher/rareexplode (LDRRLAXP)
+677. rocketlauncher/epicfire (LDERLA)
+678. rocketlauncher/epicexplode (LDERLAXP)
+679. rocketlauncher/keganexplode (LDSTOCXP)
+680. rocketlauncher/plasmaticfire (LDPLASRK)
+681. plasmarifle/fire (LDPLASMA)
+682. plasmarifle/impact **not present**
+683. plasmarifle/cooldown (LDPLASCO)
+684. plasmarifle/pickup (LDPLASPK)
+685. plasmarifle/draw (LDPLASUP)
+686. plasmarifle/commonfire (LDCPLAS)
+687. plasmarifle/uncommonfire (LDUPLAS)
+688. plasmarifle/rarefire (LDRPLAS)
+689. plasmarifle/epicfire (LDEPLAS)
+690. plasmarifle/epicloop (LDEPLASL)
+691. bfg9000/fire (LDBFG)
+692. bfg9000/charge (LDBFGCHG)
+693. bfg9000/impact (LDBFGXP)
+694. bfg9000/loop (LDBFGLP)
+695. bfg9000/pickup (LDBFGPK)
+696. bfg9000/draw (LDBFGUP)
+697. bfg9000/commonfire (LDCBFG)
+698. bfg9000/commonfireinstant (LDCBFG2)
+699. bfg9000/commonimpact (LDCBFGXP)
+700. bfg9000/uncommonfire (LDUBFG)
+701. bfg9000/uncommoncharge (LDUBFGCH)
+702. bfg9000/uncommonimpact (LDUBFGXP)
+703. bfg9000/uncommonloop (LDUBFGLP)
+704. bfg9000/rarefire (LDRBFG)
+705. bfg9000/rarecharge (LDRBFGCH)
+706. bfg9000/rapidcharge (LDRBFGC2)
+707. bfg9000/epicfire (LDEBFG)
+708. bfg9000/epicimpact (LDEBFGXP)
+709. bfg9000/kineticimpact (LDKINBFG)
+710. effects/newlegendarypickup1 (LDLEGEN1)
+711. effects/newlegendarypickup2 (LDLEGEN2)
+712. effects/newlegendarypickup3 (LDLEGEN3)
+713. effects/newlegendarypickup -> #31 { effects/newlegendarypickup1  effects/newlegendarypickup2  effects/newlegendarypickup3 }
+714. effects/epicnewlegendarypickup (LDLEGENE)
+715. effects/agitatingpickup (LDAGITAT)
+716. effects/mysteriouspickup (LDMYSTER)
+717. effects/seriouspickup (LDSERIOU)
+718. effects/desperatepickup (LDDESPER)
+719. effects/augmentedpickup (LDAUGMEN)
+720. effects/beampickup (LDBEAMPK)
+721. effects/illegalpickup (LDILLEGA)
+722. effects/legendaryenemyloop (LDLELOOP)
+723. effects/legendaryenemy (LDLETRAN)
+724. effects/legendaryenemyboss (LDLEBOSS)
+725. effects/hunting (LDHUNTIN)
+726. effects/huntingenergy (LDHUNTEN)
+727. effects/lucky (LDLUCKY)
+728. effects/medic (LDMEDIC)
+729. effects/shaman (LDSHAMAN)
+730. effects/quartermaster (LDQUARTM)
+731. effects/chargeup (LDCHARGE)
+732. effects/chargeupdone (LDCHARGX)
+733. effects/irradiated1 (LDRADP1)
+734. effects/irradiated2 (LDRADP2)
+735. effects/irradiated3 (LDRADP3)
+736. effects/irradiated4 (LDRADP4)
+737. effects/irradiated -> #32 { effects/irradiated1  effects/irradiated2  effects/irradiated3  effects/irradiated4 }
+738. effects/gauss (LDGAUSS)
+739. effects/seekerrocket (LDSEEKRK)
+740. effects/plasmarocket (LDPLASRK)
+741. effects/bouncyrocket (LDBOUNC1)
+742. effects/bouncyplasma (LDBOUNC2)
+743. effects/bouncybfg9000 (LDBOUNC3)
+744. effects/acceleratorrocketlauncher (LDACCROK)
+745. effects/acceleratorplasmarifle1 (LDACCPL1)
+746. effects/acceleratorplasmarifle2 (LDACCPL2)
+747. effects/acceleratorplasmarifle -> #33 { effects/acceleratorplasmarifle1  effects/acceleratorplasmarifle2 }
+748. effects/acceleratorbfg9000 (LDACCBFG)
+749. effects/stasis (LDSTASIS)
+750. effects/stasis2 (LDSTASI2)
+751. effects/energizingstart (LDKINBFG)
+752. effects/energizing (LDENERAN)
+753. effects/stealthchainsaw (LDSILEN3)
+754. effects/stealthpistol (LDSILEN3)
+755. effects/stealthshotgun (LDSILEN1)
+756. effects/stealthsupershotgun (LDSILEN2)
+757. effects/stealthchaingun (LDSILEN3)
+758. effects/stealthrocketlauncher (LDSTLROK)
+759. effects/stealthplasmarifle (LDSTLPLS)
+760. effects/stealthbfg9000 (LDSTLBFG)
+761. effects/renegade1 (LDAAAGH1)
+762. effects/renegade2 (LDAAAGH2)
+763. effects/renegade3 (LDAAAGH3)
+764. effects/renegade4 (LDAAAGH4)
+765. effects/renegade5 (LDAAAGH5)
+766. effects/renegade6 (LDAAAGH6)
+767. effects/renegade -> #34 { effects/renegade1  effects/renegade2  effects/renegade3  effects/renegade4  effects/renegade5  effects/renegade6 }
+768. effects/agitatingshort (LDAGITF1)
+769. effects/agitatinglong (LDAGITF2)
+770. effects/agitatingpunch (LDAGITP1)
+771. effects/agitatingswing (LDAGITP2)
+772. effects/agitatingrocket -> effects/agitatinglong
+773. effects/agitatingplasma -> effects/agitatingshort
+774. effects/agitatingplasmaexplode -> effects/agitatingpunch
+775. effects/agitatingbfg9000 (LDAGITBF)
+776. effects/agitatingbfgcharge (LDAGITBC)
+777. effects/agitatingrocketloop (LDAGITL1)
+778. effects/agitatingbfg9000loop (LDAGITL2)
+779. effects/agitatingbone1 (LDAGBON1)
+780. effects/agitatingbone2 (LDAGBON2)
+781. effects/agitatingbone3 (LDAGBON3)
+782. effects/agitatingbone4 (LDAGBON4)
+783. effects/agitatingbone5 (LDAGBON5)
+784. effects/agitatingbone -> #35 { effects/agitatingbone1  effects/agitatingbone2  effects/agitatingbone3  effects/agitatingbone4  effects/agitatingbone5 }
+785. effects/upgradingmeter (LDUPGRA1)
+786. effects/upgradinglevel (LDUPGRA2)
+787. effects/grouptherapy (LDROCKXP)
+788. effects/sensing (LDSENSIN)
+789. effects/vidmaster (LDVMFIRE)
+790. effects/vidmasterexplode (LDVMXP)
+791. effects/wildfire (LDFUKINV)
+792. effects/chronostrike (LDWARUDO)
+793. effects/restoring (LDSOULPK)
+794. effects/resupplying (LDBPAKPK)
+795. effects/vanguard (LDARM2PK)
+796. effects/goldeneye (LDGOLDEN)
+797. effects/goldeneyeexplode1 (LDGOLDX1)
+798. effects/goldeneyeexplode2 (LDGOLDX2)
+799. effects/goldeneyeexplode -> #36 { effects/goldeneyeexplode1  effects/goldeneyeexplode2 }
+800. effects/blazingrocket (LDBLAZIF)
+801. effects/blazingplasma (LDBLAZIF)
+802. effects/blazingbfg (LDBLAZIF)
+803. effects/blazingimpact (LDBLAZIH)
+804. effects/blazingstartrocket (LDBLZRST)
+805. effects/blazingstartplasma (LDBLZRST)
+806. effects/blazingstartbfg (LDBEAMS2)
+807. effects/blazinglooprocket (LDBLZRLP)
+808. effects/blazingloopplasma (LDBLZRLP)
+809. effects/blazingloopbfg (LDBLZBLP)
+810. effects/beamstartplasma (LDBEAMS1)
+811. effects/beamloopplasma (LDBEAML1)
+812. effects/beamendplasma (LDBEAME1)
+813. effects/beamstartbfg (LDBEAMS2)
+814. effects/beamloopbfg (LDBEAML2)
+815. effects/beamendbfg (LDBEAME2)
+816. effects/blaster (LDBLASTE)
+817. pistol/dualfire -> pistol/rarefire
+818. pistol/advancedfire -> pistol/rarefire
+819. effects/advancedreloadout (LDADVAN1)
+820. effects/advancedreloadin (LDADVAN2)
+821. effects/advancedreloadcock (LDADVAN3)
+822. hehheenh/hehheenh1 (LDHEHEH1)
+823. hehheenh/hehheenh2 (LDHEHEH2)
+824. hehheenh/hehheenh3 (LDHEHEH3)
+825. hehheenh/hehheenh4 (LDHEHEH4)
+826. hehheenh/hehheenh -> #37 { hehheenh/hehheenh1  hehheenh/hehheenh2  hehheenh/hehheenh3  hehheenh/hehheenh4 }
+827. effects/onepunch (LDONEPUN)
+828. effects/onepunchloop (LDONEPUL)
+829. effects/onepunchshockwave (LDONEPSK)
+830. effects/onepunchcharge1 (LDONEPC1)
+831. effects/onepunchcharge2 (LDONEPC2)
+832. effects/onepunchcharge3 (LDONEPC3)
+833. effects/onepunchcharge -> #38 { effects/onepunchcharge1  effects/onepunchcharge2  effects/onepunchcharge3 }
+834. effects/northernstarloop (LDNSLOOP)
+835. effects/kenshiroyell (LDKENSH1)
+836. effects/kenshiroloop (LDKENSH2)
+837. effects/kenshirostop (LDKENSH3)
+838. effects/northernstargib1 (LDNSGIB1)
+839. effects/northernstargib2 (LDNSGIB2)
+840. effects/northernstargib3 (LDNSGIB3)
+841. effects/northernstargib4 (LDNSGIB4)
+842. effects/northernstargib5 (LDNSGIB5)
+843. effects/northernstargib6 (LDNSGIB6)
+844. effects/northernstargib7 (LDNSGIB7)
+845. effects/northernstargib8 (LDNSGIB8)
+846. effects/northernstargib9 (LDNSGIB9)
+847. effects/northernstargib -> #39 { effects/northernstargib1  effects/northernstargib2  effects/northernstargib3  effects/northernstargib4  effects/northernstargib5  effects/northernstargib6  effects/northernstargib7  effects/northernstargib8  effects/northernstargib9 }
+848. effects/facekickinghitflesh1 (LDFKHFL1)
+849. effects/facekickinghitflesh2 (LDFKHFL2)
+850. effects/facekickinghitflesh3 (LDFKHFL3)
+851. effects/facekickinghitflesh -> #40 { effects/facekickinghitflesh1  effects/facekickinghitflesh2  effects/facekickinghitflesh3 }
+852. effects/facekickinghitwall1 (LDFKHWL1)
+853. effects/facekickinghitwall2 (LDFKHWL2)
+854. effects/facekickinghitwall3 (LDFKHWL3)
+855. effects/facekickinghitwall -> #41 { effects/facekickinghitwall1  effects/facekickinghitwall2  effects/facekickinghitwall3 }
+856. effects/sixshooter (LDSIXSHO)
+857. effects/sixshooter2 (LDSIXSH2)
+858. effects/machineloop (LDMACHI1)
+859. effects/machineend (LDMACHI2)
+860. effects/imaginary (LDIMAGIN)
+861. effects/imaginaryidle (LDIMAGI2)
+862. effects/raycaster (LDERLAXP)
+863. effects/annihilating (LDEBFGXP)
+864. effects/nanocircuit1 (LDNANOC1)
+865. effects/nanocircuit2 (LDNANOC2)
+866. effects/nanocircuit3 (LDNANOC3)
+867. effects/nanocircuit -> #42 { effects/nanocircuit1  effects/nanocircuit2  effects/nanocircuit3 }
+868. effects/gyrojet1 (LDGYROJ1)
+869. effects/gyrojet2 (LDGYROJ2)
+870. effects/gyrojet3 (LDGYROJ3)
+871. effects/gyrojet4 (LDGYROJ4)
+872. effects/gyrojet5 (LDGYROJ5)
+873. effects/gyrojet -> #43 { effects/gyrojet1  effects/gyrojet2  effects/gyrojet3  effects/gyrojet4  effects/gyrojet5 }
+874. items/pistoldrop (LDGUNSMA)
+875. items/shotgundrop (LDGUNMED)
+876. items/supershotgundrop -> items/shotgundrop
+877. items/chaingundrop -> items/shotgundrop
+878. items/rocketlauncherdrop (LDGUNBIG)
+879. items/plasmarifledrop -> items/rocketlauncherdrop
+880. items/bfg9000drop (LDGUNBFG)
+881. items/brassknuckledrop -> items/pistoldrop
+882. items/chainsawdrop -> items/shotgundrop
+883. casings/bullet1 (LDPCASE1)
+884. casings/bullet2 (LDPCASE2)
+885. casings/bullet3 (LDPCASE3)
+886. casings/bullet4 (LDPCASE4)
+887. casings/bullet5 (LDPCASE5)
+888. casings/bullet6 (LDPCASE6)
+889. casings/bullet7 (LDPCASE7)
+890. casings/bullet8 (LDPCASE8)
+891. casings/bullet -> #44 { casings/bullet1  casings/bullet2  casings/bullet3  casings/bullet4  casings/bullet5  casings/bullet6  casings/bullet7  casings/bullet8 }
+892. casings/shell1 (LDSCASE1)
+893. casings/shell2 (LDSCASE2)
+894. casings/shell3 (LDSCASE3)
+895. casings/shell4 (LDSCASE4)
+896. casings/shell5 (LDSCASE5)
+897. casings/shell6 (LDSCASE6)
+898. casings/shell -> #45 { casings/shell1  casings/shell2  casings/shell3  casings/shell4  casings/shell5  casings/shell6 }
+899. casings/chaingun1 (LDCCASE1)
+900. casings/chaingun2 (LDCCASE2)
+901. casings/chaingun3 (LDCCASE3)
+902. casings/chaingun4 (LDCCASE4)
+903. casings/chaingun5 (LDCCASE5)
+904. casings/chaingun6 (LDCCASE6)
+905. casings/chaingun7 (LDCCASE7)
+906. casings/chaingun8 (LDCCASE8)
+907. casings/chaingun -> #46 { casings/chaingun1  casings/chaingun2  casings/chaingun3  casings/chaingun4  casings/chaingun5  casings/chaingun6  casings/chaingun7  casings/chaingun8 }
+908. bullet/ricochet1 (LDBULLR1)
+909. bullet/ricochet2 (LDBULLR2)
+910. bullet/ricochet3 (LDBULLR3)
+911. bullet/ricochet4 (LDBULLR4)
+912. bullet/ricochet5 (LDBULLR5)
+913. bullet/ricochet6 (LDBULLR6)
+914. bullet/ricochet7 (LDBULLR7)
+915. bullet/ricochet8 (LDBULLR8)
+916. bullet/ricochet9 (LDBULLR9)
+917. bullet/ricochet0 (LDBULLR0)
+918. bullet/ricochet -> #47 { bullet/ricochet1  bullet/ricochet2  bullet/ricochet3  bullet/ricochet4  bullet/ricochet5  bullet/ricochet6  bullet/ricochet7  bullet/ricochet8  bullet/ricochet9  bullet/ricochet0 }
+919. bullet/hitflesh1 (LDBULLF1)
+920. bullet/hitflesh2 (LDBULLF2)
+921. bullet/hitflesh3 (LDBULLF3)
+922. bullet/hitflesh4 (LDBULLF4)
+923. bullet/hitflesh5 (LDBULLF5)
+924. bullet/hitflesh6 (LDBULLF6)
+925. bullet/hitflesh -> #48 { bullet/hitflesh1  bullet/hitflesh2  bullet/hitflesh3  bullet/hitflesh4  bullet/hitflesh5  bullet/hitflesh6 }
+926. items/healthbonuspickup (LDHBONPK)
+927. items/armorbonuspickup (LDABONPK)
+928. items/stimpackpickup (LDSTIMPK)
+929. items/medikitpickup (LDMEDIPK)
+930. items/backpackpickup (LDBPAKPK)
+931. items/computermappickup (LDCMAPPK)
+932. items/soulspherepickup (LDSOULPK)
+933. items/megaspherepickup (LDMEGAPK)
+934. items/radsuitpickup (LDSUITPK)
+935. items/invulnerabilitypickup (LDINVLPK)
+936. items/infraredpickup (LDIREDPK)
+937. items/berserkpickup (LDBERSPK)
+938. items/blurspherepickup (LDBLURPK)
+939. items/shellpickup (LDSHELPK)
+940. items/cellpickup (LDCELLPK)
+941. items/clipboxpickup (LDCBOXPK)
+942. items/clippickup (LDCLIPPK)
+943. items/rocketpickup (LDROCKPK)
+944. items/greenarmorpickup (LDARM1PK)
+945. items/bluearmorpickup (LDARM2PK)
+946. items/cardpickup (LDCARDPK)
+947. items/skullpickup (LDSKULPK)
+948. menu/infoopen (LDINFO1)
+949. menu/infoclose (LDINFO2)
+950. announcer/97d/accuracy (A4ACCU)
+951. announcer/97d/assist (A4ASSIST)
+952. announcer/97d/blueflagdropped (A4BFLDRP)
+953. announcer/97d/blueflagreturned (A4BFLRTN)
+954. announcer/97d/blueflagtaken (A4BFLTKN)
+955. announcer/97d/blueleads (A4BLUELD)
+956. announcer/97d/bluescores (A4BSCORE)
+957. announcer/97d/blueskulldropped (A4BSKDRP)
+958. announcer/97d/blueskullreturned (A4BSKRTN)
+959. announcer/97d/blueskulltaken (A4BSKTKN)
+960. announcer/97d/capture (A4CAPTUR)
+961. announcer/97d/defense (A4DEFENS)
+962. announcer/97d/domination (A4DOMN)
+963. announcer/97d/doomsphere (A4DMSPHR)
+964. announcer/97d/drain (A4DRAIN)
+965. announcer/97d/excellent (A4EXCL)
+966. announcer/97d/fight (A4FIGHT)
+967. announcer/97d/firstfrag (A4FFRAG)
+968. announcer/97d/fisting (A4FISTNG)
+969. announcer/97d/oneminutewarning (A4ONMWRN)
+970. announcer/97d/fiveminutewarning (A4FMNWRN)
+971. announcer/97d/guardsphere (A4GUARD)
+972. announcer/97d/haste (A4HASTE)
+973. announcer/97d/highjump (A4HIJUMP)
+974. announcer/97d/impressive (A4IMPR)
+975. announcer/97d/incredible (A4INCR)
+976. announcer/97d/invisibility (A4INVS)
+977. announcer/97d/invulnerability (A4INVUL)
+978. announcer/97d/llama (A4LLAM)
+979. announcer/97d/megasphere (A4MEGA)
+980. announcer/97d/mostimpressive (A4MIMP)
+981. announcer/97d/nextroundin (A4NXTRND)
+982. announcer/97d/one (A4ONE)
+983. announcer/97d/onefragleft (A4ONEFRG)
+984. announcer/97d/partialinvisibility (A4PINVS)
+985. announcer/97d/perfect (A4PERFCT)
+986. announcer/97d/possessionartifactdropped (A4POSDRP)
+987. announcer/97d/possessionartifactpickedup (A4POSPCK)
+988. announcer/97d/precision (A4PREC)
+989. announcer/97d/preparetofight (A4PREPAR)
+990. announcer/97d/prosperity (A4PROSP)
+991. announcer/97d/rage (A4RAGE)
+992. announcer/97d/redflagdropped (A4RFLDRP)
+993. announcer/97d/redflagreturned (A4RFLRTN)
+994. announcer/97d/redflagtaken (A4RFLTKN)
+995. announcer/97d/redleads (A4REDLD)
+996. announcer/97d/redredskull (A4RRSKUL)
+997. announcer/97d/redscores (A4RSCORE)
+998. announcer/97d/redskulldropped (A4RSKDRP)
+999. announcer/97d/redskullreturned (A4RSKRTN)
+1000. announcer/97d/redskulltaken (A4RSKTKN)
+1001. announcer/97d/reflection (A4REFL)
+1002. announcer/97d/regeneration (A4REGEN)
+1003. announcer/97d/resistance (A4RESIS)
+1004. announcer/97d/soulsphere (A4SOUL)
+1005. announcer/97d/spam **not present**
+1006. announcer/97d/spread (A4SPREAD)
+1007. announcer/97d/strength (A4STR)
+1008. announcer/97d/tag (A4TAG)
+1009. announcer/97d/teamsaretied (A4TEAMTD)
+1010. announcer/97d/termination (A4TERM2)
+1011. announcer/97d/terminator (A4TERM)
+1012. announcer/97d/theenemyhastheflag (A4ENHSFL)
+1013. announcer/97d/three (A4THREE)
+1014. announcer/97d/threefragsleft (A4THRFRG)
+1015. announcer/97d/timefreeze (A4TIMFR)
+1016. announcer/97d/totaldomination (A4TDOM)
+1017. announcer/97d/turbosphere (A4TURBO)
+1018. announcer/97d/two (A4TWO)
+1019. announcer/97d/twofragsleft (A4TWOFRG)
+1020. announcer/97d/victory (A4VICTOR)
+1021. announcer/97d/votefailed (A4VFAIL)
+1022. announcer/97d/votenow (A4VNOW)
+1023. announcer/97d/votepassed (A4VPASS)
+1024. announcer/97d/welcometoctf (A4WELCTF)
+1025. announcer/97d/welcometooneflagctf (A4WLOCTF)
+1026. announcer/97d/welcometost (A4WELST)
+1027. announcer/97d/whiteflagreturned (A4WFLRTN)
+1028. announcer/97d/youaretiedforthelead (A4TIEDLD)
+1029. announcer/97d/youfailit (A4YOUFAI)
+1030. announcer/97d/youhavetheflag (A4UHAVFL)
+1031. announcer/97d/yourskillisnotenough (A4NOTENO)
+1032. announcer/97d/yourteamhastheflag **not present**
+1033. announcer/97d/youvelostthelead (A4LOSTLD)
+1034. announcer/97d/youvetakenthelead (A4TAKNLD)
+1035. announcer/97d/youwin (A4WIN)
+1036. announcer/94c/accuracy **not present**
+1037. announcer/94c/blueflagreturned **not present**
+1038. announcer/94c/blueflagtaken **not present**
+1039. announcer/94c/bluescores **not present**
+1040. announcer/94c/blueskullreturned **not present**
+1041. announcer/94c/blueskulltaken **not present**
+1042. announcer/94c/capture **not present**
+1043. announcer/94c/domination **not present**
+1044. announcer/94c/doomsphere **not present**
+1045. announcer/94c/drain **not present**
+1046. announcer/94c/excellent **not present**
+1047. announcer/94c/fiveminutewarning **not present**
+1048. announcer/94c/haste **not present**
+1049. announcer/94c/highjump **not present**
+1050. announcer/94c/impressive **not present**
+1051. announcer/94c/incredible **not present**
+1052. announcer/94c/invisibility **not present**
+1053. announcer/94c/invulnerability **not present**
+1054. announcer/94c/llama **not present**
+1055. announcer/94c/mostimpressive **not present**
+1056. announcer/94c/one **not present**
+1057. announcer/94c/onefragleft **not present**
+1058. announcer/94c/oneminutewarning **not present**
+1059. announcer/94c/partialinvisibility **not present**
+1060. announcer/94c/precision **not present**
+1061. announcer/94c/prosperity **not present**
+1062. announcer/94c/rage **not present**
+1063. announcer/94c/redflagreturned **not present**
+1064. announcer/94c/redflagtaken **not present**
+1065. announcer/94c/redscores **not present**
+1066. announcer/94c/redskullreturned **not present**
+1067. announcer/94c/redskulltaken **not present**
+1068. announcer/94c/reflection **not present**
+1069. announcer/94c/regeneration **not present**
+1070. announcer/94c/resistance **not present**
+1071. announcer/94c/spread **not present**
+1072. announcer/94c/strength **not present**
+1073. announcer/94c/tag **not present**
+1074. announcer/94c/terminator **not present**
+1075. announcer/94c/three **not present**
+1076. announcer/94c/threefragsleft **not present**
+1077. announcer/94c/timefreeze **not present**
+1078. announcer/94c/totaldomination **not present**
+1079. announcer/94c/turbosphere **not present**
+1080. announcer/94c/two **not present**
+1081. announcer/94c/twofragsleft **not present**
+1082. announcer/94c/welcometoctf **not present**
+1083. announcer/94c/welcometooneflagctf **not present**
+1084. announcer/94c/welcometost **not present**
+1085. announcer/94c/youfailit **not present**
+1086. announcer/94c/assist -> announcer/97d/assist
+1087. announcer/94c/blueflagdropped -> announcer/97d/blueflagdropped
+1088. announcer/94c/blueleads -> announcer/97d/blueleads
+1089. announcer/94c/blueskulldropped -> announcer/97d/blueskulldropped
+1090. announcer/94c/defense -> announcer/97d/defense
+1091. announcer/94c/fight -> announcer/97d/fight
+1092. announcer/94c/firstfrag -> announcer/97d/firstfrag
+1093. announcer/94c/fisting -> announcer/97d/fisting
+1094. announcer/94c/guardsphere -> announcer/97d/guardsphere
+1095. announcer/94c/megasphere -> announcer/97d/megasphere
+1096. announcer/94c/nextroundin -> announcer/97d/nextroundin
+1097. announcer/94c/perfect -> announcer/97d/perfect
+1098. announcer/94c/possessionartifactdropped -> announcer/97d/possessionartifactdropped
+1099. announcer/94c/possessionartifactpickedup -> announcer/97d/possessionartifactpickedup
+1100. announcer/94c/preparetofight -> announcer/97d/preparetofight
+1101. announcer/94c/redflagdropped -> announcer/97d/redflagdropped
+1102. announcer/94c/redleads -> announcer/97d/redleads
+1103. announcer/94c/redskulldropped -> announcer/97d/redskulldropped
+1104. announcer/94c/soulsphere -> announcer/97d/soulsphere
+1105. announcer/94c/spam -> announcer/97d/spam
+1106. announcer/94c/teamsaretied -> announcer/97d/teamsaretied
+1107. announcer/94c/termination -> announcer/97d/termination
+1108. announcer/94c/theenemyhastheflag -> announcer/97d/theenemyhastheflag
+1109. announcer/94c/victory -> announcer/97d/victory
+1110. announcer/94c/votefailed -> announcer/97d/votefailed
+1111. announcer/94c/votenow -> announcer/97d/votenow
+1112. announcer/94c/votepassed -> announcer/97d/votepassed
+1113. announcer/94c/whiteflagreturned -> announcer/97d/whiteflagreturned
+1114. announcer/94c/youaretiedforthelead -> announcer/97d/youaretiedforthelead
+1115. announcer/94c/youhavetheflag -> announcer/97d/youhavetheflag
+1116. announcer/94c/yourskillisnotenough -> announcer/97d/yourskillisnotenough
+1117. announcer/94c/yourteamhastheflag -> announcer/97d/yourteamhastheflag
+1118. announcer/94c/youvelostthelead -> announcer/97d/youvelostthelead
+1119. announcer/94c/youvetakenthelead -> announcer/97d/youvetakenthelead
+1120. announcer/94c/youwin -> announcer/97d/youwin
+1121. announcer/95k/accuracy **not present**
+1122. announcer/95k/blueflagreturned **not present**
+1123. announcer/95k/blueflagtaken **not present**
+1124. announcer/95k/blueleads **not present**
+1125. announcer/95k/bluescores **not present**
+1126. announcer/95k/blueskullreturned **not present**
+1127. announcer/95k/blueskulltaken **not present**
+1128. announcer/95k/capture **not present**
+1129. announcer/95k/domination **not present**
+1130. announcer/95k/doomsphere **not present**
+1131. announcer/95k/drain **not present**
+1132. announcer/95k/excellent **not present**
+1133. announcer/95k/fight **not present**
+1134. announcer/95k/fisting **not present**
+1135. announcer/95k/fiveminutewarning **not present**
+1136. announcer/95k/haste **not present**
+1137. announcer/95k/highjump **not present**
+1138. announcer/95k/impressive **not present**
+1139. announcer/95k/incredible **not present**
+1140. announcer/95k/invisibility **not present**
+1141. announcer/95k/invulnerability **not present**
+1142. announcer/95k/llama **not present**
+1143. announcer/95k/megasphere **not present**
+1144. announcer/95k/mostimpressive **not present**
+1145. announcer/95k/one **not present**
+1146. announcer/95k/onefragleft **not present**
+1147. announcer/95k/oneminutewarning **not present**
+1148. announcer/95k/partialinvisibility **not present**
+1149. announcer/95k/perfect **not present**
+1150. announcer/95k/precision **not present**
+1151. announcer/95k/preparetofight **not present**
+1152. announcer/95k/prosperity **not present**
+1153. announcer/95k/rage **not present**
+1154. announcer/95k/redflagreturned **not present**
+1155. announcer/95k/redflagtaken **not present**
+1156. announcer/95k/redleads **not present**
+1157. announcer/95k/redscores **not present**
+1158. announcer/95k/redskullreturned **not present**
+1159. announcer/95k/redskulltaken **not present**
+1160. announcer/95k/reflection **not present**
+1161. announcer/95k/regeneration **not present**
+1162. announcer/95k/resistance **not present**
+1163. announcer/95k/soulsphere **not present**
+1164. announcer/95k/spread **not present**
+1165. announcer/95k/strength **not present**
+1166. announcer/95k/tag **not present**
+1167. announcer/95k/teamsaretied **not present**
+1168. announcer/95k/terminator **not present**
+1169. announcer/95k/theenemyhastheflag **not present**
+1170. announcer/95k/three **not present**
+1171. announcer/95k/threefragsleft **not present**
+1172. announcer/95k/timefreeze **not present**
+1173. announcer/95k/totaldomination **not present**
+1174. announcer/95k/turbosphere **not present**
+1175. announcer/95k/two **not present**
+1176. announcer/95k/twofragsleft **not present**
+1177. announcer/95k/victory **not present**
+1178. announcer/95k/welcometoctf **not present**
+1179. announcer/95k/welcometooneflagctf **not present**
+1180. announcer/95k/welcometost **not present**
+1181. announcer/95k/youaretiedforthelead **not present**
+1182. announcer/95k/youfailit **not present**
+1183. announcer/95k/youhavetheflag **not present**
+1184. announcer/95k/yourskillisnotenough **not present**
+1185. announcer/95k/yourteamhastheflag **not present**
+1186. announcer/95k/youvetakenthelead **not present**
+1187. announcer/95k/youwin **not present**
+1188. announcer/95k/assist -> announcer/97d/assist
+1189. announcer/95k/blueflagdropped -> announcer/97d/blueflagdropped
+1190. announcer/95k/blueskulldropped -> announcer/97d/blueskulldropped
+1191. announcer/95k/defense -> announcer/97d/defense
+1192. announcer/95k/firstfrag -> announcer/97d/firstfrag
+1193. announcer/95k/guardsphere -> announcer/97d/guardsphere
+1194. announcer/95k/nextroundin -> announcer/97d/nextroundin
+1195. announcer/95k/possessionartifactdropped -> announcer/97d/possessionartifactdropped
+1196. announcer/95k/possessionartifactpickedup -> announcer/97d/possessionartifactpickedup
+1197. announcer/95k/redflagdropped -> announcer/97d/redflagdropped
+1198. announcer/95k/redskulldropped -> announcer/97d/redskulldropped
+1199. announcer/95k/spam -> announcer/97d/spam
+1200. announcer/95k/termination -> announcer/97d/termination
+1201. announcer/95k/votefailed -> announcer/97d/votefailed
+1202. announcer/95k/votenow -> announcer/97d/votenow
+1203. announcer/95k/votepassed -> announcer/97d/votepassed
+1204. announcer/95k/whiteflagreturned -> announcer/97d/whiteflagreturned
+1205. announcer/95k/youvelostthelead -> announcer/97d/youvelostthelead
+1206. announcer/96f/accuracy **not present**
+1207. announcer/96f/blueflagreturned **not present**
+1208. announcer/96f/blueflagtaken **not present**
+1209. announcer/96f/blueleads **not present**
+1210. announcer/96f/bluescores **not present**
+1211. announcer/96f/blueskullreturned **not present**
+1212. announcer/96f/blueskulltaken **not present**
+1213. announcer/96f/capture **not present**
+1214. announcer/96f/domination **not present**
+1215. announcer/96f/doomsphere **not present**
+1216. announcer/96f/drain **not present**
+1217. announcer/96f/excellent **not present**
+1218. announcer/96f/fight **not present**
+1219. announcer/96f/fisting **not present**
+1220. announcer/96f/fiveminutewarning **not present**
+1221. announcer/96f/haste **not present**
+1222. announcer/96f/highjump **not present**
+1223. announcer/96f/impressive **not present**
+1224. announcer/96f/incredible **not present**
+1225. announcer/96f/invisibility **not present**
+1226. announcer/96f/invulnerability **not present**
+1227. announcer/96f/llama **not present**
+1228. announcer/96f/megasphere **not present**
+1229. announcer/96f/mostimpressive **not present**
+1230. announcer/96f/one **not present**
+1231. announcer/96f/onefragleft **not present**
+1232. announcer/96f/oneminutewarning **not present**
+1233. announcer/96f/partialinvisibility **not present**
+1234. announcer/96f/perfect **not present**
+1235. announcer/96f/precision **not present**
+1236. announcer/96f/preparetofight **not present**
+1237. announcer/96f/prosperity **not present**
+1238. announcer/96f/rage **not present**
+1239. announcer/96f/redflagreturned **not present**
+1240. announcer/96f/redflagtaken **not present**
+1241. announcer/96f/redleads **not present**
+1242. announcer/96f/redscores **not present**
+1243. announcer/96f/redskullreturned **not present**
+1244. announcer/96f/redskulltaken **not present**
+1245. announcer/96f/reflection **not present**
+1246. announcer/96f/regeneration **not present**
+1247. announcer/96f/resistance **not present**
+1248. announcer/96f/soulsphere **not present**
+1249. announcer/96f/spread **not present**
+1250. announcer/96f/strength **not present**
+1251. announcer/96f/tag **not present**
+1252. announcer/96f/teamsaretied **not present**
+1253. announcer/96f/terminator **not present**
+1254. announcer/96f/theenemyhastheflag **not present**
+1255. announcer/96f/three **not present**
+1256. announcer/96f/threefragsleft **not present**
+1257. announcer/96f/timefreeze **not present**
+1258. announcer/96f/totaldomination **not present**
+1259. announcer/96f/turbosphere **not present**
+1260. announcer/96f/two **not present**
+1261. announcer/96f/twofragsleft **not present**
+1262. announcer/96f/victory **not present**
+1263. announcer/96f/welcometoctf **not present**
+1264. announcer/96f/welcometooneflagctf **not present**
+1265. announcer/96f/welcometost **not present**
+1266. announcer/96f/youaretiedforthelead **not present**
+1267. announcer/96f/youfailit **not present**
+1268. announcer/96f/youhavetheflag **not present**
+1269. announcer/96f/yourskillisnotenough **not present**
+1270. announcer/96f/yourteamhastheflag **not present**
+1271. announcer/96f/youvetakenthelead **not present**
+1272. announcer/96f/youwin **not present**
+1273. announcer/96f/assist -> announcer/97d/assist
+1274. announcer/96f/blueflagdropped -> announcer/97d/blueflagdropped
+1275. announcer/96f/blueskulldropped -> announcer/97d/blueskulldropped
+1276. announcer/96f/defense -> announcer/97d/defense
+1277. announcer/96f/firstfrag -> announcer/97d/firstfrag
+1278. announcer/96f/guardsphere -> announcer/97d/guardsphere
+1279. announcer/96f/nextroundin -> announcer/97d/nextroundin
+1280. announcer/96f/possessionartifactdropped -> announcer/97d/possessionartifactdropped
+1281. announcer/96f/possessionartifactpickedup -> announcer/97d/possessionartifactpickedup
+1282. announcer/96f/redflagdropped -> announcer/97d/redflagdropped
+1283. announcer/96f/redskulldropped -> announcer/97d/redskulldropped
+1284. announcer/96f/spam -> announcer/97d/spam
+1285. announcer/96f/termination -> announcer/97d/termination
+1286. announcer/96f/youvelostthelead -> announcer/97d/youvelostthelead
+1287. announcer/96f/whiteflagreturned -> announcer/97d/whiteflagreturned
+1288. announcer/96f/votefailed -> announcer/97d/votefailed
+1289. announcer/96f/votenow -> announcer/97d/votenow
+1290. announcer/96f/votepassed -> announcer/97d/votepassed
+1291. announcer/97c3/accuracy **not present**
+1292. announcer/97c3/assist **not present**
+1293. announcer/97c3/blueflagdropped **not present**
+1294. announcer/97c3/blueflagreturned **not present**
+1295. announcer/97c3/blueleads **not present**
+1296. announcer/97c3/bluescores **not present**
+1297. announcer/97c3/blueskulldropped **not present**
+1298. announcer/97c3/blueskullreturned **not present**
+1299. announcer/97c3/capture **not present**
+1300. announcer/97c3/defense **not present**
+1301. announcer/97c3/domination **not present**
+1302. announcer/97c3/doomsphere **not present**
+1303. announcer/97c3/drain **not present**
+1304. announcer/97c3/excellent **not present**
+1305. announcer/97c3/fight **not present**
+1306. announcer/97c3/firstfrag **not present**
+1307. announcer/97c3/fisting **not present**
+1308. announcer/97c3/guardsphere **not present**
+1309. announcer/97c3/haste **not present**
+1310. announcer/97c3/highjump **not present**
+1311. announcer/97c3/impressive **not present**
+1312. announcer/97c3/incredible **not present**
+1313. announcer/97c3/invisibility **not present**
+1314. announcer/97c3/invulnerability **not present**
+1315. announcer/97c3/llama **not present**
+1316. announcer/97c3/megasphere **not present**
+1317. announcer/97c3/mostimpressive **not present**
+1318. announcer/97c3/nextroundin **not present**
+1319. announcer/97c3/one **not present**
+1320. announcer/97c3/onefragleft **not present**
+1321. announcer/97c3/partialinvisibility **not present**
+1322. announcer/97c3/perfect **not present**
+1323. announcer/97c3/possessionartifactdropped **not present**
+1324. announcer/97c3/possessionartifactpickedup **not present**
+1325. announcer/97c3/precision **not present**
+1326. announcer/97c3/preparetofight **not present**
+1327. announcer/97c3/prosperity **not present**
+1328. announcer/97c3/rage **not present**
+1329. announcer/97c3/redflagdropped **not present**
+1330. announcer/97c3/redflagreturned **not present**
+1331. announcer/97c3/redleads **not present**
+1332. announcer/97c3/redscores **not present**
+1333. announcer/97c3/redskulldropped **not present**
+1334. announcer/97c3/redskullreturned **not present**
+1335. announcer/97c3/reflection **not present**
+1336. announcer/97c3/regeneration **not present**
+1337. announcer/97c3/resistance **not present**
+1338. announcer/97c3/soulsphere **not present**
+1339. announcer/97c3/spam **not present**
+1340. announcer/97c3/spread **not present**
+1341. announcer/97c3/strength **not present**
+1342. announcer/97c3/tag **not present**
+1343. announcer/97c3/teamsaretied **not present**
+1344. announcer/97c3/termination **not present**
+1345. announcer/97c3/terminator **not present**
+1346. announcer/97c3/theenemyhastheflag **not present**
+1347. announcer/97c3/three **not present**
+1348. announcer/97c3/threefragsleft **not present**
+1349. announcer/97c3/timefreeze **not present**
+1350. announcer/97c3/totaldomination **not present**
+1351. announcer/97c3/turbosphere **not present**
+1352. announcer/97c3/two **not present**
+1353. announcer/97c3/twofragsleft **not present**
+1354. announcer/97c3/victory **not present**
+1355. announcer/97c3/votefailed **not present**
+1356. announcer/97c3/votenow **not present**
+1357. announcer/97c3/votepassed **not present**
+1358. announcer/97c3/welcometoctf **not present**
+1359. announcer/97c3/welcometooneflagctf **not present**
+1360. announcer/97c3/welcometost **not present**
+1361. announcer/97c3/whiteflagreturned **not present**
+1362. announcer/97c3/youaretiedforthelead **not present**
+1363. announcer/97c3/youfailit **not present**
+1364. announcer/97c3/youhavetheflag **not present**
+1365. announcer/97c3/yourskillisnotenough **not present**
+1366. announcer/97c3/yourteamhastheflag **not present**
+1367. announcer/97c3/youvelostthelead **not present**
+1368. announcer/97c3/youvetakenthelead **not present**
+1369. announcer/97c3/youwin **not present**
+1370. announcer/97c3/blueflagtaken -> announcer/97d/blueflagtaken
+1371. announcer/97c3/blueskulltaken -> announcer/97d/blueskulltaken
+1372. announcer/97c3/fiveminutewarning -> announcer/97d/fiveminutewarning
+1373. announcer/97c3/oneminutewarning -> announcer/97d/oneminutewarning
+1374. announcer/97c3/redflagtaken -> announcer/97d/redflagtaken
+1375. announcer/97c3/redskulltaken -> announcer/97d/redskulltaken
+1376. DSTELEPT (DSTELEPT)
+1377. weapons/barrelpain (BARRELZ)
+1378. Pickup/HeavyArmor (ARMOR2)
+1379. Pickup/RadSuit (RADSUIT)
+1380. Pickup/Invis (INVIS)
+1381. CrushSkull (CRUSHSKU)
+1382. ads/in (ADSIN)
+1383. ads/out (ADSOUT)
+1384. weapons/lowammo (MAGCLICK)
+1385. RevLaunch/Draw (REVUP)
+1386. FOOTWALL (FOOTWALL)
+1387. Kick/Swing (KICK)
+1388. Kick/wall -> #49 { KICKWAL1  KICKWAL2  KICKWAL3 }
+1389. KICKWAL1 (KICKWAL1)
+1390. KICKWAL2 (KICKWAL2)
+1391. KICKWAL3 (KICKWAL3)
+1392. Kick/flesh -> #50 { KICKHIT1  KICKHIT2  KICKHIT3 }
+1393. KICKHIT1 (KICKHIT1)
+1394. KICKHIT2 (KICKHIT2)
+1395. KICKHIT3 (KICKHIT3)
+1396. Kick/SlideStart -> #51 { SLIDSTRT1  SLIDSTRT2  SLIDSTRT3 }
+1397. SLIDSTRT1 (SLIDSTR1)
+1398. SLIDSTRT2 (SLIDSTR2)
+1399. SLIDSTRT3 (SLIDSTR3)
+1400. Kick/SlideStop -> #52 { SLIDEND1  SLIDEND2 }
+1401. SLIDEND1 (SLIDEND1)
+1402. SLIDEND2 (SLIDEND2)
+1403. Melee/Reload (KNUCKLED)
+1404. Melee/SwingStrong (DSSWING)
+1405. Melee/Swing -> #53 { fstatk1  fstatk2  fstatk3 }
+1406. fstatk1 (FSTATK1)
+1407. fstatk2 (FSTATK2)
+1408. fstatk3 (FSTATK3)
+1409. Melee/SwingDeep -> #54 { fstatk4  fstatk5  fstatk6 }
+1410. fstatk4 (FSTATK4)
+1411. fstatk5 (FSTATK5)
+1412. fstatk6 (FSTATK6)
+1413. Melee/SwingHigh -> #55 { fstatk1  fstatk2  fstatk3 }
+1414. fstatk7 (FSTATK7)
+1415. fstatk8 (FSTATK8)
+1416. fstatk9 (FSTATK9)
+1417. Melee/Flesh -> #56 { marine/superfist1  marine/superfist2  marine/superfist3  marine/superfist4  marine/superfist5 }
+1418. marine/superfist1 (PLSPNCH1)
+1419. marine/superfist2 (PLSPNCH2)
+1420. marine/superfist3 (PLSPNCH3)
+1421. marine/superfist4 (PLSPNCH4)
+1422. marine/superfist5 (PLSPNCH5)
+1423. Melee/Wall -> #57 { FISTIMP1  FISTIMP2  FISTIMP3 }
+1424. FISTIMP1 (FISTIMP1)
+1425. FISTIMP2 (FISTIMP2)
+1426. FISTIMP3 (FISTIMP3)
+1427. Chainsaw/Zip (DSSAWZIP)
+1428. Chainsaw/Loop (CSAWFUL)
+1429. Chainsaw/Cut (CSAWCUT)
+1430. Chainsaw/Wall -> #58 { DSSAWAL1  DSSAWAL2  DSSAWAL3  DSSAWAL4 }
+1431. DSSAWAL1 (DSSAWAL1)
+1432. DSSAWAL2 (DSSAWAL2)
+1433. DSSAWAL3 (DSSAWAL3)
+1434. DSSAWAL4 (DSSAWAL4)
+1435. Chainsaw/Flesh -> #59 { DSSAW0  DSSAW1  DSSAW2  DSSAW3  DSSAW4  DSSAW5  DSSAW6  DSSAW7  DSSAW8  DSSAW9 }
+1436. DSSAW0 (DSSAW0)
+1437. DSSAW1 (DSSAW1)
+1438. DSSAW2 (DSSAW2)
+1439. DSSAW3 (DSSAW3)
+1440. DSSAW4 (DSSAW4)
+1441. DSSAW5 (DSSAW5)
+1442. DSSAW6 (DSSAW6)
+1443. DSSAW7 (DSSAW7)
+1444. DSSAW8 (DSSAW8)
+1445. DSSAW9 (DSSAW9)
+1446. Axe/Wall (AXECLN)
+1447. Axe/Hit (AXEHIT)
+1448. Axe/Draw (AXEDRAW)
+1449. Axe/Woosh1 (AXEFLY1)
+1450. Axe/Woosh2 (AXEFLY2)
+1451. Axe/Swing (AXSWING1)
+1452. Axe/AltSwing (AXSWING2)
+1453. Axe/Throw (AXSWING3)
+1454. Pistol/Reload1 (MG_OUT)
+1455. Pistol/Reload2 (PISR)
+1456. Pistol/slide (PISSL2)
+1457. Pistol/slide2 (PISSL)
+1458. DSPISTOL (DSPISTOL)
+1459. SMG/Fire (SMGFIRE)
+1460. SMG/Reload1 (SMGREL1)
+1461. SMG/Reload2 (SMGREL2)
+1462. Revolver/Fire (REVOFIR)
+1463. Revolver/Fire2 (1REVFIRE)
+1464. Revolver/Hammer (REVOHAM)
+1465. Revolver/Open (REVOP)
+1466. Revolver/Close (REVLOSE)
+1467. Revolver/Unload (REVLOSE2)
+1468. Revolver/Reload (REVBIN)
+1469. MP40/Reload1 (MP401)
+1470. MP40/Reload2 (MP402)
+1471. MP40/Fire (GMP40)
+1472. MP40/Draw (MP40DRAW)
+1473. MP40/Bolt1 (BOLTBACK)
+1474. MP40/Bolt2 (BOLTRELE)
+1475. MG42/Draw (MG42UP)
+1476. Shotgun/Pump1 (SHGUPUM1)
+1477. Shotgun/Pump2 (SHGUPUM2)
+1478. Shotgun/Reload -> #60 { SHTLOAD1  SHTLOAD2  SHTLOAD3  SHTLOAD4 }
+1479. SHTLOAD1 (SHTLOAD1)
+1480. SHTLOAD2 (SHTLOAD2)
+1481. SHTLOAD3 (SHTLOAD3)
+1482. SHTLOAD4 (SHTLOAD4)
+1483. SSG/Draw (CLIPINSS)
+1484. SSG/Fire (SSHFIRE)
+1485. SSG/AltFire (SSGALTFI)
+1486. SSG/Lever1 (SSGCLIP1)
+1487. SSG/Lever2 (SSGCLIP2)
+1488. ASG/Fire (AA12F)
+1489. ASG/Draw (AA12R1)
+1490. ASG/Reload1 (USASOUT)
+1491. ASG/Reload2 (USASIN)
+1492. asg/bolt1 (ASGBOLT1)
+1493. asg/bolt2 (ASGBOLT2)
+1494. asg/bolt3 (ASGBOLT3)
+1495. Rifle/Fire (DSRIFLE)
+1496. Rifle/Fire1 (DSRIFL1)
+1497. Rifle/Fire2 (DSRIFL2)
+1498. Rifle/Fire3 (DSRIFL3)
+1499. Weapon/Empty (DRYFIRE)
+1500. Rifle/Select (CLIPIN)
+1501. Rifle/Bolt1 (BOLT1)
+1502. Rifle/Bolt2 (BOLT2)
+1503. Rifle/Reload1 (RIFLER1)
+1504. Rifle/Reload2 (RIFLER2)
+1505. Rifle/ReloadGrenade (RIFLER3)
+1506. Rifle/Grenade1 (GRLLO1)
+1507. Rifle/Grenade2 (GRLLO2)
+1508. Chaingun/Start (CHAINSTA)
+1509. Chaingun/Spin (CHAINSPI)
+1510. Chaingun/Stop (CHAINSTO)
+1511. Chaingun/belt (MINIBELT)
+1512. Chaingun/beltQuiet (MINIBEL2)
+1513. Sniper/Fire (M14FIRE)
+1514. FARM14 (FARM14)
+1515. Sniper/Draw (X21DRAW)
+1516. Sniper/MagOut (X21MGOUT)
+1517. Sniper/MagIn (X21MGIN)
+1518. Sniper/BoltBack (X21BACK)
+1519. Sniper/BoltForward (X21FORW)
+1520. Rocket/Fire (DSRFIRE)
+1521. Rocket/Draw (RLANDRAW)
+1522. Rocket/Fly (DSRLAUN)
+1523. rocket/reload1 (RLREL1)
+1524. rocket/reload2 (RLREL2)
+1525. Rocket/Loop (RLLOOP)
+1526. Weapons/GrenadeFire (DSGRFIRE)
+1527. GrenadeLauncher/Fire (DSGRFIRE)
+1528. GrenadeLauncher/Bounce -> #61 { GLGRBNC1  GLGRBNC2  GLGRBNC3 }
+1529. GLGRBNC1 (GLGRBNC1)
+1530. GLGRBNC2 (GLGRBNC2)
+1531. GLGRBNC3 (GLGRBNC3)
+1532. GrenadeLauncher/Open (DSGROPEN)
+1533. GrenadeLauncher/Load (DSGRLOAD)
+1534. GrenadeLauncher/Close (DSGRCLOS)
+1535. GrenadeLauncher/Casing -> #62 { HGRENB1A  HGRENB2A }
+1536. HGRENB1A (HGRENB1A)
+1537. HGRENB2A (HGRENB2A)
+1538. Devastator/fire (DEVAFIRE)
+1539. Devastator/select (DEVASEL)
+1540. Devastator/explode (DEVAEXPO)
+1541. Incendiary/Fire (RLANSHOT)
+1542. Plasma/Charge (PLSCHARG)
+1543. Plasma/AltFire (PLSALTFR)
+1544. Plasma/FullyCharged (PLSFULL)
+1545. Plasma/Draw (PLSDRAW)
+1546. Plasma/Cool (PLSCOOL)
+1547. Plasma/Fire (PLSM9)
+1548. Plasma/Reload1 (PLSREL1)
+1549. Plasma/Reload2 (PLSREL2)
+1550. Plasma/BeepLow (BEPLOW)
+1551. Plasma/BeepQuiet (BEPQUIET)
+1552. Plasma/Pickup (PLSPCK)
+1553. Plasma/Beep (BEP)
+1554. Plasma/BeepBeep (BEPBEP)
+1555. Plasma/Impact -> #63 { PLASHIT1  PLASHIT2  PLASHIT3  PLASHIT4  PLASHIT5 }
+1556. PLASHIT1 (PLASHIT1)
+1557. PLASHIT2 (PLASHIT2)
+1558. PLASHIT3 (PLASHIT3)
+1559. PLASHIT4 (PLASHIT4)
+1560. PLASHIT5 (PLASHIT5)
+1561. Railgun/Fire (RAILF1)
+1562. Railgun/Recharge (RAILR1)
+1563. Railgun/Reload1 (RGREL1)
+1564. Railgun/Reload2 (RGREL2)
+1565. BFG/Draw (BFGREADY)
+1566. BFG/Charge (BFGCHARG)
+1567. BFG/Fire (BFGFIRE)
+1568. BFG/Explosion (BFGEXPLO)
+1569. BFG/ExplosionDistant (BFGEXPL2)
+1570. BFG10K/Idle (10KIDLE)
+1571. BFG10K/Charge (10KSTART)
+1572. BFG10K/Fire (10KFIRE)
+1573. BFG10K/Stop (10KSTOP)
+1574. Unmaker/Start (UNMSTA)
+1575. Unmaker/Loop (UNMLOP)
+1576. Unmaker/Stop (UNMSTO)
+1577. SLOWON (SLOWON)
+1578. SLOWOFF (SLOWOFF)
+1579. FLASHON (FLASHON)
+1580. FLASHOFF (FLASHOFF)
+1581. INFRARED (INFRARED)
+1582. FLAMER (FLAMER)
+1583. FLAMSTOP (FLAMSTOP)
+1584. BREATHOF (BREATHOF)
+1585. Flamer/Select (FLAMER5)
+1586. Flamer/idle (FLAMER4)
+1587. Flamer/loop (FLAMER2)
+1588. Flamer/stop (FLAMER1)
+1589. BRKCLANG (BRKCLANG)
+1590. B2KCLANG (B2KCLANG)
+1591. Grenade/Pin (GRNPIN)
+1592. Grenade/Bounce (GRNBNCE)
+1593. Grenade/Toss (GRNTOSS)
+1594. Grenade/Pickup (GRENPIC2)
+1595. Nuke/Explosion (NUKEEXP)
+1596. Reload (RELOAD)
+1597. RELO1 (RELO1)
+1598. RELO2 (RELO2)
+1599. FARRIF (FARRIF)
+1600. FARHMG (FARHMG)
+1601. FARSHT (FARSHT)
+1602. FARMGN (FARMGN)
+1603. FARCAN1 (FARCAN1)
+1604. FARSSG (FARSSG)
+1605. MINIGN1 (MINIGN1)
+1606. MINIGN3 (MINIGN3)
+1607. MINIGN4 (MINIGN4)
+1608. HMGFIRE (HMGFIRE)
+1609. Armor (ARMOR)
+1610. GOTHPB (GOTHPB)
+1611. GOTHPS (GOTHPS)
+1612. CBOXPKUP (CBOXPKUP)
+1613. CHGNPKUP (CHGNPKUP)
+1614. SHELPKUP **not present**
+1615. SHELPK1 (SHELPK1)
+1616. SHELPK2 (SHELPK2)
+1617. RCKCLIP (RCKCLIP)
+1618. RCKCLIP2 (RCKCLIP2)
+1619. CBOXPICK (CBOXPICK)
+1620. CLIPICK (CLIPICK)
+1621. CLIPICK2 (CLIPICK2)
+1622. MEGAPKUP (MEGAPKUP)
+1623. BERSPKUP (BERSPKUP)
+1624. BACKPACK (BACKPACK)
+1625. world/ricochet -> #64 { ricochet/hit  dsempty }
+1626. ricochet/hit -> #65 { world/ricochet1  world/ricochet2  world/ricochet3  world/ricochet4  world/ricochet5  world/ricochet6  world/ricochet7 }
+1627. dsempty **not present**
+1628. world/ricochet1 (RICOCHE1)
+1629. world/ricochet2 (RICOCHE2)
+1630. world/ricochet3 (RICOCHE3)
+1631. world/ricochet4 (RICOCHE4)
+1632. world/ricochet5 (RICOCHE5)
+1633. world/ricochet6 (RICOCHE6)
+1634. world/ricochet7 (RICOCHE7)
+1635. world/blank1 **not present**
+1636. world/blank2 **not present**
+1637. BHITDIR -> #66 { BHITDIR1  BHITDIR2  BHITDIR3  BHITDIR4  BHITDIR5  dsempty }
+1638. BHITDIR1 (BHITDIR1)
+1639. BHITDIR2 (BHITDIR2)
+1640. BHITDIR3 (BHITDIR3)
+1641. BHITDIR4 (BHITDIR4)
+1642. BHITDIR5 (BHITDIR5)
+1643. BIGEXPL2 (BIGEXPL2)
+1644. Explosion -> #67 { Explode1  Explode2 }
+1645. Explode1 (EXPLODE1)
+1646. Explode2 (EXPLODE2)
+1647. Explosion2 -> #68 { Explode5  Explode6  Explode7  Explode8 }
+1648. Explode5 (EXPLODE5)
+1649. Explode6 (EXPLODE6)
+1650. Explode7 (EXPLODE7)
+1651. Explode8 (EXPLODE8)
+1652. Barrel/explode (BARELBOM)
+1653. Grenade/Explode -> #69 { GLEXP1  GLEXP2  GLEXP3 }
+1654. GLEXP1 (GLEXP1)
+1655. GLEXP2 (GLEXP2)
+1656. GLEXP3 (GLEXP3)
+1657. HandGrenade/explode -> #70 { GRENEXP1  GRENEXP2  GRENEXP3 }
+1658. GRENEXP1 (GRENEXP1)
+1659. GRENEXP2 (GRENEXP2)
+1660. GRENEXP3 (GRENEXP3)
+1661. FAREXPL -> #72 { dsbarex1  dsbarex2  dsbarex3  dsbarex4  dsbarex5  dsbarex6  dsbarex7 }
+1662. dsbarex1 (DSBAREX1)
+1663. dsbarex2 (DSBAREX2)
+1664. dsbarex3 (DSBAREX3)
+1665. dsbarex4 (DSBAREX4)
+1666. dsbarex5 (DSBAREX5)
+1667. dsbarex6 (DSBAREX6)
+1668. dsbarex7 (DSBAREX7)
+1669. Barrel/explodeDistant (DSBAREX8)
+1670. Grenade/DistantExplode -> #73 { GLEXP4  GLEXP5  GLEXP6 }
+1671. GLEXP4 (GLEXP4)
+1672. GLEXP5 (GLEXP5)
+1673. GLEXP6 (GLEXP6)
+1674. HandGrenade/DistantExplode -> #74 { GRENEXP4  GRENEXP5  GRENEXP6 }
+1675. GRENEXP4 (GRENEXP4)
+1676. GRENEXP5 (GRENEXP5)
+1677. GRENEXP6 (GRENEXP6)
+1678. distantexp **not present**
+1679. weapons/casing -> #75 { weapons/casing2  weapons/casing3 }
+1680. weapons/casing2 (DSCASIN2)
+1681. weapons/casing3 (DSCASIN3)
+1682. weapons/casing1 (DSCASIN1)
+1683. weapons/shell -> #76 { weapons/shell1  weapons/shell2  weapons/shell3  weapons/shell4 }
+1684. weapons/shell1 (DSSHELL1)
+1685. weapons/shell2 (DSSHELL2)
+1686. weapons/shell3 (DSSHELL3)
+1687. weapons/shell4 (DSSHELL4)
+1688. weapons/smallmagdrop -> #77 { weapons/smallmagdrop1  weapons/smallmagdrop2  weapons/smallmagdrop3  weapons/smallmagdrop4 }
+1689. weapons/smallmagdrop1 (DSBOUNC1)
+1690. weapons/smallmagdrop2 (DSBOUNC2)
+1691. weapons/smallmagdrop3 (DSBOUNC3)
+1692. weapons/smallmagdrop4 (DSBOUNC4)
+1693. weapons/largemagdrop -> #78 { weapons/largemagdrop1  weapons/largemagdrop2  weapons/largemagdrop3  weapons/largemagdrop4 }
+1694. weapons/largemagdrop1 (DSAOUNC1)
+1695. weapons/largemagdrop2 (DSAOUNC2)
+1696. weapons/largemagdrop3 (DSAOUNC3)
+1697. weapons/largemagdrop4 (DSAOUNC4)
+1698. Lamp/die (ELECDEST)
+1699. MRNAT -> #79 { MRNAT1  MRNAT2  MRNAT3  MRNAT4  MRNAT5  MRNAT6 }
+1700. MRNAT1 (MRNAT1)
+1701. MRNAT2 (MRNAT2)
+1702. MRNAT3 (MRNAT3)
+1703. MRNAT4 (MRNAT4)
+1704. MRNAT5 (MRNAT5)
+1705. MRNAT6 (MRNAT6)
+1706. LETSROCK (LETSROCK)
+1707. MRNWT -> #80 { MRNWT1  MRNWT2  MRNWT3  MRNWT4  MRNWT5 }
+1708. MRNWT1 (MRNWT1)
+1709. MRNWT2 (MRNWT2)
+1710. MRNWT3 (MRNWT3)
+1711. MRNWT4 (MRNWT4)
+1712. MRNWT5 (MRNWT5)
+1713. MRNWC -> #81 { MRNWC1  MRNWC2  MRNWC3  MRNWC4  MRNWC5  MRNWC6 }
+1714. MRNWC1 (MRNWC1)
+1715. MRNWC2 (MRNWC2)
+1716. MRNWC3 (MRNWC3)
+1717. MRNWC4 (MRNWC4)
+1718. MRNWC5 (MRNWC5)
+1719. MRNWC6 (MRNWC6)
+1720. MRNGI1 (MRNGI1)
+1721. MRNGI2 (MRNGI2)
+1722. MRNAG -> #82 { MRNAG1  MRNAG2 }
+1723. MRNAG1 (MRNAG1)
+1724. MRNAG2 (MRNAG2)
+1725. MarineGuard -> #83 { MRNWT2  MRNWT1  MRNWT5 }
+1726. MarineFollow -> MRNWT4
+1727. DSMADTH -> #84 { DSMADTH1  DSMADTH2  DSMADTH3  DSMADTH4  DSMADTH5  DSMADTH6  DSMADTH7  DSMADTH8 }
+1728. DSMADTH1 (DSMADTH1)
+1729. DSMADTH2 (DSMADTH2)
+1730. DSMADTH3 (DSMADTH3)
+1731. DSMADTH4 (DSMADTH4)
+1732. DSMADTH5 (DSMADTH5)
+1733. DSMADTH6 (DSMADTH6)
+1734. DSMADTH7 (DSMADTH7)
+1735. DSMADTH8 (DSMADTH8)
+1736. Monsters/Sentry/Walk1 (DSSSPWK1)
+1737. Monsters/Sentry/Walk2 (DSSSPWK2)
+1738. Monsters/Sentry/Walk3 (DSSSPWK3)
+1739. Monsters/Sentry/Walk4 (DSSSPWK4)
+1740. Monsters/Sentry/Walking -> #85 { Monsters/Sentry/Walk1  Monsters/Sentry/Walk2  Monsters/Sentry/Walk3  Monsters/Sentry/Walk4 }
+1741. SentryBotPain -> #86 { SENTP1  SENTP2  SENTP3  SENTP4 }
+1742. SENTP1 (SENTP1)
+1743. SENTP2 (SENTP2)
+1744. SENTP3 (SENTP3)
+1745. SENTP4 (SENTP4)
+1746. SentrybotDeath (SENTD)
+1747. SentryBotSee -> #87 { SENSI1  SENSI2  SENSI3  dsempty  dsempty }
+1748. SENSI1 (SENSI1)
+1749. SENSI2 (SENSI2)
+1750. SENSI3 (SENSI3)
+1751. SentrybotOrderFollow (SENTFW)
+1752. SentrybotORderStay (SENTST)
+1753. DSPDIEHI (DSPDIEHI)
+1754. DASYBIT (DASYBIT)
+1755. DogAttack -> #88 { DOGAT1  DOGAT2 }
+1756. DOGAT1 (DOGAT1)
+1757. DOGAT2 (DOGAT2)
+1758. DOGAT3 (DOGAT3)
+1759. DOGAT4 (DOGAT4)
+1760. DOGPAIN (DOGPAI)
+1761. DOGDIE (DOGDIE)
+1762. DSIDETH **not present**
+1763. DSIPAIN **not present**
+1764. BabyCaco/Sight (CACOBSIT)
+1765. BabyCaco/Pain (CACOBPAI)
+1766. BabyCaco/Death (CACOBDTH)
+1767. BabyCaco/Active (BABYACT)
+1768. BabyCaco/Melee (BABYBITE)
+1769. TorturedMarineBD -> #89 { CPTRT01  CPTRT02  CPTRT03  CPTRT04  CPTRT05  CPTRT06  CPTRT07  CPTRT08  CPTRT09  CPTRT10 }
+1770. CPTRT01 (CPTRT01)
+1771. CPTRT02 (CPTRT02)
+1772. CPTRT03 (CPTRT03)
+1773. CPTRT04 (CPTRT04)
+1774. CPTRT05 (CPTRT05)
+1775. CPTRT06 (CPTRT06)
+1776. CPTRT07 (CPTRT07)
+1777. CPTRT08 (CPTRT08)
+1778. CPTRT09 (CPTRT09)
+1779. CPTRT10 (CPTRT10)
+1780. TorturedMarineDieBD -> #90 { CPTRT11  CPTRT12  CPTRT13  CPTRT14 }
+1781. CPTRT11 (CPTRT11)
+1782. CPTRT12 (CPTRT12)
+1783. CPTRT13 (CPTRT13)
+1784. CPTRT14 (CPTRT14)
+1785. TorturedMarinePain -> #91 { CPTRP1  CPTRP2  CPTRP3 }
+1786. CPTRP1 (CPTRP1)
+1787. CPTRP2 (CPTRP2)
+1788. CPTRP3 (CPTRP3)
+1789. FLEAS (FLEAS)
+1790. BodyThud -> #92 { BTHUD1  BTHUD2  BTHUD3  BTHUD4  BTHUD5  BTHUD6  BTHUD7 }
+1791. BTHUD1 (BTHUD1)
+1792. BTHUD2 (BTHUD2)
+1793. BTHUD3 (BTHUD3)
+1794. BTHUD4 (BTHUD4)
+1795. BTHUD5 (BTHUD5)
+1796. BTHUD6 (BTHUD6)
+1797. BTHUD7 (BTHUD7)
+1798. misc/xdeath -> #195 { misc/xdeath1a  misc/xdeath1b  misc/xdeath1c  misc/xdeath1d  misc/xdeath1e  misc/xdeath1f  misc/xdeath2a  misc/xdeath2b  misc/xdeath2c  misc/xdeath2d  misc/xdeath2e  misc/xdeath2f  misc/xdeath3a  misc/xdeath3b  misc/xdeath3c  misc/xdeath4a  misc/xdeath4b  misc/xdeath4c }
+1799. misc/xdeath1a (DSXDTH1A)
+1800. misc/xdeath1b (DSXDTH1B)
+1801. misc/xdeath1c (DSXDTH1C)
+1802. misc/xdeath1d (DSXDTH1D)
+1803. misc/xdeath1e (DSXDTH1E)
+1804. misc/xdeath1f (DSXDTH1F)
+1805. misc/xdeath2a (DSXDTH2A)
+1806. misc/xdeath2b (DSXDTH2B)
+1807. misc/xdeath2c (DSXDTH2C)
+1808. misc/xdeath2d (DSXDTH2D)
+1809. misc/xdeath2e (DSXDTH2E)
+1810. misc/xdeath2f (DSXDTH2F)
+1811. misc/xdeath3a (DSXDTH3A)
+1812. misc/xdeath3b (DSXDTH3B)
+1813. misc/xdeath3c (DSXDTH3C)
+1814. misc/xdeath4a (DSXDTH4A)
+1815. misc/xdeath4b (DSXDTH4B)
+1816. misc/xdeath4c (DSXDTH4C)
+1817. misc/xdeath1 -> #196 { misc/xdeath1a  misc/xdeath1b  misc/xdeath1c  misc/xdeath1d  misc/xdeath1e  misc/xdeath1f }
+1818. misc/xdeath2 -> #197 { misc/xdeath2a  misc/xdeath2b  misc/xdeath2c  misc/xdeath2d  misc/xdeath2e  misc/xdeath2f }
+1819. misc/xdeath3 -> #198 { misc/xdeath3a  misc/xdeath3b  misc/xdeath3c }
+1820. misc/xdeath4 -> #199 { misc/xdeath4a  misc/xdeath4b  misc/xdeath4c }
+1821. misc/xdeath5 -> #98 { misc/xdeath4a  misc/xdeath4b  misc/xdeath2a  misc/xdeath2b  misc/xdeath2e }
+1822. BONECR1 (BONECR1)
+1823. BONECR2 (BONECR2)
+1824. LQDRIP1 (LQDRIP1)
+1825. LQDRIP2 (LQDRIP2)
+1826. LQDRIP3 (LQDRIP3)
+1827. LQDRIP4 (LQDRIP4)
+1828. LQDRIP5 (LQDRIP5)
+1829. LQDRIP6 (LQDRIP6)
+1830. LQDRIP7 (LQDRIP7)
+1831. LQDRIP8 (LQDRIP8)
+1832. LQDRIP9 (LQDRIP9)
+1833. LQDRIP10 (LQDRIP10)
+1834. LQDRIP11 (LQDRIP11)
+1835. LQDRIP12 (LQDRIP12)
+1836. LQDRIP13 (LQDRIP13)
+1837. LQDRIP14 (LQDRIP14)
+1838. blooddrop (BLODDROP)
+1839. blooddrop2 -> #100 { LQDRIP4  LQDRIP5  LQDRIP6  LQDRIP7 }
+1840. blooddrop3 -> #101 { LQDRIP8  LQDRIP9  LQDRIP10  LQDRIP11  LQDRIP12  LQDRIP13  LQDRIP14  LQDRIP14 }
+1841. BLOOOD -> #102 { DSBLUD01  DSBLUD02  DSBLUD03 }
+1842. DSBLUD01 (DSBLUD01)
+1843. DSBLUD02 (DSBLUD02)
+1844. DSBLUD03 (DSBLUD03)
+1845. HEDBON -> #103 { HEDBON1  HEDBON2  HEDBON3 }
+1846. HEDBON1 (HEDBON1)
+1847. HEDBON2 (HEDBON2)
+1848. HEDBON3 (HEDBON3)
+1849. heartbeat1 (DSHEART1)
+1850. heartbeat2 (DSHEART2)
+1851. grunt/footstep -> #104 { ZomStep1  ZomStep2  ZomStep3  ZomStep4 }
+1852. ZomStep1 (ZOMSTEP1)
+1853. ZomStep2 (ZOMSTEP2)
+1854. ZomStep3 (ZOMSTEP3)
+1855. ZomStep4 (ZOMSTEP4)
+1856. imp/footstep -> #105 { ImpStep1  ImpStep2  ImpStep3  ImpStep4 }
+1857. ImpStep1 (IMPSTEP1)
+1858. ImpStep2 (IMPSTEP2)
+1859. ImpStep3 (IMPSTEP3)
+1860. ImpStep4 (IMPSTEP4)
+1861. fatso/footstep -> #106 { FatStep1  FatStep2  FatStep3  FatStep4 }
+1862. FatStep1 (FATSTEP1)
+1863. FatStep2 (FATSTEP2)
+1864. FatStep3 (FATSTEP3)
+1865. FatStep4 (FATSTEP4)
+1866. demon/footstep -> #107 { PinkySt1  PinkySt2  PinkySt3  PinkySt4 }
+1867. PinkySt1 (PINKYST1)
+1868. PinkySt2 (PINKYST2)
+1869. PinkySt3 (PINKYST3)
+1870. PinkySt4 (PINKYST4)
+1871. skel/footstep -> #108 { RevStep1  RevStep2  RevStep3  RevStep4 }
+1872. RevStep1 (REVSTEP1)
+1873. RevStep2 (REVSTEP2)
+1874. RevStep3 (REVSTEP3)
+1875. RevStep4 (REVSTEP4)
+1876. baron/footstep -> #109 { BruStep1  BruStep2  BruStep3  BruStep4 }
+1877. BruStep1 (BRUSTEP1)
+1878. BruStep2 (BRUSTEP2)
+1879. BruStep3 (BRUSTEP3)
+1880. BruStep4 (BRUSTEP4)
+1881. grunt/pain1 (ZOMPN1)
+1882. grunt/pain2 (ZOMPN2)
+1883. grunt/pain3 (ZOMPN3)
+1884. grunt/pain4 (ZOMPN4)
+1885. grunt/burn -> #111 { grunt/burn1  grunt/burn2 }
+1886. grunt/burn1 (ZOMBURN1)
+1887. grunt/burn2 (ZOMBURN2)
+1888. grunt/writhing -> #112 { grunt/writhing1  grunt/writhing2  grunt/writhing3  grunt/writhing4  grunt/writhing5 }
+1889. grunt/writhing1 (ZOMWRIT1)
+1890. grunt/writhing2 (ZOMWRIT2)
+1891. grunt/writhing3 (ZOMWRIT3)
+1892. grunt/writhing4 (ZOMWRIT4)
+1893. grunt/writhing5 (ZOMWRIT5)
+1894. shotgunguy/sight -> #113 { shotgunguy/sight1  shotgunguy/sight2  shotgunguy/sight3 }
+1895. shotgunguy/sight1 (DSSGSIT1)
+1896. shotgunguy/sight2 (DSSGSIT2)
+1897. shotgunguy/sight3 (DSSGSIT3)
+1898. shotgunguy/pain -> #114 { shotgunguy/pain1  shotgunguy/pain2  shotgunguy/pain3  shotgunguy/pain4 }
+1899. shotgunguy/pain1 (DSSGPAI1)
+1900. shotgunguy/pain2 (DSSGPAI2)
+1901. shotgunguy/pain3 (DSSGPAI3)
+1902. shotgunguy/pain4 (DSSGPAI4)
+1903. shotgunguy/death -> #115 { shotgunguy/death1  shotgunguy/death2  shotgunguy/death3 }
+1904. shotgunguy/death1 (DSSGDTH1)
+1905. shotgunguy/death2 (DSSGDTH2)
+1906. shotgunguy/death3 (DSSGDTH3)
+1907. shotgunguy/burn -> #116 { shotgunguy/burn1  shotgunguy/burn2 }
+1908. shotgunguy/burn1 (SGTBURN1)
+1909. shotgunguy/burn2 (SGTBURN2)
+1910. shotgunguy/writhing -> #117 { shotgunguy/writhing1  shotgunguy/writhing2  shotgunguy/writhing3  shotgunguy/writhing4  shotgunguy/writhing5 }
+1911. shotgunguy/writhing1 (SGTWRIT1)
+1912. shotgunguy/writhing2 (SGTWRIT2)
+1913. shotgunguy/writhing3 (SGTWRIT3)
+1914. shotgunguy/writhing4 (SGTWRIT4)
+1915. shotgunguy/writhing5 (SGTWRIT5)
+1916. shotgunguy/active (DSSGTACT)
+1917. chaingunguy/sight -> #118 { chaingunguy/sight1  chaingunguy/sight2  chaingunguy/sight3 }
+1918. chaingunguy/sight1 (DSCGSIT1)
+1919. chaingunguy/sight2 (DSCGSIT2)
+1920. chaingunguy/sight3 (DSCGSIT3)
+1921. chaingunguy/pain -> #119 { chaingunguy/pain1  chaingunguy/pain2  chaingunguy/pain3  chaingunguy/pain4 }
+1922. chaingunguy/pain1 (DSCGPAI1)
+1923. chaingunguy/pain2 (DSCGPAI2)
+1924. chaingunguy/pain3 (DSCGPAI3)
+1925. chaingunguy/pain4 (DSCGPAI4)
+1926. chaingunguy/death -> #120 { chaingunguy/death1  chaingunguy/death2  chaingunguy/death3 }
+1927. chaingunguy/death1 (DSCGDTH1)
+1928. chaingunguy/death2 (DSCGDTH2)
+1929. chaingunguy/death3 (DSCGDTH3)
+1930. chaingunguy/burn -> #121 { chaingunguy/burn1  chaingunguy/burn2 }
+1931. chaingunguy/burn1 (COMBURN1)
+1932. chaingunguy/burn2 (COMBURN2)
+1933. chaingunguy/writhing -> #122 { chaingunguy/writhing1  chaingunguy/writhing2  chaingunguy/writhing3  chaingunguy/writhing4  chaingunguy/writhing5 }
+1934. chaingunguy/writhing1 (COMWRIT1)
+1935. chaingunguy/writhing2 (COMWRIT2)
+1936. chaingunguy/writhing3 (COMWRIT3)
+1937. chaingunguy/writhing4 (COMWRIT4)
+1938. chaingunguy/writhing5 (COMWRIT5)
+1939. chaingunguy/active (DSCGGACT)
+1940. labguy/sight -> #123 { labguy/sight1  labguy/sight2  labguy/sight3 }
+1941. labguy/sight1 (DSLASIT1)
+1942. labguy/sight2 (DSLASIT2)
+1943. labguy/sight3 (DSLASIT3)
+1944. labguy/pain -> #124 { labguy/pain1  labguy/pain2  labguy/pain3  labguy/pain4 }
+1945. labguy/pain1 (DSLAPAI1)
+1946. labguy/pain2 (DSLAPAI2)
+1947. labguy/pain3 (DSLAPAI3)
+1948. labguy/pain4 (DSLAPAI4)
+1949. labguy/death -> #125 { labguy/death1  labguy/death2  labguy/death3 }
+1950. labguy/death1 (DSLADTH1)
+1951. labguy/death2 (DSLADTH2)
+1952. labguy/death3 (DSLADTH3)
+1953. labguy/burn -> #126 { labguy/burn1  labguy/burn2 }
+1954. labguy/burn1 (LABBURN1)
+1955. labguy/burn2 (LABBURN2)
+1956. labguy/writhing -> #127 { labguy/writhing1  labguy/writhing2  labguy/writhing3  labguy/writhing4  labguy/writhing5 }
+1957. labguy/writhing1 (LABWRIT1)
+1958. labguy/writhing2 (LABWRIT2)
+1959. labguy/writhing3 (LABWRIT3)
+1960. labguy/writhing4 (LABWRIT4)
+1961. labguy/writhing5 (LABWRIT5)
+1962. labguy/active (DSLABACT)
+1963. ZombieStep -> #128 { floorhard01  floorhard02  floorhard03  floorhard04  floorhard05  floorhard06 }
+1964. floorhard01 (FSHARD1)
+1965. floorhard02 (FSHARD2)
+1966. floorhard03 (FSHARD3)
+1967. floorhard04 (FSHARD4)
+1968. floorhard05 (FSHARD5)
+1969. floorhard06 (FSHARD6)
+1970. IMPCHARG (IMPCHARG)
+1971. imp/melee1 (IMPCLAW1)
+1972. imp/melee2 (IMPCLAW2)
+1973. imp/melee3 (IMPCLAW3)
+1974. imp/miss -> #130 { IMPMISS1  IMPMISS2  IMPMISS3 }
+1975. IMPMISS1 (IMPMISS1)
+1976. IMPMISS2 (IMPMISS2)
+1977. IMPMISS3 (IMPMISS3)
+1978. ImpStep -> #131 { ImpStep1  ImpStep2  ImpStep3  ImpStep4 }
+1979. ImpBall4 (IMPBALL4)
+1980. ImpBall5 (IMPBALL5)
+1981. ImpBall6 (IMPBALL6)
+1982. ImpBall1 (IMPBALL1)
+1983. ImpBall2 (IMPBALL2)
+1984. ImpBall3 (IMPBALL3)
+1985. PINKIDL -> #134 { PINKIDL1  PINKIDL2  PINKIDL3  PINKIDL4 }
+1986. PINKIDL1 (PINKIDL1)
+1987. PINKIDL2 (PINKIDL2)
+1988. PINKIDL3 (PINKIDL3)
+1989. PINKIDL4 (PINKIDL4)
+1990. DSBIGDPN (DSBIGDPN)
+1991. CacoBal4 (CACOBAL4)
+1992. CacoBal5 (CACOBAL5)
+1993. CacoBal6 (CACOBAL6)
+1994. CacoBal1 (CACOBAL1)
+1995. CacoBal2 (CACOBAL2)
+1996. CacoBal3 (CACOBAL3)
+1997. LSOD -> #137 { LSOD1  LSOD2  LSOD3  LSOD4 }
+1998. LSOD1 (LSOD1)
+1999. LSOD2 (LSOD2)
+2000. LSOD3 (LSOD3)
+2001. LSOD4 (LSOD4)
+2002. PSXDPN (PSXDPN)
+2003. bigstep1 **not present**
+2004. bigstep2 **not present**
+2005. bigstep3 **not present**
+2006. bigstep4 **not present**
+2007. BaronStep -> #138 { bigstep1  bigstep2  bigstep3  bigstep4 }
+2008. BaroBal4 (BAROBAL4)
+2009. BaroBal5 (BAROBAL5)
+2010. BaroBal6 (BAROBAL6)
+2011. BaroBal1 (BAROBAL1)
+2012. BaroBal2 (BAROBAL2)
+2013. BaroBal3 (BAROBAL3)
+2014. REVIDLE -> #141 { REVIDLE1  REVIDLE2  REVIDLE3  REVIDLE4  REVIDLE5  REVIDLE6  REVIDLE7 }
+2015. REVIDLE1 (REVIDLE1)
+2016. REVIDLE2 (REVIDLE2)
+2017. REVIDLE3 (REVIDLE3)
+2018. REVIDLE4 (REVIDLE4)
+2019. REVIDLE5 (REVIDLE5)
+2020. REVIDLE6 (REVIDLE6)
+2021. REVIDLE7 (REVIDLE7)
+2022. REVOUCH -> #142 { REVIDLE1  REVIDLE2  REVIDLE3  REVIDLE4  REVIDLE5  REVIDLE6  REVIDLE7 }
+2023. REVOUCH1 (REVOUCH1)
+2024. REVOUCH2 (REVOUCH2)
+2025. REVOUCH3 (REVOUCH3)
+2026. Skeleton/explode (REVBOOM)
+2027. SPIPAIN1 (SPIPAIN1)
+2028. SPIPAIN2 (SPIPAIN2)
+2029. CLAP (CLAP)
+2030. CYBPAIN (CYBPAIN)
+2031. CYBTAT (CYBTAT)
+2032. DSCANFIR (DSCANFIR)
+2033. Mastermind/minigun (MASTFIRE)
+2034. ICOSCRE (ICOSCRE)
+2035. ICOBREAT (ICOBREAT)
+2036. ICOTHUND (ICOTHUND)
+2037. ICOFIRE (ICOFIRE)
+2038. ICOLAUG (ICOLAUG)
+2039. Volcabus/Sight (VOLCST)
+2040. Volcabus/Pain (VOLCPN)
+2041. Volcabus/Death (VOLCDTH)
+2042. Volcabus/Attack (VOLCATK)
+2043. Volcabus/Cannon -> #143 { VOLCCF1  VOLCCF2  VOLCCF3  VOLCCF4 }
+2044. VOLCCF1 (VOLCCF1)
+2045. VOLCCF2 (VOLCCF2)
+2046. VOLCCF3 (VOLCCF3)
+2047. VOLCCF4 (VOLCCF4)
+2048. VOLCBRN (VOLCBRN)
+2049. PAILGF3 (PAILGF3)
+2050. PAILGF2 (PAILGF2)
+2051. PAILGD3 (PAILGD3)
+2052. MUMYACT (MUMYACT)
+2053. MUMYSEE (MUMYSEE)
+2054. MUMYDIE (MUMYDIE)
+2055. mother/sight (DSMTHSIT)
+2056. mother/pain (DSMTHPAI)
+2057. mother/death (DSMTHDTH)
+2058. mother/attack (DSMTHATK)
+2059. mother/active (DSMTHACT)
+2060. rat/melee (DSRATMEL)
+2061. rat/pain (DSRATPAI)
+2062. rat/death1 (DSRATDT1)
+2063. rat/death2 (DSRATDT2)
+2064. rat/death3 (DSRATDT3)
+2065. rat/death -> #144 { rat/death1  rat/death2  rat/death3 }
+2066. zombiemarine/sight -> #145 { zombiemarine/sight1  zombiemarine/sight2  zombiemarine/sight3  zombiemarine/sight4  zombiemarine/sight5  zombiemarine/sight6  zombiemarine/sight7  zombiemarine/sight8  zombiemarine/sight9  zombiemarine/sight10  zombiemarine/sight11 }
+2067. zombiemarine/sight1 (ZSPSIT1)
+2068. zombiemarine/sight2 (ZSPSIT2)
+2069. zombiemarine/sight3 (ZSPSIT3)
+2070. zombiemarine/sight4 (ZSPSIT4)
+2071. zombiemarine/sight5 (ZSPSIT5)
+2072. zombiemarine/sight6 (ZSPSIT6)
+2073. zombiemarine/sight7 (ZSPSIT7)
+2074. zombiemarine/sight8 (ZSPSIT8)
+2075. zombiemarine/sight9 (ZSPSIT9)
+2076. zombiemarine/sight10 (ZSPSIT10)
+2077. zombiemarine/sight11 (ZSPSIT11)
+2078. zombiemarine/death -> #146 { zombiemarine/death1  zombiemarine/death2  zombiemarine/death3  zombiemarine/death4  zombiemarine/death5  zombiemarine/death6  zombiemarine/death7 }
+2079. zombiemarine/death1 (ZSPDTH1)
+2080. zombiemarine/death2 (ZSPDTH2)
+2081. zombiemarine/death3 (ZSPDTH3)
+2082. zombiemarine/death4 (ZSPDTH4)
+2083. zombiemarine/death5 (ZSPDTH5)
+2084. zombiemarine/death6 (ZSPDTH6)
+2085. zombiemarine/death7 (ZSPDTH7)
+2086. zombiemarine/pain -> #147 { zombiemarine/pain1  zombiemarine/pain2  zombiemarine/pain3  zombiemarine/pain4  zombiemarine/pain5  zombiemarine/pain6  zombiemarine/pain7  zombiemarine/pain8  zombiemarine/pain9  zombiemarine/pain10  zombiemarine/pain11 }
+2087. zombiemarine/pain1 (ZSPPN1)
+2088. zombiemarine/pain2 (ZSPPN2)
+2089. zombiemarine/pain3 (ZSPPN3)
+2090. zombiemarine/pain4 (ZSPPN4)
+2091. zombiemarine/pain5 (ZSPPN5)
+2092. zombiemarine/pain6 (ZSPPN6)
+2093. zombiemarine/pain7 (ZSPPN7)
+2094. zombiemarine/pain8 (ZSPPN8)
+2095. zombiemarine/pain9 (ZSPPN9)
+2096. zombiemarine/pain10 (ZSPPN10)
+2097. zombiemarine/pain11 (ZSPPN11)
+2098. zombiemarine/active -> #148 { zombiemarine/active1  zombiemarine/active2  zombiemarine/active3  zombiemarine/active4  zombiemarine/active5  dsempty  dsempty  dsempty  dsempty  dsempty  dsempty  dsempty  dsempty  dsempty  dsempty }
+2099. zombiemarine/active1 (ZSPACT1)
+2100. zombiemarine/active2 (ZSPACT2)
+2101. zombiemarine/active3 (ZSPACT3)
+2102. zombiemarine/active4 (ZSPACT4)
+2103. zombiemarine/active5 (ZSPACT5)
+2104. juggernaut/see (BTKUNQV2)
+2105. juggernaut/roam (BTKUNQV1)
+2106. juggernaut/engine (BTKENGN1)
+2107. juggernaut/death (BTKDETH1)
+2108. juggernaut/pain -> #194 { BTKPAIN1  BTKPAIN2  BTKPAIN3 }
+2109. BTKPAIN1 (BTKPAIN1)
+2110. BTKPAIN2 (BTKPAIN2)
+2111. BTKPAIN3 (BTKPAIN3)
+2112. nazi/sight -> #150 { nazisight1  nazisight2  nazisight3  nazisight4  nazisight5  nazisight6  nazisight7  nazisight8 }
+2113. nazisight1 (NAZISIT1)
+2114. nazisight2 (NAZISIT1)
+2115. nazisight3 (NAZISIT2)
+2116. nazisight4 (NAZISIT3)
+2117. nazisight5 (NAZISIT5)
+2118. nazisight6 (NAZISIT6)
+2119. nazisight7 (NAZISIT7)
+2120. nazisight8 (NAZISIT8)
+2121. nazi/death -> #151 { nazideath1  nazideath2  nazideath3  nazideath4  nazideath5  nazideath6  nazideath7  nazideath8  nazideath9  nazideath10  nazideath11 }
+2122. nazideath1 (NAZIDTH1)
+2123. nazideath2 (NAZIDTH2)
+2124. nazideath3 (NAZIDTH3)
+2125. nazideath4 (NAZIDTH4)
+2126. nazideath5 (NAZIDTH5)
+2127. nazideath6 (NAZIDTH6)
+2128. nazideath7 (NAZIDTH7)
+2129. nazideath8 (NAZIDTH8)
+2130. nazideath9 (NAZIDTH9)
+2131. nazideath10 (NAZIDTHA)
+2132. nazideath11 (NAZIDTHB)
+2133. nazi/pain -> #152 { nazipain1  nazipain2  nazipain3  nazipain4  nazipain5  nazipain6  nazipain7  nazipain8 }
+2134. nazipain1 (NAZIPN1)
+2135. nazipain2 (NAZIPN2)
+2136. nazipain3 (NAZIPN3)
+2137. nazipain4 (NAZIPN4)
+2138. nazipain5 (NAZIPN5)
+2139. nazipain6 (NAZIPN6)
+2140. nazipain7 (NAZIPN7)
+2141. nazipain8 (NAZIPN8)
+2142. EvilmarineSight -> #153 { EVMRSIT1  EVMRSIT2  EVMRSIT3  EVMRSIT4  EVMRSIT5  EVMRSIT6 }
+2143. EVMRSIT1 (EVMRSIT1)
+2144. EVMRSIT2 (EVMRSIT2)
+2145. EVMRSIT3 (EVMRSIT3)
+2146. EVMRSIT4 (EVMRSIT4)
+2147. EVMRSIT5 (EVMRSIT5)
+2148. EVMRSIT6 (EVMRSIT6)
+2149. EvilmarineActive -> #154 { dsempty  dsempty  dsempty  EVMRACT2  EVMRACT3  EVMRACT4 }
+2150. EVMRACT2 (EVMRACT2)
+2151. EVMRACT3 (EVMRACT3)
+2152. EVMRACT4 (EVMRACT4)
+2153. EVMRACT1 (EVMRACT1)
+2154. EvilmarinePain -> #155 { EVMRPN1  EVMRPN2 }
+2155. EVMRPN1 (EVMRPN1)
+2156. EVMRPN2 (EVMRPN2)
+2157. EvilmarineDeath -> #156 { EVMRDT1  EVMRDT2 }
+2158. EVMRDT1 (EVMRDT1)
+2159. EVMRDT2 (EVMRDT2)
+2160. EVMRLAUG (EVMRLAUG)
+2161. alieno/pain (ALDOLORE)
+2162. alieno/death (ALMORTO)
+2163. alieno/sight (ALVEDE)
+2164. Alieno/Attivo (ALATTI)
+2165. AlienGuard/See (AGSEE)
+2166. AlienGuardian/Loop (AGLOOP)
+2167. AlienGuard/Death (AGDIE)
+2168. SS/pain (BWZIPN1)
+2169. SS/death -> #157 { BWZIDTH1  BWZIDTH2 }
+2170. BWZIDTH1 (BWZIDTH1)
+2171. BWZIDTH2 (BWZIDTH2)
+2172. SS/sight -> #158 { BWZISIT1  BWZISIT2 }
+2173. BWZISIT1 (BWZISIT1)
+2174. BWZISIT2 (BWZISIT2)
+2175. BrutalWolfensteinRetardedScream -> #159 { ssscr1  ssscre2  ssscre3 }
+2176. ssscr1 (SSSCR1)
+2177. ssscre2 (SSSCRE2)
+2178. ssscre3 (SSSCRE3)
+2179. NDemon/sight (NMDZSIT)
+2180. Ndemon/pain (NMDZPAIN)
+2181. Ndemon/death (NMDZDTH)
+2182. Ndemon/Active (NMDZACT)
+2183. Ndemon/Attack (NMDZATK)
+2184. BRobot/sight (EVANSIT)
+2185. BRobot/death (EVANDTH)
+2186. CacoAssholeSee (BCAOACT)
+2187. CacoAssholepain (BCAOSEE)
+2188. CacoAssholedeath (BCAODTH)
+2189. CacoAssholeAttack (BCAOAT)
+2190. Scheletro/Morte (SKEFAL)
+2191. Angel/sight (ANGSSIT)
+2192. angel/pain (ANGSPN)
+2193. angel/cube (ANGCUB)
+2194. angel/death (ANGDTH)
+2195. Angel/attack (ANGATK)
+2196. Commander/Sight -> #160 { FCAL1  FCAL2  FCAL3  FCAL4 }
+2197. FCAL1 (FCAL1)
+2198. FCAL2 (FCAL2)
+2199. FCAL3 (FCAL3)
+2200. FCAL4 (FCAL4)
+2201. Commander/Idle (FCACT)
+2202. Heart/Pain (HEARTDMG)
+2203. AlphaSoul/Sight (SKULSIT)
+2204. AlphaSoul/Pain (SKULPN)
+2205. AlphaSoul/Death (SKULDTH)
+2206. Witch/Sight (WTCHSIT)
+2207. Witch/Spit (WTCHPIT)
+2208. Witch/Pain (WTCHPN)
+2209. Witch/Death (WTCHDTH)
+2210. Witch/Cubeboom (WTCHCUB)
+2211. DopeFish/Pain (DOPEPN)
+2212. Archangel/sight **not present**
+2213. Archangel/pain **not present**
+2214. Archangel/death **not present**
+2215. Archangel/spit **not present**
+2216. Archangel/cube **not present**
+2217. Archangel/cubeboom (DSFIRXPL)
+2218. Bat/Sight (DBATSIT)
+2219. pitchshiftrange **not present**
+2220. player"0"*death (DSPLDETH)
+2221. player"0"*xdeath (DSPDIEHI)
+2222. player"0"*gibbed (DSSLOP)
+2223. player"0"*grunt (DSOOF)
+2224. player"0"*fist (DSPUNCH)
+2225. *taunt <<player sound 12>>
+2226. player"0"*taunt (DSTAUNT)
+2227. player"0"*usefail (DSNOWAY)
+2228. player"0"*pain100 (DSPLPAIN)
+2229. *scream <<player sound 13>>
+2230. player"0"*scream (BIGSCREA)
+2231. *burndeath <<player sound 14>>
+2232. SALUTE <<player sound 15>>
+2233. player"0"SALUTE (DSSALUTE)
+2234. *gasp <<player sound 16>>
+2235. player"0"*gasp (TIRED)
+2236. *grunt2 <<player sound 17>>
+2237. player"0"*grunt2 (DSOOF2)
+2238. DSSALUTE (DSSALUTE)
+2239. DSFDTHG (DSFDTHG)
+2240. DSFDTHE **not present**
+2241. FUCK -> #161 { FUCK1  FUCK2  FUCK3  FUCK4 }
+2242. FUCK1 (FUCK1)
+2243. FUCK2 (FUCK2)
+2244. FUCK3 (FUCK3)
+2245. FUCK4 (FUCK4)
+2246. player"1"*death (DSFDETH)
+2247. player"1"*xdeath (DSFDIEHI)
+2248. player"1"*gibbed (DSSLOP)
+2249. DSFEMUF -> #163 { dsfnowa1  dsfnowa2  dsfnowa3 }
+2250. player"1"*land (DSF2OOF)
+2251. player"1"*fist (DSPUNCH)
+2252. player"1"*taunt (DSFTAUNT)
+2253. DSFPAIN -> #162 { DSFPAIN1  DSFPAIN2  DSFPAIN3  DSFPAIN4  DSFPAIN5  DSFPAIN6  DSFPAIN7 }
+2254. player"1"SALUTE (DSFTAUN2)
+2255. player"1"*gasp (TIRED)
+2256. fplayer"1"*death (DSFDETH)
+2257. fplayer"1"*xdeath (DSFDIEHI)
+2258. fplayer"1"*gibbed (DSSLOP)
+2259. fplayer"1"*land (DSF2OOF)
+2260. fplayer"1"*fist (DSPUNCH)
+2261. fplayer"1"*taunt (DSFTAUNT)
+2262. fplayer"1"SALUTE (DSFTAUN2)
+2263. fplayer"1"*gasp (TIRED)
+2264. DSF2OOF (DSF2OOF)
+2265. DSFPAIN1 (DSFPAIN1)
+2266. DSFPAIN2 (DSFPAIN2)
+2267. DSFPAIN3 (DSFPAIN3)
+2268. DSFPAIN4 (DSFPAIN4)
+2269. DSFPAIN5 (DSFPAIN5)
+2270. DSFPAIN6 (DSFPAIN6)
+2271. DSFPAIN7 (DSFPAIN7)
+2272. dsfnowa1 (DSFNOWA1)
+2273. dsfnowa2 (DSFNOWA2)
+2274. dsfnowa3 (DSFNOWA3)
+2275. MTAUN -> #164 { MTAUN01  MTAUN02  MTAUN03  MTAUN04  MTAUN05  MTAUN06 }
+2276. MTAUN01 **not present**
+2277. MTAUN02 **not present**
+2278. MTAUN03 **not present**
+2279. MTAUN04 **not present**
+2280. MTAUN05 **not present**
+2281. MTAUN06 **not present**
+2282. FTAUNT -> #165 { FTAUNT1  FTAUNT2  FTAUNT3  FTAUNT4 }
+2283. FTAUNT1 (FTAUNT1)
+2284. FTAUNT2 (FTAUNT2)
+2285. FTAUNT3 (FTAUNT3)
+2286. FTAUNT4 (FTAUNT4)
+2287. TAUNT0 -> #166 { TAUNT01  TAUNT02  TAUNT03  TAUNT04  TAUNT05  TAUNT06  TAUNT07  TAUNT08  TAUNT09  TAUNT10  TAUNT11  TAUNT12  TAUNT13  TAUNT14  TAUNT15  TAUNT16  TAUNT17  TAUNT18 }
+2288. TAUNT01 **not present**
+2289. TAUNT02 **not present**
+2290. TAUNT03 **not present**
+2291. TAUNT04 **not present**
+2292. TAUNT05 **not present**
+2293. TAUNT06 **not present**
+2294. TAUNT07 **not present**
+2295. TAUNT08 **not present**
+2296. TAUNT09 **not present**
+2297. TAUNT10 **not present**
+2298. TAUNT11 **not present**
+2299. TAUNT12 **not present**
+2300. TAUNT13 **not present**
+2301. TAUNT14 **not present**
+2302. TAUNT15 **not present**
+2303. TAUNT16 **not present**
+2304. TAUNT17 **not present**
+2305. TAUNT18 **not present**
+2306. ONELIN -> #167 { ONELIN01  ONELIN02  ONELIN03  ONELIN04  ONELIN05  ONELIN06  ONELIN07  ONELIN08  ONELIN09  ONELIN10  ONELIN11  ONELIN12 }
+2307. ONELIN01 **not present**
+2308. ONELIN02 **not present**
+2309. ONELIN03 **not present**
+2310. ONELIN04 **not present**
+2311. ONELIN05 **not present**
+2312. ONELIN06 **not present**
+2313. ONELIN07 **not present**
+2314. ONELIN08 **not present**
+2315. ONELIN09 **not present**
+2316. ONELIN10 **not present**
+2317. ONELIN11 **not present**
+2318. ONELIN12 **not present**
+2319. PIKUPTALK -> #168 { PIKUPTALK1  PIKUPTALK2  PIKUPTALK3  PIKUPTALK4 }
+2320. PIKUPTALK1 **not present**
+2321. PIKUPTALK2 **not present**
+2322. PIKUPTALK3 **not present**
+2323. PIKUPTALK4 **not present**
+2324. LANDS1 (LANDS1)
+2325. ledgeclimb -> #169 { CLIMB_1  CLIMB_2  CLIMB_3 }
+2326. CLIMB_1 (CLIMB_1)
+2327. CLIMB_2 (CLIMB_2)
+2328. CLIMB_3 (CLIMB_3)
+2329. PlayerRoll -> #170 { jmpland1  jmpland2  jmpland3  jmpland4  jmpland5 }
+2330. jmpland1 (JMPLAND1)
+2331. jmpland2 (JMPLAND2)
+2332. jmpland3 (JMPLAND3)
+2333. jmpland4 (JMPLAND4)
+2334. jmpland5 (JMPLAND5)
+2335. MQUIP00 (MQUIP00)
+2336. MQUIP01 (MQUIP01)
+2337. MQUIP02 (MQUIP02)
+2338. MQUIP03 (MQUIP03)
+2339. MQUIP04 (MQUIP04)
+2340. MQUIP05 (MQUIP05)
+2341. MQUIP06 (MQUIP06)
+2342. MQUIP07 (MQUIP07)
+2343. MQUIP08 (MQUIP08)
+2344. MQUIP09 (MQUIP09)
+2345. MQUIP10 (MQUIP10)
+2346. MQUIP11 (MQUIP11)
+2347. MQUIP12 (MQUIP12)
+2348. MQUIP13 (MQUIP13)
+2349. MQUIP14 (MQUIP14)
+2350. MQUIP15 (MQUIP15)
+2351. MQUIP16 (MQUIP16)
+2352. MQUIP17 (MQUIP17)
+2353. MQUIP18 (MQUIP18)
+2354. MQUIP19 (MQUIP19)
+2355. MQUIP20 (MQUIP20)
+2356. MQUIP21 (MQUIP21)
+2357. MQUIP22 (MQUIP22)
+2358. MQUIP23 (MQUIP23)
+2359. MQUIP24 (MQUIP24)
+2360. MQUIP25 (MQUIP25)
+2361. MQUIP26 (MQUIP26)
+2362. MQUIP27 (MQUIP27)
+2363. MQUIP28 (MQUIP28)
+2364. MQUIP29 (MQUIP29)
+2365. MQUIP30 **not present**
+2366. MQUIP31 (MQUIP31)
+2367. MQUIP32 (MQUIP32)
+2368. MQUIP33 (MQUIP33)
+2369. MQUIP34 (MQUIP34)
+2370. MQUIP35 (MQUIP35)
+2371. M_QUIPS -> #171 { MQUIP00  MQUIP01  MQUIP02  MQUIP03  MQUIP04  MQUIP05  MQUIP06  MQUIP07  MQUIP08  MQUIP09  MQUIP10  MQUIP11  MQUIP12  MQUIP13  MQUIP14  MQUIP15  MQUIP16  MQUIP17  MQUIP18  MQUIP19  MQUIP20  MQUIP21  MQUIP22  MQUIP23  MQUIP24  MQUIP25  MQUIP26  MQUIP27  MQUIP28  MQUIP29  MQUIP30  MQUIP31  MQUIP32  MQUIP33  MQUIP34  MQUIP35 }
+2372. Q3_TAUNT -> #172 { MQUIP07  MQUIP17  MQUIP33  MQUIP34  MQUIP35 }
+2373. Slime (DSMUCK)
+2374. slimesmall (DSMUCKSM)
+2375. watersmall (DSFLOUSH)
+2376. Burn (DSBURN)
+2377. burnsmall (DSBURNSM)
+2378. blood1 **not present**
+2379. blood2 **not present**
+2380. Blood -> #173 { blood1  blood2 }
+2381. bloodsmall1 **not present**
+2382. bloodsmall2 **not present**
+2383. bloodsmall -> #174 { bloodsmall1  bloodsmall2 }
+2384. Sparks/Spawn -> #175 { Sparks/Sound1  Sparks/Sound2  Sparks/Sound3  Sparks/Sound4 }
+2385. Sparks/Sound1 (SPARKS1)
+2386. Sparks/Sound2 (SPARKS2)
+2387. Sparks/Sound3 (SPARKS3)
+2388. Sparks/Sound4 (SPARKS4)
+2389. DSBOTTLE (DSBOTTLE)
+2390. chainrattle -> #176 { CHNRTL1  CHNRTL2  CHNRTL3 }
+2391. CHNRTL1 (CHNRTL1)
+2392. CHNRTL2 (CHNRTL2)
+2393. CHNRTL3 (CHNRTL3)
+2394. BDFirePlace (DSTORCH)
+2395. BDFirePlace2 (DSTORCH2)
+2396. BDALARM (BDALARM)
+2397. WINBREA (WINBREA)
+2398. AMBRAIN (AMBRAIN)
+2399. AMBAIRP **not present**
+2400. ICEBRK1 (ICEBRK1)
+2401. ICEBRK2 (ICEBRK2)
+2402. BDWFALL1 (BDWFALL1)
+2403. BDWFALL2 (BDWFALL2)
+2404. BDWFALL3 (BDWFALL3)
+2405. ACIDMELT (ACIDMELT)
+2406. bigspl1 (BIGSPL1)
+2407. dssplas2 (DSSPLAS2)
+2408. water1 (WATER1)
+2409. water2 (WATER2)
+2410. water3 (WATER3)
+2411. water4 (WATER4)
+2412. world/watersplashsmall (DSSPLSML)
+2413. world/sludgegloopsmall (DSPLOSML)
+2414. world/lavsiz2 (DSLVSIZ2)
+2415. world/lavasizzlesmall (DSLAVSML)
+2416. world/hotsiz **not present**
+2417. floorhard -> #178 { floorhard01  floorhard02  floorhard03  floorhard04  floorhard05  floorhard06 }
+2418. floordirt -> #179 { floordirt01  floordirt02  floordirt03  floordirt04 }
+2419. floordirt01 (FSDIRT1)
+2420. floordirt02 (FSDIRT2)
+2421. floordirt03 (FSDIRT3)
+2422. floordirt04 (FSDIRT4)
+2423. floorgrass -> #180 { floorgrass01  floorgrass02  floorgrass03  floorgrass04 }
+2424. floorgrass01 (FSGRASS1)
+2425. floorgrass02 (FSGRASS2)
+2426. floorgrass03 (FSGRASS3)
+2427. floorgrass04 (FSGRASS4)
+2428. floorcarpet -> #181 { floorcarpet01  floorcarpet02  floorcarpet03  floorcarpet04 }
+2429. floorcarpet01 (FSCARP1)
+2430. floorcarpet02 (FSCARP2)
+2431. floorcarpet03 (FSCARP3)
+2432. floorcarpet04 (FSCARP4)
+2433. floorsnow -> #187 { floorsnow01  floorsnow02  floorsnow03  floorsnow04 }
+2434. floorsand -> #182 { floorsand01  floorsand02  floorsand03  floorsand04 }
+2435. floorsand01 (FSSAND1)
+2436. floorsand02 (FSSAND2)
+2437. floorsand03 (FSSAND3)
+2438. floorsand04 (FSSAND4)
+2439. floorgravel -> #183 { floorgrav01  floorgrav02  floorgrav03  floorgrav04 }
+2440. floorgrav01 (FSGRAV1)
+2441. floorgrav02 (FSGRAV2)
+2442. floorgrav03 (FSGRAV3)
+2443. floorgrav04 (FSGRAV4)
+2444. floormetal -> #184 { floormetl01  floormetl02  floormetl03  floormetl04 }
+2445. floormetl01 (FSMET01)
+2446. floormetl02 (FSMET02)
+2447. floormetl03 (FSMET03)
+2448. floormetl04 (FSMET04)
+2449. floormetal2 -> #185 { floormetal201  floormetal202  floormetal203  floormetal204 }
+2450. floormetal201 (FSMET201)
+2451. floormetal202 (FSMET202)
+2452. floormetal203 (FSMET203)
+2453. floormetal204 (FSMET204)
+2454. FHVMTL (FHVMTL)
+2455. floorrock -> #186 { floorrock01  floorrock02  floorrock03  floorrock04 }
+2456. floorrock01 (FSROCK1)
+2457. floorrock02 (FSROCK2)
+2458. floorrock03 (FSROCK3)
+2459. floorrock04 (FSROCK4)
+2460. floorsnow01 (FSSNOW1)
+2461. floorsnow02 (FSSNOW2)
+2462. floorsnow03 (FSSNOW3)
+2463. floorsnow04 (FSSNOW4)
+2464. floorwood -> #188 { floorwood01  floorwood02  floorwood03  floorwood04 }
+2465. floorwood01 (FSWOOD1)
+2466. floorwood02 (FSWOOD2)
+2467. floorwood03 (FSWOOD3)
+2468. floorwood04 (FSWOOD4)
+2469. floortile -> #189 { floortile01  floortile02  floortile03  floortile04 }
+2470. floortile01 (FSTILE01)
+2471. floortile02 (FSTILE02)
+2472. floortile03 (FSTILE03)
+2473. floortile04 (FSTILE04)
+2474. floortile2 -> #190 { floortile201  floortile202  floortile203 }
+2475. floortile201 (FSTILE21)
+2476. floortile202 (FSTILE22)
+2477. floortile203 (FSTILE23)
+2478. floorslimy **not present**
+2479. floorslimy01 **not present**
+2480. floorslimy02 **not present**
+2481. floorslimy03 **not present**
+2482. floorslimy04 **not present**
+2483. BIKE1 (BIKE1)
+2484. BIKE1A (BIKE1A)
+2485. BIKE1B (BIKE1B)
+2486. BIKE1C (BIKE1C)
+2487. BIKE1D (BIKE1D)
+2488. BIKE1E **not present**
+2489. BIKE1F **not present**
+2490. BIKE1G **not present**
+2491. BIKESK (BIKESK)
+2492. BIKESK1 (BIKESK1)
+2493. BIKESK2 (BIKESK2)
+2494. BIKESK3 (BIKESK3)
+2495. BIKECLW (BIKECLW)
+2496. EBIKECLS (EBIKECLS)
+2497. EBIKEBNC (EBIKEBNC)
+2498. DSXDTH2E (DSXDTH2E)
+2499. BIKESTRT (BIKESTRT)
+2500. CARSTE (CARSTE)
+2501. REPAIR (REPAIR)
+2502. TNKENGS (TNKENGS)
+2503. DSMISFIR (DSMISFIR)
+2504. MISFAR **not present**
+2505. DSMISLAU (DSMISLAU)
+2506. HELILOP (HELILOP)
+2507. HELILOP2 (HELILOP2)
+2508. HELSTAR (HELSTAR)
+2509. HELSTOP (HELSTOP)
+2510. MECHWLK (MECHWLK)
+2511. MECHJUMP (MECHJUMP)
+2512. MISLFIRE (MISLFIRE)
+2513. ACANO1 (ACANO1)
+2514. ACANO2 **not present**
+2515. TANK1 (TANK1)
+2516. TANK2 (TANK2)
+2517. TANK3 (TANK3)
+2518. TANKRE (TANKRE)
+2519. TANKF -> #191 { TANKF1  TANKF2  TANKF3 }
+2520. TANKF1 (TANKF1)
+2521. TANKF2 (TANKF2)
+2522. TANKF3 (TANKF3)
+2523. TANKMG (TANKMG)
+2524. BIGPLSM -> #192 { BIGPLSM1  BIGPLSM2 }
+2525. BIGPLSM1 (BIGPLSM1)
+2526. BIGPLSM2 (BIGPLSM2)
+2527. RICMET -> #193 { RICMET1  RICMET2  RICMET3  RICMET4 }
+2528. RICMET1 (RICMET1)
+2529. RICMET2 (RICMET2)
+2530. RICMET3 (RICMET3)
+2531. RICMET4 (RICMET4)
+2532. rsb/tail/pistol/int1 (WEAP_PIS)
+2533. rsb/tail/pistol/int2 (WEAP_PIS)
+2534. rsb/tail/pistol/int3 (WEAP_PIS)
+2535. rsb/tail/pistol/int4 (WEAP_PIS)
+2536. rsb/tail/pistol/int5 (WEAP_PIS)
+2537. rsb/tail/pistol/int6 (WEAP_PIS)
+2538. rsb/tail/pistol/int -> #200 { rsb/tail/pistol/int1  rsb/tail/pistol/int2  rsb/tail/pistol/int3  rsb/tail/pistol/int4  rsb/tail/pistol/int5  rsb/tail/pistol/int6 }
+2539. rsb/tail/pistol/ext1 (WEAP_PIS)
+2540. rsb/tail/pistol/ext2 (WEAP_PIS)
+2541. rsb/tail/pistol/ext3 (WEAP_PIS)
+2542. rsb/tail/pistol/ext4 (WEAP_PIS)
+2543. rsb/tail/pistol/ext5 (WEAP_PIS)
+2544. rsb/tail/pistol/ext6 (WEAP_PIS)
+2545. rsb/tail/pistol/ext -> #201 { rsb/tail/pistol/ext1  rsb/tail/pistol/ext2  rsb/tail/pistol/ext3  rsb/tail/pistol/ext4  rsb/tail/pistol/ext5  rsb/tail/pistol/ext6 }
+2546. rsb/tail/pistol_mag/ext1 (WEAP_PIS)
+2547. rsb/tail/pistol_mag/ext2 (WEAP_PIS)
+2548. rsb/tail/pistol_mag/ext3 (WEAP_PIS)
+2549. rsb/tail/pistol_mag/ext4 (WEAP_PIS)
+2550. rsb/tail/pistol_mag/ext5 (WEAP_PIS)
+2551. rsb/tail/pistol_mag/ext6 (WEAP_PIS)
+2552. rsb/tail/pistol_mag/ext -> #202 { rsb/tail/pistol_mag/ext1  rsb/tail/pistol_mag/ext2  rsb/tail/pistol_mag/ext3  rsb/tail/pistol_mag/ext4  rsb/tail/pistol_mag/ext5  rsb/tail/pistol_mag/ext6 }
+2553. rsb/tail/shotgun/int1 (WEAP_SHO)
+2554. rsb/tail/shotgun/int2 (WEAP_SHO)
+2555. rsb/tail/shotgun/int3 (WEAP_SHO)
+2556. rsb/tail/shotgun/int4 (WEAP_SHO)
+2557. rsb/tail/shotgun/int5 (WEAP_SHO)
+2558. rsb/tail/shotgun/int6 (WEAP_SHO)
+2559. rsb/tail/shotgun/int -> #203 { rsb/tail/shotgun/int1  rsb/tail/shotgun/int2  rsb/tail/shotgun/int3  rsb/tail/shotgun/int4  rsb/tail/shotgun/int5  rsb/tail/shotgun/int6 }
+2560. rsb/tail/shotgun/ext1 (WEAP_SHO)
+2561. rsb/tail/shotgun/ext2 (WEAP_SHO)
+2562. rsb/tail/shotgun/ext3 (WEAP_SHO)
+2563. rsb/tail/shotgun/ext4 (WEAP_SHO)
+2564. rsb/tail/shotgun/ext5 (WEAP_SHO)
+2565. rsb/tail/shotgun/ext6 (WEAP_SHO)
+2566. rsb/tail/shotgun/ext -> #204 { rsb/tail/shotgun/ext1  rsb/tail/shotgun/ext2  rsb/tail/shotgun/ext3  rsb/tail/shotgun/ext4  rsb/tail/shotgun/ext5  rsb/tail/shotgun/ext6 }
+2567. rsb/tail/dbshotgun/ext1 (WEAP_SHO)
+2568. rsb/tail/dbshotgun/ext2 (WEAP_SHO)
+2569. rsb/tail/dbshotgun/ext3 (WEAP_SHO)
+2570. rsb/tail/dbshotgun/ext4 (WEAP_SHO)
+2571. rsb/tail/dbshotgun/ext5 (WEAP_SHO)
+2572. rsb/tail/dbshotgun/ext6 (WEAP_SHO)
+2573. rsb/tail/dbshotgun/ext -> #205 { rsb/tail/dbshotgun/ext1  rsb/tail/dbshotgun/ext2  rsb/tail/dbshotgun/ext3  rsb/tail/dbshotgun/ext4  rsb/tail/dbshotgun/ext5  rsb/tail/dbshotgun/ext6 }
+2574. rsb/tail/ar/int1 (WEAP_AR_)
+2575. rsb/tail/ar/int2 (WEAP_AR_)
+2576. rsb/tail/ar/int3 (WEAP_AR_)
+2577. rsb/tail/ar/int4 (WEAP_AR_)
+2578. rsb/tail/ar/int -> #206 { rsb/tail/ar/int1  rsb/tail/ar/int2  rsb/tail/ar/int3  rsb/tail/ar/int4 }
+2579. rsb/tail/ar/ext1 (WEAP_AR3)
+2580. rsb/tail/ar/ext2 (WEAP_AR3)
+2581. rsb/tail/ar/ext3 (WEAP_AR3)
+2582. rsb/tail/ar/ext4 (WEAP_AR3)
+2583. rsb/tail/ar/ext5 (WEAP_AR3)
+2584. rsb/tail/ar/ext6 (WEAP_AR3)
+2585. rsb/tail/ar/ext -> #207 { rsb/tail/ar/ext1  rsb/tail/ar/ext2  rsb/tail/ar/ext3  rsb/tail/ar/ext4  rsb/tail/ar/ext5  rsb/tail/ar/ext6 }
+2586. rsb/tail/lmg/int1 (WEAP_LMG)
+2587. rsb/tail/lmg/int2 (WEAP_LMG)
+2588. rsb/tail/lmg/int3 (WEAP_LMG)
+2589. rsb/tail/lmg/int4 (WEAP_LMG)
+2590. rsb/tail/lmg/int5 (WEAP_LMG)
+2591. rsb/tail/lmg/int6 (WEAP_LMG)
+2592. rsb/tail/lmg/int -> #208 { rsb/tail/lmg/int1  rsb/tail/lmg/int2  rsb/tail/lmg/int3  rsb/tail/lmg/int4  rsb/tail/lmg/int5  rsb/tail/lmg/int6 }
+2593. rsb/tail/lmg/ext1 (WEAP_LMG)
+2594. rsb/tail/lmg/ext2 (WEAP_LMG)
+2595. rsb/tail/lmg/ext3 (WEAP_LMG)
+2596. rsb/tail/lmg/ext4 (WEAP_LMG)
+2597. rsb/tail/lmg/ext5 (WEAP_LMG)
+2598. rsb/tail/lmg/ext6 (WEAP_LMG)
+2599. rsb/tail/lmg/ext -> #209 { rsb/tail/lmg/ext1  rsb/tail/lmg/ext2  rsb/tail/lmg/ext3  rsb/tail/lmg/ext4  rsb/tail/lmg/ext5  rsb/tail/lmg/ext6 }
+2600. rsb/tail/br/ext1 (WEAP_BR3)
+2601. rsb/tail/br/ext2 (WEAP_BR3)
+2602. rsb/tail/br/ext3 (WEAP_BR3)
+2603. rsb/tail/br/ext4 (WEAP_BR3)
+2604. rsb/tail/br/ext5 (WEAP_BR3)
+2605. rsb/tail/br/ext6 (WEAP_BR3)
+2606. rsb/tail/br/ext7 (WEAP_BR3)
+2607. rsb/tail/br/ext8 (WEAP_BR3)
+2608. rsb/tail/br/ext -> #210 { rsb/tail/br/ext1  rsb/tail/br/ext2  rsb/tail/br/ext3  rsb/tail/br/ext4  rsb/tail/br/ext5  rsb/tail/br/ext6  rsb/tail/br/ext7  rsb/tail/br/ext8 }
+2609. rsb/tail/smg/int1 (WEAP_SMG)
+2610. rsb/tail/smg/int2 (WEAP_SMG)
+2611. rsb/tail/smg/int3 (WEAP_SMG)
+2612. rsb/tail/smg/int4 (WEAP_SMG)
+2613. rsb/tail/smg/int5 (WEAP_SMG)
+2614. rsb/tail/smg/int6 (WEAP_SMG)
+2615. rsb/tail/smg/int -> #211 { rsb/tail/smg/int1  rsb/tail/smg/int2  rsb/tail/smg/int3  rsb/tail/smg/int4  rsb/tail/smg/int5  rsb/tail/smg/int6 }
+2616. rsb/tail/smg/ext1 (WEAP_SMG)
+2617. rsb/tail/smg/ext2 (WEAP_SMG)
+2618. rsb/tail/smg/ext3 (WEAP_SMG)
+2619. rsb/tail/smg/ext4 (WEAP_SMG)
+2620. rsb/tail/smg/ext5 (WEAP_SMG)
+2621. rsb/tail/smg/ext6 (WEAP_SMG)
+2622. rsb/tail/smg/ext -> #212 { rsb/tail/smg/ext1  rsb/tail/smg/ext2  rsb/tail/smg/ext3  rsb/tail/smg/ext4  rsb/tail/smg/ext5  rsb/tail/smg/ext6 }
+2623. rsb/tail/rpg/int1 (RPG_ATMO)
+2624. rsb/tail/rpg/int2 (RPG_ATMO)
+2625. rsb/tail/rpg/int3 (RPG_ATMO)
+2626. rsb/tail/rpg/int -> #213 { rsb/tail/rpg/int1  rsb/tail/rpg/int2  rsb/tail/rpg/int3 }
+2627. rsb/tail/rpg/ext1 (RPG_ATMO)
+2628. rsb/tail/rpg/ext2 (RPG_ATMO)
+2629. rsb/tail/rpg/ext3 (RPG_ATMO)
+2630. rsb/tail/rpg/ext -> #214 { rsb/tail/rpg/ext1  rsb/tail/rpg/ext2  rsb/tail/rpg/ext3 }
+2631. rsb/impact/concrete1 (BULLETIM)
+2632. rsb/impact/concrete2 (BULLETIM)
+2633. rsb/impact/concrete3 (BULLETIM)
+2634. rsb/impact/concrete4 (BULLETIM)
+2635. rsb/impact/concrete5 (BULLETIM)
+2636. rsb/impact/concrete6 (BULLETIM)
+2637. rsb/impact/concrete7 (BULLETIM)
+2638. rsb/impact/concrete8 (BULLETIM)
+2639. rsb/impact/concrete9 (BULLETIM)
+2640. rsb/impact/concrete10 (BULLETIM)
+2641. rsb/impact/concrete11 (BULLETIM)
+2642. rsb/impact/concrete -> #215 { rsb/impact/concrete1  rsb/impact/concrete2  rsb/impact/concrete3  rsb/impact/concrete4  rsb/impact/concrete5  rsb/impact/concrete6  rsb/impact/concrete7  rsb/impact/concrete8  rsb/impact/concrete9  rsb/impact/concrete10  rsb/impact/concrete11 }
+2643. rsb/impact/metal1 (BLT_IMP_)
+2644. rsb/impact/metal2 (BLT_IMP_)
+2645. rsb/impact/metal3 (BLT_IMP_)
+2646. rsb/impact/metal4 (BLT_IMP_)
+2647. rsb/impact/metal5 (BLT_IMP_)
+2648. rsb/impact/metal6 (BLT_IMP_)
+2649. rsb/impact/metal -> #216 { rsb/impact/metal1  rsb/impact/metal2  rsb/impact/metal3  rsb/impact/metal4  rsb/impact/metal5  rsb/impact/metal6 }
+2650. rsb/impact/wood1 (BLT_IMP_)
+2651. rsb/impact/wood2 (BLT_IMP_)
+2652. rsb/impact/wood3 (BLT_IMP_)
+2653. rsb/impact/wood4 (BLT_IMP_)
+2654. rsb/impact/wood5 (BLT_IMP_)
+2655. rsb/impact/wood6 (BLT_IMP_)
+2656. rsb/impact/wood -> #217 { rsb/impact/wood1  rsb/impact/wood2  rsb/impact/wood3  rsb/impact/wood4  rsb/impact/wood5  rsb/impact/wood6 }
+2657. rsb/ricochet1 (RQS00003)
+2658. rsb/ricochet2 (RQS00011)
+2659. rsb/ricochet3 (RQS00012)
+2660. rsb/ricochet4 (RQS00013)
+2661. rsb/ricochet5 (RQS00014)
+2662. rsb/ricochet6 (RQS00015)
+2663. rsb/ricochet7 (RQS00016)
+2664. rsb/ricochet8 (RICOCHE8)
+2665. rsb/ricochet9 (RICOCHE9)
+2666. rsb/ricochet10 (RQS00004)
+2667. rsb/ricochet11 (RQS00005)
+2668. rsb/ricochet12 (RQS00006)
+2669. rsb/ricochet13 (RQS00007)
+2670. rsb/ricochet14 (RQS00008)
+2671. rsb/ricochet15 (RQS00009)
+2672. rsb/ricochet16 (RQS00010)
+2673. rsb/ricochet -> #218 { rsb/ricochet1  rsb/ricochet2  rsb/ricochet3  rsb/ricochet4  rsb/ricochet5  rsb/ricochet6  rsb/ricochet7  rsb/ricochet8  rsb/ricochet9  rsb/ricochet10  rsb/ricochet11  rsb/ricochet12  rsb/ricochet13  rsb/ricochet14  rsb/ricochet15  rsb/ricochet16 }
+2674. rsb/glass1 (DSBOTTLE)
+2675. rsb/glass2 (GLSFAL)
+2676. rsb/glass3 (RQS00001)
+2677. rsb/glass -> #219 { rsb/glass1  rsb/glass2  rsb/glass3 }
+2678. rsb/flame/hiss1 (FLAMERHI)
+2679. rsb/flame/hiss2 (FLAMERHI)
+2680. rsb/flame/hiss -> #220 { rsb/flame/hiss1  rsb/flame/hiss2 }
+2681. rsb/impact/electric1 (ELECTRO8)
+2682. rsb/impact/electric2 (PZAPHIT)
+2683. rsb/impact/electric3 (DSDEVZAP)
+2684. rsb/impact/electric4 (ELECTRO7)
+2685. rsb/impact/electric5 (RQS00002)
+2686. rsb/impact/electric -> #221 { rsb/impact/electric1  rsb/impact/electric2  rsb/impact/electric3  rsb/impact/electric4  rsb/impact/electric5 }
+2687. rsb/impact/pipe1 (PIPE_HIT)
+2688. rsb/impact/pipe2 (PIPE_HIT)
+2689. rsb/impact/pipe3 (PIPE_HIT)
+2690. rsb/impact/pipe4 (PIPE_HIT)
+2691. rsb/impact/pipe5 (PIPE_HIT)
+2692. rsb/impact/pipe6 (PIPE_HIT)
+2693. rsb/impact/pipe -> #222 { rsb/impact/pipe1  rsb/impact/pipe2  rsb/impact/pipe3  rsb/impact/pipe4  rsb/impact/pipe5  rsb/impact/pipe6 }
+2694. rsr/slideback (RSRSLIDE)
+2695. rsr/smgback (RSRSLIDE)
+2696. rsr/smgfwd (RSRSMGFW)
+2697. rsr/bigdrop -> #223 { rsr/bigdrop1  rsr/bigdrop2  rsr/bigdrop3 }
+2698. rsr/bigdrop1 (RQS00017)
+2699. rsr/bigdrop2 (RQS00018)
+2700. rsr/bigdrop3 (RQS00019)
+2701. rsr/drumout (MGCHAIN)
+2702. rsr/drumin (MGLOAD)
+2703. rsr/canout (RLCOUT)
+2704. rsr/canin (RLCIN)
+2705. fem/sight (FEMZSIT)
+2706. fem/pain (FEMZPAIN)
+2707. fem/death (FEMZDHT)
+2708. fem/active (FEMZACT)
+2709. KnifeHit (DSKNIFE)
+2710. fem/burn (FEMBURN)
+2711. fem/owow (FEMOW)
+2712. blooddemon/sight (DSBLDSIT)
+2713. blooddemon/pain (DSBLDPAI)
+2714. blooddemon/death (DSBLDDTH)
+2715. blooddemon/active (DSBLDACT)
+2716. blooddemon/melee (DSBLDATK)
+2717. blooddemon/walk (DSBLDWAL)
+2718. acid/spew (SPEWLOOP)
+2719. acid/spewstop (SPEWSTOP)
+2720. BIOSHOOT (BIOSHOOT)
+2721. Daedabus/Sight (DAEDSIGH)
+2722. Daedabus/Active -> #250 { DAEDACT1  DAEDACT2 }
+2723. DAEDACT1 (DAEDACT1)
+2724. DAEDACT2 (DAEDACT2)
+2725. Daedabus/Attack (DAEDATTK)
+2726. Daedabus/pain -> #251 { DAEDPAI1  DAEDPAI2 }
+2727. DAEDPAI1 (DAEDPAI1)
+2728. DAEDPAI2 (DAEDPAI2)
+2729. Daedabus/Death (DAEDDEAT)
+2730. Daedabus/gun -> #252 { daedgn1  daedgn2  daedgn3 }
+2731. daedgn1 (DAEDGN1)
+2732. daedgn2 (DAEDGN2)
+2733. daedgn3 (DAEDGN3)
+2734. Daedabus/impact -> #253 { daedim1  daedim2 }
+2735. daedim1 (DAEDIM1)
+2736. daedim2 (DAEDIM2)
+2737. monster/diasit (DSDIASIT)
+2738. monster/diapai (DSDIAPAI)
+2739. monster/diadth (DSDIADTH)
+2740. monster/diaact (DSDIAACT)
+2741. weapons/firbfi (DSFIRBFI)
+2742. weapons/firmfi (DSFIRMFI)
+2743. weapons/firex4 (DSFIREX4)
+2744. weapons/diasht (DSDIASHT)
+2745. weapons/firex3 (DSFIREX3)
+2746. ClericFlameFire (DSHELLFI)
+2747. ClericFlameExplode (DSHELLEX)
+2748. ClericFlameCircle (DSFIREX5)
+2749. grunt/pain5 (ZOMPN5)
+2750. grunt/pain6 (ZOMPN6)
+2751. grunt/pain7 (ZOMPN7)
+2752. grunt/pain8 (ZOMPN8)
+2753. grunt/pain9 (ZOMPN9)
+2754. grunt/pain10 (ZOMPN10)
+2755. grunt/pain11 (ZOMPN11)
+2756. grunt/death4 (ZOMDTH4)
+2757. grunt/death5 (ZOMDTH5)
+2758. grunt/death6 (ZOMDTH6)
+2759. grunt/death7 (ZOMDTH7)
+2760. commando/sight -> #230 { ZCSIT1  ZCSIT2  ZCSIT3  ZCSIT4 }
+2761. ZCSIT1 (ZCSIT1)
+2762. ZCSIT2 (ZCSIT2)
+2763. ZCSIT3 (ZCSIT3)
+2764. ZCSIT4 (ZCSIT4)
+2765. ZCSIT5 (ZCSIT5)
+2766. commando/pain -> #231 { ZCPAIN1  ZCPAIN2  ZCPAIN3  ZCPAIN4 }
+2767. ZCPAIN1 (ZCPAIN1)
+2768. ZCPAIN2 (ZCPAIN2)
+2769. ZCPAIN3 (ZCPAIN3)
+2770. ZCPAIN4 (ZCPAIN4)
+2771. commando/death -> #232 { ZCDIE1  ZCDIE2  ZCDIE3  ZCDIE4 }
+2772. ZCDIE1 (ZCDIE1)
+2773. ZCDIE2 (ZCDIE2)
+2774. ZCDIE3 (ZCDIE3)
+2775. ZCDIE4 (ZCDIE4)
+2776. commando/active -> #233 { ZCI1  ZCI2  ZCI3  ZCI4  ZCI5 }
+2777. ZCI1 (ZCI1)
+2778. ZCI2 (ZCI2)
+2779. ZCI3 (ZCI3)
+2780. ZCI4 (ZCI4)
+2781. ZCI5 (ZCI5)
+2782. ZSpecOps/Sight -> #234 { ZSPCSIG1  ZSPCSIG2  ZSPCSIG3 }
+2783. ZSPCSIG1 (ZSPCSIG1)
+2784. ZSPCSIG2 (ZSPCSIG2)
+2785. ZSPCSIG3 (ZSPCSIG3)
+2786. ZSpecOps/MGun -> #235 { ZSPCMGN1  ZSPCMGN2 }
+2787. ZSPCMGN1 **not present**
+2788. ZSPCMGN2 **not present**
+2789. ZSpecOps/Pain -> #236 { ZSPCPAI1  ZSPCPAI2  ZSPCPAI3 }
+2790. ZSPCPAI1 (ZSPCPAI1)
+2791. ZSPCPAI2 (ZSPCPAI2)
+2792. ZSPCPAI3 (ZSPCPAI3)
+2793. ZSpecOps/Death -> #237 { ZSPCDEA1  ZSPCDEA2  ZSPCDEA3  ZSPCDEA4 }
+2794. ZSPCDEA1 (ZSPCDEA1)
+2795. ZSPCDEA2 (ZSPCDEA2)
+2796. ZSPCDEA3 (ZSPCDEA3)
+2797. ZSPCDEA4 (ZSPCDEA4)
+2798. CMGFIR (SMGFIRE)
+2799. CMGSIL (DSCMGSIL)
+2800. monster/incsit (DSINCSIT)
+2801. monster/incdth (DSINCDTH)
+2802. monster/incexp (DSINCEXP)
+2803. monster/incact (DSINCACT)
+2804. monster/incatk (DSINCATK)
+2805. monster/inchit (DSINCHIT)
+2806. superbaron/scream (DSSBSIT)
+2807. superbaron/pain (DSSBPAIN)
+2808. superbaron/death (DSSBDTH)
+2809. superbaron/act (DSSBACT)
+2810. pyro/see (BE-SEE)
+2811. pyro/idle (BE-IDLE)
+2812. pyro/tele (BE-TELE)
+2813. pyro/pain (DE_PAIN_)
+2814. pyro/death (BE-DEATH)
+2815. pyro/blast (DP_ATTAC)
+2816. pyro/flame (DSFLAMER)
+2817. pyro/explosion (DSPIPEX1)
+2818. pyro/flamepoof (DSHITW)
+2819. pyro/blastexplosion (DSFRBXPL)
+2820. pyro/comet (DSCMTLNC)
+2821. pyro/cometdeath (DSCMTEXP)
+2822. pyro/bomb (DSRDSHOT)
+2823. pyro/bombhit (DSRDHIT)
+2824. monster/termsit (TSIGHT)
+2825. monster/termpin (TPAIN1)
+2826. monster/termdth (TDEATH)
+2827. Terminator/termact -> #238 { termact1  termact2 }
+2828. termact1 (DSTERACT)
+2829. termact2 (DSTEACT2)
+2830. Terminator/terstepA -> #239 { terstep1  terstep2 }
+2831. terstep1 (DSTSTEP1)
+2832. terstep2 (DSTSTEP2)
+2833. Terminator/terstepB **not present**
+2834. Terminator/tershotA (DSTSHOT1)
+2835. Terminator/tershotB (DSTSHOT2)
+2836. OPNGRN (OPNGRN)
+2837. weapons/pbarm (DSPIPARM)
+2838. QSGFIRE1 (QSGFIRE1)
+2839. aracnorb/sight (DSARACST)
+2840. aracnorb/death (DSARACDT)
+2841. aracnorb/attack **not present**
+2842. cbaron/sight (CBARNSIT)
+2843. cbaron/pain (CBARNPAI)
+2844. cbaron/death (CBARNDTH)
+2845. cbaron/active (CBARNACT)
+2846. cbaron/metal (CMETAL)
+2847. monster/brusit (DSBRUSIT)
+2848. monster/brudth (DSBRUDTH)
+2849. monster/bruwlk -> #240 { DSBRUWK1  DSBRUWK2  DSBRUWK3  DSBRUWK4  DSBRUWK5 }
+2850. DSBRUWK1 (DSBRUWK1)
+2851. DSBRUWK2 (DSBRUWK2)
+2852. DSBRUWK3 (DSBRUWK3)
+2853. DSBRUWK4 (DSBRUWK4)
+2854. DSBRUWK5 (DSBRUWK5)
+2855. monster/brufir (DSBRUFIR)
+2856. weapons/hellex (DSHELLEX)
+2857. superdemon/death (DSSUPDTH)
+2858. superdemon/snarl (DSSUPSNA)
+2859. superdemon/crash (DSSUPLND)
+2860. dimp/pain -> #241 { DImppain1  DImppain2  DImppain3 }
+2861. DImppain1 (DIMPPN1)
+2862. DImppain2 (DIMPPN2)
+2863. DImppain3 (DIMPPN3)
+2864. dimp/active -> #242 { dimpact1  dimpact2  dimpact3 }
+2865. dimpact1 (DIMPACT1)
+2866. dimpact2 (DIMPACT2)
+2867. dimpact3 (DIMPACT3)
+2868. dimp/death -> #243 { dimpdth1  dimpdth2  dimpdth3 }
+2869. dimpdth1 (DIMPDTH1)
+2870. dimpdth2 (DIMPDTH2)
+2871. dimpdth3 (DIMPDTH3)
+2872. dimp/see -> #244 { dimpsit1  dimpsit2  dimpsit3 }
+2873. dimpsit1 (DIMPSIT1)
+2874. dimpsit2 (DIMPSIT2)
+2875. dimpsit3 (DIMPSIT3)
+2876. SniperGuy/Fire (SNPRFIRE)
+2877. SniperGuy/Reload (SNPRRELD)
+2878. SniperGuy/Bulletloop (SNPRFLY)
+2879. SniperGuy/FleshHit -> #245 { SNPRFHT1  SNPRFHT2  SNPRFHT3 }
+2880. SNPRFHT1 (SNPRFHT1)
+2881. SNPRFHT2 (SNPRFHT2)
+2882. SNPRFHT3 (SNPRFHT3)
+2883. SniperGuy/WallHit -> #246 { SNPRWHT1  SNPRWHT2  SNPRWHT3  SNPRWHT4 }
+2884. SNPRWHT1 (SNPRWHT1)
+2885. SNPRWHT2 (SNPRWHT2)
+2886. SNPRWHT3 (SNPRWHT3)
+2887. SNPRWHT4 (SNPRWHT4)
+2888. monster/annsit (DSANNSIT)
+2889. monster/anndth (DSANNDIE)
+2890. monster/anhoof -> #247 { CYBHOOF1  CYBHOOF2  CYBHOOF3  CYBHOOF4 }
+2891. CYBHOOF1 (CYBHOOF1)
+2892. CYBHOOF2 (CYBHOOF2)
+2893. CYBHOOF3 (CYBHOOF3)
+2894. CYBHOOF4 (CYBHOOF4)
+2895. monster/annpain -> #248 { CYBPAIN1  CYBPAIN2  CYBPAIN3  CYBPAIN4 }
+2896. CYBPAIN1 (CYBPAIN1)
+2897. CYBPAIN2 (CYBPAIN2)
+2898. CYBPAIN3 (CYBPAIN3)
+2899. CYBPAIN4 (CYBPAIN4)
+2900. monster/annidle -> #249 { CYBIDLE1  CYBIDLE2  CYBIDLE3  CYBIDLE4 }
+2901. CYBIDLE1 (CYBIDLE1)
+2902. CYBIDLE2 (CYBIDLE2)
+2903. CYBIDLE3 (CYBIDLE3)
+2904. CYBIDLE4 (CYBIDLE4)
+2905. draugr/fire -> #254 { DRHEAT1  DRHEAT2  DRHEAT3  DRHEAT4 }
+2906. DRHEAT1 (DRHEAT1)
+2907. DRHEAT2 (DRHEAT2)
+2908. DRHEAT3 (DRHEAT3)
+2909. DRHEAT4 (DRHEAT4)
+2910. icevile/see (NA_TAUNT)
+2911. icevile/death (NA_DEATH)
+2912. icevile/pain (NA_PAIN_)
+2913. icevile/active (NA_IDLE_)
+2914. tornado/form (Q2WIND)
+2915. wind/away (HLWIND)
+2916. monster/sg2sit (DSSG2SIT)
+2917. monster/sg2atk (DSSG2ATK)
+2918. weapons/devexp (DSDEVEXP)
+2919. weapons/devzap (DSDEVZAP)
+2920. monster/ovlsit (DSOVLSIT)
+2921. monster/ovlact (DSOVLACT)
+2922. monster/ovlpai (DSOVLPAI)
+2923. monster/ovldth (DSOVLDTH)
+2924. monster/hadsit (DSHADSIT)
+2925. monster/haddth (DSHADDTH)
+2926. monster/hadexp (DSHADEXP)
+2927. monster/hadtel (DSHADTEL)
+2928. monster/hadwlk (DSHADWLK)
+2929. monster/heltel -> #262 { heltel1  heltel2  heltel3  heltel4 }
+2930. monster/ovlbit (DSDEMBIT)
+2931. weapons/gntidl **not present**
+2932. weapons/chaofi (DSCHAOFI)
+2933. weapons/shock (DSSHOCK)
+2934. phantasm/attack (SKL2ATK)
+2935. phantasm/death (FIRXPL2)
+2936. phantasm/pain (DM2PAIN)
+2937. phantasm/explode (BAREXP2)
+2938. Apocalypse/cast (APOCAST)
+2939. Thamuz/Attack (NAKRULA2)
+2940. Thamuz/death (NAKRULD2)
+2941. Thamuz/Pain (NAKRULH2)
+2942. Thamuz/Idlesight -> #255 { Thamuz/Idle1  Thamuz/Idle2 }
+2943. Thamuz/Idle1 (NAKRULS1)
+2944. Thamuz/Idle2 (NAKRULS2)
+2945. Thamuz/death2 **not present**
+2946. q2weapon/bfgball (BFG_FIRE)
+2947. q2weapon/bfgballexplo (BFG__X1B)
+2948. q2weapon/rocketlauncherfire (ROCKLF1A)
+2949. q2weapon/rocketexplo (Q2ROKLX1)
+2950. h2necromancer/magiccast (H2NCMAGH)
+2951. comet/explosion (COMETEXP)
+2952. CGunSpider/Sight (DSCSPISE)
+2953. CGunSpider/Death (DSCSPIDI)
+2954. CGunSpider/Attack (DSCSPIFI)
+2955. queen/sight (QUESIT)
+2956. queen/pain (QUEPAIN)
+2957. queen/death (QUEDIE)
+2958. queen/active (QUEACT)
+2959. queen/fire (QBFGFIRE)
+2960. electricplasma/shoot (PZAPSEE)
+2961. electricplasma/hit (PZAPHIT)
+2962. queen/hit (QBFGHIT)
+2963. queen/melee (QUEBIT)
+2964. blusoul/see (BLUSOSEE)
+2965. blusoul/death -> #256 { blusodt1  blusodt2 }
+2966. blusodt1 (BLUSODT1)
+2967. blusodt2 (BLUSODT2)
+2968. ImpureCac/Sight -> #257 { IPCDSIG1  IPCDSIG2 }
+2969. IPCDSIG1 (IPCDSIG1)
+2970. IPCDSIG2 (IPCDSIG2)
+2971. ImpureCac/Active -> #258 { IPCDACT1  IPCDACT2 }
+2972. IPCDACT1 (IPCDACT1)
+2973. IPCDACT2 (IPCDACT2)
+2974. ImpureCac/Pain -> #259 { IPCDPAI1  IPCDPAI2 }
+2975. IPCDPAI1 (IPCDPAI1)
+2976. IPCDPAI2 (IPCDPAI2)
+2977. ImpureCac/Death (IPCDDETH)
+2978. ImpureCac/DeathExp (IPCDEXPL)
+2979. ImpureSoul/Death -> #260 { SKUPOOF1  SKUPOOF2  SKUPOOF3  SKUPOOF4 }
+2980. SKUPOOF1 (SKUPOOF1)
+2981. SKUPOOF2 (SKUPOOF2)
+2982. SKUPOOF3 (SKUPOOF3)
+2983. SKUPOOF4 (SKUPOOF4)
+2984. ImpureSoul/Active **not present**
+2985. ImpureSoul/Pain (SKUPAI)
+2986. ImpureSoul/See (SKUSEE)
+2987. PainLord/Death (DIA2DETH)
+2988. PainLord/Sight -> #261 { lordsee1  lordsee2  lordsee3 }
+2989. lordsee1 (DIA2SIG1)
+2990. lordsee2 (DIA2SIG2)
+2991. lordsee3 (DIA2SIG3)
+2992. PainLord/Pain **not present**
+2993. PainLord/Active **not present**
+2994. painlord/darkmatterdie (SORBLEXP)
+2995. painlord/darkmatter (MAGE4)
+2996. heltel1 (PALOTEL1)
+2997. heltel2 (PALOTEL2)
+2998. heltel3 (PALOTEL3)
+2999. heltel4 (PALOTEL4)
+RSLD probe: cleared slot Shotgun
+RSLD loadorder: TITLEMAP's MAPINFO name "Titlemap"
+RSLD loadorder: maps/titlemap.wad in load order (the last read last): [container 4, 52759 bytes] [container 5, 104246 bytes]
+RSLD loadorder: SBARINFO in load order (the last read last): [container 0, 444 bytes] [container 4, 215934 bytes] [container 5, 35935 bytes] [container 10, 37408 bytes]
+RSLD loadorder: SNDINFO in load order (the last read last): [container 0, 7563 bytes] [container 0, 13670 bytes] [container 4, 25768 bytes] [container 5, 26102 bytes] [container 5, 13910 bytes] [container 5, 1975 bytes] [container 5, 3300 bytes] [container 5, 14131 bytes] [container 5, 4574 bytes] [container 5, 1031 bytes] [container 5, 5193 bytes] [container 5, 2809 bytes] [container 10, 17419 bytes] [container 10, 931 bytes] [container 11, 10458 bytes]
+RSLD loadorder: MAPINFO in load order (the last read last): [container 4, 1533 bytes] [container 5, 12638 bytes] [container 10, 47 bytes] [container 10, 154 bytes] [container 10, 570 bytes] [container 10, 236 bytes] [container 15, 47 bytes]

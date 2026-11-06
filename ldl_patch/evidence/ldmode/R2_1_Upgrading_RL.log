@@ -1,0 +1,31 @@
+# R2_1_Upgrading_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Upgrading on Rocket_Launcher slot RocketLauncher rarity Common
+RSLD 95 Upgrading: probe: AmmoRocket filled to 100
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
+RSLD 103 Upgrading p1 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 103 Upgrading p1 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD probe: Rocket_Launcher magazine 5 reserve 100
+RSLD 174 Upgrading p2 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 174 Upgrading p2 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD probe: Rocket_Launcher magazine 4 reserve 100
+RSLD 245 Upgrading p3 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256: FREE
+RSLD 245 Upgrading p3 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 246 Upgrading p3 main Rocket_Launcher: refund 1 -> RocketRounds
+RSLD probe: Rocket_Launcher magazine 4 reserve 100
+RSLD 316 Upgrading p4 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 316 Upgrading p4 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD probe: Rocket_Launcher magazine 3 reserve 100
+RSLD 387 Upgrading p5 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 387 Upgrading p5 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD probe: Rocket_Launcher magazine 2 reserve 100
+RSLD 458 Upgrading p6 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 458 Upgrading p6 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD probe: Rocket_Launcher magazine 1 reserve 100
+RSLD 529 Upgrading p7 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 529 Upgrading p7 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD probe: Rocket_Launcher magazine 6 reserve 94
+RSLD 600 Upgrading p8 main Rocket_Launcher: level 5: damage x1.50, free shot chance 64/256
+RSLD 600 Upgrading p8 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD probe: Rocket_Launcher magazine 5 reserve 94

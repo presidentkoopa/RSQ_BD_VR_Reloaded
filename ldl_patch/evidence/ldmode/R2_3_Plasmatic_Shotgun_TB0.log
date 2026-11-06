@@ -1,0 +1,25 @@
+# R2_3_Plasmatic_Shotgun_TB0: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Plasmatic on Shot_Gun slot Shotgun rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 164 Plasmatic p2 main Shot_Gun: pellet 0 (13 dmg) -> LDPlasmaticShotgunBall2 from the main muzzle (-158 -197 37) at 2.0 / -2.4, speed 25, damage 7 x random(1,8) (mean 31.5 = 13 x 2.42)
+RSLD 164 Plasmatic p2 main Shot_Gun: pellet 0 dropped
+RSLD 164 Plasmatic p2 main Shot_Gun: pellet 1 dropped
+RSLD 164 Plasmatic p2 main Shot_Gun: pellet 2 dropped
+RSLD 164 Plasmatic p2 main Shot_Gun: pellet 3 dropped
+RSLD 164 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 56
+RSLD 164 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 21
+RSLD 164 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 49
+RSLD 164 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 56
+RSLD 165 Plasmatic p2 main Shot_Gun: pellet 4 dropped
+RSLD 165 Plasmatic p2 main Shot_Gun: pellet 5 dropped
+RSLD 165 Plasmatic p2 main Shot_Gun: pellet 6 dropped
+RSLD 165 Plasmatic p2 main Shot_Gun: pellet 7 dropped
+RSLD 165 Plasmatic p2 main Shot_Gun: pellet 8 dropped
+RSLD 165 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 35
+RSLD 165 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 42
+RSLD 165 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 35
+RSLD 165 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 21
+RSLD 165 Plasmatic p2 main Shot_Gun: LDPlasmaticShotgunBall2 hit BaronofHell2 for 28
+RSLD 167 Plasmatic p2 main Shot_Gun: 9 pellets became 9 LDPlasmaticShotgunBall2; hits 9 kills 0

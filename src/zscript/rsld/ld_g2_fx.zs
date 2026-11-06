@@ -8,8 +8,8 @@
 // gun-relative, LegenDoom's RATIO goes onto our gun's own number (owner 11-06): x pellets, x damage, x spread.
 // "Pattern pellets": the gun's spread volleys (ld_g2_core.zs); the SSG's 300-unit point-blank blast stays as it is.
 // Sounds: BD22 / BD22 VR sounds only (scope section 4); Renegade's scream: mechanics only, silent (owner 11-06).
-// Visuals: none of LegenDoom's (explosion sprites, quakes, rail spirals): scope Q4 is open; quakes would move the VR
-// camera. The rocket / plasma / BFG / melee halves of the all-slot effects here (Blastwave, Explosive, Heavy, Cursed,
+// Visuals (owner 2026-11-06 round 2): LegenDoom's own, from the loaded LegenDoom pk3 by name (RSLD.LDVisual), never its
+// quakes (the LD mode turns LegenDoom's LD_quakes off). The rocket / plasma / BFG / melee halves of the all-slot effects here (Blastwave, Explosive, Heavy, Cursed,
 // TripleThreat, TwinShot, ShortRange) belong to G3 / G4 / G7: they add OnMissile / OnMelee to these same classes.
 
 // ---------------------------------------------------------------------------------------------------------------
@@ -125,24 +125,55 @@ class RSLD_Fx_Sniper : RSLD_G2_Effect
 }
 
 // ---------------------------------------------------------------------------------------------------------------
-// Choked (C: Sg, SS): "Shotguns have fixed spread instead of random shots". LD's fixed points (Shotgun.dec FireChoked:
-// 7, centre, +-3.0 h, +-1.5/+-1.5; SuperShotgun.dec: 20 on a 2/4 grid), FBF_EXPLICITANGLE. Ours: pattern pellet j sits
-// on LD point (j mod N) around the aim (pump 9: points 1-7, then 1-2 again). OPEN (report Q-C1): how our 9 / 14 / 18 /
-// 28 pellets map onto LD's 7 / 20 points.
+// Choked (Sg, SS): "Shotguns have fixed spread instead of random shots". Owner 2026-11-06 round 2: our OWN tight pattern
+// for each of our pellet counts (pump 9 / Tactical 14, SSG 18 / 28, SSG one barrel 9 / 14), built the way LegenDoom built
+// its Shotgun 7 / SuperShotgun 20 (ldl_patch/tools/g2_choked.py -> ld_g2_choked.zs: fixed mirror-symmetric points on a
+// square grid, centre for an odd count, LegenDoom's own points first). Grid step = LegenDoom's step (Choked|sg_h3 1.5,
+// Choked|ss_h0 2.0) x our widest pattern volley's horizontal spread / LegenDoom's (Base|sg_spread 5.6, ss_spread 11.2),
+// so the pattern keeps LegenDoom's share of the spread. Pattern pellet j of the pull goes on point j, around the aim.
 class RSLD_Fx_Choked : RSLD_G2_Effect
 {
+	RSLD_G2_Choked pat;
+
+	override void Init()
+	{
+		Super.Init();
+		pat = new("RSLD_G2_Choked");
+		pat.Fill();
+	}
+
+	// our pull's widest pattern volley (Tactical / "Pump Shotgun Spread" as the player has them)
+	double OurSpread(RSLD_Shot s)
+	{
+		int q = s.i2 - 2;
+		if (q < 0) return 0;
+		bool tac = Tactical(s.mo), en = Enhanced(s.mo);
+		double w = 0;
+		for (int i = 0; i < tab.vSeq.Size(); i++)
+			if (tab.vSeq[i] == tab.sName[q] && (!tab.vTac[i] || tac) && tab.vRange[i] == 0)
+				w = max(w, en ? tab.vHe[i] : tab.vH[i]);
+		return w;
+	}
+
 	override bool OnPellet(RSLD_Shot s, RSLD_Pellet p)
 	{
 		int n = PatternIndex(s, p);
 		if (n < 0) return false;
 		string k = RSLD_G2.Key(s.slot) == "ss" ? "ss" : "sg";
-		int pts = int(RSLD.Num("Base", k .. "_n"));	// LD's pattern = its normal pellet count (7 / 20)
-		if (pts <= 0) return false;
-		int j = n % pts;
-		double h = Num(String.Format("%s_h%d", k, j)), v = Num(String.Format("%s_v%d", k, j));
-		p.angle = s.aimAngle + h;
-		p.pitch = s.aimPitch + v;
-		s.Log(String.Format("%s pellet %d -> LD point %d (%g, %g)", SeqName(s), n + 1, j + 1, h, v));
+		int total = PatternPellets(s);
+		int row = pat.Find(k, total);
+		if (row < 0 || n >= pat.count[row]) { s.Log(String.Format("%s: no pattern for %d pellets: left as fired", SeqName(s), total)); return false; }
+		double ldStep = abs(Num(k == "ss" ? "ss_h0" : "sg_h3")), ldSpread = RSLD.Num("Base", k .. "_spread");
+		double ours = OurSpread(s);
+		if (ldStep <= 0 || ldSpread <= 0 || ours <= 0) return false;
+		double step = ldStep * ours / ldSpread;
+		int gx = pat.px[pat.first[row] + n], gy = pat.py[pat.first[row] + n];
+		p.angle = s.aimAngle + gx * step;
+		p.pitch = s.aimPitch + gy * step;
+		if (n == 0)
+			s.Log(String.Format("%s: %d pellets on our pattern %s|%d, grid %.3f deg (LegenDoom %g x our spread %g / %g)", SeqName(s), total, k, total, step, ldStep, ours, ldSpread));
+		if (RSLD.DebugLevel() > 1 || n + 1 == total)
+			s.Log(String.Format("pellet %d -> grid (%d, %d) = (%.2f, %.2f) deg", n + 1, gx, gy, gx * step, gy * step));
 		return false;
 	}
 }
@@ -208,14 +239,21 @@ class RSLD_Fx_Gauss : RSLD_G2_Effect
 			s.Sound("Railgun/Fire", 0.6);
 		}
 		Hold(p);
-		s.FireRail(keep.angle, keep.pitch, keep.damage, keep.puff, keep.range > 0 ? keep.range : PLAYERMISSILERANGE);	// RailAttack takes distance as given: 0 is a zero-length rail (rig agC_b2)
+		// round 2 (owner: LegenDoom's own visuals): LegenDoom's rail look, no outer spiral ("None"), a white inner trail
+		// ("White"), its duration / sparsity / drift (numbers_g2 Gauss|*)
+		s.FireRail(keep.angle, keep.pitch, keep.damage, keep.puff, keep.range > 0 ? keep.range : PLAYERMISSILERANGE,	// RailAttack takes distance as given: 0 is a zero-length rail (rig agC_b2)
+			-1, 0xFFFFFF, int(Num("duration")), Num("sparsity"), Num("drift"));
 		Restore(p);
 		return true;
 	}
 
 	override void OnPelletEnd(RSLD_Shot s, RSLD_Pellet p, int res, Vector3 at, Actor thing)
 	{
-		if (p.rail) s.Log(String.Format("rail (%d dmg): %s%s", p.damage, RSLD_G2.ResName(res), thing ? " " .. thing.GetClassName() : ""));
+		if (!p.rail) return;
+		// LegenDoom's LDGaussBulletPuff visual where the rail ended (EpicSpecialEffects.dec: GAUX B-E; our puff did the damage)
+		Actor v = res != RSLD.RES_NONE ? RSLD.LDVisual("LDGaussBulletPuff", at, "Spawn", 0, s.mo) : null;
+		s.Log(String.Format("rail (%d dmg): %s%s, LegenDoom trail (white, %d tic) %s", p.damage, RSLD_G2.ResName(res), thing ? " " .. thing.GetClassName() : "",
+			int(Num("duration")), v ? String.Format("+ LDGaussBulletPuff at %.0f %.0f %.0f", at.x, at.y, at.z) : "(no end puff)"));
 	}
 }
 
@@ -278,7 +316,11 @@ class RSLD_Fx_Explosive : RSLD_G2_Effect
 			s.b2 = true;
 			b.A_StartSound("Explosion", CHAN_AUTO);
 		}
-		s.Log(String.Format("pellet %d on %s: explosion %d r%d (full %d) at %.0f %.0f %.0f", p.index, RSLD_G2.ResName(res), b.dmg, b.rad, b.full, at.x, at.y, at.z));
+		// round 2: LegenDoom's own visual (LDExplosiveBulletPuff's particles and MEXP explosion, from its Pahticools state:
+		// past its A_Explode and its sounds; its quake is off)
+		let v = RSLD.LDVisual("LDExplosiveBulletPuff", at, "Pahticools", 0, s.mo);
+		s.Log(String.Format("pellet %d on %s: explosion %d r%d (full %d) at %.0f %.0f %.0f%s", p.index, RSLD_G2.ResName(res), b.dmg, b.rad, b.full, at.x, at.y, at.z,
+			v ? ", LegenDoom visual LDExplosiveBulletPuff" : ""));
 	}
 }
 
@@ -289,7 +331,7 @@ class RSLD_Fx_Explosive : RSLD_G2_Effect
 // our bullets; BD22's "Explosion" at LD's 0.4 for each (LD: rocketlauncher/uncommonexplode 0.4). No sprites (Q4).
 class RSLD_G2_Flak : Actor
 {
-	int left, lo, hi, rad, wait, gaplo, gaphi;
+	int left, lo, hi, rad, wait, gaplo, gaphi, shown;
 	double z;
 	Default { +NOINTERACTION; +NOBLOCKMAP; +NOGRAVITY; +DONTSPLASH; +FORCERADIUSDMG; +NODAMAGETHRUST; +BLOODLESSIMPACT; RenderStyle "None"; }
 	States { Spawn: TNT1 A -1; Stop; }
@@ -301,6 +343,14 @@ class RSLD_G2_Flak : Actor
 		SetOrigin(tracer.pos + (0, 0, z), false);
 		A_Explode(random[rsld_g2](lo, hi), rad);
 		A_StartSound("Explosion", CHAN_AUTO, CHANF_OVERLAP, 0.4);
+		// round 2: LegenDoom's own LDFlakEffectExplosion, where its LDFlakEffectExplosionMaker puts it (around the target:
+		// x/y within 0.8 radius, z 8 .. 0.8 height), past its two sound calls (UncommonSpecialEffects.dec:1786-1815)
+		if (tracer)
+		{
+			double r = tracer.radius * 0.8;
+			Vector3 at = tracer.pos + (frandom[rsld_g2](-r, r), frandom[rsld_g2](-r, r), frandom[rsld_g2](8, max(8., tracer.height * 0.8)));
+			if (RSLD.LDVisual("LDFlakEffectExplosion", at, "Spawn", 3, target)) shown++;
+		}
 		left--;
 		wait = random[rsld_g2](gaplo, gaphi) - 1;
 	}
@@ -459,7 +509,8 @@ class RSLD_Fx_Perfect : RSLD_G2_Effect
 	override bool OnPellet(RSLD_Shot s, RSLD_Pellet p)
 	{
 		if (RSLD.Has(s.mo, "LDPerfectJammed"))
-		{
+		{	// the fire states' hook (RSLD_JamMain / RSLD_JamOff) stops the trigger first; a pellet that still comes (a gun
+			// without the hook) is dropped and its round given back
 			s.b2 = true;
 			return true;
 		}
@@ -475,7 +526,7 @@ class RSLD_Fx_Perfect : RSLD_G2_Effect
 		if (!s.b2) return;
 		int n = s.pellets > 0 ? min(s.ammoTaken, 1) : 0;	// one round per shot (see PointBlank)
 		if (n > 0) s.Refund(n);
-		s.Log(String.Format("JAMMED: shot dropped, %d round back (GAP until the fire hook: the gun still drew its fire)", n));
+		s.Log(String.Format("JAMMED: a pellet came past the fire hook (a gun without it): dropped, %d round back", n));
 	}
 
 	override void OnPelletEnd(RSLD_Shot s, RSLD_Pellet p, int res, Vector3 at, Actor thing)
@@ -489,6 +540,10 @@ class RSLD_Fx_Perfect : RSLD_G2_Effect
 		{
 			if (RSLD.Has(s.mo, "LDPerfectHit")) { s.Log("miss within LD's 6 tics of a hit: no jam"); return; }
 			RSLD.Give(s.mo, "LDPerfectJammed");
+			// the hands' trigger tokens at once (the handler's WorldTick runs after the players' tic: a shot in this tic
+			// would come past the fire hook; rig prove_round2 #2 tics 2472, 3272)
+			if (RSLD_G2.Jammed(s.mo, RSLD.MAIN)) s.mo.GiveInventory("RSLD_JamMain", 1);
+			if (RSLD_G2.Jammed(s.mo, RSLD.OFF)) s.mo.GiveInventory("RSLD_JamOff", 1);
 			s.Log(String.Format("miss (wall): JAMMED (LegenDoom's LDPerfectJammed, %d s)", int(Num("jam_s"))));
 		}
 	}
@@ -504,12 +559,20 @@ class RSLD_G2_Blastwave : Actor
 {
 	int dmg, rad;
 	Vector3 step;
+	string ldCls;
+	// round 2: LegenDoom's own blastwave visual (LDBlastwave<Gun>'s SHOK shock ring), from its DeathAnimation past its two
+	// effects/blastwave sound calls (CommonSpecialEffects.dec:1614-1618); its quake is off
+	void ShowLD()
+	{
+		let v = RSLD.LDVisual(ldCls, pos, "DeathAnimation", 2, target);
+		if (RSLD.Debug()) Console.Printf("RSLD %d Blastwave: exploded %d r%d at %.0f %.0f %.0f%s", level.maptime, dmg, rad, pos.x, pos.y, pos.z, v ? ", LegenDoom visual " .. ldCls : "");
+	}
 	Default { +NOINTERACTION; +NOBLOCKMAP; +NOGRAVITY; +DONTSPLASH; +FORCERADIUSDMG; RenderStyle "None"; }
 	States
 	{
 	Spawn:
 		TNT1 A 1;
-		TNT1 A 0 { SetOrigin(pos + step, false); A_Explode(dmg, rad, 0); A_StartSound("Explode2", CHAN_AUTO); }
+		TNT1 A 0 { SetOrigin(pos + step, false); A_Explode(dmg, rad, 0); A_StartSound("Explode2", CHAN_AUTO); ShowLD(); }
 		TNT1 A 1;
 		Stop;
 	}
@@ -533,6 +596,7 @@ class RSLD_Fx_Blastwave : RSLD_G2_Effect
 		b.dmg = int(Num(k .. "_dmg"));
 		b.rad = int(Num("radius"));
 		b.step = (cos(pt) * cos(a), cos(pt) * sin(a), -sin(pt)) * spd;
+		b.ldCls = k == "sg" ? "LDBlastwaveShotgun" : (k == "ss" ? "LDBlastwaveSuperShotgun" : (k == "cg" ? "LDBlastwaveChaingun" : "LDBlastwavePistol"));
 		s.Log(String.Format("blastwave %d r%d, %g units ahead of the muzzle (%.0f %.0f %.0f), next tic", b.dmg, b.rad, spd, at.x, at.y, at.z));
 		return false;
 	}

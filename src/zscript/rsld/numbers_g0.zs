@@ -75,7 +75,8 @@ class RSLD_Numbers_g0 : RSLD_NumberTable
 		"Patient|max|50|decorate/RareSpecialEffects.dec:2757|inventory.maxamount 50 // Divided by 10, so maximum of 5x damage",
 		"Persistent|bleeds|8|decorate/EpicSpecialEffects.dec:2181|TNT1 A 0 A_SetUserVar('user_persistenttimer', 8)",
 		"Persistent|every|35|decorate/EpicSpecialEffects.dec:2185|TNT1 A 0 A_SetUserVar('user_dottimer', 35)",
-		"Persistent|dmg|5|decorate/EpicSpecialEffects.dec:2252|Damage (5)"
+		"Persistent|dmg|5|decorate/EpicSpecialEffects.dec:2252|Damage (5)",
+		"Bloody|every|5|LANGUAGE.effectdesc:76|LD_FX_DESCR_Bloody = 'Every 5 enemies killed with this increases damage for the level';"
 	};
 	override int Count() { return Rows.Size(); }
 	override string Row(int i) { return Rows[i]; }

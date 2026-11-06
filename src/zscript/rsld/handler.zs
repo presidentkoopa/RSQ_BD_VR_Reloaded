@@ -38,6 +38,8 @@ class RSLD_Handler : EventHandler
 	Weapon heldW[MAXPLAYERS * 2];
 	int snapMag[MAXPLAYERS * 2], snapRes[MAXPLAYERS * 2];
 	Weapon snapW[MAXPLAYERS * 2];
+	int prevMag[MAXPLAYERS * 2], prevRes[MAXPLAYERS * 2];	// the snapshot one tic earlier (round 2: the rocket
+	Weapon prevW[MAXPLAYERS * 2];							// launcher takes its round a tic before the rocket: rig r2_rlamm)
 	int pulls;
 	Array<RSLD_Shot> pend;
 	Array<Actor> tagA;
@@ -53,6 +55,7 @@ class RSLD_Handler : EventHandler
 	RSLD_Pellet pel, pelX;		// pelX: FirePellet / FireRail's own (NEEDS_C 3: never the pellet OnPellet holds)
 	RSLD_PelletRec railRec;
 	bool railPuff;
+	Vector3 railAt;
 	RSLD_Hit hit;
 	RSLD_Held held;
 	bool inDamage;
@@ -120,6 +123,21 @@ class RSLD_Handler : EventHandler
 		held = new("RSLD_Held");
 		for (int i = 0; i < MAXPLAYERS; i++) slotCacheTic[i] = -1000;
 		if (RSLD.Debug()) Console.Printf("RSLD: LD mode on: %d effects registered, %d numbers", fx.Size(), numVal.CountUsed());
+	}
+
+	// owner 2026-11-06 round 2: LegenDoom's own visuals come with its effects, but NO quakes or anything that moves the VR
+	// camera. Every LegenDoom A_Quake is behind its own option LD_quakes (decorate/*.dec: each QuakeTime state starts
+	// A_JumpIf(CallACS("LD_quakes") == 0, ...); source/LEGENDVAR.acs:94 reads CVARINFO's server bool LD_quakes): the LD
+	// mode turns it off on every map.
+	override void WorldLoaded(WorldEvent e)
+	{
+		if (!ldOn) return;
+		cvar q = cvar.FindCvar("LD_quakes");
+		if (q && q.GetBool())
+		{
+			q.SetBool(false);
+			Console.Printf("RSLD: LegenDoom's LD_quakes turned off (no camera quakes in VR)");
+		}
 	}
 
 	RSLD_Effect FindFx(string n)
@@ -285,6 +303,7 @@ class RSLD_Handler : EventHandler
 	{
 		int pn = mo.PlayerNumber();
 		int k = pn * 2 + hand;
+		bool firedLastTic = lastPullTic[k] == level.maptime - 1;
 		lastPullTic[k] = level.maptime;
 		int slot;
 		let e = FxFor(pn, hand, w, slot);
@@ -293,7 +312,8 @@ class RSLD_Handler : EventHandler
 		s.mo = mo; s.pn = pn; s.hand = hand; s.weapon = w; s.slot = slot; s.rarity = slotRar[pn * 9 + slot];
 		s.fx = e; s.effName = e.name; s.tic = level.maptime; s.lastTic = s.tic; s.pull = ++pulls; s.melee = melee;
 		open.Push(s);
-		if (snapW[k] == w) { s.preMag = snapMag[k]; s.preRes = snapRes[k]; }
+		if (!firedLastTic && prevW[k] == w && snapW[k] == w) { s.preMag = max(prevMag[k], snapMag[k]); s.preRes = max(prevRes[k], snapRes[k]); }
+		else if (snapW[k] == w) { s.preMag = snapMag[k]; s.preRes = snapRes[k]; }
 		else { s.preMag = MagOf(w); s.preRes = ResOf(w); }
 		cur[k] = s;
 		pend.Push(s);
@@ -482,7 +502,8 @@ class RSLD_Handler : EventHandler
 		refiring = false;
 	}
 
-	void FireRail(RSLD_Shot s, double angle, double pitch, int damage, class<Actor> puff, double range)
+	void FireRail(RSLD_Shot s, double angle, double pitch, int damage, class<Actor> puff, double range, int color1 = -1, int color2 = -1,
+		int duration = 0, double sparsity = 1.0, double drift = 1.0)
 	{
 		if (!s || !s.mo) return;
 		if (range <= 0) range = PLAYERMISSILERANGE;	// NEEDS_C 6: RailAttack takes the distance as given (0 = a zero-length rail)
@@ -490,21 +511,21 @@ class RSLD_Handler : EventHandler
 		pelX.range = range; pelX.damage = damage; pelX.flags = 0; pelX.puff = puff; pelX.damageType = 'Hitscan'; pelX.index = -1; pelX.rail = true;
 		let r = NewRec(s, pelX);
 		FRailParams q;
-		q.damage = damage; q.offset_xy = 0; q.offset_z = 0; q.color1 = -1; q.color2 = -1; q.maxdiff = 0;
+		q.damage = damage; q.offset_xy = 0; q.offset_z = 0; q.color1 = color1; q.color2 = color2; q.maxdiff = 0;
 		q.flags = RGF_SILENT | (s.hand == RSLD.OFF ? RGF_ISOFFHAND : 0); q.puff = puff;
 		q.angleoffset = Actor.DeltaAngle(s.mo.angle, angle); q.pitchoffset = pitch - s.mo.pitch;
-		q.distance = range; q.duration = 0; q.sparsity = 1.0; q.drift = 1.0; q.spawnclass = null; q.SpiralOffset = 270; q.limit = 0;
+		q.distance = range; q.duration = duration; q.sparsity = sparsity; q.drift = drift; q.spawnclass = null; q.SpiralOffset = 270; q.limit = 0;
 		refiring = true;
-		railRec = r; railPuff = false;
+		railRec = r; railPuff = false; railAt = (0, 0, 0);
 		s.mo.RailAttack(q);
 		refiring = false;
 		railRec = null;
-		EndRec(r, railPuff ? RSLD.RES_WALL : RSLD.RES_NONE, (0, 0, 0));	// NEEDS_C 4: no puff = nothing hit
+		EndRec(r, railPuff ? RSLD.RES_WALL : RSLD.RES_NONE, railAt);	// NEEDS_C 4: no puff = nothing hit; round 2: where it ended
 	}
 
 	override void WorldRailgunFired(WorldEvent e)
 	{
-		if (railRec && e.Thing == railRec.s.mo && e.Inflictor) railPuff = true;
+		if (railRec && e.Thing == railRec.s.mo) { if (e.Inflictor) railPuff = true; railAt = e.DamagePosition; }
 	}
 
 	static bool NotAShot(string n)
@@ -514,6 +535,17 @@ class RSLD_Handler : EventHandler
 			"distantfiresound", "links", "tracer", "smoke", "muzzle", "spark", "shell", "mag", "puff" };
 		for (int i = 0; i < words.Size(); i++) if (n.IndexOf(words[i]) >= 0) return true;
 		return false;
+	}
+
+	// a BD22 helper missile, never a shot (round 2, NEEDS_B v2): its class or any ancestor is named like one (BD22's
+	// RocketGlassBreaker is an Alerter), or it carries no damage (Rifle: EmptyBrass at T+1; rocket: RedFlareSpawn,
+	// BackblastFlames*, LiquidExplosionEffectSpawner 4 tics later: rig r2_pull0). Helpers never start a pull.
+	static bool Helper(Actor a)
+	{
+		if (!a) return false;
+		for (class<Actor> c = a.GetClass(); c && c != "Actor"; c = (class<Actor>)(c.GetParentClass()))
+			if (NotAShot(c.GetClassName())) return true;
+		return a.GetMissileDamage(0, 1) <= 0;
 	}
 
 	static bool IsStrike(Actor a)
@@ -585,10 +617,11 @@ class RSLD_Handler : EventHandler
 			s.fx.OnMelee(s, a);
 			return;
 		}
-		if (NotAShot(cn))
+		if (Helper(a))
 		{	// NEEDS_B 4b: BD22's alert helpers of a pull already under way this tic (Stealth)
 			string lc = cn.MakeLower();
 			int k = mo.PlayerNumber() * 2 + hand;
+			if (RSLD.DebugLevel() > 2) RSLD.Log(String.Format("helper %s (dmg %d): not a shot", cn, a.GetMissileDamage(0, 1)));
 			if ((lc.IndexOf("alerter") >= 0 || lc.IndexOf("distantfiresound") >= 0) && lastPullTic[k] == level.maptime && cur[k])
 				if (cur[k].fx.OnAlerter(cur[k], a)) { cur[k].Log("alerter " .. cn .. " removed"); a.Destroy(); }
 			return;
@@ -596,6 +629,7 @@ class RSLD_Handler : EventHandler
 		let s = PullOf(mo, hand, w, false);
 		if (!s) return;
 		s.missiles++;
+		if (RSLD.DebugLevel() > 1) s.Log(String.Format("missile %s (dmg %d) %.0f from the player", cn, a.GetMissileDamage(0, 1), a.Distance3D(mo)));
 		Tag(a, s);
 		s.fx.OnMissile(s, a);
 	}
@@ -617,7 +651,7 @@ class RSLD_Handler : EventHandler
 				let w = hand == RSLD.OFF ? mo.player.OffhandWeapon : mo.player.ReadyWeapon;
 				bool strike = IsStrike(inflictor);
 				int sl = SlotOf(w);
-				if ((strike && (sl == 0 || sl == 1)) || (!strike && !NotAShot(icn)))
+				if ((strike && (sl == 0 || sl == 1)) || (!strike && !Helper(inflictor)))
 				{
 					let s = PullOf(mo, hand, w, strike);
 					if (s)
@@ -648,7 +682,8 @@ class RSLD_Handler : EventHandler
 	int Outgoing(PlayerPawn mo, int damage, Name type, Actor inflictor, Actor victim, int flags)
 	{
 		if (!ldOn || inDamage) return damage;
-		if (inflictor) { string ic = inflictor.GetClassName(); if (ic.Left(2) == "LD") return damage; }	// LegenDoom's own effect damage
+		if (inflictor) { string ic = inflictor.GetClassName(); if (ic.Left(2) == "LD" && !TagOf(inflictor)) return damage; }	// LegenDoom's own effect damage (not a projectile a pull fired: s.TagMissile)
+		if (inflictor && inflictor.bMISSILE && inflictor.target == mo && !IsStrike(inflictor) && Helper(inflictor)) return damage;	// RocketGlassBreaker's 1
 		let s = FindShot(mo, inflictor);
 		if (!s || !s.fx) return damage;
 		hit.target = victim; hit.inflictor = inflictor; hit.damage = damage; hit.setDamage = -1; hit.flags = flags;
@@ -703,7 +738,8 @@ class RSLD_Handler : EventHandler
 			if (r && !r.ended && !r.thing) { r.thing = t; r.monster = t.bIsMonster; }
 		}
 		if (!mo || !mo.player || !t || t == mo || !t.bIsMonster) return;
-		if (e.Inflictor) { string ic = e.Inflictor.GetClassName(); if (ic.Left(2) == "LD") return; }
+		if (e.Inflictor) { string ic = e.Inflictor.GetClassName(); if (ic.Left(2) == "LD" && !TagOf(e.Inflictor)) return; }
+		if (e.Inflictor && e.Inflictor.bMISSILE && e.Inflictor.target == mo && !IsStrike(e.Inflictor) && Helper(e.Inflictor)) return;
 		let s = FindShot(mo, e.Inflictor);
 		if (!s || !s.fx) return;
 		hit.target = t; hit.inflictor = e.Inflictor; hit.damage = e.Damage; hit.setDamage = -1; hit.flags = e.DamageFlags;
@@ -786,7 +822,7 @@ class RSLD_Handler : EventHandler
 				s.resTaken = max(0, s.preRes - ResOf(s.weapon));
 				s.ammoTaken = s.magTaken + s.resTaken;
 			}
-			if (RSLD.DebugLevel() > 1) s.Log(String.Format("after pull: pellets %d missiles %d hits %d kills %d ammo taken %d (mag %d)", s.pellets, s.missiles, s.hits, s.kills, s.ammoTaken, s.magTaken));
+			if (RSLD.DebugLevel() > 1) s.Log(String.Format("after pull: pellets %d missiles %d hits %d kills %d ammo taken %d (mag %d) [mag %d -> %d, res %d -> %d]", s.pellets, s.missiles, s.hits, s.kills, s.ammoTaken, s.magTaken, s.preMag, MagOf(s.weapon), s.preRes, ResOf(s.weapon)));
 			s.fx.AfterPull(s);
 		}
 		pend.Clear();
@@ -866,6 +902,18 @@ class RSLD_Handler : EventHandler
 		}
 		for (int i = 0; i < fx.Size(); i++)
 			if (fx[i].anyPickup && fx[i].passive && FirstSlotOf(pn, fx[i]) < 0) fx[i].Owned(p, 0);
+		// Perfect's jam (round 2, item 7): LegenDoom's LDPerfectJammed is per player (owner: a miss jams both hands); the
+		// gun in a hand is blocked while it carries Perfect. BD22 VR's fire states read these two tokens (their first
+		// line: A_JumpIf(... CountInv("RSLD_JamMain" / "RSLD_JamOff") ..., "RSLD_Jammed")).
+		for (int hand = 0; hand < 2; hand++)
+		{
+			bool jam = RSLD_G2.Jammed(p, hand);
+			class<Inventory> tok = "RSLD_JamMain";
+			if (hand == RSLD.OFF) tok = "RSLD_JamOff";
+			bool had = p.CountInv(tok) > 0;
+			if (jam && !had) { p.GiveInventory(tok, 1); if (RSLD.Debug()) Console.Printf("RSLD %d Perfect: %s hand JAMMED (trigger blocked)", level.maptime, RSLD.HandName(hand)); }
+			else if (!jam && had) { p.TakeInventory(tok, 1); if (RSLD.Debug()) Console.Printf("RSLD %d Perfect: %s hand jam cleared", level.maptime, RSLD.HandName(hand)); }
+		}
 		// the guns in the hands
 		for (int hand = 0; hand < 2; hand++)
 		{
@@ -877,6 +925,7 @@ class RSLD_Handler : EventHandler
 				class<Inventory> pc = RSLD.IC("LDPatientCounter");	// LegenDoom empties it on select and deselect
 				if (pc && hand == RSLD.MAIN) p.TakeInventory(pc, 999);
 			}
+			prevW[k] = snapW[k]; prevMag[k] = snapMag[k]; prevRes[k] = snapRes[k];
 			snapW[k] = w; snapMag[k] = MagOf(w); snapRes[k] = ResOf(w);
 			if (!w) continue;
 			int slot;
@@ -1126,6 +1175,37 @@ class RSLD_Handler : EventHandler
 			Console.Printf("RSLD owned: %d effects registered", fx.Size());
 			return;
 		}
+		if (n.Left(12) == "rsld_reroll:")	// rig probe (round 2): what a drop of <effect> on the held gun's slot becomes
+		{
+			int s = SlotOf(p.player.ReadyWeapon);
+			string eff = n.Mid(12);
+			if (s < 0) return;
+			int r = max(RarityFromRolls(s, eff), 0);
+			string l = "";
+			for (int i = 0; i < 4; i++) l = l .. " " .. RSLD_Reroll.Reroll(s, r, eff);
+			Console.Printf("RSLD probe: a %s %s %s drop rolls as:%s (dropped by the owner: %s)", RSLD_Data.Slots[s], RSLD_Data.Rarities[r], eff, l, RSLD_Reroll.IsDropped(eff) ? "yes" : "no");
+			return;
+		}
+		if (n == "rsld_loadorder")	// rig probe (round 2, item 2): whose title map, HUD and sound definitions win
+		{	// (Wads.GetLumpFullPath crashed QZD 17.3 on the rig: container index + length only; the tool maps them to files)
+			let li = LevelInfo.FindLevelInfo("TITLEMAP");
+			Console.Printf("RSLD loadorder: TITLEMAP's MAPINFO name \"%s\"", li ? li.LevelName : "none");
+			string ll = "maps/titlemap.wad|SBARINFO|SNDINFO|MAPINFO";	// never a method call on a literal (VM crash, rig round 2)
+			Array<string> lumps; ll.Split(lumps, "|");
+			for (int k = 0; k < lumps.Size(); k++)
+			{
+				string l = "";
+				bool full = lumps[k].IndexOf("/") >= 0;
+				int i = full ? Wads.FindLumpFullName(lumps[k], 0) : Wads.FindLump(lumps[k], 0);
+				while (i >= 0)
+				{
+					l = l .. String.Format(" [container %d, %d bytes]", Wads.GetLumpContainer(i), Wads.GetLumpLength(i));
+					i = full ? Wads.FindLumpFullName(lumps[k], i + 1) : Wads.FindLump(lumps[k], i + 1);
+				}
+				Console.Printf("RSLD loadorder: %s in load order (the last read last):%s", lumps[k], l);
+			}
+			return;
+		}
 		if (n == "rsld_list")
 		{
 			string l = "";
@@ -1181,6 +1261,10 @@ class RSLD_Handler : EventHandler
 		return -1;
 	}
 }
+
+// Perfect's jam tokens (handler TickPlayer): read by BD22 VR's fire states; never given without LegenDoom
+class RSLD_JamMain : Inventory { Default { +INVENTORY.UNDROPPABLE +INVENTORY.UNTOSSABLE +INVENTORY.UNCLEARABLE Inventory.MaxAmount 1; } }
+class RSLD_JamOff : Inventory { Default { +INVENTORY.UNDROPPABLE +INVENTORY.UNTOSSABLE +INVENTORY.UNCLEARABLE Inventory.MaxAmount 1; } }
 
 // Battlerage's attack speed on BD22 guns (handler.zs Battlerage keeps it as long as LegenDoom's own timer)
 class RSLD_Haste : PowerDoubleFiringSpeed

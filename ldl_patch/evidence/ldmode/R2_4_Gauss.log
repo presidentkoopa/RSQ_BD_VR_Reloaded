@@ -1,0 +1,24 @@
+# R2_4_Gauss: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Gauss on Shot_Gun slot Shotgun rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 972 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 282 -170 64
+RSLD 972 Gauss p9 main Shot_Gun: pellet 0 dropped
+RSLD 972 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 544 -193 69
+RSLD 972 Gauss p9 main Shot_Gun: pellet 1 dropped
+RSLD 972 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 544 -161 67
+RSLD 972 Gauss p9 main Shot_Gun: pellet 2 dropped
+RSLD 972 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 314 -191 64
+RSLD 972 Gauss p9 main Shot_Gun: pellet 3 dropped
+RSLD 973 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 282 -167 64
+RSLD 973 Gauss p9 main Shot_Gun: pellet 4 dropped
+RSLD 973 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 544 -145 67
+RSLD 973 Gauss p9 main Shot_Gun: pellet 5 dropped
+RSLD 973 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 544 -143 62
+RSLD 973 Gauss p9 main Shot_Gun: pellet 6 dropped
+RSLD 973 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 544 -171 73
+RSLD 973 Gauss p9 main Shot_Gun: pellet 7 dropped
+RSLD 973 Gauss p9 main Shot_Gun: rail (13 dmg): monster BaronofHell2, LegenDoom trail (white, 1 tic) + LDGaussBulletPuff at 175 -164 64
+RSLD 973 Gauss p9 main Shot_Gun: pellet 8 dropped
+RSLD probe: 9 actors LDGaussBulletPuff*

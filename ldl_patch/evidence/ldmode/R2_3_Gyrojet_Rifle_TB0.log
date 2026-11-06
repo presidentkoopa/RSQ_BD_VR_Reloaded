@@ -1,0 +1,8 @@
+# R2_3_Gyrojet_Rifle_TB0: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round2.
+RSLD probe: Gyrojet on Rifle slot Chaingun rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 642 Gyrojet p5 main Rifle: pellet 0 (20 dmg) -> LDGyrojetShotgunProjectile2 from the main muzzle (-158 -198 40) at 3.2 / -3.0, speed 30, damage 20 x random(1,8) (mean 90.0 = 20 x 4.50)
+RSLD 642 Gyrojet p5 main Rifle: pellet 0 dropped
+RSLD 642 Gyrojet p5 main Rifle: LDGyrojetShotgunProjectile2 hit BaronofHell2 for 160
+RSLD 644 Gyrojet p5 main Rifle: 1 pellets became 1 LDGyrojetShotgunProjectile2; hits 1 kills 0

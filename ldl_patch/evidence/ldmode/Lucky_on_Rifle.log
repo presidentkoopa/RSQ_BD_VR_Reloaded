@@ -1,0 +1,35 @@
+# Lucky@Rifle: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: Lucky on Rifle slot Chaingun rarity Rare
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Rifle magazine 31 reserve 30
+RSLD 133 Lucky p1 main Rifle: pull
+RSLD 133 Lucky p1 main Rifle: plain pull
+RSLD 133 Lucky p1 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 133 Lucky p1 main Rifle: hit BaronofHell2 dmg 20 hp 29980
+RSLD 133 Lucky p1 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 135 Lucky p1 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 30 reserve 30
+RSLD 179 Lucky p2 main Rifle: pull
+RSLD 179 Lucky p2 main Rifle: plain pull
+RSLD 179 Lucky p2 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 179 Lucky p2 main Rifle: hit BaronofHell2 dmg 20 hp 29960
+RSLD 179 Lucky p2 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 181 Lucky p2 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 29 reserve 30
+RSLD 225 Lucky p3 main Rifle: pull
+RSLD 225 Lucky p3 main Rifle: lucky pull: x5
+RSLD 225 Lucky p3 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 225 Lucky p3 main Rifle: damage 20 -> 100 (x5.00) on BaronofHell2
+RSLD 225 Lucky p3 main Rifle: hit BaronofHell2 dmg 100 hp 29860
+RSLD 225 Lucky p3 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 227 Lucky p3 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 28 reserve 30
+RSLD 271 Lucky p4 main Rifle: pull
+RSLD 271 Lucky p4 main Rifle: lucky pull: x5
+RSLD 271 Lucky p4 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 271 Lucky p4 main Rifle: damage 20 -> 100 (x5.00) on BaronofHell2
+RSLD 271 Lucky p4 main Rifle: hit BaronofHell2 dmg 100 hp 29760
+RSLD 271 Lucky p4 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 273 Lucky p4 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 27 reserve 30

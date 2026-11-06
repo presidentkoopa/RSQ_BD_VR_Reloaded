@@ -1,0 +1,89 @@
+# Upgrading@Rifle: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch pull.
+RSLD probe: cleared slot Chaingun
+RSLD probe: Upgrading on Rifle slot Chaingun rarity Common
+RSLD 716 Upgrading: probe: Clip2 filled to 200
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 716 pickup pickup p0: RSQ_HudRes x170 not a world pickup: no rule
+RSLD probe: Rifle magazine 19 reserve 200
+RSLD 724 pickup pickup p0: PSeq3 x1 not a world pickup: no rule
+RSLD 724 Upgrading p13 main Rifle: pull
+RSLD 724 Upgrading p13 main Rifle: level 5: damage x2.00, free shot chance 64/256
+RSLD 724 Upgrading p13 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 724 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 724 Upgrading p13 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 724 Upgrading p13 main Rifle: hit BaronofHell2 dmg 40 hp 29960
+RSLD 724 Upgrading p13 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 726 Upgrading p13 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 18 reserve 200
+RSLD 770 Upgrading p14 main Rifle: pull
+RSLD 770 Upgrading p14 main Rifle: level 5: damage x2.00, free shot chance 64/256
+RSLD 770 Upgrading p14 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 770 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 770 Upgrading p14 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 770 Upgrading p14 main Rifle: hit BaronofHell2 dmg 40 hp 29920
+RSLD 770 Upgrading p14 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 772 Upgrading p14 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 17 reserve 200
+RSLD 816 pickup pickup p0: PSeq3 x1 not a world pickup: no rule
+RSLD 816 Upgrading p15 main Rifle: pull
+RSLD 816 Upgrading p15 main Rifle: level 5: damage x2.00, free shot chance 64/256
+RSLD 816 Upgrading p15 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 816 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 816 Upgrading p15 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 816 Upgrading p15 main Rifle: hit BaronofHell2 dmg 40 hp 29880
+RSLD 816 Upgrading p15 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 818 Upgrading p15 main Rifle: pull end: 1 pellets, 1 recs
+RSLD 818 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rifle magazine 16 reserve 200
+RSLD 862 Upgrading p16 main Rifle: pull
+RSLD 862 Upgrading p16 main Rifle: level 5: damage x2.00, free shot chance 64/256
+RSLD 862 Upgrading p16 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 862 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 862 Upgrading p16 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 862 Upgrading p16 main Rifle: hit BaronofHell2 dmg 40 hp 29840
+RSLD 862 Upgrading p16 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 864 Upgrading p16 main Rifle: pull end: 1 pellets, 1 recs
+RSLD 864 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rifle magazine 15 reserve 200
+RSLD 908 pickup pickup p0: PSeq3 x1 not a world pickup: no rule
+RSLD 908 Upgrading p17 main Rifle: pull
+RSLD 908 Upgrading p17 main Rifle: level 5: damage x2.00, free shot chance 64/256: FREE
+RSLD 908 Upgrading p17 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 908 Upgrading p17 main Rifle: refund 1 -> RifleAmmo
+RSLD 908 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 908 Upgrading p17 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 908 Upgrading p17 main Rifle: hit BaronofHell2 dmg 40 hp 29800
+RSLD 908 Upgrading p17 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 910 Upgrading p17 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 15 reserve 200
+RSLD 954 Upgrading p18 main Rifle: pull
+RSLD 954 Upgrading p18 main Rifle: level 5: damage x2.00, free shot chance 64/256
+RSLD 954 Upgrading p18 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 954 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 954 Upgrading p18 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 954 Upgrading p18 main Rifle: hit BaronofHell2 dmg 40 hp 29760
+RSLD 954 Upgrading p18 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 956 Upgrading p18 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 14 reserve 200
+RSLD 1000 pickup pickup p0: PSeq3 x1 not a world pickup: no rule
+RSLD 1000 Upgrading p19 main Rifle: pull
+RSLD 1000 Upgrading p19 main Rifle: level 5: damage x2.00, free shot chance 64/256: FREE
+RSLD 1000 Upgrading p19 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1000 Upgrading p19 main Rifle: refund 1 -> RifleAmmo
+RSLD 1000 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 1000 Upgrading p19 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 1000 Upgrading p19 main Rifle: hit BaronofHell2 dmg 40 hp 29720
+RSLD 1000 Upgrading p19 main Rifle: pellet 0 end: monster at (-120 -195 42)
+RSLD 1002 Upgrading p19 main Rifle: pull end: 1 pellets, 1 recs
+RSLD probe: Rifle magazine 14 reserve 200
+RSLD 1046 Upgrading p20 main Rifle: pull
+RSLD 1046 Upgrading p20 main Rifle: level 5: damage x2.00, free shot chance 64/256
+RSLD 1046 Upgrading p20 main Rifle: after pull: pellets 1 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1)
+RSLD 1046 pickup pickup p0: FiredPrimary x1 not a world pickup: no rule
+RSLD 1046 Upgrading p20 main Rifle: damage 20 -> 40 (x2.00) on BaronofHell2
+RSLD 1046 Upgrading p20 main Rifle: hit BaronofHell2 dmg 40 hp 29680
+RSLD 1046 Upgrading p20 main Rifle: pellet 0 end: monster at (-120 -196 42)
+RSLD 1048 Upgrading p20 main Rifle: pull end: 1 pellets, 1 recs
+RSLD 1048 pickup pickup p0: BloodSplasher_Green x1 not a world pickup: no rule
+RSLD probe: Rifle magazine 13 reserve 200
