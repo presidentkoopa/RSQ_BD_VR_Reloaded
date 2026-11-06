@@ -634,3 +634,12 @@ explosions chain (section 5).
 - Off-hand copies (Q8): both hands carry the legendary power. A "Weapon Bond" design (GBOVR) is for the GBOVR pass.
 - Machine: LegenDoom's own 17.5 shots a second.
 - Bloody: as LegenDoom's description says, +20% damage every 5 kills.
+- Marksman / Decaying (Q13): LegenDoom's average gain as a ratio (Marksman x1.5; Decaying x(1..30)/10).
+- Favoured: dropped (never rolls).
+- Pickup passives (Q14b): every BD22 ammo pickup counts (gas, grenades, ...). Later: Colorful Hell / RS Monsters
+  tiering rules so the challenge keeps rising.
+- Stealth: LegenDoom's stated 64-unit alert, enforced by us.
+- Co-op effects (Q15): BD22's rescued / allied marines count as teammates (Quartermaster, Armorer, Medic, Shaman
+  share with friendly marines; Comrade scales with them). Owner also floated: the effect spawns a marine ally like
+  BD's rescuable marines (open; built as "allies count" first).
+- LegenDoom bugs: the intended rule, not the bugs.
