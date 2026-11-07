@@ -447,6 +447,13 @@ class RSVR_Hand play
 	int calmTics;
 	int whooshWait;
 	int sawWait;		// r6: tics until the bar may cut the same body again
+	// 2.0.4b (LD mode, owner 2026-11-07: "Extended and Imaginary = LONGER BLADE REACH"): set every tic by zscript/rsld
+	// (ld_g7_fx.zs RSLD_G7.SawReach) while the saw carries one of them; never set without LegenDoom.
+	double ldSawMul;	// Extended: the cut reaches this many times the saw's own reach (the hand to the bar's tip)
+	double ldSawPoint;	// Imaginary: the cut hits what the bar points at, up to this many units from the hand
+	int ldSawTic;		// the tic they were set (a value not renewed for a tic is off)
+	double ldSawBar;	// for the LD log: the saw's own reach (hand to bar tip) and how far the last cut was from the hand
+	double ldSawCut;
 	bool usedLine;		// 2.0.3y: this swing has worked a switch / door already (one Use per swing)
 	// 2.0.2 (owner r3 item 38) THE SWORD'S DELIBERATE SWING: see SWORD_* below and Tick
 	double arc;			// map units the point has travelled in this swing, above the speed threshold
@@ -926,6 +933,8 @@ class RSVR_Hand play
 					sawWait = SAW_EVERY;
 				}
 				Sweep(mo, k, prevIn, prevOut, bin, bout, 1.0, SAW_PAD);
+				if (mo.Level.maptime - ldSawTic <= 1)
+					LDSawReach(mo, k, bin, bout);
 			}
 			else
 			{
@@ -1115,6 +1124,39 @@ class RSVR_Hand play
 	}
 
 	//------------------------------------------------------------------
+	// 2.0.4b (LD mode, owner 2026-11-07): LegenDoom's Extended / Imaginary on the running bar: a longer blade reach.
+	// Extended: the cut reaches ldSawMul times the saw's own reach, along the bar: the bar's tip line is swept on out to
+	// that distance from the hand (same pad, same once-per-SAW_EVERY rule, nothing through a wall). Imaginary: whatever
+	// the bar points at (a trace from the hand along the bar) is cut, up to ldSawPoint units from the hand.
+	void LDSawReach(PlayerPawn mo, int k, Vector3 bin, Vector3 bout)
+	{
+		ldSawBar = (bout - fH).Length();
+		if (ldSawMul > 1)
+		{
+			Vector3 x0 = prevH + (prevOut - prevH) * ldSawMul;
+			Vector3 x1 = fH + (bout - fH) * ldSawMul;
+			Sweep(mo, k, prevOut, x0, bout, x1, 1.0, SAW_PAD);
+		}
+		if (ldSawPoint > 0)
+		{
+			Vector3 d = bout - bin;
+			double l = d.Length();
+			if (l <= 0)
+				return;
+			d /= l;
+			FLineTraceData tr;
+			mo.LineTrace(VectorAngle(d.x, d.y), ldSawPoint, -asin(clamp(d.z, -1, 1)), TRF_ABSPOSITION, fH.z, fH.x, fH.y, tr);
+			Actor t = tr.HitActor;
+			if (tr.HitType != TRACE_HitActor || !t || t == mo || t.player || !t.bSHOOTABLE || t.bFRIENDLY || t.bDORMANT || t.health <= 0)
+				return;
+			if (struck.Find(t) != struck.Size())
+				return;
+			struck.Push(t);
+			Strike(mo, k, t, tr.HitLocation, d, 1.0, d);
+		}
+	}
+
+	//------------------------------------------------------------------
 	// the blade's path this tic (a0-b0 -> a1-b1) against every body near it;
 	// each body is hit once per swing, at the first point the blade reaches it
 	void Sweep(PlayerPawn mo, int k, Vector3 a0, Vector3 b0, Vector3 a1, Vector3 b1, double power, double padAt = 0)
@@ -1256,7 +1298,8 @@ class RSVR_Hand play
 			// into the body from the hand: the bar may be still, so its motion is no direction
 			Vector3 into = (t.pos.x, t.pos.y, p.z) - fH;
 			double il = into.Length();
-			Launch(mo, 'SawDamageHorizontal', p, il > 0 ? into / il : dir);
+			ldSawCut = (p - fH).Length();
+			Launch(mo, 'SawDamageHorizontal', p, il > 0 ? into / il : dir, off ? 1 : 0);
 		}
 		else
 		{
@@ -1279,8 +1322,10 @@ class RSVR_Hand play
 			Buzz(mo);	// the engine buzzes the WEAPON hand only; the off axe goes without
 	}
 
-	// BD22's attack actor, fired by the player from that point
-	static void Launch(PlayerPawn mo, Name cname, Vector3 p, Vector3 dir)
+	// BD22's attack actor, fired by the player from that point. rec >= 0 (the saw's cut: 0 main hand, 1 off hand):
+	// 2.0.4b (LD mode, owner 2026-11-07) it is recorded the way rsq/fists.zs records a punch, before it can hit, so the
+	// LD mode counts it as a melee attack of the hand that holds the saw (zscript/rsld handler.zs IsStrike / StrikeHand)
+	static void Launch(PlayerPawn mo, Name cname, Vector3 p, Vector3 dir, int rec = -1)
 	{
 		class<Actor> cls = cname;
 		if (!cls)
@@ -1292,6 +1337,8 @@ class RSVR_Hand play
 		a.angle = VectorAngle(dir.x, dir.y);
 		a.pitch = -asin(clamp(dir.z, -1, 1));
 		a.vel = dir * a.speed;
+		if (rec >= 0)
+			RSQ_Fists.Record(a, rec, 0);
 		a.CheckMissileSpawn(0);
 	}
 

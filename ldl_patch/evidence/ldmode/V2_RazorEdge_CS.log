@@ -1,0 +1,17 @@
+RSLD probe: cleared slot Chainsaw
+RSLD probe: player at (-1600 0), holding Chain_saw
+RSLD probe: RazorEdge on Chain_saw slot Chainsaw rarity Common
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 197 RazorEdge p21 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 199 RazorEdge p22 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 201 RazorEdge p23 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 203 RazorEdge p24 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 205 RazorEdge p25 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD probe: player BDoomer has RSLD_G7NoTurn x1 health 100 speed 8.0
+RSLD 207 RazorEdge p26 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 209 RazorEdge p27 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 211 RazorEdge p28 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 213 RazorEdge p29 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD 215 RazorEdge p30 main Chain_saw: razor edge: the VR saw cut neither turns nor pulls you (player at -1600 0 angle 0.0)
+RSLD probe: target BaronofHell2 has Health x0 health 29945 speed 0.0

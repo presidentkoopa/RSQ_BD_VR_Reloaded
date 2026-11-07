@@ -126,6 +126,25 @@ class RSLD_G7 play
 		return s;
 	}
 
+	// 2.0.4b (owner 2026-11-07: "Extended and Imaginary = LONGER BLADE REACH"): BD22 VR's chainsaw cuts by bar contact
+	// (rsvr/melee.zs), so LegenDoom's longer saw range is a longer reach of the cut: renewed every tic the saw is held
+	// (mul: x the saw's own reach, hand to bar tip; point: what the bar points at, up to that many units from the hand)
+	static void SawReach(RSLD_Held c, double mul, double point)
+	{
+		if (!c || c.slot != 1 || !c.mo) return;
+		let h = RSVR_MeleeHandler.HandOf(c.mo, c.hand == RSLD.OFF);
+		if (!h) return;
+		h.ldSawMul = mul;
+		h.ldSawPoint = point;
+		h.ldSawTic = level.maptime;
+	}
+	// the cut's distance from the hand and the saw's own reach, for the proof line
+	static void SawCutLog(RSLD_Shot s, string what)
+	{
+		let h = RSVR_MeleeHandler.HandOf(s.mo, s.hand == RSLD.OFF);
+		if (h) s.Log(String.Format("%s: the cut landed %.0f from the hand (the bar's own reach %.0f)", what, h.ldSawCut, h.ldSawBar));
+	}
+
 	static void NoTurn(RSLD_Held c)
 	{
 		if (!c || c.slot != 1 || !c.mo) return;
@@ -170,12 +189,19 @@ class RSLD_Fx_ColdBlooded : RSLD_G7Effect
 // ---- Extended (R: Fi Cs), "Has longer range": LegenDoom's fist reaches 256 where it reaches 64 (x4), its chainsaw 256
 // where 65, both without turning or pulling the player. Ours: the strike reaches 4x as far; the saw's hitscan range
 // x256/65 and our saw never turns or pulls you while it carries Extended (Saw.dec reads RSLD_G7NoTurn).
+// 2.0.4b (owner 2026-11-07): in VR the saw cuts by bar contact (rsvr/melee.zs): its cut reaches x256/65 of the saw's own
+// reach (the hand to the bar's tip), along the bar (RSLD_G7.SawReach).
 class RSLD_Fx_Extended : RSLD_G7Effect
 {
-	override void WhileHeld(RSLD_Held c) { RSLD_G7.NoTurn(c); }
+	override void WhileHeld(RSLD_Held c)
+	{
+		RSLD_G7.NoTurn(c);
+		RSLD_G7.SawReach(c, Num("cs_range") / max(1, RSLD.Num("Base", "cs_range")), 0);
+	}
 
 	override void OnMelee(RSLD_Shot s, Actor strike)
 	{
+		if (Saw(s)) { RSLD_G7.SawCutLog(s, String.Format("extended: VR saw reach x%.2f", Num("cs_range") / max(1, RSLD.Num("Base", "cs_range")))); return; }
 		if (!Fist(s)) return;
 		double r = Num("fi_range") / max(1, RSLD.Num("Base", "fi_range"));
 		Reach(strike, r);
@@ -206,6 +232,8 @@ class RSLD_Fx_RazorEdge : RSLD_G7Effect
 	override void OnMelee(RSLD_Shot s, Actor strike)
 	{
 		if (Fist(s)) s.Log("razor edge: the VR punch never turns or moves you (as LegenDoom's CPF_NOTURN)");
+		// 2.0.4b: the VR saw's cut (rsvr/melee.zs) is a missile into the body: it never turns or pulls you
+		if (Saw(s) && s.mo) s.Log(String.Format("razor edge: the VR saw cut neither turns nor pulls you (player at %.0f %.0f angle %.1f)", s.mo.pos.x, s.mo.pos.y, s.mo.angle));
 	}
 }
 
@@ -514,9 +542,20 @@ class RSLD_Fx_Lacerating : RSLD_G7Effect
 // ---- Imaginary (E: Cs; SILENT: owner, LegenDoom's "EEEE" voice is not carried), "Uses the power of your mind":
 // LegenDoom's saw reaches 512 (where 65), never turns or pulls you, and throws its "EEEE" letters
 // (LDImaginaryEEEEAttackSpawner: LegenDoom's own visual, no damage) with each attack. Ours: the same on our saw.
+// 2.0.4b (owner 2026-11-07): in VR the saw cuts by bar contact (rsvr/melee.zs): it also cuts whatever the bar points at,
+// up to LegenDoom's 512 units from the hand (RSLD_G7.SawReach).
 class RSLD_Fx_Imaginary : RSLD_G7Effect
 {
-	override void WhileHeld(RSLD_Held c) { RSLD_G7.NoTurn(c); }
+	override void WhileHeld(RSLD_Held c)
+	{
+		RSLD_G7.NoTurn(c);
+		RSLD_G7.SawReach(c, 0, Num("range"));
+	}
+
+	override void OnMelee(RSLD_Shot s, Actor strike)
+	{
+		if (Saw(s)) RSLD_G7.SawCutLog(s, String.Format("imaginary (silent): VR saw, what the bar points at up to %.0f", Num("range")));
+	}
 
 	override void OnPull(RSLD_Shot s)
 	{

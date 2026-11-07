@@ -1,0 +1,22 @@
+RSLDT baseline: no legendary on the saw, target at 400
+RSLD probe: cleared slot Chainsaw
+RSLD probe: player at (-1600 0), holding Chain_saw
+RSLD probe: cleared slot Chainsaw
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLDT with Imaginary
+RSLD probe: target BaronofHell2 has Health x0 health 30000 speed 0.0
+RSLD probe: Imaginary on Chain_saw slot Chainsaw rarity Epic
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 430 Imaginary p41 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD 432 Imaginary p42 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD probe: 2 actors LDImaginaryEEEE*
+RSLD 434 Imaginary p43 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD 436 Imaginary p44 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD 438 Imaginary p45 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD 440 Imaginary p46 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD 442 Imaginary p47 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD 444 Imaginary p48 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD 446 Imaginary p49 main Chain_saw: imaginary (silent): VR saw, what the bar points at up to 512: the cut landed 373 from the hand (the bar's own reach 41)
+RSLD probe: target BaronofHell2 has Health x0 health 29950 speed 0.0

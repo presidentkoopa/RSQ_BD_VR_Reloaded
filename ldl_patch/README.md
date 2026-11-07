@@ -164,6 +164,26 @@ One batched rig run (`tools/ldprove.py round4`: the open arena `tools/make_ldare
 sections run again (`R3_*`, `R3B_*`; Upgrading_Gas and Hoarder_hand keep their round-3 logs: the run had no B probe).
 Rig only, not headset-confirmed.
 
+## 2.0.4b (2026-11-07): two owner-approved fixes
+
+- **Chainsaw effects in VR.** In VR the saw cuts by bar contact (rsvr/melee.zs: BD22's SawDamageHorizontal), which the
+  LD mode never counted as a chainsaw attack, so Lacerating, RazorEdge, Extended and Imaginary did nothing. Each cut is
+  now recorded the way rsq/fists.zs records a punch (handler.zs IsStrike): a melee attack of the hand holding the saw
+  (LegenDoom's Chainsaw slot). Owner: Extended and Imaginary are a longer blade reach: with Extended the cut reaches
+  x3.94 (256/65) of the saw's own reach, measured from the hand to the bar's tip, along the bar; with Imaginary the saw
+  cuts whatever the bar points at, up to 512 units from the hand (ld_g7_fx.zs RSLD_G7.SawReach).
+- **Quickdraw on the BFG fired twice from one press** (the second ball 16 tics later, 50 more cells). Cause (one rig
+  run with a per-tic psprite log, `evidence/ldmode/V2_Quickdraw_BFG_diagnosis_2.0.4a.log`): the shot counter looked
+  for the new ball with a blockmap search, but projectiles are not in the blockmap, so the no-prefire stepping never
+  saw the ball, ran on through RecoilFire to its A_Refire while the trigger was still down, and fired a second time.
+  Quickdraw now finds the new ball in the sector lists and stops at the shot: one press, one ball (50 cells), and the
+  prefire is still cut.
+- Shown in one rig run (full order, LegenDoom first, open arena, 0 script errors from ours) plus a load-only check:
+  `evidence/ldmode/V2_*.log`, frames `evidence/ldmode/frames_2.0.4b/` (f00270 / f00384: no legendary, the Baron at 160 /
+  400 is not cut; f00318 Extended and f00438 Imaginary: the same Baron cut). Lacerating x1.25 -> x6.00 over 20 cuts;
+  RazorEdge logged on every cut with the player not moved; Quickdraw: two presses, two balls, 600 -> 550 -> 500.
+  Rig only, not headset-confirmed.
+
 ## Build
 
 ```

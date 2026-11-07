@@ -675,3 +675,13 @@ explosions chain (section 5).
 - Overflowing's speed-up and fist/chainsaw extra punch: left out.
 - Arcing / Proximity: speeds scaled to our rocket.
 - Chargeup on fists: store punches while the trigger is held.
+
+### Fixes 2026-11-07 (BD22 VR 2.0.4b, owner-approved)
+- Chainsaw in VR: every bar cut is a chainsaw attack of the hand holding the saw, so Lacerating and RazorEdge act on
+  contact; Extended = the cut reaches x3.94 of the saw's reach (hand to bar tip), Imaginary = the saw cuts what the bar
+  points at up to 512 units. Status: rig only, not headset-confirmed (`ldl_patch/evidence/ldmode/V2_*_CS.log`, frames
+  `frames_2.0.4b/`).
+- Quickdraw on the BFG: one press = one ball (50 cells), prefire still cut (the shot counter missed projectiles, which
+  are not in the blockmap, and the stepping ran into A_Refire). Status: rig only, not headset-confirmed
+  (`V2_Quickdraw_BFG.log`, cause in `V2_Quickdraw_BFG_diagnosis_2.0.4a.log`).
+- Not changed: Quickdraw's weapon-switch speed (owner: not now).

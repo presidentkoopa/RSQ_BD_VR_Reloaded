@@ -670,9 +670,56 @@ class RSLD_Fx_Quickdraw : RSLD_G5Effect
 		let hh = RSLD.H();
 		int lp = hh ? hh.LastPull(c.pn, c.hand) : -1000;
 		if (level.maptime - lp <= 1) return;	// it shot on its first frame: no prefire
-		int before = RSLD_G5.ShotCount(c.mo, c.hand);
-		if (RSLD_G5.StepToShot(c.mo, c.hand, c.weapon, before, 48))
+		int before = Shots(c.mo, c.hand);
+		if (StepToShot(c.mo, c.hand, c.weapon, before, 48))
 			RSLD.Log(String.Format("Quickdraw: %s: the prefire frames ran in tic %d (no prefire time)", c.weapon.GetClassName(), level.maptime));
+	}
+
+	// 2.0.4b (owner 2026-11-07: "Quickdraw on the BFG fires twice from one press"). Rig diagnosis (per-tic psprite log):
+	// RSLD_G5.ShotCount finds projectiles with a BlockThingsIterator, but a projectile is +NOBLOCKMAP, so the BFG ball
+	// was never seen: the stepping ran past the shot, through RecoilFire to its A_Refire inside the press tic (trigger
+	// still down: refire 0 -> 1), into Fire again, and that second Fire fired its ball 16 tics later (another 50 cells).
+	// Quickdraw now counts the hand's fresh projectiles from the sector lists (where a NOBLOCKMAP actor is linked) and
+	// stops at the shot: one press, one shot, the prefire still cut.
+	static int Shots(PlayerPawn mo, int hand)
+	{
+		int n = RSLD_G5.ShotCount(mo, hand);	// the pull's pellets (and anything the blockmap does hold)
+		Vector3 hp = mo.pos;
+		double a = mo.angle, p = mo.pitch;
+		if (mo.OverrideAttackPosDir)
+		{
+			hp = hand == RSLD.OFF ? mo.OffhandPos : mo.AttackPos;
+			Vector3 d = hand == RSLD.OFF ? mo.OffhandDir(mo, a, p) : mo.AttackDir(mo, a, p);
+			a = d.x; p = d.y;
+		}
+		Vector3 ahead = hp + (cos(a) * cos(p), sin(a) * cos(p), -sin(p)) * 64;
+		Sector s0 = mo.CurSector, s1 = level.PointInSector(hp.xy), s2 = level.PointInSector(ahead.xy);
+		n += FreshIn(mo, s0);
+		if (s1 != s0) n += FreshIn(mo, s1);
+		if (s2 != s0 && s2 != s1) n += FreshIn(mo, s2);
+		return n;
+	}
+	static int FreshIn(PlayerPawn mo, Sector sec)
+	{
+		int n = 0;
+		if (!sec) return 0;
+		for (Actor t = sec.thinglist; t; t = t.snext)
+			if (t.bMISSILE && t.bNOBLOCKMAP && t.target == mo && t.GetAge() == 0 && !RSLD_Handler.Helper(t) && !RSLD_Handler.IsStrike(t)) n++;
+		return n;
+	}
+	// RSLD_G5.StepToShot with that count
+	static bool StepToShot(PlayerPawn mo, int hand, Weapon w, int before, int maxSteps)
+	{
+		for (int k = 0; k < maxSteps; k++)
+		{
+			if (Shots(mo, hand) > before) return true;
+			let psp = RSLD_G5.Psp(mo, hand);
+			if (!psp || !psp.CurState || psp.Caller != w || RSLD_G5.InStop(w, psp.CurState) || psp.Tics < 0) return false;
+			State nx = psp.CurState.NextState;
+			if (!nx) return false;
+			psp.SetState(nx);
+		}
+		return Shots(mo, hand) > before;
 	}
 }
 

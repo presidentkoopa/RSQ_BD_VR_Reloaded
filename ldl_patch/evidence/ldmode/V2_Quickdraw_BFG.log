@@ -1,0 +1,24 @@
+RSLD probe: Quickdraw on BIG_FUCKING_GUN slot BFG9000 rarity Common
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLDT press 1
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD 591 Quickdraw: BIG_FUCKING_GUN: the prefire frames ran in tic 591 (no prefire time)
+RSLD 591 Quickdraw p50 main BIG_FUCKING_GUN: pull
+RSLD 591 Quickdraw p50 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+RSLD 592 Quickdraw p50 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 600 -> 550]
+RSLD 593 Quickdraw p50 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+RSLD 603 Quickdraw p50 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 1500 hp 28500
+RSLD 603 Quickdraw p50 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 191 hp 28309
+RSLD 603 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 68 hp 28241
+RSLD 603 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 80 hp 28161
+RSLD 603 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 77 hp 28084
+RSLD 603 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 63 hp 28021
+RSLDT press 2
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 550
+RSLD 703 Quickdraw: BIG_FUCKING_GUN: the prefire frames ran in tic 703 (no prefire time)
+RSLD 703 Quickdraw p51 main BIG_FUCKING_GUN: pull
+RSLD 703 Quickdraw p51 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+RSLD 704 Quickdraw p51 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 550 -> 500]
+RSLD 705 Quickdraw p51 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 500

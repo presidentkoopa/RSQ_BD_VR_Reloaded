@@ -1,0 +1,43 @@
+RSLD probe: Lacerating on Chain_saw slot Chainsaw rarity Epic
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 114 Lacerating p1 main Chain_saw: lacerating: count 1, next hit x1.25
+RSLD 116 Lacerating p2 main Chain_saw: damage 6 -> 7 (x1.25) on BaronofHell2
+RSLD 116 Lacerating p2 main Chain_saw: lacerating: count 2, next hit x1.50
+RSLD 118 Lacerating p3 main Chain_saw: damage 6 -> 9 (x1.50) on BaronofHell2
+RSLD 118 Lacerating p3 main Chain_saw: lacerating: count 3, next hit x1.75
+RSLD 120 Lacerating p4 main Chain_saw: damage 6 -> 10 (x1.75) on BaronofHell2
+RSLD 120 Lacerating p4 main Chain_saw: lacerating: count 4, next hit x2.00
+RSLD 122 Lacerating p5 main Chain_saw: damage 6 -> 12 (x2.00) on BaronofHell2
+RSLD 122 Lacerating p5 main Chain_saw: lacerating: count 5, next hit x2.25
+RSLD 124 Lacerating p6 main Chain_saw: damage 6 -> 13 (x2.25) on BaronofHell2
+RSLD 124 Lacerating p6 main Chain_saw: lacerating: count 6, next hit x2.50
+RSLD 126 Lacerating p7 main Chain_saw: damage 5 -> 12 (x2.50) on BaronofHell2
+RSLD 126 Lacerating p7 main Chain_saw: lacerating: count 7, next hit x2.75
+RSLD 128 Lacerating p8 main Chain_saw: damage 6 -> 16 (x2.75) on BaronofHell2
+RSLD 128 Lacerating p8 main Chain_saw: lacerating: count 8, next hit x3.00
+RSLD 130 Lacerating p9 main Chain_saw: damage 6 -> 18 (x3.00) on BaronofHell2
+RSLD 130 Lacerating p9 main Chain_saw: lacerating: count 9, next hit x3.25
+RSLD 132 Lacerating p10 main Chain_saw: damage 6 -> 19 (x3.25) on BaronofHell2
+RSLD 132 Lacerating p10 main Chain_saw: lacerating: count 10, next hit x3.50
+RSLD 134 Lacerating p11 main Chain_saw: damage 6 -> 21 (x3.50) on BaronofHell2
+RSLD 134 Lacerating p11 main Chain_saw: lacerating: count 11, next hit x3.75
+RSLD 136 Lacerating p12 main Chain_saw: damage 5 -> 18 (x3.75) on BaronofHell2
+RSLD 136 Lacerating p12 main Chain_saw: lacerating: count 12, next hit x4.00
+RSLD 138 Lacerating p13 main Chain_saw: damage 6 -> 24 (x4.00) on BaronofHell2
+RSLD 138 Lacerating p13 main Chain_saw: lacerating: count 13, next hit x4.25
+RSLD 140 Lacerating p14 main Chain_saw: damage 5 -> 21 (x4.25) on BaronofHell2
+RSLD 140 Lacerating p14 main Chain_saw: lacerating: count 14, next hit x4.50
+RSLD 142 Lacerating p15 main Chain_saw: damage 5 -> 22 (x4.50) on BaronofHell2
+RSLD 142 Lacerating p15 main Chain_saw: lacerating: count 15, next hit x4.75
+RSLD 144 Lacerating p16 main Chain_saw: damage 5 -> 23 (x4.75) on BaronofHell2
+RSLD 144 Lacerating p16 main Chain_saw: lacerating: count 16, next hit x5.00
+RSLD 146 Lacerating p17 main Chain_saw: damage 5 -> 25 (x5.00) on BaronofHell2
+RSLD 146 Lacerating p17 main Chain_saw: lacerating: count 17, next hit x5.25
+RSLD 148 Lacerating p18 main Chain_saw: damage 5 -> 26 (x5.25) on BaronofHell2
+RSLD 148 Lacerating p18 main Chain_saw: lacerating: count 18, next hit x5.50
+RSLD 150 Lacerating p19 main Chain_saw: damage 6 -> 33 (x5.50) on BaronofHell2
+RSLD 150 Lacerating p19 main Chain_saw: lacerating: count 19, next hit x5.75
+RSLD 152 Lacerating p20 main Chain_saw: damage 6 -> 34 (x5.75) on BaronofHell2
+RSLD 152 Lacerating p20 main Chain_saw: lacerating: count 20, next hit x6.00
+RSLD probe: target BaronofHell2 has Health x0 health 29632 speed 0.0

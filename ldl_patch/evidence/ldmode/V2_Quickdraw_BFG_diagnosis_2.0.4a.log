@@ -1,0 +1,178 @@
+RSLDT begin QD
+RSLD probe: Quickdraw on BIG_FUCKING_GUN slot BFG9000 rarity Common
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+VBQ 113 pre : Fire+4 tics 2 frame 0 | buttons 1 attackdown 1 refire 0
+VBQ 113 post: Fire+14 tics 1 frame 8 | buttons 1 attackdown 1 refire 1
+RSLD 113 Quickdraw p1 main BIG_FUCKING_GUN: pull
+RSLD 113 Quickdraw p1 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+VBQ 113 spawned SuperBFGBall target BDoomer age 0 dist 68 dmg 1500
+VBQ 114 pre : Fire+15 tics 1 frame 9 | buttons 1 attackdown 0 refire 1
+RSLD 114 Quickdraw p1 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 600 -> 550]
+VBQ 114 post: Fire+15 tics 1 frame 9 | buttons 1 attackdown 0 refire 1
+VBQ 115 pre : Fire+16 tics 1 frame 10 | buttons 0 attackdown 1 refire 1
+RSLD 115 Quickdraw p1 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+VBQ 115 post: Fire+16 tics 1 frame 10 | buttons 0 attackdown 1 refire 1
+VBQ 116 pre : Fire+17 tics 1 frame 11 | buttons 0 attackdown 0 refire 1
+VBQ 116 post: Fire+17 tics 1 frame 11 | buttons 0 attackdown 0 refire 1
+VBQ 117 pre : Fire+18 tics 1 frame 12 | buttons 0 attackdown 0 refire 1
+VBQ 117 post: Fire+18 tics 1 frame 12 | buttons 0 attackdown 0 refire 1
+VBQ 118 pre : Fire+19 tics 1 frame 13 | buttons 0 attackdown 0 refire 1
+VBQ 118 post: Fire+19 tics 1 frame 13 | buttons 0 attackdown 0 refire 1
+VBQ 119 pre : Fire+20 tics 1 frame 10 | buttons 0 attackdown 0 refire 1
+VBQ 119 post: Fire+20 tics 1 frame 10 | buttons 0 attackdown 0 refire 1
+VBQ 120 pre : Fire+21 tics 1 frame 11 | buttons 0 attackdown 0 refire 1
+VBQ 120 post: Fire+21 tics 1 frame 11 | buttons 0 attackdown 0 refire 1
+VBQ 121 pre : Fire+22 tics 1 frame 12 | buttons 0 attackdown 0 refire 1
+VBQ 121 post: Fire+22 tics 1 frame 12 | buttons 0 attackdown 0 refire 1
+VBQ 122 pre : Fire+23 tics 1 frame 13 | buttons 0 attackdown 0 refire 1
+VBQ 122 post: Fire+23 tics 1 frame 13 | buttons 0 attackdown 0 refire 1
+VBQ 123 pre : Fire+24 tics 1 frame 14 | buttons 0 attackdown 0 refire 1
+VBQ 123 post: Fire+24 tics 1 frame 14 | buttons 0 attackdown 0 refire 1
+VBQ 124 pre : Fire+25 tics 1 frame 15 | buttons 0 attackdown 0 refire 1
+VBQ 124 post: Fire+25 tics 1 frame 15 | buttons 0 attackdown 0 refire 1
+VBQ 125 pre : Fire+26 tics 1 frame 16 | buttons 0 attackdown 0 refire 1
+VBQ 125 post: Fire+26 tics 1 frame 16 | buttons 0 attackdown 0 refire 1
+VBQ 126 pre : Fire+27 tics 1 frame 17 | buttons 0 attackdown 0 refire 1
+VBQ 126 post: Fire+27 tics 1 frame 17 | buttons 0 attackdown 0 refire 1
+VBQ 127 pre : Fire+28 tics 2 frame 0 | buttons 0 attackdown 0 refire 1
+VBQ 127 post: Fire+28 tics 2 frame 0 | buttons 0 attackdown 0 refire 1
+VBQ 128 pre : Fire+28 tics 1 frame 0 | buttons 0 attackdown 0 refire 1
+VBQ 128 post: Fire+28 tics 1 frame 0 | buttons 0 attackdown 0 refire 1
+VBQ 129 pre : RecoilFire+2 tics 1 frame 1 | buttons 0 attackdown 0 refire 1
+VBQ 129 post: RecoilFire+2 tics 1 frame 1 | buttons 0 attackdown 0 refire 1
+RSLD 129 Quickdraw p2 main BIG_FUCKING_GUN: pull
+RSLD 129 Quickdraw p2 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+VBQ 129 spawned SuperBFGBall target BDoomer age 0 dist 68 dmg 1500
+VBQ 130 pre : RecoilFire+3 tics 1 frame 2 | buttons 0 attackdown 0 refire 1
+RSLD 130 Quickdraw p2 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 550 -> 500]
+VBQ 130 post: RecoilFire+3 tics 1 frame 2 | buttons 0 attackdown 0 refire 1
+VBQ 131 pre : RecoilFire+5 tics 1 frame 3 | buttons 0 attackdown 0 refire 1
+RSLD 131 Quickdraw p2 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+VBQ 131 post: RecoilFire+5 tics 1 frame 3 | buttons 0 attackdown 0 refire 1
+VBQ 132 pre : RecoilFire+6 tics 1 frame 4 | buttons 0 attackdown 0 refire 1
+VBQ 132 post: RecoilFire+6 tics 1 frame 4 | buttons 0 attackdown 0 refire 1
+VBQ 133 pre : RecoilFire+7 tics 1 frame 5 | buttons 0 attackdown 0 refire 1
+VBQ 133 post: RecoilFire+7 tics 1 frame 5 | buttons 0 attackdown 0 refire 1
+VBQ 134 pre : RecoilFire+8 tics 1 frame 6 | buttons 0 attackdown 0 refire 1
+VBQ 134 post: RecoilFire+8 tics 1 frame 6 | buttons 0 attackdown 0 refire 1
+VBQ 135 pre : RecoilFire+9 tics 1 frame 7 | buttons 0 attackdown 0 refire 1
+VBQ 135 post: RecoilFire+9 tics 1 frame 7 | buttons 0 attackdown 0 refire 1
+VBQ 136 pre : RecoilFire+10 tics 1 frame 7 | buttons 0 attackdown 0 refire 1
+VBQ 136 post: RecoilFire+10 tics 1 frame 7 | buttons 0 attackdown 0 refire 1
+VBQ 137 pre : RecoilFire+11 tics 1 frame 8 | buttons 0 attackdown 0 refire 1
+VBQ 137 post: RecoilFire+11 tics 1 frame 8 | buttons 0 attackdown 0 refire 1
+VBQ 138 pre : RecoilFire+12 tics 1 frame 9 | buttons 0 attackdown 0 refire 1
+VBQ 138 post: RecoilFire+12 tics 1 frame 9 | buttons 0 attackdown 0 refire 1
+VBQ 139 pre : RecoilFire+13 tics 1 frame 9 | buttons 0 attackdown 0 refire 1
+VBQ 139 post: RecoilFire+13 tics 1 frame 9 | buttons 0 attackdown 0 refire 1
+VBQ 140 pre : RecoilFire+14 tics 1 frame 10 | buttons 0 attackdown 0 refire 1
+VBQ 140 post: RecoilFire+14 tics 1 frame 10 | buttons 0 attackdown 0 refire 1
+VBQ 141 pre : RecoilFire+15 tics 1 frame 11 | buttons 0 attackdown 0 refire 1
+VBQ 141 post: RecoilFire+15 tics 1 frame 11 | buttons 0 attackdown 0 refire 1
+VBQ 142 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 142 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 143 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 143 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 144 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 144 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 145 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 145 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 146 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 146 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 147 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 147 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 148 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 148 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 149 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 149 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 150 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 150 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 151 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 151 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 152 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 152 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 153 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 153 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 154 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 154 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 155 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 155 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 156 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 156 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 157 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 157 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 158 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 158 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 159 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 159 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 160 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 160 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 161 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 161 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 162 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 162 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 163 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 163 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 164 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 164 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 165 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 165 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 166 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 166 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 167 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 167 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 168 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 168 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 169 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 169 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 170 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 170 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 171 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 171 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 172 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 172 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 173 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 173 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 174 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 174 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 175 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 175 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 176 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 176 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 177 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 177 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 178 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 178 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 179 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 179 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 180 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 180 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 181 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 181 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 182 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 182 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 183 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 183 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 184 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 184 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 185 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 185 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 186 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 186 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 187 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 187 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 188 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 188 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 189 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 189 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 190 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 190 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 191 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 191 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 192 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 192 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 193 pre : Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+VBQ 193 post: Ready3+0 tics 1 frame 0 | buttons 0 attackdown 0 refire 0
+RSLDT end QD

@@ -551,6 +551,12 @@ class RSLD_Handler : EventHandler
 
 	static bool IsStrike(Actor a)
 	{
+		// 2.0.4b (owner 2026-11-07): the VR chainsaw's cut (BD22's SawDamageHorizontal from rsvr/melee.zs) is recorded
+		// as rsq/fists.zs records a punch: a melee attack of the hand holding the saw (LegenDoom's Chainsaw slot)
+		int rh;
+		double rm;
+		[rh, rm] = RSQ_Fists.Lookup(a);
+		if (rh >= 0) return true;
 		for (class<Actor> c = a.GetClass(); c; c = (class<Actor>)(c.GetParentClass()))
 		{
 			Name n = c.GetClassName();

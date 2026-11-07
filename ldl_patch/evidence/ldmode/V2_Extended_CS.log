@@ -1,0 +1,22 @@
+RSLDT baseline: no legendary on the saw, target at 160
+RSLD probe: cleared slot Chainsaw
+RSLD probe: player at (-1600 0), holding Chain_saw
+RSLD probe: cleared slot Chainsaw
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 160 (-1440 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLDT with Extended
+RSLD probe: target BaronofHell2 has Health x0 health 30000 speed 0.0
+RSLD probe: Extended on Chain_saw slot Chainsaw rarity Rare
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 160 (-1440 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 308 Extended p31 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 310 Extended p32 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 312 Extended p33 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 314 Extended p34 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 316 Extended p35 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 318 Extended p36 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 320 Extended p37 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 322 Extended p38 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 324 Extended p39 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD 326 Extended p40 main Chain_saw: extended: VR saw reach x3.94: the cut landed 160 from the hand (the bar's own reach 41)
+RSLD probe: target BaronofHell2 has Health x0 health 29947 speed 0.0
