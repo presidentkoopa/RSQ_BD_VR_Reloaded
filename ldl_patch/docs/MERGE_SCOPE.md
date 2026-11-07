@@ -657,3 +657,21 @@ explosions chain (section 5).
   speed) into BD22 VR's own melee WITHOUT depending on RSQ Melee being loaded.
 - LegenDoom's non-gun sounds (pickup jingle, pickup screen, legendary aura): a toggle in BD22 VR's options, if the
   engine allows it (check).
+
+### Round 4 answers (2026-11-06 evening) — all open questions closed
+- Beam / Blazing: LegenDoom's stream from our drawn muzzle, our sounds.
+- DualWield: with LegenDoom loaded, BD22's own Dual Pistols weapon unlocks only from the DualWield legendary
+  (our VR pistol-in-each-hand is unaffected).
+- SixShooter: half speed (its description).
+- Fist legendaries: both fists (the off hand's free fist too).
+- Charge / hold with real arms: the fist's trigger held, plus damage scaled by swing speed.
+- NorthernStar: include the closing blow, monsters only (never pushes the player).
+- Start buffs: leave as LegenDoom (any owned legendary).
+- "Without ammo" on magazines: the magazine never runs dry until you reload (as built).
+- Transmogrifier / Overflowing: all BD22 ammo counts (Upgrading's mapping).
+- Overkill: LegenDoom's full ring.
+- Prototype: a stream while the trigger is held.
+- Menu sounds: QuestZDoom's own menu/info-screen sounds come back under "Mute LegenDoom sounds".
+- Overflowing's speed-up and fist/chainsaw extra punch: left out.
+- Arcing / Proximity: speeds scaled to our rocket.
+- Chargeup on fists: store punches while the trigger is held.
