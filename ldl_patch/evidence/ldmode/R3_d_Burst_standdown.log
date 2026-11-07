@@ -1,6 +1,8 @@
-# R3_d_Burst_standdown: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_d_Burst_standdown: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BrutalPistol magazine 16 reserve 200
 RSLD probe: Burst on BrutalPistol slot Pistol rarity Uncommon
-RSLD 7250 Burst: main hand's BD22 VR secondary stands down (BrutalPistol)
-RSLD 7250 Burst: BD22's pistol burst toggle stood down
+RSLD 12811 Burst: main hand's BD22 VR secondary stands down (BrutalPistol)
+RSLD 12811 Burst: BD22's pistol burst toggle stood down
+RSLD 12811 Burst: BrutalPistol: nothing loaded (or the hand is loading): the burst ends with 2 left
 RSLD probe: player BDoomer has RSLD_AltDown x1 health 100 speed 8.0
 RSLD probe: player BDoomer has PistolBurstFire x0 health 100 speed 8.0

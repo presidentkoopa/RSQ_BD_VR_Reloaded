@@ -1,8 +1,10 @@
-# R3B_Extended_FI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Extended_FI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Fists
+RSLD probe: player at (-1600 0), holding Melee_Attacks
+RSLD probe: Melee_Attacks magazine 0 reserve 0
 RSLD probe: Extended on Melee_Attacks slot Fists rarity Rare
-RSLD 11897 G7 probe: a test punch (MeleeStrikeNormal) from the main hand
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 90 (26 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 11897 Extended p233 main Melee_Attacks: extended: the punch reaches x4.00
-RSLD 11912 Extended p234 main Melee_Attacks: extended: the punch reaches x4.00
+RSLD 17153 G7 probe: a test punch (MeleeStrikeNormal) from the main hand
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 90 (-1510 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 17153 Extended p287 main Melee_Attacks: extended: the punch reaches x4.00
+RSLD 17168 Extended p288 main Melee_Attacks: extended: the punch reaches x4.00

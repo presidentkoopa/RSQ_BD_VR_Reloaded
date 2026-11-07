@@ -1,18 +1,19 @@
-# R3B_Chargeup_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Chargeup_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BrutalPistol magazine 16 reserve 200
 RSLD probe: Chargeup on BrutalPistol slot Pistol rarity Uncommon
 RSLD probe: BrutalPistol magazine 16 reserve 200
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 10152 Chargeup: main hand winds up (4 tics)
-RSLD 10156 Chargeup: 1 stored
-RSLD 10170 Chargeup: 2 stored
-RSLD 10184 Chargeup: 3 stored
-RSLD 10198 Chargeup: 4 stored
-RSLD 10212 Chargeup p216 main BrutalPistol: chargeup release: the gun's shot + 3 stored
-RSLD 10212 Chargeup: released 4 stored attacks in tic 10212
-RSLD 10213 Chargeup p216 main BrutalPistol: take 3 <- BDPistolAmmo
-RSLD 10213 Chargeup p216 main BrutalPistol: chargeup: 3 more rounds out of the magazine for the stored attacks
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 15638 Chargeup: main hand winds up (4 tics)
+RSLD 15642 Chargeup: 1 stored
+RSLD 15656 Chargeup: 2 stored
+RSLD 15670 Chargeup: 3 stored
+RSLD 15684 Chargeup: 4 stored
+RSLD 15698 Chargeup p272 main BrutalPistol: chargeup release: the gun's shot + 3 stored
+RSLD 15698 Chargeup: released 4 stored attacks in tic 15698
+RSLD 15699 Chargeup p272 main BrutalPistol: take 3 <- BDPistolAmmo
+RSLD 15699 Chargeup p272 main BrutalPistol: chargeup: 3 more rounds out of the magazine for the stored attacks
 RSLD probe: BrutalPistol magazine 12 reserve 200
-RSLD 10242 Chargeup: main hand winds up (4 tics)
-RSLD 10246 Chargeup: released 1 stored attack in tic 10246
+RSLD 15728 Chargeup: main hand winds up (4 tics)
+RSLD 15732 Chargeup: released 1 stored attack in tic 15732
 RSLD probe: BrutalPistol magazine 11 reserve 200

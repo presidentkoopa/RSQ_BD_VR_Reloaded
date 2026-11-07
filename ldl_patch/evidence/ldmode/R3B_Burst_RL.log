@@ -1,6 +1,54 @@
-# R3B_Burst_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Burst_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Burst on Rocket_Launcher slot RocketLauncher rarity Uncommon
-RSLD probe: Rocket_Launcher magazine 5 reserve 100
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (336 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD probe: Rocket_Launcher magazine 5 reserve 100
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 7888 Burst p58 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7892 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7892 Burst p59 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7896 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7896 Burst p60 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7900 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7900 Burst p61 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7904 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7904 Burst p62 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7908 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7908 Burst p63 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7912 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7912 Burst p64 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7916 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7916 Burst p65 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7920 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7920 Burst p66 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7924 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7924 Burst p67 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7928 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7928 Burst p68 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7932 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7932 Burst p69 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7936 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7936 Burst p70 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7940 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7940 Burst p71 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7944 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7944 Burst p72 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7948 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7948 Burst p73 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7952 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7952 Burst p74 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7956 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7956 Burst p75 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7960 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7960 Burst p76 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7964 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7964 Burst p77 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7968 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7968 Burst p78 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7972 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7972 Burst p79 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 7976 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7976 Burst p80 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD probe: Rocket_Launcher magazine 1 reserve 82
+RSLD 7980 Burst: Rocket_Launcher gave no shot: the burst ends with 1 left
+RSLD 7980 Burst p81 main Rocket_Launcher: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)

@@ -1,0 +1,61 @@
+# R4_Beam_PR: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Plasma_Gun magazine 50 reserve 600
+RSLD probe: Beam on Plasma_Gun slot PlasmaRifle rarity Rare
+RSLD probe: Plasma_Gun magazine 50 reserve 600
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 355 Beam p4 main Plasma_Gun: Beam: Plasma_Gun stream starts (LegenDoom's charge 0 tics), damage x1.78, ammo x1.00 a tic
+RSLD 355 Beam p4 main Plasma_Gun: damage 5 -> 8 (x1.78) on BaronofHell2
+RSLD 355 Beam p4 main Plasma_Gun: Beam: streaming 1 tics, 1 rounds used (PlasmaAmmo 49 left)
+RSLD 356 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 357 Beam p4 main Plasma_Gun: damage 30 -> 53 (x1.78) on BaronofHell2
+RSLD 358 Beam p4 main Plasma_Gun: damage 35 -> 62 (x1.78) on BaronofHell2
+RSLD 359 Beam p4 main Plasma_Gun: damage 5 -> 8 (x1.78) on BaronofHell2
+RSLD 360 Beam p4 main Plasma_Gun: damage 10 -> 17 (x1.78) on BaronofHell2
+RSLD 361 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 362 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 363 Beam p4 main Plasma_Gun: damage 15 -> 26 (x1.78) on BaronofHell2
+RSLD 364 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 365 Beam p4 main Plasma_Gun: damage 30 -> 53 (x1.78) on BaronofHell2
+RSLD 366 Beam p4 main Plasma_Gun: damage 35 -> 62 (x1.78) on BaronofHell2
+RSLD 367 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 368 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 369 Beam p4 main Plasma_Gun: damage 15 -> 26 (x1.78) on BaronofHell2
+RSLD 370 Beam p4 main Plasma_Gun: damage 25 -> 44 (x1.78) on BaronofHell2
+RSLD 371 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 372 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 373 Beam p4 main Plasma_Gun: damage 15 -> 26 (x1.78) on BaronofHell2
+RSLD 374 Beam p4 main Plasma_Gun: damage 35 -> 62 (x1.78) on BaronofHell2
+RSLD 375 Beam p4 main Plasma_Gun: damage 5 -> 8 (x1.78) on BaronofHell2
+RSLD 376 Beam p4 main Plasma_Gun: damage 30 -> 53 (x1.78) on BaronofHell2
+RSLD 377 Beam p4 main Plasma_Gun: damage 10 -> 17 (x1.78) on BaronofHell2
+RSLD 378 Beam p4 main Plasma_Gun: damage 25 -> 44 (x1.78) on BaronofHell2
+RSLD 379 Beam p4 main Plasma_Gun: damage 30 -> 53 (x1.78) on BaronofHell2
+RSLD 380 Beam p4 main Plasma_Gun: damage 25 -> 44 (x1.78) on BaronofHell2
+RSLD 381 Beam p4 main Plasma_Gun: damage 25 -> 44 (x1.78) on BaronofHell2
+RSLD 382 Beam p4 main Plasma_Gun: damage 30 -> 53 (x1.78) on BaronofHell2
+RSLD 383 Beam p4 main Plasma_Gun: damage 10 -> 17 (x1.78) on BaronofHell2
+RSLD 384 Beam p4 main Plasma_Gun: damage 35 -> 62 (x1.78) on BaronofHell2
+RSLD 385 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 386 Beam p4 main Plasma_Gun: damage 25 -> 44 (x1.78) on BaronofHell2
+RSLD 387 Beam p4 main Plasma_Gun: damage 25 -> 44 (x1.78) on BaronofHell2
+RSLD 388 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 389 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 389 Beam p4 main Plasma_Gun: Beam: streaming 35 tics, 35 rounds used (PlasmaAmmo 15 left)
+RSLD 390 Beam p4 main Plasma_Gun: damage 15 -> 26 (x1.78) on BaronofHell2
+RSLD 391 Beam p4 main Plasma_Gun: damage 35 -> 62 (x1.78) on BaronofHell2
+RSLD 392 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 393 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 394 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 395 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 396 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 397 Beam p4 main Plasma_Gun: damage 30 -> 53 (x1.78) on BaronofHell2
+RSLD 398 Beam p4 main Plasma_Gun: damage 5 -> 8 (x1.78) on BaronofHell2
+RSLD 399 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 400 Beam p4 main Plasma_Gun: damage 40 -> 71 (x1.78) on BaronofHell2
+RSLD 401 Beam p4 main Plasma_Gun: damage 25 -> 44 (x1.78) on BaronofHell2
+RSLD 402 Beam p4 main Plasma_Gun: damage 20 -> 35 (x1.78) on BaronofHell2
+RSLD 403 Beam p4 main Plasma_Gun: damage 10 -> 17 (x1.78) on BaronofHell2
+RSLD 404 Beam p4 main Plasma_Gun: damage 35 -> 62 (x1.78) on BaronofHell2
+RSLD 405 Beam p4 main Plasma_Gun: Beam: stream ends (let go / empty) after 50 tics, 50 rounds used
+RSLD probe: Plasma_Gun magazine 0 reserve 600

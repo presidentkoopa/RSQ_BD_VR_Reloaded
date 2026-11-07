@@ -1,4 +1,11 @@
-# R3_Spamtastic_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Spamtastic_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot RocketLauncher
+RSLD probe: player at (-1600 0), holding Rocket_Launcher
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Spamtastic on Rocket_Launcher slot RocketLauncher rarity Rare
-RSLD probe: 1 targets removed
+RSLD probe: 0 targets removed
+RSLD 5817 Spamtastic rider rocket p46: mini 1 (x0.33)
+RSLD 5827 Spamtastic rider rocket child p46: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 5844 Spamtastic rider rocket child p46: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 5847 Spamtastic rider rocket child p46: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 5869 Spamtastic rider rocket child p46: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)

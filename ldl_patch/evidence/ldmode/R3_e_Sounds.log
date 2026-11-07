@@ -1,12 +1,13 @@
-# R3_e_Sounds: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+# R3_e_Sounds: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Shot_Gun magazine 9 reserve 100
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
 RSLD probe: LDLegendaryMonsterSoundGenerator on BaronofHell2
 RSLD probe: 1 LegenDoom aura generators, 1 playing LegenDoom's aura (muted no)
-RSLD 7368 sounds: LegenDoom pickup jingle rsld/ld/newlegendarypickup
-RSLD 7368 sounds: LegenDoom pickup jingle rsld/ld/illegalpickup
-RSLD 7368 sounds: LegenDoom pickup & aura sounds muted (1 auras)
+RSLD 12939 sounds: LegenDoom pickup jingle rsld/ld/newlegendarypickup
+RSLD 12939 sounds: LegenDoom pickup jingle rsld/ld/illegalpickup
+RSLD 12939 sounds: LegenDoom pickup & aura sounds muted (1 auras)
 RSLD probe: 1 LegenDoom aura generators, 0 playing LegenDoom's aura (muted yes)
-RSLD 7373 sounds: LegenDoom pickup jingle muted (rsld_mute_ld_sounds)
-RSLD 7373 sounds: LegenDoom pickup & aura sounds on (1 auras)
+RSLD 12944 sounds: LegenDoom pickup jingle muted (rsld_mute_ld_sounds)
+RSLD 12944 sounds: LegenDoom pickup & aura sounds on (1 auras)
 RSLD probe: 1 LegenDoom aura generators, 1 playing LegenDoom's aura (muted no)

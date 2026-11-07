@@ -1,5 +1,6 @@
-# R3_d_Seeker_standdown: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_d_Seeker_standdown: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Seeker on Rocket_Launcher slot RocketLauncher rarity Rare
-RSLD 7140 Seeker: main hand's BD22 VR secondary stands down (Rocket_Launcher)
+RSLD 12691 Seeker: main hand's BD22 VR secondary stands down (Rocket_Launcher)
 RSLD probe: player BDoomer has RSLD_AltDown x1 health 100 speed 8.0
 RSLD probe: player BDoomer has RSA_Opt_RLLock x0 health 100 speed 8.0

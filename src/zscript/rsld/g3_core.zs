@@ -362,7 +362,7 @@ class RSLD_Rider : Thinker
 	RSLD_G3Fx fx;
 	int kind, age, deadAge, prevBounce, bounces, spawnTic, ourDirect;
 	bool dead, child, claimed, sky, started;
-	Vector3 last, blastPos;
+	Vector3 last, blastPos, from;	// from: where it was on its first tic (round 4: Arcing / Proximity distances)
 	// what the rider changes (multipliers on our projectile's own numbers)
 	double dmgMul;			// direct hit
 	double explDmgMul, explRadMul, rayMul;
@@ -397,6 +397,7 @@ class RSLD_Rider : Thinker
 		if (!started)
 		{	// the first tic: BD22 VR's muzzle.zs has put the projectile at the drawn muzzle by now
 			started = true;
+			from = m.pos;
 			if (fx) fx.RiderStart(self);
 			if (!m) return;
 		}

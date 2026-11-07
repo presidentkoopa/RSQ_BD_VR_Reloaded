@@ -17,6 +17,9 @@ effects/illegalpickup			dsempty
 effects/legendaryenemyloop		dsempty
 effects/legendaryenemy			dsempty
 effects/legendaryenemyboss		dsempty
+// round 4: LegenDoom's info screen open / close (LEGENDMEN.acs LocalAmbientSound): played by the LD mode (ldsounds.zs InfoTick)
+menu/infoopen				dsempty
+menu/infoclose				dsempty
 
 // LegenDoom's own lumps (LegenDoom 3.0 SNDINFO:286-306), played by the LD mode
 rsld/ld/newlegendarypickup1		LDLEGEN1
@@ -36,3 +39,17 @@ rsld/ld/legendaryenemy			LDLETRAN
 $limit rsld/ld/legendaryenemy		0
 rsld/ld/legendaryenemyboss		LDLEBOSS
 $limit rsld/ld/legendaryenemyboss	0
+rsld/ld/infoopen			LDINFO1
+rsld/ld/infoclose			LDINFO2
+
+// round 4: QuestZDoom's own menu sounds (its filter/game-doomchex/sndinfo.txt:439-447), played in place of LegenDoom's
+// LDMENU* by the menu delegate (ldsounds.zs RSLD_MenuDelegate) while "Mute LegenDoom Sounds" is on
+rsld/qz/activate			dsswtchn
+rsld/qz/backup				dsswtchn
+rsld/qz/prompt				dsswtchn
+rsld/qz/cursor				dspstop
+rsld/qz/change				dsstnmov
+rsld/qz/invalid				dsoof
+rsld/qz/dismiss				dsswtchx
+rsld/qz/choose				dspistol
+rsld/qz/clear				dsswtchx

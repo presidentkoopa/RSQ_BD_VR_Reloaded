@@ -149,6 +149,21 @@ One batched rig run (`tools/ldprove.py round3`, QuestZDoom 17.3, full order with
 boot without LegenDoom (0 script errors, LD mode silent). Logs: `evidence/ldmode/R3_*.log` (rig only, not
 headset-confirmed). What each log shows and what it does not: the round-3 report (coordinator).
 
+## Round 4 (2026-11-06 late evening): the owner's round-4 answers (BD22 VR 2.0.4a)
+
+Code: `src/zscript/rsld/ld_g11_stream.zs` (Beam, Blazing, Prototype as streams), `numbers/g11.rules` -> `numbers_g11.zs`;
+DualWield (BD22's Dual Pistols only from the DualWield legendary: handler.zs DualWieldGate), SixShooter at half speed, fist
+legendaries on both fists (the off hand's free fist), punch damage x swing speed (RSQ Melee's 2 -> 7 m/s rule, built in;
+rsq/fists.zs records each punch's hand and speed), Chargeup on the fists, NorthernStar's closing blow (monsters only),
+Arcing / Proximity at our projectile speed, Transmogrifier / Overflowing over every BD22 ammo, QuestZDoom's menu and
+info-screen sounds under the mute option (MAPINFO.rsld MenuDelegateClass, ldsounds.zs). Registry: 179 effects (all but
+Favoured), 647 numbers.
+One batched rig run (`tools/ldprove.py round4`: the open arena `tools/make_ldarena.py` loaded last, hostile still targets,
+126 sections, full order with LegenDoom first, god, give all: 0 script errors from ours) and one boot without LegenDoom
+(0 script errors, LD mode silent: `evidence/ldmode/R4_nold.log`). Logs: `evidence/ldmode/R4_*.log` and the round-3
+sections run again (`R3_*`, `R3B_*`; Upgrading_Gas and Hoarder_hand keep their round-3 logs: the run had no B probe).
+Rig only, not headset-confirmed.
+
 ## Build
 
 ```

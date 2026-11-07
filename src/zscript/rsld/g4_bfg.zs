@@ -135,60 +135,7 @@ class RSLD_Fx_Nova : RSLD_G4Fx
 	}
 }
 
-// Prototype (E: BF): "Sprays huge amounts of plasma projectiles": LegenDoom's BFG streams LDPrototypeBFGBallGreen
-// pairs (one straight, one +-2 degrees), one pair a tic, one cell a pair. Ours: the ball becomes a stream of those
-// pairs from the drawn muzzle, as many pairs as the cells the shot took, damage at our BFG's ratio (our 1500 over its
-// 100 x random(1,8) mean); LegenDoom's balls are silenced when they burst (Plasma/Impact in their place).
-class RSLD_Fx_Prototype : RSLD_G4Fx
-{
-	override void RiderStart(RSLD_Rider r)
-	{
-		if (r.child || !r.m) return;
-		r.m.Destroy();
-		let st = new("RSLD_ProtoStream");
-		st.s = r.s; st.fx = self;
-		st.ratio = r.ourDirect / (RSLD_G3.LDBase(RSLD_G3.K_BFG) * RSLD_G3.RndMean());
-		RSLD_G3.Log(r, "ball -> plasma stream");
-	}
-	override void RiderDeath(RSLD_Rider r)
-	{
-		if (!r.child || !r.m) return;
-		RSLD_G3.Silence(r.m, 4);
-		r.m.A_StartSound("Plasma/Impact", CHAN_AUTO, CHANF_OVERLAP);
-	}
-}
-
-class RSLD_ProtoStream : Thinker
-{
-	RSLD_Shot s;
-	RSLD_Fx_Prototype fx;
-	double ratio;
-	int left, age;
-	override void Tick()
-	{
-		age++;
-		if (!s || !s.mo || s.mo.health <= 0) { Destroy(); return; }
-		if (age == 1) return;	// AfterPull (the next WorldTick) knows what the shot took
-		if (age == 2) { left = max(1, s.ammoTaken); if (RSLD.Debug()) s.Log(String.Format("Prototype stream: %d pairs (cells taken %d)", left, s.ammoTaken)); return; }
-		if (left-- <= 0) { Destroy(); return; }
-		let c = RSLD.AC("LDPrototypeBFGBallGreen"), c2 = RSLD.AC("LDPrototypeBFGBallGreen2");
-		if (!c || !c2) { Destroy(); return; }
-		Vector3 at; double a, p;
-		[at, a, p] = RSLD_G2.Muzzle(s.mo, s.hand, s.mo.angle, s.mo.pitch);
-		Ball(c, at, a, p);
-		Ball(c2, at, a + frandom(-2, 2), p + frandom(-2, 2));
-	}
-	void Ball(class<Actor> c, Vector3 at, double a, double p)
-	{
-		let b = Actor.Spawn(c, at, NO_REPLACE);
-		if (!b) return;
-		b.target = s.mo; b.angle = a; b.pitch = p;
-		b.Vel3DFromAngle(b.Speed, a, p);
-		b.SetDamage(max(1, int(b.GetMissileDamage(0, 1) * ratio + 0.5)));	// x random(1,8) in flight, as LegenDoom's
-		s.TagMissile(b);
-		let r = RSLD_G3.Ride(s, b, fx, true);
-	}
-}
+// Prototype (E: BF): moved to ld_g11_stream.zs in round 4 (owner: "a stream while the trigger is held").
 
 // Raycaster (E: RL): rockets emit BFG rays: A_BFGSpray("LDRaycasterRocketFlash", 20) at the blast, each ray target hit by
 // A_Explode(64, 128) (half LegenDoom's rocket blast, its radius). Ours: 20 of BD22's BFG rays from our rocket, each

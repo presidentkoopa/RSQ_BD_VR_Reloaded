@@ -1,18 +1,7 @@
-# R3_Overflowing_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Overflowing_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Shotgun
+RSLD probe: player at (-1600 0), holding Shot_Gun
+RSLD probe: Shot_Gun magazine 9 reserve 100
 RSLD probe: Overflowing on Shot_Gun slot Shotgun rarity Epic
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 6200 Overflowing p68 main Shot_Gun: maxed: rockets (small blasts) cells (x1.5) shells (free extra volley) clips (faster cycle: not carried here, G5)
-RSLD 6200 Overflowing p68 main Shot_Gun: shells maxed: 2 free extra pellets
-RSLD 6200 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6200 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6200 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6200 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6200 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6200 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6201 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6201 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6201 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6201 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
-RSLD 6201 Overflowing p68 main Shot_Gun: damage 13 -> 19 (x1.50) on BaronofHell2
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0

@@ -1,0 +1,11 @@
+# R4_DualWield: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BrutalPistol magazine 16 reserve 200
+RSLD probe: player BDoomer has DualPistols x0 health 100 speed 8.0
+RSLD probe: DualWield on BrutalPistol slot Pistol rarity Rare
+RSLD 115 DualWield p0 main BrutalPistol: DualWield: BD22's Dual Pistols unlock (the handler's gate, next tics)
+RSLD 115 DualWield: BD22's Dual Pistols unlocked by the pistol's DualWield legendary
+RSLD probe: player BDoomer has DualPistols x1 health 100 speed 8.0
+RSLD probe: cleared slot Pistol
+RSLD 130 DualWield: BD22's Dual Pistols taken (the pistol carries no DualWield legendary)
+RSLD probe: player BDoomer has DualPistols x0 health 100 speed 8.0
+RSLD probe: player BDoomer has BrutalPistol x1 health 100 speed 8.0

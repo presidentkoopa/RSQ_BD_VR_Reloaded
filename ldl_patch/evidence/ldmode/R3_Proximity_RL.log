@@ -1,5 +1,7 @@
-# R3_Proximity_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
-RSLD probe: cleared slot RocketLauncher
+# R3_Proximity_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Proximity on Rocket_Launcher slot RocketLauncher rarity Uncommon
 RSLD probe: 2 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 620 (428 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: target BaronofHell2 (BaronofHell2) at 620 (-980 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 4583 Proximity rider rocket p39: launched at 100 (LegenDoom's 40 x 2.50, our speed over its LDRocket's), drift 5.0
+RSLD 4617 Proximity rider rocket p39: deployed after 35 tics, 875 from the muzzle

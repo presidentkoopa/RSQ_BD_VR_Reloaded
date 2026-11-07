@@ -1,6 +1,11 @@
-# R3_Cluster_PR: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Cluster_PR: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot PlasmaRifle
+RSLD probe: player at (-1600 0), holding Plasma_Gun
+RSLD probe: Plasma_Gun magazine 50 reserve 600
 RSLD probe: Cluster on Plasma_Gun slot PlasmaRifle rarity Uncommon
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (208 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 3379 Cluster rider plasma p35: burst into 6 minis (x0.40, blast x0.50, speed 48)
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 10804 Cluster rider plasma p108: burst into 6 minis (x0.40, blast x0.50, speed 48)
+RSLD 10804 Cluster p108 main Plasma_Gun: damage 40 -> 16 (x0.40) on BaronofHell2
+RSLD 10804 Cluster p108 main Plasma_Gun: damage 40 -> 16 (x0.40) on BaronofHell2
+RSLD 10804 Cluster p108 main Plasma_Gun: damage 40 -> 16 (x0.40) on BaronofHell2

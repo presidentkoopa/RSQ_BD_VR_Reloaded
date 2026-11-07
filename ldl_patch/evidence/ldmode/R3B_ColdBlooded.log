@@ -1,14 +1,15 @@
-# R3B_ColdBlooded: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_ColdBlooded: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Melee_Attacks magazine 0 reserve 0
 RSLD probe: ColdBlooded on Melee_Attacks slot Fists rarity Common
-RSLD 11808 G7 probe: a test punch (MeleeStrikeNormal) from the main hand
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-16 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 11808 ColdBlooded p229 main Melee_Attacks: cold-blooded: no berserk: BD22's berserk punch level (x6.00)
-RSLD 11808 ColdBlooded p229 main Melee_Attacks: damage 10 -> 60 (x6.00) on BaronofHell2
-RSLD 11823 ColdBlooded p230 main Melee_Attacks: cold-blooded: no berserk: BD22's berserk punch level (x6.00)
-RSLD 11823 ColdBlooded p230 main Melee_Attacks: damage 10 -> 60 (x6.00) on BaronofHell2
-RSLD 11831 Recursive: 0 pellets and 3 projectiles fired again from the spot of the shot (0 more to come)
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-16 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 11865 ColdBlooded p232 main Melee_Attacks: cold-blooded: berserk lowers it: BD22's normal punch level (x0.17)
-RSLD 11865 ColdBlooded p232 main Melee_Attacks: damage 60 -> 10 (x0.17) on BaronofHell2
+RSLD 17064 G7 probe: a test punch (MeleeStrikeNormal) from the main hand
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 17064 ColdBlooded p283 main Melee_Attacks: cold-blooded: no berserk: BD22's berserk punch level (x6.00)
+RSLD 17064 ColdBlooded p283 main Melee_Attacks: damage 10 -> 60 (x6.00) on BaronofHell2
+RSLD 17077 Recursive: 0 pellets and 3 projectiles fired again from the spot of the shot (0 more to come)
+RSLD 17079 ColdBlooded p285 main Melee_Attacks: cold-blooded: no berserk: BD22's berserk punch level (x6.00)
+RSLD 17079 ColdBlooded p285 main Melee_Attacks: damage 10 -> 60 (x6.00) on BaronofHell2
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 17121 ColdBlooded p286 main Melee_Attacks: cold-blooded: berserk lowers it: BD22's normal punch level (x0.17)
+RSLD 17121 ColdBlooded p286 main Melee_Attacks: damage 60 -> 10 (x0.17) on BaronofHell2

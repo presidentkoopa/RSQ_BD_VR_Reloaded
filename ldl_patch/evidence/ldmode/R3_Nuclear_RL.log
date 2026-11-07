@@ -1,10 +1,13 @@
-# R3_Nuclear_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Nuclear_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot RocketLauncher
+RSLD probe: player at (-1600 0), holding Rocket_Launcher
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Nuclear on Rocket_Launcher slot RocketLauncher rarity Rare
-RSLD probe: Rocket_Launcher magazine 4 reserve 70
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 2973 Nuclear p30 main Rocket_Launcher: refund 1 -> RocketRounds
-RSLD 2973 Nuclear p30 main Rocket_Launcher: Nuclear (infinite ammo): 1 round(s) given back
-RSLD 2979 Nuclear rider rocket p30: blast RocketExplosion -> 60 over 90 (BD22's 100 / 150)
-RSLD probe: Rocket_Launcher magazine 4 reserve 70
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (-1280 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 10390 Nuclear p103 main Rocket_Launcher: refund 1 -> RocketRounds
+RSLD 10390 Nuclear p103 main Rocket_Launcher: Nuclear (infinite ammo): 1 round(s) given back
+RSLD 10394 Nuclear p103 main Rocket_Launcher: damage 150 -> 90 (x0.60) on BaronofHell2
+RSLD 10394 Nuclear rider rocket p103: blast RocketExplosion -> 60 over 90 (BD22's 100 / 150)
+RSLD probe: Rocket_Launcher magazine 6 reserve 100

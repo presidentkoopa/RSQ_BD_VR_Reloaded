@@ -1,16 +1,19 @@
-# R3B_NorthernStar: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_NorthernStar: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Fists
+RSLD probe: player at (-1600 0), holding Melee_Attacks
+RSLD probe: Melee_Attacks magazine 0 reserve 0
 RSLD probe: NorthernStar on Melee_Attacks slot Fists rarity Epic
-RSLD 12385 G7 probe: a test punch (MeleeStrikeNormal) from the main hand
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-16 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 12385 NorthernStar p250 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
-RSLD 12385 NorthernStar p250 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
-RSLD 12400 NorthernStar p251 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
-RSLD 12400 NorthernStar p251 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
-RSLD 12409 NorthernStar p252 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
-RSLD 12409 NorthernStar p252 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
-RSLD 12424 NorthernStar p253 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
-RSLD 12424 NorthernStar p253 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
+RSLD 17641 G7 probe: a test punch (MeleeStrikeNormal) from the main hand
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 17641 NorthernStar p304 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
+RSLD 17641 NorthernStar p304 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
+RSLD 17656 NorthernStar p305 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
+RSLD 17656 NorthernStar p305 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
+RSLD 17665 NorthernStar p306 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
+RSLD 17665 NorthernStar p306 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
+RSLD 17680 NorthernStar p307 main Melee_Attacks: northern star: BaronofHell2 stunned 60 tics, 35 more damage waits for the stun's end (LegenDoom's damager)
+RSLD 17680 NorthernStar p307 main Melee_Attacks: damage 10 -> 0 (x1.00) on BaronofHell2
 RSLD probe: target BaronofHell2 has LDNorthernStarStunActive x1 (55 tics) health 30000 speed 0.0
+RSLD 17739 NorthernStar p304 main Melee_Attacks: northern star: the closing blow (LegenDoom's A_RadiusThrust 20000 over 20): 1 monster thrown: BaronofHell2 +10
 RSLD probe: target BaronofHell2 has Health x0 health 29860 speed 0.0

@@ -55,12 +55,56 @@ class RSLD_G6 play
 	}
 	static int Taken(RSLD_Shot s) { return HasMag(s.weapon) ? s.magTaken : s.resTaken; }
 
-	static bool Maxed(Actor p, string kind)
+	// owner, round 4: "Transmogrifier / Overflowing: all BD22 ammo counts (Upgrading's mapping)". Every BD22 reserve ammo
+	// belongs to one of LegenDoom's four kinds: the kind's own item (Clip2 / AmmoShell / AmmoRocket / AmmoCell; BD22 VR's
+	// RSQ_MinigunAmmo is the chaingun's clip ammo) and the ammo of BD22's guns outside LegenDoom's nine, as Upgrading
+	// counts them (ld_g8_rules.zs RSLD_B.OnlyKind: Gas / SoulAmmo -> Cell, GrenadeAmmo / AmmoM202 / MiniHellRocketAmmo /
+	// Nuke / DevastatorAmmo -> Rocket, Mauser9mm / SniperAmmo / Clip1 -> Clip). Magazines are not reserves.
+	static int KindIndex(string k)
 	{
-		let c = RSLD.IC(KindCls(kind));
-		let i = c ? p.FindInventory(c) : null;
-		return i && i.MaxAmount > 0 && i.Amount >= i.MaxAmount;
+		if (k == "Clip") return 0;
+		if (k == "Shell") return 1;
+		if (k == "RocketAmmo" || k == "Rocket") return 2;
+		if (k == "Cell") return 3;
+		return -1;
 	}
+	static int KindOfAmmo(Name n)
+	{
+		switch (n)
+		{
+			case 'Clip2': case 'RSQ_MinigunAmmo': return 0;
+			case 'AmmoShell': return 1;
+			case 'AmmoRocket': return 2;
+			case 'AmmoCell': return 3;
+		}
+		return RSLD_B.OnlyKind(n);
+	}
+	// the player's BD22 reserves of a kind, the kind's own item first
+	static void KindAmmo(Actor p, string kind, out Array<Inventory> l)
+	{
+		l.Clear();
+		int ki = KindIndex(kind);
+		if (!p || ki < 0) return;
+		let own = RSLD.IC(KindCls(kind));
+		let oi = own ? p.FindInventory(own) : null;
+		if (oi) l.Push(oi);
+		for (let i = p.Inv; i; i = i.Inv)
+		{
+			if (i == oi || !(i is "Ammo")) continue;
+			let pa = Ammo(i).GetParentAmmo();
+			if (pa && pa == i.GetClass() && KindOfAmmo(i.GetClassName()) == ki) l.Push(i);
+		}
+	}
+	// a kind is at its maximum when any of its BD22 reserves is full (each BD22 ammo type counts: owner round 2 Q14b,
+	// round 4); the full one's name for the log, "" if none
+	static string MaxedBy(Actor p, string kind)
+	{
+		Array<Inventory> l;
+		KindAmmo(p, kind, l);
+		for (int i = 0; i < l.Size(); i++) if (l[i].MaxAmount > 0 && l[i].Amount >= l[i].MaxAmount) return l[i].GetClassName();
+		return "";
+	}
+	static bool Maxed(Actor p, string kind) { return MaxedBy(p, kind) != ""; }
 
 	// ---------------------------------------------------------------- alt-fire stand-down (owner round 3, Q12)
 	// BD22 VR's toggleable secondaries stand down while the hand's gun carries the legendary power that uses that input:
@@ -271,12 +315,17 @@ class RSLD_Fx_Transmogrifier : RSLD_G6Fx
 		for (int i = 1; i < l.Size(); i++)	// [0] is its own kind (the normal path)
 		{
 			int cost = int(RSLD_G3.NOr("Transmogrifier", gk .. "_" .. l[i], 0));
-			let c = RSLD.IC(RSLD_G6.KindCls(l[i]));
-			let inv = c ? s.mo.FindInventory(c) : null;
-			if (cost <= 0 || !inv || inv.Amount < cost) continue;
-			inv.Amount -= cost;
-			GiveBack(s, String.Format("Transmogrifier: out of its own ammo, took %d %s (LegenDoom's %s) instead", cost, inv.GetClassName(), l[i]));
-			return;
+			if (cost <= 0) continue;
+			Array<Inventory> pools;
+			RSLD_G6.KindAmmo(s.mo, l[i], pools);	// round 4: every BD22 ammo of that kind (the kind's own first)
+			for (int j = 0; j < pools.Size(); j++)
+			{
+				let inv = pools[j];
+				if (inv.Amount < cost) continue;
+				inv.Amount -= cost;
+				GiveBack(s, String.Format("Transmogrifier: out of its own ammo, took %d %s (LegenDoom's %s kind) instead", cost, inv.GetClassName(), l[i]));
+				return;
+			}
 		}
 		s.Log("Transmogrifier: no other ammo kind has enough: the gun empties");
 	}
@@ -358,8 +407,10 @@ class RSLD_Fx_Overflowing : RSLD_G6Fx
 	override void Init() { wantPellets = true; }
 	override void OnPull(RSLD_Shot s)
 	{
-		s.i1 = (RSLD_G6.Maxed(s.mo, "RocketAmmo") ? 1 : 0) | (RSLD_G6.Maxed(s.mo, "Cell") ? 2 : 0) | (RSLD_G6.Maxed(s.mo, "Shell") ? 4 : 0) | (RSLD_G6.Maxed(s.mo, "Clip") ? 8 : 0);
-		if (s.i1) s.Log(String.Format("maxed:%s%s%s%s", s.i1 & 1 ? " rockets (small blasts)" : "", s.i1 & 2 ? " cells (x1.5)" : "", s.i1 & 4 ? " shells (free extra volley)" : "", s.i1 & 8 ? " clips (faster cycle: not carried here, G5)" : ""));
+		string mr = RSLD_G6.MaxedBy(s.mo, "RocketAmmo"), mc = RSLD_G6.MaxedBy(s.mo, "Cell"), ms = RSLD_G6.MaxedBy(s.mo, "Shell"), ml = RSLD_G6.MaxedBy(s.mo, "Clip");
+		s.i1 = (mr != "" ? 1 : 0) | (mc != "" ? 2 : 0) | (ms != "" ? 4 : 0) | (ml != "" ? 8 : 0);
+		if (s.i1) s.Log(String.Format("maxed:%s%s%s%s", mr != "" ? " rockets by " .. mr .. " (small blasts)" : "", mc != "" ? " cells by " .. mc .. " (x1.5)" : "",
+			ms != "" ? " shells by " .. ms .. " (free extra volley)" : "", ml != "" ? " clips by " .. ml .. " (faster cycle: left out, owner round 4)" : ""));
 	}
 	static double CellMul(int kind)
 	{

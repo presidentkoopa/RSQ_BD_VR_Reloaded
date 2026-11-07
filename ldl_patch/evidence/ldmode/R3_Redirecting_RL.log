@@ -1,5 +1,7 @@
-# R3_Redirecting_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Redirecting_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot RocketLauncher
+RSLD probe: player at (-1600 0), holding Rocket_Launcher
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Redirecting on Rocket_Launcher slot RocketLauncher rarity Uncommon
-RSLD probe: 1 targets removed
-RSLD 621 Redirecting rider rocket p8: bounced: turned toward LabguyB
+RSLD probe: 3 targets removed
+RSLD 9289 Redirecting rider rocket p90: bounced: turned toward nothing

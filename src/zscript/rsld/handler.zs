@@ -568,6 +568,34 @@ class RSLD_Handler : EventHandler
 		return dof < dm ? RSLD.OFF : RSLD.MAIN;
 	}
 
+	// owner, round 4: "fist legendaries: both fists (the off hand's free fist too)". A punch thrown with an arm comes from
+	// the hand rsq/fists.zs recorded for it (the nearest controller for any other strike); the off hand's free fist
+	// (RSQ_Hands) stands for BD22's fists weapon (Melee_Attacks, LegenDoom's Fists slot) in that hand.
+	static int StrikeHand(PlayerPawn mo, Actor a)
+	{
+		int rh;
+		double mps;
+		[rh, mps] = RSQ_Fists.Lookup(a);
+		return rh >= 0 ? rh : HandOf(mo, a);
+	}
+	static Weapon FistsOf(PlayerPawn mo)
+	{
+		class<Inventory> c = RSLD.IC("Melee_Attacks");
+		return c ? Weapon(mo.FindInventory(c)) : null;
+	}
+	// the weapon a hand holds for the LD mode: the off hand's free fist is the fists weapon (strike: any RSQ_Hands punch)
+	static Weapon HandWeapon(PlayerPawn mo, int hand, bool strike = false)
+	{
+		if (!mo || !mo.player) return null;
+		let w = hand == RSLD.OFF ? mo.player.OffhandWeapon : mo.player.ReadyWeapon;
+		if (hand == RSLD.OFF && w is "RSQ_Hands" && (strike || RSQ_Hands.OffFist(mo)))
+		{
+			let f = FistsOf(mo);
+			if (f) w = f;
+		}
+		return w;
+	}
+
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		if (!ldOn) return;
@@ -612,6 +640,8 @@ class RSLD_Handler : EventHandler
 		if (TagOf(a)) return;	// already met at its first hit (FindShot)
 		if (IsStrike(a))
 		{
+			hand = StrikeHand(mo, a);
+			w = HandWeapon(mo, hand, true);
 			int sl = SlotOf(w);
 			if (sl != 0 && sl != 1) return;	// a kick / gun bash is not a LegenDoom attack (it gets the held effect, no pull)
 			let s = PullOf(mo, hand, w, true);
@@ -652,9 +682,9 @@ class RSLD_Handler : EventHandler
 			if (inflictor.bMISSILE && inflictor.target == mo)
 			{
 				string icn = inflictor.GetClassName();
-				int hand = HandOf(mo, inflictor);
-				let w = hand == RSLD.OFF ? mo.player.OffhandWeapon : mo.player.ReadyWeapon;
 				bool strike = IsStrike(inflictor);
+				int hand = strike ? StrikeHand(mo, inflictor) : HandOf(mo, inflictor);
+				let w = HandWeapon(mo, hand, strike);
 				int sl = SlotOf(w);
 				if ((strike && (sl == 0 || sl == 1)) || (!strike && !Helper(inflictor)))
 				{
@@ -694,6 +724,7 @@ class RSLD_Handler : EventHandler
 		hit.target = victim; hit.inflictor = inflictor; hit.damage = damage; hit.setDamage = -1; hit.flags = flags;
 		hit.damageType = type; hit.mult = 1.0; hit.killed = false;
 		s.fx.ModifyDamage(s, hit);
+		if (s.melee && s.slot == 0) RSLD_G7.Swing(s, hit);	// round 4: a fist legendary's punch x its swing speed (ld_g7_fx.zs)
 		int nd = hit.setDamage >= 0 ? hit.setDamage : int(damage * hit.mult);
 		if (nd != damage && RSLD.Debug())
 			s.Log(String.Format("damage %d -> %d (x%.2f) on %s", damage, nd, hit.mult, victim ? victim.GetClassName() : 'none'));
@@ -920,12 +951,14 @@ class RSLD_Handler : EventHandler
 			if (jam && !had) { p.GiveInventory(tok, 1); if (RSLD.Debug()) Console.Printf("RSLD %d Perfect: %s hand JAMMED (trigger blocked)", level.maptime, RSLD.HandName(hand)); }
 			else if (!jam && had) { p.TakeInventory(tok, 1); if (RSLD.Debug()) Console.Printf("RSLD %d Perfect: %s hand jam cleared", level.maptime, RSLD.HandName(hand)); }
 		}
+		infoWas = RSLD_LDSounds.InfoTick(p, infoWas);	// round 4: LegenDoom's info screen sounds under the mute option
+		if (level.maptime % 5 == pn % 5) DualWieldGate(pn, p);	// round 4 (owner): BD22's Dual Pistols only from DualWield
 		RSLD_G6.StandDown(self, p);	// round 3 (owner Q12): BD22 VR's secondaries stand down for a legendary power (g6_ammo.zs)
 		// the guns in the hands
 		for (int hand = 0; hand < 2; hand++)
 		{
 			int k = pn * 2 + hand;
-			let w = hand == RSLD.OFF ? pl.OffhandWeapon : pl.ReadyWeapon;
+			let w = HandWeapon(p, hand);	// round 4: the off hand's free fist carries the Fists slot's legendary
 			if (w != heldW[k])
 			{
 				heldW[k] = w; heldSince[k] = level.maptime;
@@ -947,6 +980,54 @@ class RSLD_Handler : EventHandler
 	}
 
 	int LastPull(int pn, int hand) { return lastPullTic[pn * 2 + hand]; }
+
+	// owner, round 4: "DualWield: with LegenDoom loaded, BD22's own Dual Pistols weapon unlocks only from the DualWield
+	// legendary (our VR pistol-in-each-hand is unaffected)". The pistol slot's legendary is DualWield: BD22's DualPistols
+	// is given (once; it stays while the legendary does). Anything else: DualPistols is taken (a cheat's give all, BD22's
+	// own twin-pistol path); a rig-probe-forced effect on the slot leaves it be (rig only).
+	bool infoWas;	// LegenDoom's info screen was open (consoleplayer: ldsounds.zs InfoTick)
+	bool keepDual;	// rig probe only (netevent rsld_keepdual 1): the gate leaves a given DualPistols be (Perfect's proof on it)
+	static bool OwnsFamilyBut(Actor a, int s, class<Inventory> but)
+	{
+		for (int i = 0; i < RSLD_Data.Family.Size(); i++)
+		{
+			Array<string> f; RSLD_Data.Family[i].Split(f, "|");
+			if (f[0].ToInt() != s) continue;
+			class<Inventory> c = f[1];
+			if (c && c != but && a.CountInv(c) > 0) return true;
+		}
+		return false;
+	}
+
+	void DualWieldGate(int pn, PlayerPawn p)
+	{
+		class<Inventory> dc = RSLD.IC("DualPistols");
+		if (!dc) return;
+		bool on = slotEff[pn * 9 + 2] ~== "DualWield";
+		let have = Weapon(p.FindInventory(dc));
+		if (on && !have)
+		{
+			p.GiveInventory(dc, 1);
+			if (RSLD.Debug()) Console.Printf("RSLD %d DualWield: BD22's Dual Pistols unlocked by the pistol's DualWield legendary", level.maptime);
+		}
+		else if (!on && have && !probeFx[pn * 9 + 2] && !keepDual)
+		{
+			let pl = p.player;
+			bool held = pl.ReadyWeapon == have || pl.PendingWeapon == have;
+			p.RemoveInventory(have);
+			have.Destroy();
+			// BD22's DualPistols took the single pistol when it was selected (DualPistol.dec Select): it comes back
+			class<Inventory> bc = RSLD.IC("BrutalPistol");
+			if (bc && !OwnsFamilyBut(p, 2, dc)) p.GiveInventory(bc, 1);
+			if (held)
+			{
+				let bp = bc ? Weapon(p.FindInventory(bc)) : null;
+				pl.PendingWeapon = bp ? bp : WP_NOCHANGE;
+				if (!bp) p.PickNewWeapon(null);
+			}
+			if (RSLD.Debug()) Console.Printf("RSLD %d DualWield: BD22's Dual Pistols taken (the pistol carries no DualWield legendary)", level.maptime);
+		}
+	}
 
 	// LegenDoom's start buffs run from its own ENTER/RESPAWN script (LD_ApplyStartBuffs); OnMapStart is ours
 	void MapStart(int pn, PlayerPawn p)
@@ -1110,7 +1191,12 @@ class RSLD_Handler : EventHandler
 			let m = Actor.Spawn(c, at, NO_REPLACE);	// the class asked for (BD22 class names: RifleZombie, Imp, BullDemon...)
 			if (!m) return;
 			m.angle = m.AngleTo(p);
-			if (e.Args[2] > 0) { m.bFRIENDLY = true; m.speed = 0; m.vel = (0, 0, 0); m.bDONTTHRUST = true; }	// arg 3 > 0: a still dummy (speed 0: it does not walk; friendly: it does not fight)
+			if (e.Args[2] == 2)	// round 4: a HOSTILE still target (seekers, sprays and autoaim take it; it never walks or attacks)
+			{
+				m.speed = 0; m.vel = (0, 0, 0);
+				let hold = new("RSLD_ProbeHold"); hold.m = m;
+			}
+			else if (e.Args[2] > 0) { m.bFRIENDLY = true; m.speed = 0; m.vel = (0, 0, 0); m.bDONTTHRUST = true; }	// arg 3 > 0: a still dummy (speed 0: it does not walk; friendly: it does not fight)
 			probeTargets.Push(m);
 			if (e.Args[1] > 0) m.health = e.Args[1];
 			Vector3 gd = p.OverrideAttackPosDir ? p.AttackDir(p, p.angle, p.pitch) : (p.angle, p.pitch, 0);
@@ -1119,6 +1205,28 @@ class RSLD_Handler : EventHandler
 			return;
 		}
 		// rig probe helpers (TEST: never in a menu): player health, inventory checks on the player / last target
+		if (n == "rsld_home")	// round 4: the player back at <x> <y> (the rig's arena start), facing east, standing still
+		{
+			p.SetOrigin((e.Args[0], e.Args[1], p.floorz), false);
+			p.vel = (0, 0, 0);
+			p.angle = 0; p.pitch = 0;
+			Console.Printf("RSLD probe: player at (%.0f %.0f), holding %s", p.pos.x, p.pos.y, p.player.ReadyWeapon ? p.player.ReadyWeapon.GetClassName() : 'nothing');
+			return;
+		}
+		if (n == "rsld_keepdual") { keepDual = e.Args[0] != 0; Console.Printf("RSLD probe: the DualWield gate %s a given DualPistols", keepDual ? "keeps" : "no longer keeps"); return; }
+		if (n.Left(11) == "rsld_punch:")	// round 4: a test punch from hand <0 main | 1 off> at <args 0> / 100 m/s (rsq/fists.zs's record)
+		{
+			RSLD_G7.TestPunch(p, n.Mid(11).ToInt() == 1 ? RSLD.OFF : RSLD.MAIN, e.Args[0] / 100.0);
+			return;
+		}
+		if (n == "rsld_menusnd")	// round 4: what the menu delegate plays for QuestZDoom's menu sounds now (ldsounds.zs)
+		{
+			static const string MS[] = { "menu/activate", "menu/cursor", "menu/choose", "menu/backup", "menu/change", "menu/clear" };
+			string l = "";
+			for (int i = 0; i < MS.Size(); i++) l = l .. String.Format(" %s -> %s", MS[i], RSLD_MenuSounds.Map(MS[i]));
+			Console.Printf("RSLD probe: menu sounds (muted %s):%s", RSLD_LDSounds.Muted() ? "yes" : "no", l);
+			return;
+		}
 		if (n.Left(12) == "rsld_health:") { p.A_SetHealth(n.Mid(12).ToInt()); Console.Printf("RSLD probe: health %d", p.health); return; }
 		if (n.Left(9) == "rsld_has:" || n.Left(10) == "rsld_thas:")
 		{
@@ -1144,11 +1252,14 @@ class RSLD_Handler : EventHandler
 			Console.Printf("RSLD probe: %d actors %s*", k, pre);
 			return;
 		}
-		if (n == "rsld_cleartargets")
+		if (n == "rsld_cleartargets")	// round 4: and every other monster left in the level (BD22's headshot / dying replacements)
 		{
 			int k = 0;
 			for (int i = 0; i < probeTargets.Size(); i++) if (probeTargets[i]) { probeTargets[i].Destroy(); k++; }
 			probeTargets.Clear();
+			let mi = ThinkerIterator.Create("Actor");
+			Actor ma;
+			while (ma = Actor(mi.Next())) if (ma.bISMONSTER && !ma.player) { ma.Destroy(); k++; }
 			Console.Printf("RSLD probe: %d targets removed", k);
 			return;
 		}
@@ -1324,4 +1435,20 @@ class RSLDP_Service : Service
 	{ return request ~== "ld_prefix" ? Prefix(stringArg) : ""; }
 	override String GetStringData(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{ return request ~== "ld_prefix" ? Prefix(stringArg) : ""; }
+}
+
+// rig probe (round 4): a hostile target that stays put: never walks (speed 0), never attacks (back to its Spawn state
+// whenever it goes into its See / Missile / Melee states); its pain, its death and anything thrown at it as normal
+class RSLD_ProbeHold : Thinker
+{
+	Actor m;
+	override void Tick()
+	{
+		if (!m || m.health <= 0) { Destroy(); return; }
+		m.speed = 0;
+		if (!m.CurState) return;
+		bool act = (m.SeeState && Actor.InStateSequence(m.CurState, m.SeeState)) || (m.MissileState && Actor.InStateSequence(m.CurState, m.MissileState))
+			|| (m.MeleeState && Actor.InStateSequence(m.CurState, m.MeleeState));
+		if (act && m.SpawnState) { m.target = null; m.SetState(m.SpawnState); }
+	}
 }

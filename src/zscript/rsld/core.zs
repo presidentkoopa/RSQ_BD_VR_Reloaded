@@ -85,7 +85,7 @@ class RSLD play
 		int n = 0;
 		int s0 = SlotOf(p.player.ReadyWeapon), s1 = -1;
 		cvar oc = cvar.FindCvar("rsld_offhand_legendary");
-		if (!oc || oc.GetBool()) s1 = SlotOf(p.player.OffhandWeapon);
+		if (!oc || oc.GetBool()) s1 = SlotOf(RSLD_Handler.HandWeapon(p, OFF));	// round 4: the off hand's free fist is the Fists slot
 		for (int k = 0; k < 2; k++)
 		{
 			int s = k == 0 ? s0 : s1;
@@ -103,7 +103,7 @@ class RSLD play
 		if (!p || !p.player || s < 0) return false;
 		if (SlotOf(p.player.ReadyWeapon) == s) return true;
 		cvar oc = cvar.FindCvar("rsld_offhand_legendary");
-		return (!oc || oc.GetBool()) && SlotOf(p.player.OffhandWeapon) == s;
+		return (!oc || oc.GetBool()) && SlotOf(RSLD_Handler.HandWeapon(p, OFF)) == s;
 	}
 	// copies of an effect the player owns over all nine slots (LegenDoom's LD_CountEffect): effects that count
 	// owned legendaries by their own rule (Thematic) and the Upgrading meter

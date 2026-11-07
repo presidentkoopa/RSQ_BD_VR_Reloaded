@@ -1,9 +1,11 @@
-# R3B_Shielding_CG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Shielding_CG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Chaingun
+RSLD probe: player at (-1600 0), holding Minigun
+RSLD probe: Minigun magazine 0 reserve 800
 RSLD probe: Shielding on Minigun slot Chaingun rarity Uncommon
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 8931 Shielding p202 main Minigun: shield (LegenDoom's LDShieldingShield) 32 units ahead of the muzzle
-RSLD 8934 Shielding p203 main Minigun: shield (LegenDoom's LDShieldingShield) 32 units ahead of the muzzle
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 14552 Shielding p258 main Minigun: shield (LegenDoom's LDShieldingShield) 32 units ahead of the muzzle
+RSLD 14555 Shielding p259 main Minigun: shield (LegenDoom's LDShieldingShield) 32 units ahead of the muzzle
 RSLD probe: 2 actors LDShieldingShield*
-RSLD 8937 Shielding p204 main Minigun: shield (LegenDoom's LDShieldingShield) 32 units ahead of the muzzle
+RSLD 14558 Shielding p260 main Minigun: shield (LegenDoom's LDShieldingShield) 32 units ahead of the muzzle

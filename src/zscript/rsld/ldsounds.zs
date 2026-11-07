@@ -10,7 +10,23 @@
 
 class RSLD_LDSounds play
 {
-	static bool Muted() { cvar c = cvar.FindCvar("rsld_mute_ld_sounds"); return c && c.GetBool(); }
+	clearscope static bool Muted() { cvar c = cvar.FindCvar("rsld_mute_ld_sounds"); return c && c.GetBool(); }
+
+	// round 4 (owner: "QuestZDoom's own menu / info-screen sounds come back under Mute LegenDoom sounds"). LegenDoom's
+	// info screen (LEGENDMEN.acs LDMenuToggle) plays menu/infoopen / menu/infoclose with LocalAmbientSound when it gives /
+	// takes LDWeaponInfoScreenActive: SNDINFO.rsld silences those names and this plays, for the player at this screen,
+	// LegenDoom's own lumps (rsld/ld/info*) or, muted, QuestZDoom's menu open / back sounds (rsld/qz/*: the engine's own
+	// lumps for menu/activate and menu/backup). Called every tic from the handler (consoleplayer only).
+	static bool InfoTick(PlayerPawn p, bool was)
+	{
+		if (!p || p.PlayerNumber() != consoleplayer) return was;
+		bool on = RSLD.Has(p, "LDWeaponInfoScreenActive") > 0;
+		if (on == was) return was;
+		string snd = Muted() ? (on ? "rsld/qz/activate" : "rsld/qz/backup") : (on ? "rsld/ld/infoopen" : "rsld/ld/infoclose");
+		S_StartSound(snd, CHAN_AUTO, CHANF_UI, 1.0, ATTN_NONE);	// LocalAmbientSound(..., 127)
+		if (RSLD.Debug()) Console.Printf("RSLD %d sounds: LegenDoom info screen %s: %s", level.maptime, on ? "opened" : "closed", snd);
+		return on;
+	}
 
 	// pickup.zs: a legendary was picked up (LegenDoom's EffectScreen runs and plays its jingle: LEGNDLIB.acs:678-695)
 	static void Jingle(Actor toucher, string effect, int rarity)
@@ -81,5 +97,34 @@ class RSLD_LDSoundReg : Thinker
 		}
 		if (m != wasMuted && RSLD.Debug()) Console.Printf("RSLD %d sounds: LegenDoom pickup & aura sounds %s (%d auras)", level.maptime, m ? "muted" : "on", gen.Size());
 		wasMuted = m;
+	}
+}
+
+// round 4: QuestZDoom's own MENU sounds under "Mute LegenDoom sounds". LegenDoom's SNDINFO redefines the engine's menu
+// sound names (menu/activate ... menu/clear -> its LDMENU* lumps). SNDINFO is read once at start, so BD22 VR's SNDINFO
+// alone could only undo that for good, with the option or without it. The engine plays every menu sound through the
+// game's menu delegate (zscript/engine/ui/menu/menu.zs MenuSound -> menuDelegate.PlaySound; Doom: DoomMenuDelegate):
+// BD22 VR's MAPINFO.rsld names this delegate, which plays the engine's own lumps (rsld/qz/*, SNDINFO.rsld: the lumps of
+// QuestZDoom's doomchex sndinfo.txt) in their place while LegenDoom is loaded and the option is on, and the same name
+// otherwise (exactly DoomMenuDelegate: without LegenDoom nothing changes). Not covered: the quit sounds (menu/quit1,
+// quit2: the engine plays them itself, not through the delegate): LegenDoom's stay.
+class RSLD_MenuSounds
+{
+	clearscope static string Map(string snd)
+	{
+		if (!RSLD.On() || !RSLD_LDSounds.Muted() || snd.Left(5) != "menu/") return snd;
+		string k = snd.Mid(5);
+		static const string QZ[] = { "activate", "backup", "prompt", "cursor", "change", "invalid", "dismiss", "choose", "clear" };
+		for (int i = 0; i < QZ.Size(); i++) if (k == QZ[i]) return "rsld/qz/" .. k;
+		return snd;
+	}
+}
+
+class RSLD_MenuDelegate : DoomMenuDelegate
+{
+	override void PlaySound(Name snd)
+	{
+		String s = RSLD_MenuSounds.Map(snd);
+		S_StartSound(s, CHAN_VOICE, CHANF_UI, snd_menuvolume);
 	}
 }

@@ -5,8 +5,9 @@
 // (scope section 0 "R"); our hand actions (pump by hand, break action, magazine, flick) are never sped (owner Q6).
 // Proof lines (rsld_debug 1): every pull of a cadence effect logs "cadence xS: N tics since the last shot, the gun's
 // own M" (M = N plus the tics the effect took off / minus those it added), so one held-trigger run shows the change.
-// NOT built here (owner questions, R3B_DONE.md): Beam, Blazing (Q5 for these two is open), DualWield (which "twin
-// pistols"), SixShooter's rate (LegenDoom's code fires faster, its text says slower: only its damage is built).
+// Round 4 (owner's answers): SixShooter at half speed (its description); Chargeup on the fists stores punches while the
+// fist's trigger is held; DualWield unlocks BD22's own Dual Pistols (RSLD_Fx_DualWield below). Beam / Blazing /
+// Prototype: ld_g11_stream.zs.
 
 // ---- a cadence effect: a speed factor on the hand's trigger cycle, logged per pull
 class RSLD_G5Speed : RSLD_G5Effect
@@ -130,13 +131,18 @@ class RSLD_Fx_Advanced : RSLD_G5Speed
 
 // ---- SixShooter (E: Pi), "Does 10x damage, slower fire rate": LegenDoom's FireSixShooterAttack: randompick(50, 60, ...
 // 150) (FBF_NORANDOM, spread 0) where its pistol does 5 x random(1,3) (mean 10): x5..x15 rolled per pull in LegenDoom's
-// steps of 10, perfect accuracy. The RATE is an owner question (LegenDoom's code fires every 7 tics, faster than its
-// pistol's 14; its text says slower): the cycle is left as our gun's.
-class RSLD_Fx_SixShooter : RSLD_G5Effect
+// steps of 10, perfect accuracy. The RATE: owner, round 4: "SixShooter: half speed (its description)" ("slower fire
+// rate"; LegenDoom's code fires every 7 tics, faster than its pistol's 14: the text wins): x0.5 on our gun's trigger
+// cycle (hand actions at hand speed, as every cadence effect).
+class RSLD_Fx_SixShooter : RSLD_G5Speed
 {
+	const OWNER_SPEED = 0.5;	// owner round 4 (no LegenDoom number: its description's "slower", as half)
+	override double Speed(RSLD_Held c) { return c.slot == 0 ? 1.0 : OWNER_SPEED; }
+
 	override void OnPull(RSLD_Shot s)
 	{
 		if (s.melee) return;
+		LogPull(s);
 		double mean = RSLD.Num("Base", "pi_dmg") * (1 + RSLD.Num("Base", "rnd_max")) / 2.0;
 		int lo = int(Num("dmg_lo")), hi = int(Num("dmg_hi"));
 		int pick = lo + 10 * random[rsld_g5](0, max(0, (hi - lo) / 10));
@@ -287,6 +293,8 @@ class RSLD_Fx_Burst : RSLD_G5Effect
 	{
 		let h = HSc(c);
 		if (c.slot == 0) { FistBurst(c, h); return; }
+		int kk = c.pn * 2 + c.hand;
+		if (injTic[kk] > 0 && level.maptime - injTic[kk] > 2) injTic[kk] = 0;	// a burst shot that never came out
 		if (h.n1 <= 0 || level.maptime < h.tic1) return;
 		if (c.weapon != h.w || RSLD_G5.Loading(c.mo) || !RSLD_G5.CanShoot(c.weapon, c.mo))
 		{
@@ -298,8 +306,19 @@ class RSLD_Fx_Burst : RSLD_G5Effect
 		h.n1--;
 		int k = c.pn * 2 + c.hand;
 		injTic[k] = level.maptime;
-		bool ok = RSLD_G5.ShootNow(c.mo, c.hand, c.weapon);
-		if (!ok) { RSLD.Log(String.Format("Burst: %s gave no shot: the burst ends with %d left", c.weapon.GetClassName(), h.n1)); h.n1 = 0; injTic[k] = 0; }
+		int before = RSLD_G5.ShotCount(c.mo, c.hand);
+		h.tic1 = level.maptime + Gap(c.slot);	// the next one not before the gap, whenever this one's pull arrives
+		if (!RSLD_G5.Shoot(c.mo, c.hand, c.weapon))
+		{
+			RSLD.Log(String.Format("Burst: %s gave no shot: the burst ends with %d left", c.weapon.GetClassName(), h.n1));
+			h.n1 = 0; injTic[k] = 0;
+			return;
+		}
+		// round 4 (rig, round-4 batched run R3B_Burst_RL): the rocket launcher's rocket comes out after the frames run here
+		// (its pull starts with the rocket's first tic): the shot is counted then (OnPull: injTic), not ended as "no shot"
+		// (which restarted a burst on every rocket: 24 from one press)
+		if (!RSLD_G5.StepToShot(c.mo, c.hand, c.weapon, before, 64))
+			RSLD.Log(String.Format("Burst: %s: shot %d of %d under way (its projectile comes next tic)", c.weapon.GetClassName(), Shots() - h.n1, Shots()));
 	}
 
 	// BD22's pump shotgun keeps a spent shell chambered after a shot (ShotgunWasEmpty: its Fire then pumps instead):
@@ -333,7 +352,7 @@ class RSLD_Fx_Burst : RSLD_G5Effect
 		if (!h.f2 || h.n2 <= 0 || level.maptime < h.tic1) return;
 		class<Actor> sc = strikeCls[c.pn];
 		if (!sc) { h.n2 = 0; h.f2 = false; return; }
-		let a = Actor.Spawn(sc, RSVR_VRHand.HandPos(c.mo), ALLOW_REPLACE);
+		let a = Actor.Spawn(sc, c.hand == RSLD.OFF ? RSVR_VRHand.OffPos(c.mo) : RSVR_VRHand.HandPos(c.mo), ALLOW_REPLACE);
 		if (!a) { h.n2 = 0; h.f2 = false; return; }
 		mine.Push(a);
 		if (mine.Size() > 32) mine.Delete(0);
@@ -405,17 +424,59 @@ class RSLD_Fx_Doubletap : RSLD_G5Effect
 // the drawn muzzle) and every other stored attack goes out with it in the same pull: each of its pellets again (our
 // damage, its own spread re-rolled), each projectile again; their rounds come out of the magazine after the pull.
 // Sounds: ours (scope 4: effects/chargeup, chargeupdone -> Plasma/Charge, Plasma/FullyCharged). The plasma gun's own
-// charge alt fire stands down for this gun (owner round 3, Q12: R3a's shared rule). The VR fists: not built.
+// charge alt fire stands down for this gun (owner round 3, Q12: R3a's shared rule).
+// The VR fists (owner round 4: "Chargeup on fists: store punches while the trigger is held"): LegenDoom's FireChargeup
+// (Fist.dec): after its 4-tic wind-up one punch is stored, then one every LDFistsChargeMiniCounter (17) tics, up to
+// LDFistsChargeup's 20; on release it throws them all (each its normal punch). Ours: the fist's trigger held stores them
+// (each fist its own count), and the next real punch of that fist lands them all: its damage x the punches stored.
 class RSLD_Fx_Chargeup : RSLD_G5Effect
 {
 	int extraN[MAXPLAYERS * 2];		// stored attacks beyond the gun's own shot, for the release pull
 	int extraTic[MAXPLAYERS * 2];
 	int relUntil[MAXPLAYERS * 2];		// the trigger is free from a release until its shot (or this tic)
+	int fistN[MAXPLAYERS * 2], fistT[MAXPLAYERS * 2];	// the fists: punches stored, the next one's tic
+	bool fistOn[MAXPLAYERS * 2];
+
+	void FistCharge(RSLD_Held c)
+	{
+		int k = c.pn * 2 + c.hand;
+		int now = level.maptime;
+		if (!RSLD_G5.Pressed(c.mo, c.hand)) { fistOn[k] = false; return; }	// let go: the stored punches wait for the next real punch
+		if (!fistOn[k])
+		{
+			fistOn[k] = true;
+			fistT[k] = now + int(Num("fi_wind"));
+			c.mo.A_StartSound("Plasma/Charge", CHAN_AUTO, CHANF_OVERLAP);
+			RSLD.Log(String.Format("Chargeup: %s fist winds up (%d tics), %d stored so far", RSLD.HandName(c.hand), int(Num("fi_wind")), fistN[k]));
+			return;
+		}
+		if (now < fistT[k] || fistN[k] >= int(Num("fi_max"))) return;
+		fistN[k]++;
+		fistT[k] = now + int(Num("fi_step"));
+		RSLD.Log(String.Format("Chargeup: %s fist: %d punch%s stored", RSLD.HandName(c.hand), fistN[k], fistN[k] == 1 ? "" : "es"));
+		if (fistN[k] >= int(Num("fi_max"))) c.mo.A_StartSound("Plasma/FullyCharged", CHAN_AUTO, CHANF_OVERLAP);
+	}
+
+	override void OnMelee(RSLD_Shot s, Actor strike)
+	{
+		if (!s || s.slot != 0 || !strike) return;
+		int k = s.pn * 2 + s.hand;
+		if (fistN[k] <= 0) return;
+		s.i2 = fistN[k];
+		fistN[k] = 0;
+		fistOn[k] = false;
+		s.Log(String.Format("chargeup: this punch lands the %d stored (x%d)", s.i2, s.i2));
+	}
+
+	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h)
+	{
+		if (s.slot == 0 && s.i2 > 0 && h.inflictor && RSLD_Handler.IsStrike(h.inflictor)) h.mult *= s.i2;
+	}
 
 	override void WhileHeld(RSLD_Held c)
 	{
 		let h = HSc(c);
-		if (c.slot == 0) return;
+		if (c.slot == 0) { FistCharge(c); return; }
 		bool p = RSLD_G5.Pressed(c.mo, c.hand);
 		int now = level.maptime;
 		int k = c.pn * 2 + c.hand;
@@ -716,4 +777,14 @@ class RSLD_Fx_Recursive : RSLD_G5Effect
 		r.mVX.Push(m.vel.x); r.mVY.Push(m.vel.y); r.mVZ.Push(m.vel.z);
 		r.mAng.Push(m.angle); r.mPit.Push(m.pitch);
 	}
+}
+
+// ---- DualWield (R: Pi), "Twin pistols with increased stats": owner, round 4: "with LegenDoom loaded, BD22's own Dual
+// Pistols weapon unlocks only from the DualWield legendary (our VR pistol-in-each-hand is unaffected)". The gate is the
+// handler's (handler.zs DualWieldGate): the pistol slot's legendary is DualWield -> BD22's DualPistols is given; any other
+// (or none) -> DualPistols is taken (a probe-forced effect on the slot leaves it be: rig only). BD22's twin pistols ARE
+// the "twin pistols": no number of LegenDoom's is put on top (its pair's 1-tic refire is its own sprite gun's).
+class RSLD_Fx_DualWield : RSLD_G5Effect
+{
+	override void OnProbe(RSLD_Shot s) { if (s) s.Log("DualWield: BD22's Dual Pistols unlock (the handler's gate, next tics)"); }
 }

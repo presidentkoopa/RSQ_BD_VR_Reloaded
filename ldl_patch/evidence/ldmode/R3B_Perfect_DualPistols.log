@@ -1,10 +1,19 @@
-# R3B_Perfect_DualPistols: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Perfect_DualPistols: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Chainsaw
-RSLD probe: LegenDoom has no LDChainsawEffect_Perfect token: the effect is forced for the probe only
-RSLD probe: Perfect on Chain_saw slot Chainsaw rarity Common (LegenDoom never rolls it on this slot)
-RSLD probe: 1 targets removed
+RSLD probe: player at (-1600 0), holding Chain_saw
+RSLD probe: Chain_saw magazine 0 reserve 0
+RSLD probe: the DualWield gate keeps a given DualPistols
+RSLD probe: Perfect on BrutalPistol slot Pistol rarity Rare
+RSLD probe: 2 targets removed
+RSLD probe: player BDoomer has BDDualPistolAmmo x32 health 100 speed 8.0
+RSLD 18070 Perfect p308 main BrutalPistol: pellet 0 reshaped: angle -0.43 -> 0.00 pitch -0.04 -> 0.00 dmg 14 -> 28 range 8192
+RSLD probe: player BDoomer has BDDualPistolAmmo x31 health 100 speed 8.0
+RSLD 18080 Perfect p309 main BrutalPistol: pellet 0 reshaped: angle 0.64 -> 0.00 pitch -0.75 -> 0.00 dmg 14 -> 28 range 8192
 RSLD probe: player BDoomer has BDDualPistolAmmo x30 health 100 speed 8.0
+RSLD 18115 Perfect p308 main BrutalPistol: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
+RSLD 18125 Perfect p309 main BrutalPistol: miss (wall): JAMMED (LegenDoom's LDPerfectJammed, 1 s)
 RSLD probe: player BDoomer has BDDualPistolAmmo x30 health 100 speed 8.0
-RSLD probe: player BDoomer has BDDualPistolAmmo x30 health 100 speed 8.0
-RSLD probe: player BDoomer has BDDualPistolAmmo x30 health 100 speed 8.0
-RSLD probe: cleared slot Chainsaw
+RSLD probe: cleared slot Pistol
+RSLD probe: the DualWield gate no longer keeps a given DualPistols
+RSLD 18158 Perfect: main hand jam cleared
+RSLD 18160 DualWield: BD22's Dual Pistols taken (the pistol carries no DualWield legendary)

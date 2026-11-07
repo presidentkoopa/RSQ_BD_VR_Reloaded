@@ -1,20 +1,22 @@
-# R3_Illegal_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Illegal_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Shotgun
+RSLD probe: player at (-1600 0), holding Shot_Gun
+RSLD probe: Shot_Gun magazine 9 reserve 100
 RSLD probe: Illegal on Shot_Gun slot Shotgun rarity Rare
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
 RSLD probe: Shot_Gun magazine 1 reserve 100
-RSLD probe: 1 targets removed
-RSLD probe: target Imp (Imp) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 5580 Illegal p58 main Shot_Gun: last round: an illegal shot (free, enemies hit get angry)
-RSLD 5580 Illegal p58 main Shot_Gun: refund 1 -> ShotgunAmmo
-RSLD 5580 Illegal p58 main Shot_Gun: Illegal (no ammo used): 1 round(s) given back
-RSLD 5580 Illegal p58 main Shot_Gun: Imp is angry (LDIllegalizer)
-RSLD 5580 Illegal p58 main Shot_Gun: Imp is angry (LDIllegalizer)
-RSLD 5580 Illegal p58 main Shot_Gun: Imp is angry (LDIllegalizer)
-RSLD 5580 Illegal p58 main Shot_Gun: Imp is angry (LDIllegalizer)
-RSLD 5628 Illegal p59 main Shot_Gun: last round: an illegal shot (free, enemies hit get angry)
-RSLD 5628 Illegal p59 main Shot_Gun: refund 1 -> ShotgunAmmo
-RSLD 5628 Illegal p59 main Shot_Gun: Illegal (no ammo used): 1 round(s) given back
-RSLD probe: target Imp has LDIllegalActive x1 (2147483517 tics) health 29586 speed 0.0
+RSLD probe: 2 targets removed
+RSLD probe: target Imp (Imp) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 11625 Illegal p117 main Shot_Gun: last round: an illegal shot (free, enemies hit get angry)
+RSLD 11625 Illegal p117 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 11625 Illegal p117 main Shot_Gun: Illegal (no ammo used): 1 round(s) given back
+RSLD 11625 Illegal p117 main Shot_Gun: Imp is angry (LDIllegalizer)
+RSLD 11625 Illegal p117 main Shot_Gun: Imp is angry (LDIllegalizer)
+RSLD 11625 Illegal p117 main Shot_Gun: Imp is angry (LDIllegalizer)
+RSLD 11625 Illegal p117 main Shot_Gun: Imp is angry (LDIllegalizer)
+RSLD 11673 Illegal p118 main Shot_Gun: last round: an illegal shot (free, enemies hit get angry)
+RSLD 11673 Illegal p118 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 11673 Illegal p118 main Shot_Gun: Illegal (no ammo used): 1 round(s) given back
+RSLD probe: target Imp has LDIllegalActive x1 (2147483517 tics) health 29515 speed 0.0
 RSLD probe: Shot_Gun magazine 1 reserve 100

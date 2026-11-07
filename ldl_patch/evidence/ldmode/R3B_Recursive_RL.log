@@ -1,8 +1,9 @@
-# R3B_Recursive_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Recursive_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Recursive on Rocket_Launcher slot RocketLauncher rarity Common
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (336 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 11551 Recursive p226 main Rocket_Launcher: recursive: this shot comes again from here in 70 and 140 tics
-RSLD 11621 Recursive: 0 pellets and 4 projectiles fired again from the spot of the shot (1 more to come)
-RSLD 11691 Recursive: 0 pellets and 7 projectiles fired again from the spot of the shot (0 more to come)
-RSLD 11691 Recursive p228 main Rocket_Launcher: recursive: this shot comes again from here in 70 and 140 tics
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 16797 Recursive p280 main Rocket_Launcher: recursive: this shot comes again from here in 70 and 140 tics
+RSLD 16867 Recursive: 0 pellets and 4 projectiles fired again from the spot of the shot (1 more to come)
+RSLD 16937 Recursive: 0 pellets and 7 projectiles fired again from the spot of the shot (0 more to come)
+RSLD 16937 Recursive p282 main Rocket_Launcher: recursive: this shot comes again from here in 70 and 140 tics

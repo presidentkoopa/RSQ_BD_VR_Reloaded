@@ -1,0 +1,48 @@
+# G11 (round 4, 2026-11-06): LegenDoom 3.0 numbers for the streams (Beam, Blazing, Prototype), DualWield, the fists'
+# Chargeup, NorthernStar's closing blow and Proximity's per-kind drift. Every key is read from LegenDoom's pk3.
+# effect     key        file                                   state label / re                 call / pattern     arg
+# --- Beam: a hitscan every tic while fire is held (PR 5 x random(1,8), BFG 15 x random(1,8)), 1 cell a tic, needs 2 to loop;
+#     the BFG charges first (its FireBeam frames); on release one last shot (FireBeamFinal) with its own puff
+Beam         pr_dmg     decorate/PlasmaRifle/PlasmaRifle.dec   re  "(?s)FireBeamLoop:.*?A_FireBullets \(0,0, -1, \((\d+)\*random"
+Beam         pr_rnd     decorate/PlasmaRifle/PlasmaRifle.dec   re  "(?s)FireBeamLoop:.*?A_FireBullets \(0,0, -1, \(\d+\*random\(1,(\d+)\)"
+Beam         pr_fdmg    decorate/PlasmaRifle/PlasmaRifle.dec   re  "(?s)FireBeamFinalRecoilDone:.*?A_FireBullets \(0,0, -1, \((\d+)\*random"
+Beam         pr_cell    decorate/PlasmaRifle/PlasmaRifle.dec   FireBeamLoop     A_TakeInventory  1
+Beam         pr_min     decorate/PlasmaRifle/PlasmaRifle.dec   FireBeam         A_JumpIfInventory 1
+Beam         pr_lead    decorate/PlasmaRifle/PlasmaRifle.dec   FireBeam         tics
+Beam         bf_dmg     decorate/BFG9000/BFG9000.dec           re  "(?s)FireBeamLoop:.*?A_FireBullets \(0,0, -1, \((\d+)\*random"
+Beam         bf_rnd     decorate/BFG9000/BFG9000.dec           re  "(?s)FireBeamLoop:.*?A_FireBullets \(0,0, -1, \(\d+\*random\(1,(\d+)\)"
+Beam         bf_fdmg    decorate/BFG9000/BFG9000.dec           re  "(?s)FireBeamFinalRecoilDone:.*?A_FireBullets \(0,0, -1, \((\d+)\*random"
+Beam         bf_cell    decorate/BFG9000/BFG9000.dec           FireBeamLoop     A_TakeInventory  1
+Beam         bf_min     decorate/BFG9000/BFG9000.dec           FireBeam         A_JumpIfInventory 1
+Beam         bf_lead    decorate/BFG9000/BFG9000.dec           FireBeam         tics
+Beam         len        source/LEGENDBEM.acs                   re  "^\s*SetActorProperty\(0, aprop_scaley, total_distance / (\d+)\)"
+Beam         fwd        decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LD_PlasmaBeamPuff.*?LD_3DBeam\", (\d+),"
+# --- LegenDoom's normal shot cost on its guns (Weapon.AmmoUse1): the stream's cost a tic is LegenDoom's ratio on ours
+Stream       pr_ammo    decorate/PlasmaRifle/PlasmaRifle.dec   re  "Weapon.AmmoUse1 (\d+)"
+Stream       bf_ammo    decorate/BFG9000/BFG9000.dec           re  "Weapon.AmmoUse1 (\d+)"
+# --- Blazing: a flame projectile every tic while fire is held (RL / PR one, BFG three: one straight +-2, two at +-5)
+Blazing      rl_lead    decorate/RocketLauncher/RocketLauncher.dec  FireBlazing  tics
+Blazing      pr_lead    decorate/PlasmaRifle/PlasmaRifle.dec   FireBlazing      tics
+Blazing      bf_lead    decorate/BFG9000/BFG9000.dec           FireBlazing      tics
+Blazing      spread     decorate/PlasmaRifle/PlasmaRifle.dec   re  "(?s)FireBlazingFrame1:.*?LDBlazingPlasmaBall\", frandom\(-([\d.]+),"
+Blazing      bf_side    decorate/BFG9000/BFG9000.dec           re  "(?s)FireBlazingFrame1:.*?LDBlazingBFGBall2\", (\d+)\+frandom"
+Blazing      bf_cell    decorate/BFG9000/BFG9000.dec           FireBlazingLoop  A_TakeInventory  1
+Blazing      rl_fuel    decorate/RocketLauncher/RocketLauncher.dec  FireBlazingLoop  A_TakeInventory  1
+Blazing      rl_first   decorate/RocketLauncher/RocketLauncher.dec  re  "(?s)FireBlazingPreAmmoCheck2:.*?A_GiveInventory\(\"LDBlazingRocketFuel\", (\d+)\)"
+Blazing      rl_refill  decorate/RareSpecialEffects.dec        prop LDBlazingRocketFuel Inventory.Maxamount
+# --- Prototype: charge, then a pair of plasma balls a tic (1 cell a pair) while fire is held
+Prototype    lead       decorate/BFG9000/BFG9000.dec           FirePrototype    tics
+Prototype    cell       decorate/BFG9000/BFG9000.dec           FirePrototypeGreen1  A_TakeInventory  1
+Prototype    spread     decorate/BFG9000/BFG9000.dec           re  "(?s)FirePrototypeGreen1:.*?LDPrototypeBFGBallGreen2\", frandom\(-(\d+),"
+Prototype    side       decorate/BFG9000/BFG9000.dec           re  "(?s)FirePrototypeRed1:.*?LDPrototypeBFGBallRed\", frandom\(-?\d+,\s*\d+\), 0,-?(\d+),"
+# --- the fists' Chargeup: wind-up, a stored punch every LDFistsChargeMiniCounter tics, LDFistsChargeup's max
+Chargeup     fi_wind    decorate/Fist/Fist.dec                 re  "(?s)FireChargeup:\s*UFIS A (\d+)"
+Chargeup     fi_step    decorate/UncommonSpecialEffects.dec    prop LDFistsChargeMiniCounter Inventory.MaxAmount
+Chargeup     fi_max     decorate/UncommonSpecialEffects.dec    prop LDFistsChargeup Inventory.MaxAmount
+# --- NorthernStar's closing blow: LDNorthernStarFistsFinalPuff A_RadiusThrust(force, distance, flags, full distance)
+NorthernStar thrust     decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDNorthernStarFistsFinalPuff.*?A_RadiusThrust \((\d+),"
+NorthernStar trad       decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDNorthernStarFistsFinalPuff.*?A_RadiusThrust \(\d+, (\d+),"
+NorthernStar tfull      decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDNorthernStarFistsFinalPuff.*?A_RadiusThrust \(\d+, \d+, \w+, (\d+)\)"
+# --- Proximity's drift speed and pull per kind (the rocket's are in g3.rules)
+Proximity    drift_pl   decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDProximityPlasmaBall.*?A_SetSpeed \((\d+)\)"
+Proximity    drift_bf   decorate/UncommonSpecialEffects.dec    re  "(?s)ACTOR LDProximityBFGBall.*?A_SetSpeed \((\d+)\)"

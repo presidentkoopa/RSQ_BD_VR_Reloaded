@@ -1,29 +1,31 @@
-# R3B_Advanced_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Advanced_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Pistol
+RSLD probe: player at (-1600 0), holding BrutalPistol
+RSLD probe: BrutalPistol magazine 16 reserve 200
 RSLD probe: Advanced on BrutalPistol slot Pistol rarity Rare
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 8246 Advanced p114 main BrutalPistol: cadence x2.80: first shot
-RSLD 8246 Advanced p114 main BrutalPistol: pellet 0 reshaped: angle -0.39 -> -0.15 pitch 0.26 -> 0.10 dmg 14 -> 14 range 8192
-RSLD 8246 Advanced p114 main BrutalPistol: damage 14 -> 25 (x1.80) on Baron_NobleHeadshot
-RSLD 8250 Advanced p115 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
-RSLD 8250 Advanced p115 main BrutalPistol: pellet 0 reshaped: angle 0.76 -> 0.30 pitch 0.58 -> 0.23 dmg 14 -> 14 range 8192
-RSLD 8250 Advanced p115 main BrutalPistol: damage 14 -> 25 (x1.80) on Baron_NobleHeadshot
-RSLD 8254 Advanced p116 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
-RSLD 8254 Advanced p116 main BrutalPistol: pellet 0 reshaped: angle -0.04 -> -0.02 pitch -0.10 -> -0.04 dmg 14 -> 14 range 8192
-RSLD 8254 Advanced p116 main BrutalPistol: damage 14 -> 26 (x1.90) on Baron_NobleHeadshot
-RSLD 8258 Advanced p117 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
-RSLD 8258 Advanced p117 main BrutalPistol: pellet 0 reshaped: angle 0.09 -> 0.03 pitch 0.02 -> 0.01 dmg 14 -> 14 range 8192
-RSLD 8258 Advanced p117 main BrutalPistol: damage 14 -> 28 (x2.00) on Baron_NobleHeadshot
-RSLD 8262 Advanced p118 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
-RSLD 8262 Advanced p118 main BrutalPistol: pellet 0 reshaped: angle 0.60 -> 0.23 pitch 0.19 -> 0.07 dmg 14 -> 14 range 8192
-RSLD 8262 Advanced p118 main BrutalPistol: damage 14 -> 29 (x2.10) on BaronofHell2
-RSLD 8266 Advanced p119 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
-RSLD 8266 Advanced p119 main BrutalPistol: pellet 0 reshaped: angle -0.11 -> -0.04 pitch 0.35 -> 0.14 dmg 14 -> 14 range 8192
-RSLD 8266 Advanced p119 main BrutalPistol: damage 14 -> 25 (x1.80) on BaronofHell2
-RSLD 8270 Advanced p120 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
-RSLD 8270 Advanced p120 main BrutalPistol: pellet 0 reshaped: angle 0.09 -> 0.03 pitch 0.21 -> 0.08 dmg 14 -> 14 range 8192
-RSLD 8270 Advanced p120 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
-RSLD 8274 Advanced p121 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
-RSLD 8274 Advanced p121 main BrutalPistol: pellet 0 reshaped: angle 0.77 -> 0.30 pitch -0.07 -> -0.03 dmg 14 -> 14 range 8192
-RSLD 8274 Advanced p121 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 13857 Advanced p170 main BrutalPistol: cadence x2.80: first shot
+RSLD 13857 Advanced p170 main BrutalPistol: pellet 0 reshaped: angle -0.56 -> -0.22 pitch 0.28 -> 0.11 dmg 14 -> 14 range 8192
+RSLD 13857 Advanced p170 main BrutalPistol: damage 14 -> 29 (x2.10) on BaronofHell2
+RSLD 13861 Advanced p171 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
+RSLD 13861 Advanced p171 main BrutalPistol: pellet 0 reshaped: angle 0.69 -> 0.27 pitch 0.16 -> 0.06 dmg 14 -> 14 range 8192
+RSLD 13861 Advanced p171 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 13865 Advanced p172 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
+RSLD 13865 Advanced p172 main BrutalPistol: pellet 0 reshaped: angle -0.43 -> -0.17 pitch 0.29 -> 0.11 dmg 14 -> 14 range 8192
+RSLD 13865 Advanced p172 main BrutalPistol: damage 14 -> 25 (x1.80) on BaronofHell2
+RSLD 13869 Advanced p173 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
+RSLD 13869 Advanced p173 main BrutalPistol: pellet 0 reshaped: angle -0.47 -> -0.18 pitch -0.25 -> -0.10 dmg 14 -> 14 range 8192
+RSLD 13869 Advanced p173 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 13873 Advanced p174 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
+RSLD 13873 Advanced p174 main BrutalPistol: pellet 0 reshaped: angle 0.12 -> 0.05 pitch -0.43 -> -0.17 dmg 14 -> 14 range 8192
+RSLD 13873 Advanced p174 main BrutalPistol: damage 14 -> 26 (x1.90) on BaronofHell2
+RSLD 13877 Advanced p175 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
+RSLD 13877 Advanced p175 main BrutalPistol: pellet 0 reshaped: angle -0.34 -> -0.13 pitch 0.78 -> 0.31 dmg 14 -> 14 range 8192
+RSLD 13877 Advanced p175 main BrutalPistol: damage 14 -> 29 (x2.10) on BaronofHell2
+RSLD 13881 Advanced p176 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
+RSLD 13881 Advanced p176 main BrutalPistol: pellet 0 reshaped: angle -0.23 -> -0.09 pitch 0.19 -> 0.07 dmg 14 -> 14 range 8192
+RSLD 13881 Advanced p176 main BrutalPistol: damage 14 -> 28 (x2.00) on BaronofHell2
+RSLD 13885 Advanced p177 main BrutalPistol: cadence x2.80: 4 tics since the last shot, the gun's own 11 (-7 by the effect)
+RSLD 13885 Advanced p177 main BrutalPistol: pellet 0 reshaped: angle 0.09 -> 0.04 pitch 0.56 -> 0.22 dmg 14 -> 14 range 8192
+RSLD 13885 Advanced p177 main BrutalPistol: damage 14 -> 29 (x2.10) on BaronofHell2

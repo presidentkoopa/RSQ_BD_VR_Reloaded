@@ -1,0 +1,24 @@
+# R4_Fists_both_Lunging: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Melee_Attacks magazine 0 reserve 0
+RSLD probe: Lunging on Melee_Attacks slot Fists rarity Uncommon
+RSLD 2553 G7 probe: a test punch (MeleeStrikeNormal) from the main hand
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2553 Lunging p14 main Melee_Attacks: lunging (no launch: owner): punch x2.0, reach x1.50
+RSLD 2553 Lunging p14 main Melee_Attacks: damage 10 -> 20 (x2.00) on BaronofHell2
+RSLD 2561 G7 probe: a test punch (MeleeStrikeNormal) from the off hand at 4.5 m/s
+RSLD 2561 Lunging p15 off Melee_Attacks: lunging (no launch: owner): punch x2.0, reach x1.50
+RSLD 2561 Lunging p15 off Melee_Attacks: swing 4.5 m/s (off fist): x1.50 (RSQ Melee's 2 -> 7 m/s rule)
+RSLD 2561 Lunging p15 off Melee_Attacks: damage 10 -> 30 (x3.00) on BaronofHell2
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2589 G7 probe: a test punch (MeleeStrikeNormal) from the main hand at 7.0 m/s
+RSLD 2589 Lunging p16 main Melee_Attacks: lunging (no launch: owner): punch x2.0, reach x1.50
+RSLD 2589 Lunging p16 main Melee_Attacks: swing 7.0 m/s (main fist): x2.00 (RSQ Melee's 2 -> 7 m/s rule)
+RSLD 2589 Lunging p16 main Melee_Attacks: damage 10 -> 40 (x4.00) on BaronofHell2
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-1552 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2617 G7 probe: a test punch (MeleeStrikeNormal) from the main hand at 1.5 m/s
+RSLD 2617 Lunging p17 main Melee_Attacks: lunging (no launch: owner): punch x2.0, reach x1.50
+RSLD 2617 Lunging p17 main Melee_Attacks: swing 1.5 m/s (main fist): x1.00 (RSQ Melee's 2 -> 7 m/s rule)
+RSLD 2617 Lunging p17 main Melee_Attacks: damage 10 -> 20 (x2.00) on BaronofHell2

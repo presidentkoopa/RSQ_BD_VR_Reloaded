@@ -11,6 +11,31 @@ class RSQ_Fists : EventHandler
 {
 	RSQ_FistHand mainH[MAXPLAYERS];
 	RSQ_FistHand offH[MAXPLAYERS];
+	// 2.0.4a (LD mode, owner round 4: "fist legendaries on both fists", "damage scaled by swing speed"): every punch
+	// thrown with an arm is recorded here for a few tics: the strike, the hand (0 main, 1 off) and the swing's speed in
+	// m/s. Read by zscript/rsld (handler.zs StrikeHand, ld_g7_fx.zs Swing); nothing else changes.
+	Array<Actor> recA;
+	Array<int> recHand, recTic;
+	Array<double> recMps;
+
+	static RSQ_Fists Get() { return RSQ_Fists(EventHandler.Find("RSQ_Fists")); }
+	static void Record(Actor strike, int hand, double mps)
+	{
+		let f = Get();
+		if (!f || !strike) return;
+		for (int i = f.recA.Size() - 1; i >= 0; i--)
+			if (!f.recA[i] || level.maptime - f.recTic[i] > 35) { f.recA.Delete(i); f.recHand.Delete(i); f.recTic.Delete(i); f.recMps.Delete(i); }
+		f.recA.Push(strike); f.recHand.Push(hand); f.recTic.Push(level.maptime); f.recMps.Push(mps);
+	}
+	// the recorded punch of a strike: its hand (-1 not an arm's punch) and swing speed (m/s)
+	static int, double Lookup(Actor strike)
+	{
+		let f = Get();
+		if (!f || !strike) return -1, 0;
+		int i = f.recA.Find(strike);
+		if (i >= f.recA.Size()) return -1, 0;
+		return f.recHand[i], f.recMps[i];
+	}
 
 	static Class<Actor> Cls(Name n) { class<Actor> c = n; return c; }
 
@@ -103,6 +128,8 @@ class RSQ_Fists : EventHandler
 				&& RSQ.PlayerInt(mo, 'rsq_punch', 0) != 0;
 			bool mainFist = vr && p.ReadyWeapon && fw && p.ReadyWeapon == fw;
 			bool offFist = vr && p.OffhandWeapon is 'RSQ_Hands' && RSQ_Hands.OffFist(mo);
+			mainH[n].handIdx = 0;
+			offH[n].handIdx = 1;
 			mainH[n].Tick(mo, RSVR_VRHand.HandPos(mo), mainFist);
 			offH[n].Tick(mo, RSVR_VRHand.OffPos(mo), offFist);
 		}
@@ -135,6 +162,7 @@ class RSQ_FistHand play
 	int head, count;
 	bool ready;
 	double peak;			// forward reach at the last blow
+	int handIdx;			// 0 main, 1 off (set by RSQ_Fists)
 
 	void Tick(PlayerPawn mo, Vector3 hand, bool on)
 	{
@@ -215,6 +243,7 @@ class RSQ_FistHand play
 		a.angle = VectorAngle(dir.x, dir.y);
 		a.pitch = -asin(clamp(dir.z, -1, 1));
 		a.vel = dir * REACH;
+		RSQ_Fists.Record(a, handIdx, speed * 35. / vu);	// the swing's speed in m/s at the blow (map units a tic, body frame)
 		RSQ_Fists.PunchUse(mo, hand, dir);
 		mo.A_StartSound("Melee/Swing", CHAN_AUTO, CHANF_OVERLAP);
 	}

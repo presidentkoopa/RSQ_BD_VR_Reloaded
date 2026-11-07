@@ -1,8 +1,8 @@
-# R3_Tricky_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Tricky_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot RocketLauncher
+RSLD probe: player at (-1600 0), holding Rocket_Launcher
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Tricky on Rocket_Launcher slot RocketLauncher rarity Common
-RSLD probe: 1 targets removed
-RSLD 269 Tricky rider rocket p3: bounces 4
-RSLD 276 Tricky rider rocket p3: bounce 1
-RSLD 283 Tricky rider rocket p3: bounce 2
-RSLD 300 Tricky rider rocket p3: bounce 3
+RSLD probe: 3 targets removed
+RSLD 8872 Tricky rider rocket p86: bounces 4
+RSLD 8944 Tricky rider rocket p86: bounce 1

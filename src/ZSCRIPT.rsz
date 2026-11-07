@@ -39,3 +39,6 @@ version "4.14"
 #include "zscript/rsld/ld_g5_core.zs"
 #include "zscript/rsld/ld_g5_fx.zs"
 #include "zscript/rsld/ld_g7_fx.zs"
+// Round 4 (2026-11-06): the streams (Beam, Blazing, Prototype), their LegenDoom numbers (g11.rules)
+#include "zscript/rsld/numbers_g11.zs"
+#include "zscript/rsld/ld_g11_stream.zs"

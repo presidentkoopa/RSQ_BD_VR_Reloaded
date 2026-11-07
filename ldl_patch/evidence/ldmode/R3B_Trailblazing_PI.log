@@ -1,14 +1,15 @@
-# R3B_Trailblazing_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Trailblazing_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BrutalPistol magazine 16 reserve 200
 RSLD probe: Trailblazing on BrutalPistol slot Pistol rarity Common
 RSLD probe: health 100
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 8030 Trailblazing p104 main BrutalPistol: cadence x1.00: first shot
-RSLD 8041 Trailblazing p105 main BrutalPistol: cadence x1.00: 11 tics since the last shot, the gun's own 11 (+0 by the effect)
-RSLD 8052 Trailblazing p106 main BrutalPistol: cadence x1.00: 11 tics since the last shot, the gun's own 11 (+0 by the effect)
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 13641 Trailblazing p160 main BrutalPistol: cadence x1.00: first shot
+RSLD 13652 Trailblazing p161 main BrutalPistol: cadence x1.00: 11 tics since the last shot, the gun's own 11 (+0 by the effect)
+RSLD 13663 Trailblazing p162 main BrutalPistol: cadence x1.00: 11 tics since the last shot, the gun's own 11 (+0 by the effect)
 RSLD probe: health 20
-RSLD 8090 Trailblazing p107 main BrutalPistol: cadence x1.00: 38 tics since the last shot, the gun's own 38 (+0 by the effect)
-RSLD 8099 Trailblazing p108 main BrutalPistol: cadence x1.27: 9 tics since the last shot, the gun's own 11 (-2 by the effect)
-RSLD 8108 Trailblazing p109 main BrutalPistol: cadence x1.27: 9 tics since the last shot, the gun's own 11 (-2 by the effect)
-RSLD 8117 Trailblazing p110 main BrutalPistol: cadence x1.27: 9 tics since the last shot, the gun's own 11 (-2 by the effect)
+RSLD 13701 Trailblazing p163 main BrutalPistol: cadence x1.00: 38 tics since the last shot, the gun's own 38 (+0 by the effect)
+RSLD 13710 Trailblazing p164 main BrutalPistol: cadence x1.27: 9 tics since the last shot, the gun's own 11 (-2 by the effect)
+RSLD 13719 Trailblazing p165 main BrutalPistol: cadence x1.27: 9 tics since the last shot, the gun's own 11 (-2 by the effect)
+RSLD 13728 Trailblazing p166 main BrutalPistol: cadence x1.27: 9 tics since the last shot, the gun's own 11 (-2 by the effect)
 RSLD probe: health 100

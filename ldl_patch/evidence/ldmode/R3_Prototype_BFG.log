@@ -1,7 +1,7 @@
-# R3_Prototype_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
-RSLD probe: cleared slot BFG9000
+# R3_Prototype_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
 RSLD probe: Prototype on BIG_FUCKING_GUN slot BFG9000 rarity Epic
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 4488 Prototype rider bfg p47: ball -> plasma stream
-RSLD 4489 Prototype p47 main BIG_FUCKING_GUN: Prototype stream: 50 pairs (cells taken 50)
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (-1280 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 11123 Prototype p112 main BIG_FUCKING_GUN: Prototype: BIG_FUCKING_GUN stream starts (LegenDoom's charge 15 tics), damage x3.33, ammo x1.25 a tic
+RSLD 11138 Prototype p112 main BIG_FUCKING_GUN: Prototype: stream ends (let go / empty) after 0 tics, 0 rounds used

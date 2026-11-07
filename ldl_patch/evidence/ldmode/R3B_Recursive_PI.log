@@ -1,8 +1,8 @@
-# R3B_Recursive_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
-RSLD probe: cleared slot Pistol
+# R3B_Recursive_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BrutalPistol magazine 16 reserve 200
 RSLD probe: Recursive on BrutalPistol slot Pistol rarity Common
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 11286 Recursive p223 main BrutalPistol: recursive: this shot comes again from here in 70 and 140 tics
-RSLD 11356 Recursive: 1 pellets and 0 projectiles fired again from the spot of the shot (1 more to come)
-RSLD 11426 Recursive: 1 pellets and 0 projectiles fired again from the spot of the shot (0 more to come)
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 16522 Recursive p277 main BrutalPistol: recursive: this shot comes again from here in 70 and 140 tics
+RSLD 16592 Recursive: 1 pellets and 0 projectiles fired again from the spot of the shot (1 more to come)
+RSLD 16662 Recursive: 1 pellets and 0 projectiles fired again from the spot of the shot (0 more to come)

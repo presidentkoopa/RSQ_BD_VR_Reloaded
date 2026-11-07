@@ -27,8 +27,10 @@ def fire(n=1, hold=3, gap=45):
 def shots(n, cls='BaronofHell2', hp=30000, gap=45):	# a fresh still target before every shot (BD22 monsters change class when hurt)
     return '; '.join(tgt(cls, hp) + '; ' + fire(1, 3, gap) for _ in range(n))
 
-def tgt(cls='BaronofHell2', hp=30000, dist=96, friendly=1):
-    return 'netevent rsld_cleartargets; netevent rsld_target:%s %d %d %d; wait 8' % (cls, dist, hp, friendly)
+TGT_MODE = [1]	# round 4: 2 = a hostile still target (ldprove round4: seekers, sprays and autoaim take it)
+
+def tgt(cls='BaronofHell2', hp=30000, dist=96, friendly=None):
+    return 'netevent rsld_cleartargets; netevent rsld_target:%s %d %d %d; wait 8' % (cls, dist, hp, TGT_MODE[0] if friendly is None else friendly)
 
 # effect: (gun, script after the effect is forced)
 SG = 'Shot_Gun'
@@ -345,11 +347,117 @@ def round3_script(nold=False):
     s += ['wait 10', 'quit']
     return '; '.join(x for x in s if x), [x[0] for x in secs]
 
+# ---------------------------------------------------------------- round 4 (2026-11-06 evening): ONE batched run, in the
+# open arena (make_ldarena.py, loaded last: MAP01 replaced), hostile still targets (rsld_target arg 3 = 2), the player put
+# back at the arena start before every section (rsld_home), ammo topped up (give ammo). Order: the round-4 changes first,
+# then round 3's sections that did not show (direct hits, seeking, in-flight, Energizing's heal, the BFG fixes, R3b's
+# empty ones), then the rest of rounds 3 / 3b again (regression). Evidence: R4_<name>.log and R3*_<name>.log.
+ARENA = '/tmp/ldrig/ldarena.wad'
+HOME = 'netevent rsld_home -1600 0'
+R3_UNSHOWN = ['R3_Goldeneye_RL', 'R3_Kinetic_RL', 'R3_Kinetic_BFG', 'R3_Stasis_BFG', 'R3_GroupTherapy_RL', 'R3_Plasmatic_RL',
+              'R3_Seeker_RL', 'R3_Seeker_PR', 'R3_Proximity_RL', 'R3_Mysterious_RL', 'R3_Hyper_RL', 'R3_Hyper_PR', 'R3_Sluggish_RL',
+              'R3_Sluggish_PR', 'R3_Arcing_RL', 'R3_Spamtastic_RL', 'R3_Spamtastic_PR', 'R3_Energizing_BFG', 'R3_Annihilating_BFG',
+              'R3_Unfathomable_RL', 'R3_Unfathomable_SG', 'R3_Overflowing_SG', 'R3_Overflowing_RL', 'R3_Energetic_BFG', 'R3_Nova_BFG',
+              'R3_Scattering_BFG', 'R3_Shockwave_BFG', 'R3_Cluster_BFG',
+              'R3B_Burst_RL', 'R3B_Extended_CS', 'R3B_Lacerating', 'R3B_Imaginary', 'R3B_Quickdraw_BFG', 'R3B_Quickdraw_switch',
+              'R3B_Perfect_DualPistols', 'R3B_Perfect_DualRifles']
+
+def r4_sections():
+    S = []
+    def sec(name, gun, body, fx=None):
+        S.append((name, gun, body, fx))
+    RL, PR, BF, PI, SG, FI = 'Rocket_Launcher', 'Plasma_Gun', 'BIG_FUCKING_GUN', 'BrutalPistol', 'Shot_Gun', 'Melee_Attacks'
+    hold = lambda t, after=30: '+attack; wait %d; -attack; wait %d' % (t, after)
+    H = lambda cls='BaronofHell2', hp=30000, d=96: tgt(cls, hp, d, 2)
+    # 1. DualWield: give all gave BD22's DualPistols: the gate takes it (no DualWield legendary); DualWield forced on the
+    # pistol: DualPistols unlocked; cleared: taken again
+    sec('R4_DualWield', PI, 'wait 10; netevent rsld_has:DualPistols; netevent rsld_fx:DualWield; wait 12; netevent rsld_has:DualPistols; '
+        'netevent rsld_fx_clear; wait 12; netevent rsld_has:DualPistols; netevent rsld_has:BrutalPistol')
+    # 2. SixShooter at half speed: a held trigger (cadence x0.50 lines), its damage
+    sec('R4_SixShooter_PI', PI, 'give BDPistolAmmo 15; ' + H() + '; ' + hold(60), 'SixShooter')
+    # 3. the streams: Beam (PR, BFG), Blazing (RL, PR, BFG), Prototype (BFG); trigger held, then let go
+    sec('R4_Beam_PR', PR, amm() + '; ' + H(d=400) + '; ' + hold(50) + '; ' + amm(), 'Beam')
+    sec('R4_Beam_BFG', BF, amm() + '; ' + H(d=400) + '; ' + hold(70) + '; ' + amm(), 'Beam')
+    sec('R4_Blazing_RL', RL, amm() + '; ' + H(d=160) + '; ' + hold(50) + '; ' + amm(), 'Blazing')
+    sec('R4_Blazing_PR', PR, amm() + '; ' + H(d=160) + '; ' + hold(40) + '; ' + amm(), 'Blazing')
+    sec('R4_Blazing_BFG', BF, amm() + '; ' + H(d=160) + '; ' + hold(50) + '; ' + amm(), 'Blazing')
+    sec('R4_Prototype_BFG', BF, amm() + '; ' + H(d=400) + '; ' + hold(50, 60) + '; ' + amm(), 'Prototype')
+    # 4. Arcing / Proximity at our speed (open arena: the arc, the bounces, the fuse; Proximity deploys and drifts to a
+    # hostile Baron near where it stops: RL k 2.5 -> about 1000 out, PR k 2.4 -> 950, BFG k from our ball's speed)
+    sec('R4_Arcing_RL', RL, 'netevent rsld_cleartargets; wait 2; ' + fire(1, 3, 150), 'Arcing')
+    sec('R4_Proximity_RL', RL, H(d=1150) + '; ' + fire(1, 3, 200), 'Proximity')
+    sec('R4_Proximity_PR', PR, H(d=1100) + '; ' + fire(1, 3, 200), 'Proximity')
+    sec('R4_Proximity_BFG', BF, H(d=500) + '; ' + fire(1, 3, 200), 'Proximity')
+    # 5. the fists: both hands carry the Fists slot's legendary, damage x swing speed (test punches: netevent
+    # rsld_punch:<hand> <m/s x 100>, recorded as rsq/fists.zs records a real one)
+    sec('R4_Fists_both_Lunging', FI, 'rsq_no_trigger_punch 1; ' + H(d=48) + '; netevent rsld_punch:1 450; wait 20; ' + H(d=48) + '; netevent rsld_punch:0 700; wait 20; '
+        + H(d=48) + '; netevent rsld_punch:0 150; wait 20', 'Lunging')
+    sec('R4_Chargeup_FI', FI, 'rsq_no_trigger_punch 1; ' + H(d=48) + '; +attack; wait 45; -attack; wait 5; netevent rsld_punch:0 300; wait 20; '
+        + 'qz_ltrigger 1; wait 25; qz_ltrigger 0; wait 5; netevent rsld_punch:1 700; wait 20', 'Chargeup')
+    sec('R4_OnePunch_FI', FI, 'rsq_no_trigger_punch 1; ' + H(d=48) + '; +attack; wait 8; netevent rsld_punch:0 500; wait 4; -attack; wait 30; netevent rsld_has:LDOnePunchCooldown', 'OnePunch')
+    sec('R4_Blaster_off', FI, 'rsq_no_trigger_punch 1; ' + H(d=200) + '; qz_ltrigger 1; wait 50; qz_ltrigger 0; wait 30', 'Blaster')
+    sec('R4_NorthernStar_blow', FI, 'rsq_no_trigger_punch 1; ' + H(d=48) + '; netevent rsld_punch:0 450; wait 8; netevent rsld_punch:1 450; wait 8; netevent rsld_punch:0 450; wait 5; '
+        'netevent rsld_thas:LDNorthernStarStunActive; wait 75; netevent rsld_thas:Health', 'NorthernStar')
+    # 6. Transmogrifier / Overflowing count every BD22 ammo (Upgrading's mapping): the pump's last round with only Gas
+    # left of the other kinds; Overflowing with only GrenadeAmmo at its maximum
+    nocl = 'take Clip2 999; take Clip1 999; take RSQ_MinigunAmmo 999; take Mauser9mm 999; take SniperAmmo 999; take AmmoCell 999; take SoulAmmo 999; take AmmoRocket 999; take GrenadeAmmo 999; take AmmoM202 999; take MiniHellRocketAmmo 999; take Nuke 999; take DevastatorAmmo 999'
+    sec('R4_Transmogrifier_Gas', SG, nocl + '; give Gas 50; netevent rsld_has:Gas; take ShotgunAmmo 99; give ShotgunAmmo 1; wait 2; ' + H() + '; ' + fire(1, 3, 45) + '; netevent rsld_has:Gas; ' + amm(), 'Transmogrifier')
+    unmax = 'take AmmoRocket 1; take AmmoCell 1; take AmmoShell 1; take Clip2 1; take Clip1 1; take RSQ_MinigunAmmo 1; take Mauser9mm 1; take SniperAmmo 1; take Gas 1; take SoulAmmo 1; take AmmoM202 1; take MiniHellRocketAmmo 1; take Nuke 1; take DevastatorAmmo 1'
+    sec('R4_Overflowing_Grenades', SG, unmax + '; give GrenadeAmmo 999; ' + H() + '; ' + fire(1, 3, 45), 'Overflowing')
+    # 7. QuestZDoom's menu / info-screen sounds under the mute option (rig: -nosound, the code path is logged)
+    sec('R4_MenuSounds', SG, 'netevent rsld_menusnd; pukename LDMenuToggle; wait 5; pukename LDMenuToggle; wait 5; rsld_mute_ld_sounds 1; wait 3; netevent rsld_menusnd; '
+        'pukename LDMenuToggle; wait 5; pukename LDMenuToggle; wait 5; rsld_mute_ld_sounds 0; wait 3; netevent rsld_menusnd')
+    return S
+
+def round4_script():
+    TGT_MODE[0] = 2
+    r3 = {x[0]: x for x in r3_sections() + r3b_sections()}
+    fixes = {	# round 3's sections that need more for the open arena (each: name -> new body)
+        'R3_Energizing_BFG': 'netevent rsld_cleartargets; wait 2; netevent rsld_health:40; ' + fire(1, 3, 40) + '; +forward; wait 25; -forward; wait 90; netevent rsld_has:Health; netevent rsld_health:100',
+        'R3B_Quickdraw_switch': 'rsq_switch_log 1; rsq_instant_switch 0; use Shot_Gun; wait 30; use BrutalPistol; wait 30; rsq_instant_switch 1; rsq_switch_log 0',
+        'R3B_Perfect_DualPistols': 'netevent rsld_keepdual 1; use BrutalPistol; wait 60; ' + r3['R3B_Perfect_DualPistols'][2] + '; netevent rsld_keepdual 0; wait 10',
+        'R3B_Perfect_DualRifles': 'use Rifle; wait 60; ' + r3['R3B_Perfect_DualRifles'][2],
+    }
+    unshown = [r3[n] for n in R3_UNSHOWN if n in r3]
+    unshown = [(n, g, fixes.get(n, b), fx) for (n, g, b, fx) in unshown]
+    dual = [x for x in unshown if 'Perfect_Dual' in x[0]]
+    unshown = [x for x in unshown if 'Perfect_Dual' not in x[0]]
+    rest = [x for x in r3_sections() + r3b_sections() if x[0] not in R3_UNSHOWN]
+    secs = r4_sections() + unshown + rest + dual	# the dual guns last (they swap BD22's pistol / rifle)
+    only = os.environ.get('ONLY')
+    if only:
+        secs = [x for x in secs if any(o in x[0] for o in only.split(','))]
+    s = ['rsld_debug %s' % os.environ.get('DBG', '1'), 'rsr_reload 0', 'god', 'notarget', 'give all', GUNS,
+         'give RSQ_MinigunAmmo 300; give BrutalRevolver; give MiniGun; give Rifle; give BIG_FUCKING_GUN; give Plasma_Gun; give Rocket_Launcher; give AmmoCell 300; give AmmoRocket 50', 'wait 5']
+    gun = None
+    for name, g, body, fx in secs:
+        s += [HOME, 'give ammo']
+        if g and g != gun:
+            s += ['use %s' % g, 'wait 100']
+            gun = g
+        if not g:
+            gun = None
+        s += ['echo RSLDT begin %s' % name, 'netevent rsld_amm:']
+        if fx:
+            s += ['netevent rsld_fx:%s' % fx]
+        s += [body, 'wait 5']
+        if fx:
+            s += ['netevent rsld_fx_clear']
+        s += ['echo RSLDT end %s' % name]
+    s += ['wait 10', 'quit']
+    return '; '.join(x for x in s if x), [x[0] for x in secs]
+
 def run(batch, effects):
-    if batch == 'round2':
+    if batch == 'round4':
+        sc, effects = round4_script()
+        os.environ['EXTRA'] = (os.environ.get('EXTRA', '') + ' ' + ARENA).strip()
+        subprocess.run([sys.executable, '-I', os.path.join(HERE, 'make_ldarena.py'), ARENA], check=True, capture_output=True)
+    elif batch == 'round2':
         sc, effects = round2_script()
     elif batch == 'round3':
         sc, effects = round3_script()
+    elif batch == 'round4':
+        pass
     else:
         sc = start_script() if batch == 'start' else script(effects)
     secs = int(os.environ.get('SECS', 420 if batch == 'start' else 120 + 25 * max(1, len(effects))))
@@ -363,7 +471,7 @@ def run(batch, effects):
     for e in names:
         m = re.search(r'RSLDT begin %s\n(.*?)RSLDT end %s' % (e, e), log, re.S) or (re.search(r'RSLDT begin %s\n(.*)' % e, log, re.S) if e == 'START' else None)
         body = m.group(1) if m else '(no section: the run did not reach it)\n'
-        lines = [l for l in body.split('\n') if l.startswith('RSLD') or 'probe' in l or (batch in ('round2', 'round3') and (l.startswith('B probe') or re.match(r'\s*\d+\. ', l) or 'LD_quakes' in l))]
+        lines = [l for l in body.split('\n') if l.startswith('RSLD') or 'probe' in l or (batch in ('round2', 'round3', 'round4') and (l.startswith('B probe') or l.startswith('RSQ ') or re.match(r'\s*\d+\. ', l) or 'LD_quakes' in l))]
         tag = os.environ.get('ORDER', 'full')
         fn = os.path.join(EVD, (('%s.log' % e.replace('@', '_on_')) if batch != 'start' else 'START_G9_Resupplying.log').replace('.log', '.log' if tag == 'full' else '.' + tag + '.log'))
         with open(fn, 'w') as f:
@@ -378,6 +486,7 @@ if __name__ == '__main__':
     if b == 'list':
         for k, v in BATCHES.items():
             print(k, ' '.join(v))
+        print('round4', ' '.join(round4_script()[1]))
         sys.exit(0)
     eff = sys.argv[2:] or BATCHES.get(b, [])
     run(b, eff)

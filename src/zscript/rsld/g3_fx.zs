@@ -36,6 +36,14 @@ class RSLD_G3Util play
 		return p;
 	}
 	static bool Still(Actor m, double lim) { return abs(m.vel.x) < lim && abs(m.vel.y) < lim && abs(m.vel.z) < lim; }
+	// round 4 (owner: "speeds scaled to our rocket"): our projectile's speed over LegenDoom's class's (both read at run time)
+	static double SpeedRatio(RSLD_Rider r, string ldCls)
+	{
+		class<Actor> lc = RSLD.AC(ldCls);
+		if (!r || !r.cls || !lc) return 1;
+		double ours = GetDefaultByType(r.cls).Speed, ld = GetDefaultByType(lc).Speed;
+		return (ours > 0 && ld > 0) ? ours / ld : 1;
+	}
 }
 
 // a plasma ball that can bounce: the same frames, size, damage (DoSpecialDamage: our ball's fixed number), death and sound
@@ -327,23 +335,32 @@ class RSLD_Fx_Hyper : RSLD_G3Fx
 	}
 }
 
-// Arcing (U: RL): a bouncing grenade: gravity 0.15, BounceType Doom (0.4 / 0.8, 5 bounces), goes off after 139 tics
+// Arcing (U: RL): a bouncing grenade: gravity 0.15, BounceType Doom (0.4 / 0.8, 5 bounces), goes off after 139 tics.
+// Owner, round 4: "Arcing / Proximity: speeds scaled to our rocket". LegenDoom's arc is its LDArcingRocket's (speed 20,
+// read at run time from its class) under gravity 0.15 for 139 tics; our rocket flies k = our speed / its speed as fast
+// (Rocket2 50: k 2.5), so the same arc at our speed: gravity x k^2, the fuse / k (the path is LegenDoom's, flown k
+// times faster; bounces as LegenDoom's).
 class RSLD_Fx_Arcing : RSLD_G3Fx
 {
 	override bool Rides(int k) { return k == RSLD_G3.K_ROCKET || k == RSLD_G3.K_GRENADE; }
 	override void RiderStart(RSLD_Rider r)
 	{
 		let m = r.m;
-		m.bNOGRAVITY = false; m.Gravity = RSLD_G3.N("Arcing", "gravity");
+		double k = RSLD_G3Util.SpeedRatio(r, "LDArcingRocket");
+		r.d1 = k;
+		m.bNOGRAVITY = false; m.Gravity = RSLD_G3.N("Arcing", "gravity") * k * k;
 		m.bBOUNCEONWALLS = true; m.bBOUNCEONFLOORS = true; m.bBOUNCEONCEILINGS = true; m.bBOUNCEAUTOOFF = true;
 		m.bouncecount = int(RSLD_G3.N("Arcing", "count")); m.bouncefactor = RSLD_G3.N("Arcing", "factor"); m.wallbouncefactor = RSLD_G3.N("Arcing", "wall");
 		m.BounceSound = "Grenade/Bounce"; m.WallBounceSound = "Grenade/Bounce";
 		r.prevBounce = m.bouncecount;
-		RSLD_G3.Log(r, String.Format("grenade: gravity %.2f, %d bounces, fuse %d tics", m.Gravity, m.bouncecount, int(RSLD_G3.N("Arcing", "life"))));
+		RSLD_G3.Log(r, String.Format("grenade at our speed (x%.2f LegenDoom's): gravity %.2f (LegenDoom's %.2f x %.2f^2), %d bounces, fuse %d tics (%d / %.2f)",
+			k, m.Gravity, RSLD_G3.N("Arcing", "gravity"), k, m.bouncecount, Fuse(r), int(RSLD_G3.N("Arcing", "life")), k));
 	}
+	static int Fuse(RSLD_Rider r) { return max(1, int(RSLD_G3.N("Arcing", "life") / max(0.01, r.d1) + 0.5)); }
 	override void RiderTick(RSLD_Rider r, bool bounced)
 	{
-		if (r.age >= int(RSLD_G3.N("Arcing", "life"))) { RSLD_G3.Log(r, "fuse: goes off"); r.m.ExplodeMissile(); }
+		if (bounced) RSLD_G3.Log(r, String.Format("bounce %d at tic %d", r.bounces, r.age));
+		if (r.age >= Fuse(r)) { RSLD_G3.Log(r, String.Format("fuse: goes off after %d tics, %.0f from where it left", r.age, (r.m.pos - r.from).Length())); r.m.ExplodeMissile(); }
 	}
 }
 
@@ -383,17 +400,24 @@ class RSLD_Fx_GroupTherapy : RSLD_G3Fx
 }
 
 // Proximity (U: RL, PR, BF): "stationary projectiles that float towards nearby enemies": speed 40, x0.9 a tic until
-// still, then speed 2: looks for an enemy (A_SeekerMissile(90,90, SMF_LOOK|SMF_CURSPEED, 256, 4)), drifts to it within
-// 256 (A_Recoil(-0.5) + 3 tics of seeking), else brakes (x0.5 x3) and stops. LegenDoom's numbers as they are (E).
+// still, then speed 2 (plasma 5, BFG 1): looks for an enemy (A_SeekerMissile(90,90, SMF_LOOK|SMF_CURSPEED, 256, 4)),
+// drifts to it within 256 (A_Recoil(-0.5) + 3 tics of seeking), else brakes (x0.5 x3) and stops. Owner, round 4: "speeds
+// scaled to our rocket": its launch speed, drift and pull x k = our projectile's speed / LegenDoom's for that kind
+// (LDRocket / LDPlasmaBall / LDBFGBall, read at run time: Rocket2 50 / 20, Plasma_Ball 60 / 25); its slowing ratios, its
+// look and reach (distances) as LegenDoom's.
 class RSLD_Fx_Proximity : RSLD_G3Fx
 {
+	static string LDKind(int kind) { return kind == RSLD_G3.K_PLASMA ? "LDPlasmaBall" : (kind == RSLD_G3.K_BFG ? "LDBFGBall" : "LDRocket"); }
+	static double Drift(int kind) { return kind == RSLD_G3.K_PLASMA ? RSLD_G3.N("Proximity", "drift_pl") : (kind == RSLD_G3.K_BFG ? RSLD_G3.N("Proximity", "drift_bf") : RSLD_G3.N("Proximity", "drift")); }
 	override void RiderStart(RSLD_Rider r)
 	{
 		let m = r.m;
 		m.bSEEKERMISSILE = true; m.bFLOATBOB = true;
 		double a, p;
 		[a, p] = RSLD_G3.Dir(m);
-		m.Vel3DFromAngle(RSLD_G3.N("Proximity", "speed"), a, p);
+		r.d1 = RSLD_G3Util.SpeedRatio(r, LDKind(r.kind));
+		m.Vel3DFromAngle(RSLD_G3.N("Proximity", "speed") * r.d1, a, p);
+		RSLD_G3.Log(r, String.Format("launched at %.0f (LegenDoom's %.0f x %.2f, our speed over its %s's), drift %.1f", RSLD_G3.N("Proximity", "speed") * r.d1, RSLD_G3.N("Proximity", "speed"), r.d1, LDKind(r.kind), Drift(r.kind) * r.d1));
 	}
 	override void RiderTick(RSLD_Rider r, bool bounced)
 	{
@@ -401,7 +425,7 @@ class RSLD_Fx_Proximity : RSLD_G3Fx
 		if (r.i1 == 0)
 		{
 			m.A_ScaleVelocity(RSLD_G3.N("Proximity", "decel"));
-			if (RSLD_G3Util.Still(m, 1)) { m.A_Stop(); m.Speed = RSLD_G3.N("Proximity", "drift"); r.i1 = 1; RSLD_G3.Log(r, String.Format("deployed after %d tics", r.age)); }
+			if (RSLD_G3Util.Still(m, max(1.0, r.d1))) { m.A_Stop(); m.Speed = Drift(r.kind) * r.d1; r.i1 = 1; RSLD_G3.Log(r, String.Format("deployed after %d tics, %.0f from the muzzle", r.age, (m.pos - r.from).Length())); }
 			return;
 		}
 		int look = int(RSLD_G3.N("Proximity", "look"));
@@ -422,7 +446,7 @@ class RSLD_Fx_Proximity : RSLD_G3Fx
 		if (m.tracer && m.Distance3D(m.tracer) < RSLD_G3.N("Proximity", "reach"))
 		{
 			m.angle = m.AngleTo(m.tracer);
-			m.A_Recoil(RSLD_G3.N("Proximity", "pull"));
+			m.A_Recoil(RSLD_G3.N("Proximity", "pull") * r.d1);
 			r.i2 = 3;
 			if (!r.b1) { r.b1 = true; RSLD_G3.Log(r, String.Format("drifts to %s", m.tracer.GetClassName())); }
 		}

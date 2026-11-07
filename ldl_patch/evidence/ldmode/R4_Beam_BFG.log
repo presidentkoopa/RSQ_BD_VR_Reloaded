@@ -1,0 +1,58 @@
+# R4_Beam_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD probe: Beam on BIG_FUCKING_GUN slot BFG9000 rarity Rare
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 548 Beam p5 main BIG_FUCKING_GUN: Beam: BIG_FUCKING_GUN stream starts (LegenDoom's charge 25 tics), damage x3.33, ammo x1.25 a tic
+RSLD 573 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 573 Beam p5 main BIG_FUCKING_GUN: Beam: streaming 1 tics, 1 rounds used (AmmoCell 599 left)
+RSLD 574 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 575 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 576 Beam p5 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 577 Beam p5 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 578 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 579 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 580 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 581 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 582 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 583 Beam p5 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 584 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 585 Beam p5 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 586 Beam p5 main BIG_FUCKING_GUN: damage 5 -> 16 (x3.33) on Baron_NobleHeadshot
+RSLD 587 Beam p5 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 588 Beam p5 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 589 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 590 Beam p5 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 591 Beam p5 main BIG_FUCKING_GUN: damage 5 -> 16 (x3.33) on Baron_NobleHeadshot
+RSLD 592 Beam p5 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 593 Beam p5 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 594 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 595 Beam p5 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 596 Beam p5 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 597 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 598 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 599 Beam p5 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 600 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 601 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 602 Beam p5 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 603 Beam p5 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 604 Beam p5 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 605 Beam p5 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 606 Beam p5 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 607 Beam p5 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 607 Beam p5 main BIG_FUCKING_GUN: Beam: streaming 35 tics, 43 rounds used (AmmoCell 557 left)
+RSLD 608 Beam p5 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 609 Beam p5 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 610 Beam p5 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 611 Beam p5 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 612 Beam p5 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 613 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 614 Beam p5 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 615 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 616 Beam p5 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 617 Beam p5 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 618 Beam p5 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 618 Beam p5 main BIG_FUCKING_GUN: beam: the last shot (LegenDoom's FireBeamFinal)
+RSLD 618 Beam p5 main BIG_FUCKING_GUN: Beam: stream ends (let go / empty) after 45 tics, 57 rounds used
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 543

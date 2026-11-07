@@ -1,22 +1,38 @@
-# R3_Cluster_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Cluster_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot BFG9000
+RSLD probe: player at (-1600 0), holding BIG_FUCKING_GUN
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
 RSLD probe: Cluster on BIG_FUCKING_GUN slot BFG9000 rarity Uncommon
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 5133 Cluster rider bfg p52: burst into 6 minis (x0.40, blast x0.50, speed 20)
-RSLD 5136 Cluster p52 main BIG_FUCKING_GUN: damage 141 -> 70 (x0.50) on BaronofHell2
-RSLD 5136 Cluster p52 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
-RSLD 5139 Cluster p52 main BIG_FUCKING_GUN: damage 179 -> 89 (x0.50) on BaronofHell2
-RSLD 5139 Cluster p52 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
-RSLD 5139 Cluster p52 main BIG_FUCKING_GUN: damage 143 -> 71 (x0.50) on ExplosionSplashSpawner
-RSLD 5140 Cluster p52 main BIG_FUCKING_GUN: damage 124 -> 62 (x0.50) on BaronofHell2
-RSLD 5140 Cluster p52 main BIG_FUCKING_GUN: damage 91 -> 45 (x0.50) on ExplosionSplashSpawner
-RSLD 5140 Cluster p52 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
-RSLD 5141 Cluster rider bfg child p52: mini ball: 25 rays of 7 over 360 degrees
-RSLD 5147 Cluster p52 main BIG_FUCKING_GUN: damage 29 -> 14 (x0.50) on BaronofHell2
-RSLD 5147 Cluster p52 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
-RSLD 5148 Cluster p52 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
-RSLD 5148 Cluster p52 main BIG_FUCKING_GUN: damage 11 -> 5 (x0.50) on BaronofHell2
-RSLD 5148 Cluster p52 main BIG_FUCKING_GUN: damage 56 -> 28 (x0.50) on ExplosionSplashSpawner
-RSLD 5154 Cluster p52 main BIG_FUCKING_GUN: damage 83 -> 41 (x0.50) on BaronofHell2
-RSLD 5154 Cluster p52 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (-1280 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 7701 Cluster rider bfg p57: burst into 6 minis (x0.40, blast x0.50, speed 20)
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 1500 -> 600 (x0.40) on BaronofHell2
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on BaronofHell2
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD 7701 Cluster rider bfg child p57: its own rays muted (death tic and the next)
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 1500 -> 600 (x0.40) on BaronofHell2
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on BaronofHell2
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD 7701 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD 7701 Cluster p0 main BIG_FUCKING_GUN: damage 58 -> 0 (x0.00) on BaronofHell2
+RSLD 7701 Cluster p0 main BIG_FUCKING_GUN: damage 65 -> 0 (x0.00) on BaronofHell2
+RSLD 7701 Cluster p0 main BIG_FUCKING_GUN: damage 79 -> 0 (x0.00) on BaronofHell2
+RSLD 7701 Cluster p0 main BIG_FUCKING_GUN: damage 78 -> 0 (x0.00) on BaronofHell2
+RSLD 7701 Cluster p0 main BIG_FUCKING_GUN: damage 78 -> 0 (x0.00) on BaronofHell2
+RSLD 7701 Cluster p0 main BIG_FUCKING_GUN: damage 64 -> 0 (x0.00) on BaronofHell2
+RSLD 7701 Cluster rider bfg child p57: its own rays muted (death tic and the next)
+RSLD 7702 Cluster p0 main BIG_FUCKING_GUN: damage 75 -> 0 (x0.00) on BaronofHell2
+RSLD 7702 Cluster p0 main BIG_FUCKING_GUN: damage 62 -> 0 (x0.00) on BaronofHell2
+RSLD 7702 Cluster p0 main BIG_FUCKING_GUN: damage 63 -> 0 (x0.00) on BaronofHell2
+RSLD 7702 Cluster p0 main BIG_FUCKING_GUN: damage 72 -> 0 (x0.00) on BaronofHell2
+RSLD 7702 Cluster p0 main BIG_FUCKING_GUN: damage 85 -> 0 (x0.00) on BaronofHell2
+RSLD 7703 Cluster rider bfg child p57: mini ball: 25 rays of 7 over 360 degrees
+RSLD 7703 Cluster rider bfg child p57: mini ball: 25 rays of 7 over 360 degrees
+RSLD 7740 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD 7740 Cluster rider bfg child p57: its own rays muted (death tic and the next)
+RSLD 7742 Cluster rider bfg child p57: mini ball: 25 rays of 7 over 360 degrees
+RSLD 7743 Cluster p57 main BIG_FUCKING_GUN: damage 190 -> 95 (x0.50) on ExplosionSplashSpawner
+RSLD 7743 Cluster rider bfg child p57: its own rays muted (death tic and the next)
+RSLD 7745 Cluster rider bfg child p57: mini ball: 25 rays of 7 over 360 degrees

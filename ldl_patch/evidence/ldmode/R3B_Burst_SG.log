@@ -1,9 +1,10 @@
-# R3B_Burst_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Burst_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Shot_Gun magazine 9 reserve 100
 RSLD probe: Burst on Shot_Gun slot Shotgun rarity Uncommon
-RSLD probe: Shot_Gun magazine 9 reserve 4
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 9213 Burst p208 main Shot_Gun: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
-RSLD 9217 Burst p209 main Shot_Gun: burst shot 2 of 3
-RSLD 9221 Burst p210 main Shot_Gun: burst shot 3 of 3
-RSLD probe: Shot_Gun magazine 6 reserve 4
+RSLD probe: Shot_Gun magazine 9 reserve 100
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 14854 Burst p264 main Shot_Gun: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 14858 Burst p265 main Shot_Gun: burst shot 2 of 3
+RSLD 14862 Burst p266 main Shot_Gun: burst shot 3 of 3
+RSLD probe: Shot_Gun magazine 6 reserve 100

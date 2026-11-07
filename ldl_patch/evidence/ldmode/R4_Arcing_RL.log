@@ -1,0 +1,7 @@
+# R4_Arcing_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
+RSLD probe: Arcing on Rocket_Launcher slot RocketLauncher rarity Uncommon
+RSLD probe: 2 targets removed
+RSLD 1447 Arcing rider rocket p10: grenade at our speed (x2.50 LegenDoom's): gravity 0.94 (LegenDoom's 0.15 x 2.50^2), 5 bounces, fuse 56 tics (139 / 2.50)
+RSLD 1461 Arcing rider rocket p10: bounce 1 at tic 15
+RSLD 1470 Arcing rider rocket p10: bounce 2 at tic 24

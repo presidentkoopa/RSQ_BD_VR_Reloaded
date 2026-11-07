@@ -1,6 +1,9 @@
-# R3_Energizing_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
-RSLD probe: cleared slot BFG9000
+# R3_Energizing_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
 RSLD probe: Energizing on BIG_FUCKING_GUN slot BFG9000 rarity Common
-RSLD probe: 1 targets removed
-RSLD 4216 Energizing rider bfg p45: anomaly after 31 tics: 21 pulses
-RSLD 4217 Energizing rider bfg p45: pulse: 0 players healed
+RSLD probe: 2 targets removed
+RSLD probe: health 40
+RSLD 6197 Energizing rider bfg p48: anomaly after 31 tics: 21 pulses
+RSLD 6198 Energizing rider bfg p48: pulse: 0 players healed
+RSLD probe: player BDoomer has Health x0 health 40 speed 8.0
+RSLD probe: health 100

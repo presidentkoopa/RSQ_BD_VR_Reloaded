@@ -1,0 +1,80 @@
+# R4_Prototype_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: cleared slot BFG9000
+RSLD probe: player at (-1600 0), holding BIG_FUCKING_GUN
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD probe: Prototype on BIG_FUCKING_GUN slot BFG9000 rarity Epic
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 1230 Prototype p9 main BIG_FUCKING_GUN: Prototype: BIG_FUCKING_GUN stream starts (LegenDoom's charge 15 tics), damage x3.33, ammo x1.25 a tic
+RSLD 1245 Prototype p9 main BIG_FUCKING_GUN: Prototype: streaming 1 tics, 1 rounds used (AmmoCell 599 left)
+RSLD 1257 Prototype p9 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 1257 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1258 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1258 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1259 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1259 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1260 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1260 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1261 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on BaronofHell2
+RSLD 1261 Prototype p9 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 1262 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 1263 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on BaronofHell2
+RSLD 1263 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1263 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1264 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1265 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on BaronofHell2
+RSLD 1265 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1265 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 1266 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1266 Prototype p9 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 1267 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1268 Prototype p9 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 1268 Prototype p9 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 1268 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1269 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1269 Prototype p9 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 1270 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1270 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 1271 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1271 Prototype p9 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 1272 Prototype p9 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 1273 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1273 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1274 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on BaronofHell2
+RSLD 1274 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1275 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1275 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1276 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1276 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1277 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1277 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1278 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1278 Prototype p9 main BIG_FUCKING_GUN: damage 5 -> 16 (x3.33) on Baron_NobleHeadshot
+RSLD 1279 Prototype p9 main BIG_FUCKING_GUN: Prototype: streaming 35 tics, 43 rounds used (AmmoCell 557 left)
+RSLD 1279 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1279 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1280 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1281 Prototype p9 main BIG_FUCKING_GUN: Prototype: stream ends (let go / empty) after 36 tics, 45 rounds used
+RSLD 1281 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1281 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1282 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1282 Prototype p9 main BIG_FUCKING_GUN: damage 30 -> 100 (x3.33) on Baron_NobleHeadshot
+RSLD 1283 Prototype p9 main BIG_FUCKING_GUN: damage 40 -> 133 (x3.33) on Baron_NobleHeadshot
+RSLD 1284 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 1284 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 1285 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1286 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1286 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD 1287 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1287 Prototype p9 main BIG_FUCKING_GUN: damage 35 -> 116 (x3.33) on Baron_NobleHeadshot
+RSLD 1288 Prototype p9 main BIG_FUCKING_GUN: damage 15 -> 50 (x3.33) on Baron_NobleHeadshot
+RSLD 1288 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1289 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1289 Prototype p9 main BIG_FUCKING_GUN: damage 5 -> 16 (x3.33) on Baron_NobleHeadshot
+RSLD 1290 Prototype p9 main BIG_FUCKING_GUN: damage 5 -> 16 (x3.33) on Baron_NobleHeadshot
+RSLD 1291 Prototype p9 main BIG_FUCKING_GUN: damage 20 -> 66 (x3.33) on Baron_NobleHeadshot
+RSLD 1291 Prototype p9 main BIG_FUCKING_GUN: damage 5 -> 16 (x3.33) on Baron_NobleHeadshot
+RSLD 1292 Prototype p9 main BIG_FUCKING_GUN: damage 10 -> 33 (x3.33) on Baron_NobleHeadshot
+RSLD 1292 Prototype p9 main BIG_FUCKING_GUN: damage 25 -> 83 (x3.33) on Baron_NobleHeadshot
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 555

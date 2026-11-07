@@ -1,0 +1,8 @@
+# R4_Proximity_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD probe: Proximity on BIG_FUCKING_GUN slot BFG9000 rarity Uncommon
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 500 (-1100 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2275 Proximity rider bfg p13: launched at 40 (LegenDoom's 40 x 1.00, our speed over its LDBFGBall's), drift 1.0
+RSLD 2309 Proximity rider bfg p13: deployed after 35 tics, 350 from the muzzle
+RSLD 2310 Proximity rider bfg p13: drifts to BaronofHell2

@@ -1,7 +1,9 @@
-# R3_Irradiated_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Irradiated_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot RocketLauncher
+RSLD probe: player at (-1600 0), holding Rocket_Launcher
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Irradiated on Rocket_Launcher slot RocketLauncher rarity Epic
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 700 (508 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 2465 TORGUE: Baron_NobleHeadshot died: explodes (100 over 150)
-RSLD 2472 Irradiated rider rocket p26: pulse 1: 233 over 256
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 700 (-900 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 10111 Irradiated rider rocket p100: pulse 1: 100 over 256
+RSLD 10128 Irradiated rider rocket p100: pulse 2: 133 over 256

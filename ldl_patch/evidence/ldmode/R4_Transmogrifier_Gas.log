@@ -1,0 +1,10 @@
+# R4_Transmogrifier_Gas: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Shot_Gun magazine 9 reserve 100
+RSLD probe: Transmogrifier on Shot_Gun slot Shotgun rarity Uncommon
+RSLD probe: player BDoomer has Gas x999 health 100 speed 8.0
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 3142 Transmogrifier p29 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 3142 Transmogrifier p29 main Shot_Gun: Transmogrifier: out of its own ammo, took 1 Gas (LegenDoom's Cell kind) instead: 1 round(s) given back
+RSLD probe: player BDoomer has Gas x998 health 100 speed 8.0
+RSLD probe: Shot_Gun magazine 1 reserve 100

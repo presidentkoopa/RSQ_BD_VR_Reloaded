@@ -1,9 +1,11 @@
-# R3_Overflowing_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
-RSLD probe: cleared slot RocketLauncher
+# R3_Overflowing_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Overflowing on Rocket_Launcher slot RocketLauncher rarity Epic
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 6452 Overflowing p70 main Rocket_Launcher: maxed: rockets (small blasts) cells (x1.5) shells (free extra volley) clips (faster cycle: not carried here, G5)
-RSLD 6452 Overflowing rider rocket p70: shells maxed: one more, free
-RSLD 6459 Overflowing rider rocket p70: rockets maxed: +blast 33 over 160
-RSLD 6459 Overflowing rider rocket child p70: rockets maxed: +blast 33 over 160
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (-1280 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 6972 Overflowing p52 main Rocket_Launcher: maxed: rockets by AmmoRocket (small blasts) cells by AmmoCell (x1.5) shells by AmmoShell (free extra volley) clips by Clip2 (faster cycle: left out, owner round 4)
+RSLD 6972 Overflowing rider rocket p52: shells maxed: one more, free
+RSLD 6976 Overflowing p52 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 6976 Overflowing rider rocket child p52: rockets maxed: +blast 33 over 160
+RSLD 6977 Overflowing p52 main Rocket_Launcher: damage 150 -> 225 (x1.50) on BaronofHell2
+RSLD 6977 Overflowing rider rocket p52: rockets maxed: +blast 33 over 160

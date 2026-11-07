@@ -1,0 +1,11 @@
+# R4_MenuSounds: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: cleared slot Shotgun
+RSLD probe: player at (-1600 0), holding Shot_Gun
+RSLD probe: Shot_Gun magazine 9 reserve 100
+RSLD probe: menu sounds (muted no): menu/activate -> menu/activate menu/cursor -> menu/cursor menu/choose -> menu/choose menu/backup -> menu/backup menu/change -> menu/change menu/clear -> menu/clear
+RSLD 3257 sounds: LegenDoom info screen opened: rsld/ld/infoopen
+RSLD 3262 sounds: LegenDoom info screen closed: rsld/ld/infoclose
+RSLD probe: menu sounds (muted yes): menu/activate -> rsld/qz/activate menu/cursor -> rsld/qz/cursor menu/choose -> rsld/qz/choose menu/backup -> rsld/qz/backup menu/change -> rsld/qz/change menu/clear -> rsld/qz/clear
+RSLD 3270 sounds: LegenDoom info screen opened: rsld/qz/activate
+RSLD 3275 sounds: LegenDoom info screen closed: rsld/qz/backup
+RSLD probe: menu sounds (muted no): menu/activate -> menu/activate menu/cursor -> menu/cursor menu/choose -> menu/choose menu/backup -> menu/backup menu/change -> menu/change menu/clear -> menu/clear

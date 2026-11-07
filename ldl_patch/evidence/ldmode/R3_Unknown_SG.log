@@ -1,11 +1,11 @@
-# R3_Unknown_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Unknown_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Shotgun
+RSLD probe: player at (-1600 0), holding Shot_Gun
+RSLD probe: Shot_Gun magazine 9 reserve 100
 RSLD probe: Unknown on Shot_Gun slot Shotgun rarity Common
 RSLD probe: Shot_Gun magazine 9 reserve 100
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 5413 Unknown p55 main Shot_Gun: refund 1 -> ShotgunAmmo
-RSLD 5413 Unknown p55 main Shot_Gun: Unknown (invisible: free): 1 round(s) given back
-RSLD 5461 Unknown p56 main Shot_Gun: refund 1 -> ShotgunAmmo
-RSLD 5461 Unknown p56 main Shot_Gun: Unknown (invisible: free): 1 round(s) given back
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 11506 Unknown p115 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 11506 Unknown p115 main Shot_Gun: Unknown (invisible: free): 1 round(s) given back
 RSLD probe: Shot_Gun magazine 9 reserve 100

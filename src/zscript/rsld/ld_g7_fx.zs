@@ -2,26 +2,30 @@
 // chainsaw. Numbers: numbers_g7.zs (ldl_patch/tools/numbers/g7.rules, each with its LegenDoom file:line).
 //
 // The fists. A real punch (rsq/fists.zs RSQ_FistHand: a fast, forward blow of the controller) lands BD22's own strike
-// (MeleeStrikeNormal, MeleeStrike1Berserked with berserk) from the hand; the foundation hands it to the main fist's
-// effect (OnMelee) and its damage to ModifyDamage / OnHit. Only the MAIN fist (Melee_Attacks) is LegenDoom's Fists
-// slot: the free off hand (RSQ_Hands) punches as BD22 VR's, without the legendary (owner question in R3B_DONE.md).
+// (MeleeStrikeNormal, MeleeStrike1Berserked with berserk) from the hand; the foundation hands it to the fist's
+// effect (OnMelee) and its damage to ModifyDamage / OnHit. Owner, round 4: "fist legendaries: both fists (the off hand's
+// free fist too)": the free off hand (RSQ_Hands) is BD22's fists weapon there (Melee_Attacks: LegenDoom's Fists slot),
+// so every effect below works on either fist, each hand with its own trigger and its own state (handler.zs HandWeapon,
+// StrikeHand: the hand comes from rsq/fists.zs's record of the punch). Round 4 also: "charge / hold with real arms: the
+// fist's trigger held, plus damage scaled by swing speed": RSLD_G7.Swing below (RSQ Melee's rule, built here).
 // Owner, round 3 (Q11): NO pushes on the player (Lunging's launch, Facekicking's jump kick velocity, Hunting's recoil
 // push): their damage parts are kept. "Charge" and "hold" with real arms, from RSQ Melee's ideas, built HERE (RSQ Melee
 // need not be loaded): RSQ Melee's Star Punch reads "a punch thrown with that hand's trigger squeezed" (gloves.zs
 // STAR PUNCH); BD22 VR's own No Trigger Punch leaves the fists' trigger free in VR. So the fist hand's TRIGGER HELD is
 // LegenDoom's "fire held": OnePunch charges while it is held and the next real punch thrown with it still held is the
-// One Punch; Blaster fires its plasma balls while it is held. Not taken (owner's call, R3B_DONE.md): RSQ Melee's punch
-// kinds (jab / hook / uppercut) and its swing-speed damage (10 at 2 m/s to 20 at 7 m/s): LegenDoom's numbers are fixed.
+// One Punch; Blaster fires its plasma balls while it is held. Round 4: the swing-speed damage is taken too (Swing);
+// RSQ Melee's punch kinds (jab / hook / uppercut) are not.
 // The chainsaw: its A_Saw / A_CustomPunch hitscans come as pellets of a melee pull (s.melee, slot 1).
 // Silent effects (owner: voice / scream effects mechanics only): Imaginary, NorthernStar.
 
 class RSLD_G7Effect : RSLD_Effect
 {
-	int hold[MAXPLAYERS];		// tics the main fist's trigger has been down
-	int tic1[MAXPLAYERS], tic2[MAXPLAYERS];
-	bool f1[MAXPLAYERS], f2[MAXPLAYERS];
+	int hold[MAXPLAYERS * 2];		// tics the fist's trigger has been down (index pn * 2 + hand)
+	int tic1[MAXPLAYERS * 2], tic2[MAXPLAYERS * 2];
+	bool f1[MAXPLAYERS * 2], f2[MAXPLAYERS * 2];
 
-	static bool Fist(RSLD_Shot s) { return s && s.melee && s.slot == 0 && s.hand == RSLD.MAIN; }
+	static int K(int pn, int hand) { return clamp(pn * 2 + hand, 0, MAXPLAYERS * 2 - 1); }
+	static bool Fist(RSLD_Shot s) { return s && s.melee && s.slot == 0; }
 	static bool Saw(RSLD_Shot s) { return s && s.melee && s.slot == 1; }
 	static bool Berserk(Actor mo) { return mo && mo.FindInventory("PowerStrength", true) != null; }
 	static bool StrikeHit(RSLD_Hit h) { return h && h.inflictor && RSLD_Handler.IsStrike(h.inflictor); }
@@ -57,12 +61,13 @@ class RSLD_G7Effect : RSLD_Effect
 		if (s && s.mo && s.slot == 0) ProbePunch(s.mo);
 	}
 
-	// the main fist's trigger, every tic the fists are in the main hand
+	// the fist's trigger, every tic a fist is in that hand (main: BD22's fists weapon; off: the free fist)
 	void Trigger(RSLD_Held c)
 	{
-		if (c.hand != RSLD.MAIN || c.slot != 0) return;
-		if (RSLD_G5.Pressed(c.mo, RSLD.MAIN)) hold[c.pn]++;
-		else hold[c.pn] = 0;
+		if (c.slot != 0) return;
+		int k = K(c.pn, c.hand);
+		if (RSLD_G5.Pressed(c.mo, c.hand)) hold[k]++;
+		else hold[k] = 0;
 	}
 }
 
@@ -72,6 +77,55 @@ class RSLD_G7NoTurn : RSLD_G5Token {}
 
 class RSLD_G7 play
 {
+	// owner, round 4: "charge / hold with real arms: the fist's trigger held, plus damage scaled by swing speed". RSQ
+	// Melee's rule, built here (RSQ Melee need not be loaded): power = (speed - 2 m/s) / (7 - 2 m/s), 0..1, and the punch
+	// does x(1 + power): x1 at 2 m/s or slower, x2 at 7 m/s or faster (RSQ_UBQSeries/Melee zscript/rsqml/gloves.zs:1105-1115
+	// rsqml_punch_min_speed 2.0 / rsqml_punch_full_speed 7.0, :1159 damage x (1 + lastPower)). On top of LegenDoom's number
+	// for the effect (a set number too: Facekicking's kick). Only a punch thrown with an arm (rsq/fists.zs records its
+	// speed); BD22's canned trigger punch and the rig's test punch without a speed land as LegenDoom's number.
+	const SWING_MIN = 2.0;
+	const SWING_FULL = 7.0;
+	static void Swing(RSLD_Shot s, RSLD_Hit h)
+	{
+		if (!s || !h || !s.melee || s.slot != 0 || !h.inflictor || !RSLD_Handler.IsStrike(h.inflictor)) return;
+		int hand;
+		double mps;
+		[hand, mps] = RSQ_Fists.Lookup(h.inflictor);
+		if (hand < 0) return;
+		double m = 1.0 + clamp((mps - SWING_MIN) / (SWING_FULL - SWING_MIN), 0.0, 1.0);
+		if (h.setDamage >= 0) h.setDamage = int(h.setDamage * m + 0.5);
+		else h.mult *= m;
+		s.Log(String.Format("swing %.1f m/s (%s fist): x%.2f (RSQ Melee's 2 -> 7 m/s rule)", mps, RSLD.HandName(hand), m));
+	}
+
+	// a test punch for the rig probe (netevent rsld_punch:<hand> <speed x 100>): BD22's own strike from that hand along
+	// its aim, recorded with that swing speed as rsq/fists.zs records a real one
+	static Actor TestPunch(PlayerPawn mo, int hand, double mps)
+	{
+		if (!mo) return null;
+		Name sn = mo.FindInventory("PowerStrength", true) ? 'MeleeStrike1Berserked' : 'MeleeStrikeNormal';
+		class<Actor> sc = RSLD.AC(sn);
+		if (!sc) return null;
+		bool vr = RSVR_VRHand.InVR(mo);
+		Vector3 at = vr ? (hand == RSLD.OFF ? RSVR_VRHand.OffPos(mo) : RSVR_VRHand.HandPos(mo)) : mo.pos + (0, 0, mo.Height * 0.6);
+		double a = mo.angle, p = mo.pitch;
+		if (mo.OverrideAttackPosDir)
+		{
+			Vector3 d = hand == RSLD.OFF ? mo.OffhandDir(mo, a, p) : mo.AttackDir(mo, a, p);
+			a = d.x; p = d.y;
+		}
+		let s = Actor.Spawn(sc, at, ALLOW_REPLACE);
+		if (!s) return null;
+		s.target = mo;
+		s.angle = a;
+		s.pitch = p;
+		s.Vel3DFromAngle(RSQ_FistHand.REACH, a, p);
+		RSQ_Fists.Record(s, hand, mps);
+		mo.A_StartSound("Melee/Swing", CHAN_AUTO, CHANF_OVERLAP);
+		RSLD.Log(String.Format("G7 probe: a test punch (%s) from the %s hand at %.1f m/s", sn, RSLD.HandName(hand), mps));
+		return s;
+	}
+
 	static void NoTurn(RSLD_Held c)
 	{
 		if (!c || c.slot != 1 || !c.mo) return;
@@ -264,32 +318,28 @@ class RSLD_Fx_OnePunch : RSLD_G7Effect
 	override void WhileHeld(RSLD_Held c)
 	{
 		Trigger(c);
-		int pn = c.pn;
+		if (c.slot != 0) return;
+		int k = K(c.pn, c.hand);
 		bool cool = RSLD.Has(c.mo, "LDOnePunchCooldown") > 0;
-		bool charged = !cool && hold[pn] >= Num("charge");
-		if (charged && !f1[pn]) { c.mo.A_StartSound("Plasma/Charge", CHAN_AUTO, CHANF_OVERLAP); RSLD.Log(String.Format("OnePunch: charged (%d tics held): throw a punch with the trigger held", hold[pn])); }
-		f1[pn] = charged;
-		if (f2[pn] && level.maptime >= tic2[pn]) { f2[pn] = false; ProbePunch(c.mo); }	// the rig probe's punch
+		bool charged = !cool && hold[k] >= Num("charge");
+		if (charged && !f1[k]) { c.mo.A_StartSound("Plasma/Charge", CHAN_AUTO, CHANF_OVERLAP); RSLD.Log(String.Format("OnePunch: %s fist charged (%d tics held): throw a punch with the trigger held", RSLD.HandName(c.hand), hold[k])); }
+		f1[k] = charged;
 	}
 
-	override void OnProbe(RSLD_Shot s)
-	{
-		if (!s || !s.mo) return;
-		f2[s.pn] = true;		// the test punch comes 10 tics later: hold +attack over it to charge
-		tic2[s.pn] = level.maptime + 10;
-	}
+	override void OnProbe(RSLD_Shot s) {}	// the rig throws its test punch with netevent rsld_punch (handler.zs)
 
 	override void OnMelee(RSLD_Shot s, Actor strike)
 	{
 		if (!Fist(s) || !strike) return;
-		if (!f1[s.pn] || !RSLD_G5.Pressed(s.mo, RSLD.MAIN))
+		int k = K(s.pn, s.hand);
+		if (!f1[k] || !RSLD_G5.Pressed(s.mo, s.hand))
 		{
 			if (RSLD.Has(s.mo, "LDOnePunchCooldown") > 0) s.Log("one punch: cooling down (LegenDoom's LDOnePunchCooldown): a normal punch");
 			return;
 		}
 		s.b1 = true;
-		f1[s.pn] = false;
-		hold[s.pn] = 0;
+		f1[k] = false;
+		hold[k] = 0;
 		Reach(strike, Num("range") / max(1, RSLD.Num("Base", "fi_range")));
 		let l = RSLD_G7OnePunchLine(Actor.Spawn("RSLD_G7OnePunchLine", strike.pos, NO_REPLACE));
 		if (l)
@@ -328,16 +378,17 @@ class RSLD_Fx_Blaster : RSLD_G7Effect
 	override void WhileHeld(RSLD_Held c)
 	{
 		Trigger(c);
-		int pn = c.pn;
+		if (c.slot != 0) return;
+		int k = K(c.pn, c.hand);
 		int lead = int(Num("lead1") + Num("lead2") + Num("lead3"));
 		int every = int(Num("loop") - Num("loop_rf"));
-		if (hold[pn] < lead || every <= 0 || (hold[pn] - lead) % every != 0) return;
+		if (hold[k] < lead || every <= 0 || (hold[k] - lead) % every != 0) return;
 		class<Actor> bc = RSLD.AC("Plasma_Ball");
 		if (!bc) return;
 		bool b = Berserk(c.mo);
 		Vector3 at;
 		double a, pt;
-		[at, a, pt] = RSLD_G2.Muzzle(c.mo, RSLD.MAIN, c.mo.angle, c.mo.pitch);
+		[at, a, pt] = RSLD_G2.Muzzle(c.mo, c.hand, c.mo.angle, c.mo.pitch);
 		a += frandom[rsld_g7](-0.25, 0.25);
 		let m = Actor.Spawn(bc, at, ALLOW_REPLACE);
 		if (!m) return;
@@ -349,7 +400,7 @@ class RSLD_Fx_Blaster : RSLD_G7Effect
 		ballDmg.Push(int(Num(b ? "dmg_bers" : "dmg")));
 		if (balls.Size() > 32) { balls.Delete(0); ballDmg.Delete(0); }
 		c.mo.A_StartSound("Plasma/Fire", CHAN_AUTO, CHANF_OVERLAP);
-		RSLD.Log(String.Format("Blaster: plasma ball from the fist (%d damage, speed %.0f), trigger held %d tics", ballDmg[ballDmg.Size() - 1], Num(b ? "speed_bers" : "speed"), hold[pn]));
+		RSLD.Log(String.Format("Blaster: plasma ball from the %s fist (%d damage, speed %.0f), trigger held %d tics", RSLD.HandName(c.hand), ballDmg[ballDmg.Size() - 1], Num(b ? "speed_bers" : "speed"), hold[k]));
 	}
 
 	override void OnMissile(RSLD_Shot s, Actor m)
@@ -369,15 +420,45 @@ class RSLD_Fx_Blaster : RSLD_G7Effect
 // which is kept in pain (a 0-damage FORCEPAIN hit every tic) for as long as it lasts, and leaves one
 // LDNorthernStarDamager (35, exact) that lands when the stun runs out: the more punches, the more lands at once.
 // Ours: every real punch that lands is such a hit (LegenDoom's own stun item and damager, E); the stun-lock is ours
-// (TriggerPainChance every tic, no sound). LegenDoom's closing radius thrust (the end of its held-fire combo) has no
-// moment in real punching: not carried (owner question).
+// (TriggerPainChance every tic, no sound). Owner, round 4: "NorthernStar: include the closing blow, monsters only (never
+// pushes the player)": LegenDoom's combo ends with LDNorthernStarFistsFinalPuff's A_RadiusThrust(20000, 20,
+// RTF_NOIMPACTDAMAGE, 20) where the last punch lands. Real punches have no "combo end", so it comes when the stun runs out
+// (the damagers land then too): from the target's near side, the engine's radius thrust rule (P_RadiusAttack: full force
+// within 20 of a thing's edge, thrust force x 0.5 / mass, away from the spot, no Z) on MONSTERS only: never a player.
 class RSLD_G7Stun : Thinker
 {
 	Actor t;
+	PlayerPawn mo;
+	RSLD_Shot s;
 	override void Tick()
 	{
-		if (!t || t.health <= 0 || RSLD.Has(t, "LDNorthernStarStunActive") <= 0) { Destroy(); return; }
-		t.TriggerPainChance('Melee', true);
+		if (!t) { Destroy(); return; }
+		if (RSLD.Has(t, "LDNorthernStarStunActive") <= 0) { Blow(); Destroy(); return; }
+		if (t.health > 0) t.TriggerPainChance('Melee', true);
+	}
+	void Blow()
+	{
+		double force = RSLD.Num("NorthernStar", "thrust"), dist = RSLD.Num("NorthernStar", "trad"), full = RSLD.Num("NorthernStar", "tfull");
+		Vector3 spot = t.pos + (0, 0, t.Height * 0.5);
+		if (mo && (mo.pos.xy - t.pos.xy).Length() > 0.01) spot.xy = t.pos.xy + (mo.pos.xy - t.pos.xy).Unit() * t.radius;	// the punch lands on the near side
+		int n = 0;
+		string got = "";
+		let it = BlockThingsIterator.CreateFromPos(spot.x, spot.y, spot.z, t.Height, dist + 128, false);
+		while (it.Next())
+		{
+			let a = it.thing;
+			if (!a || a.player || !a.bISMONSTER || a.bDONTTHRUST || a.Mass <= 0) continue;	// monsters only (owner: never the player)
+			double dd = max(0.0, (a.pos.xy - spot.xy).Length() - a.radius);
+			if (dd >= dist) continue;
+			double pts = dd <= full ? force : force * (dist - dd) / max(1.0, dist - full);
+			double th = pts * 0.5 / a.Mass;
+			double ang = (a.pos.xy - spot.xy).Length() > 0.01 ? VectorAngle(a.pos.x - spot.x, a.pos.y - spot.y) : (mo ? mo.AngleTo(a) : a.angle + 180);
+			a.Thrust(th, ang);
+			n++;
+			got = got .. String.Format(" %s +%.0f", a.GetClassName(), th);
+		}
+		string msg = String.Format("northern star: the closing blow (LegenDoom's A_RadiusThrust %d over %d): %d monster%s thrown:%s", int(force), int(dist), n, n == 1 ? "" : "s", got);
+		if (s) s.Log(msg); else RSLD.Log(msg);
 	}
 }
 
@@ -399,7 +480,7 @@ class RSLD_Fx_NorthernStar : RSLD_G7Effect
 		let it = ThinkerIterator.Create("RSLD_G7Stun", Thinker.STAT_DEFAULT);
 		RSLD_G7Stun k;
 		while ((k = RSLD_G7Stun(it.Next()))) if (k.t == t) { running = true; break; }
-		if (!running) { let n = new("RSLD_G7Stun"); n.t = t; }
+		if (!running) { let n = new("RSLD_G7Stun"); n.t = t; n.mo = s.mo; n.s = s; }
 		s.Log(String.Format("northern star: %s stunned %d tics, %d more damage waits for the stun's end (LegenDoom's damager)",
 			t.GetClassName(), int(Num("stun")), int(Num("dmg"))));
 	}

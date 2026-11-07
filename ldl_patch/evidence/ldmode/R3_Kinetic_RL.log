@@ -1,6 +1,10 @@
-# R3_Kinetic_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3_Kinetic_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: player at (-1600 0), holding Rocket_Launcher
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
 RSLD probe: Kinetic on Rocket_Launcher slot RocketLauncher rarity Common
-RSLD probe: 0 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 103 Kinetic rider rocket p1: no splash; +100 onto the direct hit (LegenDoom +128)
-RSLD 110 Kinetic rider rocket p1: blast RocketExplosion removed (no splash)
+RSLD probe: 4 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (-1280 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 3531 Kinetic rider rocket p32: no splash; +100 onto the direct hit (LegenDoom +128)
+RSLD 3536 Kinetic p32 main Rocket_Launcher: damage 150 -> 250 (x1.67) on BaronofHell2
+RSLD 3536 Kinetic rider rocket p32: blast RocketExplosion removed (no splash)

@@ -1,0 +1,8 @@
+# R4_Proximity_PR: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: Plasma_Gun magazine 50 reserve 600
+RSLD probe: Proximity on Plasma_Gun slot PlasmaRifle rarity Uncommon
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 1100 (-500 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 1929 Proximity rider plasma p12: launched at 96 (LegenDoom's 40 x 2.40, our speed over its LDPlasmaBall's), drift 12.0
+RSLD 1963 Proximity rider plasma p12: deployed after 35 tics, 840 from the muzzle
+RSLD 1964 Proximity rider plasma p12: drifts to BaronofHell2

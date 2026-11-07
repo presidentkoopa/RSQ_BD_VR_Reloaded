@@ -196,3 +196,62 @@ Status: v2. BUILT: core.zs/handler.zs/fx_g0.zs/fx_g9.zs compile on the rig (QZD 
   variants inherit). NOT hooked: BD22's DualPistols / DualRifles (their .dec are not in BD22 VR's src).
 - NEVER call a method on a string literal (`"a|b".Split(...)`): it crashes the VM on QZD 17.3 (rig, round 2).
 - Removed: rsld_q13, rsld_q14 (fixed behaviour), RSLD_Fx_Favoured (never rolls: RSLD_Reroll.IsDropped).
+
+## 13. v5 (round 3, agent R3a, 2026-11-06 evening)
+- PASSIVES COUNTER (owner Q9, round 3): `RSLD.Count(mo, eff)` now counts only the slots of the guns IN HAND (main, and
+  off hand with rsld_offhand_legendary; a slot once). LegenDoom's every-owned count is `RSLD.CountOwned` (Thematic,
+  Upgrading's meter use it). `RSLD.HeldSlot(mo, slot)`. Hoarder's per-slot loop checks HeldSlot. LegenDoom's own
+  start-buff script (LD_ApplyStartBuffs: Restoring, Vanguard, Resupplying, Wildfire, Chronostrike, Scrambling) still
+  counts owned legendaries (LegenDoom's ACS): open question in R3a's report.
+- MISSILE RIDERS (g3_core.zs): an effect that extends `RSLD_G3Fx` gets a rider (`RSLD_Rider`) on each of our
+  projectiles of its pulls (Rides(kind): K_ROCKET/K_PLASMA/K_BFG/K_GRENADE). Hooks: RiderSpawn (in the spawn, before
+  the muzzle moves it), RiderStart (first tic, at the muzzle), RiderTick(r, bounced), RiderDeath (r.sky: vanished),
+  RiderAfter (40 tics after death), RiderBlast (BD22's RocketExplosion / UGBLExplosion of that projectile: by default
+  the rider's explDmgMul / explRadMul / explFull / explNoSelf / noExpl are applied through RSLD_Boom), RiderDamage.
+  r.dmgMul / r.directAdd change its direct hit. `RSLD_G3.Child(r, at, angle, pitch, speed, dmgMul, scale)` spawns
+  one more of OUR projectile class for the pull. `RSLD_G3.SkipSpray(ball)` skips a BFG ball's own ray spray;
+  `RSLD_G4.Spray(s, from, rays, dmg, fov, blastDmg, blastRad, flags)` fires BD22's rays (optionally a blast per
+  target). `RSLD_G3.BoomAt(s, at, dmg, rad, full, flags, delay, dtype, vis, snd)`: a blast of the pull.
+- Handler: a BD22 helper missile that a rider claimed (its blast) is TAGGED and its damage now counts for the pull
+  (Outgoing / WorldThingDamaged skip only untagged helpers). WorldThingDied feeds TORGUE's chain.
+- ALT-FIRE STAND-DOWN (owner Q12, round 3): tokens `RSLD_AltDown` / `RSLD_AltDownOff` (g6_ammo.zs) while the hand's gun
+  carries Seeker (RL), Burst (pistol family), Chargeup (plasma rifle) or Slug (pump shotgun). alts.zs stops giving
+  RSA_Opt_RLLock / RSA_Opt_Slug, rlock.zs stops painting, PistolBurstFire is taken. Fire states (R3b) read the tokens
+  in the pistol's and plasma rifle's AltFire.
+- SOUND OPTION: `rsld_mute_ld_sounds` (server, off) + SNDINFO.rsld + ldsounds.zs: LegenDoom's pickup jingles and
+  legendary aura are silenced by name and replayed from LegenDoom's lumps (rsld/ld/*) unless muted. Probes:
+  rsld_aura [1 = boss], rsld_auras, rsld_jingle:<effect> <rarity>.
+- Numbers: ldl_patch/tools/numbers/g3.rules -> numbers_g3.zs (G3, G4, G6: 256 numbers). Round-3 batched check:
+  `python3 -I ldl_patch/tools/ldprove.py round3` (R3b's sections from /home/claude/ldmerge/R3B_SECTIONS.py:
+  `SECTIONS = [(name, gun, console body, effect or None), ...]`, helpers fire/shots/tgt/amm/taps available).
+
+## 14. v6 (round 4, one agent, 2026-11-06 late evening): the owner's round-4 answers
+- FISTS ON BOTH HANDS: `RSLD_Handler.HandWeapon(mo, hand, strike)`: the off hand's free fist (RSQ_Hands) is BD22's fists
+  weapon (Melee_Attacks, slot 0) for the LD mode: WhileHeld runs for it, its punches start pulls of `hand == OFF`,
+  `RSLD.Count` / `HeldSlot` count it. `RSLD_Handler.StrikeHand(mo, strike)`: the hand from rsq/fists.zs's punch record
+  (`RSQ_Fists.Record(strike, hand, mps)` / `RSQ_Fists.Lookup(strike)`), else the nearest controller. G7's per-player state
+  is per hand (index pn * 2 + hand). `RSLD_G7Effect.Fist(s)` is any fist.
+- SWING SPEED: after the effect's ModifyDamage, a fist pull's strike damage is x(1 + clamp((m/s - 2) / 5, 0, 1))
+  (`RSLD_G7.Swing`, RSQ Melee's rule; set damage too). Only punches with a recorded speed (real arm punches, the rig's
+  `netevent rsld_punch:<0|1> <m/s x 100>` test punch).
+- STREAMS (ld_g11_stream.zs `RSLD_StreamFx`): Beam (PR BF), Blazing (RL PR BF), Prototype (BF, moved out of g4_bfg.zs).
+  While the gun carries one, its own Fire is held off (`RSLD_G5.Block`) and the stream fires every tic the hand's trigger
+  is down after LegenDoom's lead, from the drawn muzzle; one pull per press (`s.lastTic` kept current). Damage of every
+  LegenDoom actor of the stream x (our projectile's direct / LegenDoom's mean); ammo a tic x (our shot's cost / its).
+- DUALWIELD: `RSLD_Fx_DualWield` registers (179 = all but Favoured); the gate is `RSLD_Handler.DualWieldGate` (every 5
+  tics): BD22's DualPistols given while the pistol slot's legendary is DualWield, taken otherwise (the single pistol given
+  back if none is left). Probe: `netevent rsld_keepdual 1` (rig only) leaves a given DualPistols be.
+- G5: SixShooter is an `RSLD_G5Speed` at x0.5. Chargeup on the fists stores punches (`fi_wind` 4, `fi_step` 17, `fi_max` 20)
+  while the fist's trigger is held; the next punch of that fist is x the count.
+- G7: NorthernStar's closing blow at the stun's end (`RSLD_G7Stun.Blow`: LegenDoom's A_RadiusThrust numbers, monsters only).
+- G3: Arcing (gravity x k^2, fuse / k) and Proximity (launch, drift, pull x k), k = our projectile's speed / LegenDoom's
+  class's (`RSLD_G3Util.SpeedRatio`, run-time class defaults). `RSLD_Rider.from` = its first-tic position.
+- G6: `RSLD_G6.KindAmmo / MaxedBy / KindOfAmmo`: every BD22 reserve of a LegenDoom kind (Upgrading's OnlyKind mapping):
+  Transmogrifier takes from any of them, Overflowing's kind is maxed by any of them.
+- SOUNDS: MAPINFO.rsld `MenuDelegateClass = "RSLD_MenuDelegate"` (ldsounds.zs): with LegenDoom and rsld_mute_ld_sounds on,
+  the engine's menu sounds play QuestZDoom's lumps (rsld/qz/*); LegenDoom's info screen open/close (LDWeaponInfoScreenActive)
+  plays LegenDoom's lumps or, muted, QuestZDoom's menu open / back. Not covered: the quit sounds.
+- Numbers: ldl_patch/tools/numbers/g11.rules -> numbers_g11.zs (37). Probes: `rsld_target ... 2` (hostile still target:
+  RSLD_ProbeHold), `rsld_cleartargets` (also every other monster), `rsld_home <x> <y>`, `rsld_punch:`, `rsld_menusnd`,
+  `rsld_keepdual`. The batched check: `python3 -I ldl_patch/tools/ldprove.py round4` (open arena make_ldarena.py, loaded
+  last). Registry: "LD mode on: 179 effects registered, 647 numbers".

@@ -2,4 +2,7 @@
 gameinfo
 {
 	AddEventHandlers = "RSLD_Handler", "RSLD_Interface"
+	// round 4: QuestZDoom's own menu sounds under "Mute LegenDoom Sounds" (zscript/rsld/ldsounds.zs; without LegenDoom it
+	// plays exactly what the engine's DoomMenuDelegate plays)
+	MenuDelegateClass = "RSLD_MenuDelegate"
 }

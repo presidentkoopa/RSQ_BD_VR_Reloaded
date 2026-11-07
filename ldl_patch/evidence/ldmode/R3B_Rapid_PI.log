@@ -1,12 +1,13 @@
-# R3B_Rapid_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_Rapid_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
+RSLD probe: BrutalPistol magazine 16 reserve 200
 RSLD probe: Rapid on BrutalPistol slot Pistol rarity Rare
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 7481 Rapid p71 main BrutalPistol: cadence x2.00: first shot
-RSLD 7486 Rapid p72 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)
-RSLD 7492 Rapid p73 main BrutalPistol: cadence x2.00: 6 tics since the last shot, the gun's own 12 (-6 by the effect)
-RSLD 7497 Rapid p74 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)
-RSLD 7503 Rapid p75 main BrutalPistol: cadence x2.00: 6 tics since the last shot, the gun's own 12 (-6 by the effect)
-RSLD 7508 Rapid p76 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)
-RSLD 7514 Rapid p77 main BrutalPistol: cadence x2.00: 6 tics since the last shot, the gun's own 12 (-6 by the effect)
-RSLD 7519 Rapid p78 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 13062 Rapid p127 main BrutalPistol: cadence x2.00: first shot
+RSLD 13067 Rapid p128 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)
+RSLD 13073 Rapid p129 main BrutalPistol: cadence x2.00: 6 tics since the last shot, the gun's own 12 (-6 by the effect)
+RSLD 13078 Rapid p130 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)
+RSLD 13084 Rapid p131 main BrutalPistol: cadence x2.00: 6 tics since the last shot, the gun's own 12 (-6 by the effect)
+RSLD 13089 Rapid p132 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)
+RSLD 13095 Rapid p133 main BrutalPistol: cadence x2.00: 6 tics since the last shot, the gun's own 12 (-6 by the effect)
+RSLD 13100 Rapid p134 main BrutalPistol: cadence x2.00: 5 tics since the last shot, the gun's own 10 (-5 by the effect)

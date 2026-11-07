@@ -1,13 +1,17 @@
-# R3B_SixShooter_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+# R3B_SixShooter_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round4.
 RSLD probe: cleared slot Pistol
+RSLD probe: player at (-1600 0), holding BrutalPistol
+RSLD probe: BrutalPistol magazine 16 reserve 200
 RSLD probe: SixShooter on BrutalPistol slot Pistol rarity Epic
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 8319 SixShooter p122 main BrutalPistol: six-shooter: randompick 130 over LegenDoom's mean 10: x13.0, spread 0
-RSLD 8319 SixShooter p122 main BrutalPistol: pellet 0 reshaped: angle 0.53 -> 0.00 pitch -0.76 -> 0.00 dmg 14 -> 14 range 8192
-RSLD 8319 SixShooter p122 main BrutalPistol: damage 14 -> 182 (x13.00) on Baron_NobleHeadshot
-RSLD probe: 1 targets removed
-RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
-RSLD 8375 SixShooter p123 main BrutalPistol: six-shooter: randompick 100 over LegenDoom's mean 10: x10.0, spread 0
-RSLD 8375 SixShooter p123 main BrutalPistol: pellet 0 reshaped: angle 0.15 -> 0.00 pitch -0.18 -> 0.00 dmg 14 -> 14 range 8192
-RSLD 8375 SixShooter p123 main BrutalPistol: damage 14 -> 140 (x10.00) on Baron_NobleHeadshot
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 13930 SixShooter p178 main BrutalPistol: cadence x0.50: first shot
+RSLD 13930 SixShooter p178 main BrutalPistol: six-shooter: randompick 130 over LegenDoom's mean 10: x13.0, spread 0
+RSLD 13930 SixShooter p178 main BrutalPistol: pellet 0 reshaped: angle 0.17 -> 0.00 pitch -0.04 -> 0.00 dmg 14 -> 14 range 8192
+RSLD 13930 SixShooter p178 main BrutalPistol: damage 14 -> 182 (x13.00) on BaronofHell2
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 13986 SixShooter p179 main BrutalPistol: cadence x0.50: 56 tics since the last shot, the gun's own 45 (+11 by the effect)
+RSLD 13986 SixShooter p179 main BrutalPistol: six-shooter: randompick 60 over LegenDoom's mean 10: x6.0, spread 0
+RSLD 13986 SixShooter p179 main BrutalPistol: pellet 0 reshaped: angle -0.58 -> 0.00 pitch 0.14 -> 0.00 dmg 14 -> 14 range 8192
+RSLD 13986 SixShooter p179 main BrutalPistol: damage 14 -> 84 (x6.00) on BaronofHell2
