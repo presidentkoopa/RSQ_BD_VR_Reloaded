@@ -1,0 +1,25 @@
+# V3_Quickdraw_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR 2.0.4c -> XMVE 04-07, round 4's open arena. 2.0.4c test run (ShotCount sees projectiles).
+RSLD probe: Quickdraw on BIG_FUCKING_GUN slot BFG9000 rarity Common
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLDT press 1
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD 748 Quickdraw: BIG_FUCKING_GUN: the prefire frames ran in tic 748 (no prefire time)
+RSLD 748 Quickdraw p10 main BIG_FUCKING_GUN: pull
+RSLD 748 Quickdraw p10 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+RSLD 749 Quickdraw p10 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 600 -> 550]
+RSLD 750 Quickdraw p10 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+RSLD 760 Quickdraw p10 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 1500 hp 28500
+RSLD 760 Quickdraw p10 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 191 hp 28309
+RSLD 760 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 74 hp 28235
+RSLD 760 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 75 hp 28160
+RSLD 760 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 68 hp 28092
+RSLD 760 Quickdraw p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 68 hp 28024
+RSLDT press 2
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 550
+RSLD 860 Quickdraw: BIG_FUCKING_GUN: the prefire frames ran in tic 860 (no prefire time)
+RSLD 860 Quickdraw p11 main BIG_FUCKING_GUN: pull
+RSLD 860 Quickdraw p11 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+RSLD 861 Quickdraw p11 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 550 -> 500]
+RSLD 862 Quickdraw p11 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 500

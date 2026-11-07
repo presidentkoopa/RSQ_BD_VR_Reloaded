@@ -245,6 +245,9 @@ class RSLD_G5 play
 
 	// shot events of this hand in this tic so far: the pull's pellets (synchronous with the gun's A_FireBullets) and
 	// the player's fresh projectiles near him (WorldThingSpawned comes a tic later), BD22's helpers left out
+	// 2.0.4c (owner 2026-11-07 11:11): a projectile is +NOBLOCKMAP, so the blockmap search never saw one (2.0.4b found it
+	// for Quickdraw on the BFG). The hand's fresh projectiles are now counted from the sector lists (where a NOBLOCKMAP
+	// actor is linked) here, for every user (Quickdraw, ShootNow, Burst's StepToShot). Pellets and blockmap things as before.
 	static int ShotCount(PlayerPawn mo, int hand)
 	{
 		int n = 0;
@@ -260,6 +263,28 @@ class RSLD_G5 play
 			let a = it.thing;
 			if (a && a.bMISSILE && a.target == mo && a.GetAge() == 0 && !RSLD_Handler.Helper(a) && !RSLD_Handler.IsStrike(a)) n++;
 		}
+		Vector3 hp = mo.pos;
+		double ang = mo.angle, pit = mo.pitch;
+		if (mo.OverrideAttackPosDir)
+		{
+			hp = hand == RSLD.OFF ? mo.OffhandPos : mo.AttackPos;
+			Vector3 d = hand == RSLD.OFF ? mo.OffhandDir(mo, ang, pit) : mo.AttackDir(mo, ang, pit);
+			ang = d.x; pit = d.y;
+		}
+		Vector3 ahead = hp + (cos(ang) * cos(pit), sin(ang) * cos(pit), -sin(pit)) * 64;
+		Sector s0 = mo.CurSector, s1 = level.PointInSector(hp.xy), s2 = level.PointInSector(ahead.xy);
+		n += FreshIn(mo, s0);
+		if (s1 != s0) n += FreshIn(mo, s1);
+		if (s2 != s0 && s2 != s1) n += FreshIn(mo, s2);
+		return n;
+	}
+	// the player's fresh projectiles linked in this sector that the blockmap does not hold
+	static int FreshIn(PlayerPawn mo, Sector sec)
+	{
+		int n = 0;
+		if (!sec) return 0;
+		for (Actor t = sec.thinglist; t; t = t.snext)
+			if (t.bMISSILE && t.bNOBLOCKMAP && t.target == mo && t.GetAge() == 0 && !RSLD_Handler.Helper(t) && !RSLD_Handler.IsStrike(t)) n++;
 		return n;
 	}
 

@@ -1,0 +1,73 @@
+# V3_Burst_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR 2.0.4c -> XMVE 04-07, round 4's open arena. 2.0.4c test run (ShotCount sees projectiles).
+RSLD probe: Burst on Shot_Gun slot Shotgun rarity Uncommon
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-1504 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLDT press 1
+RSLD probe: Shot_Gun magazine 9 reserve 100
+RSLD 573 Burst p7 main Shot_Gun: pull
+RSLD 573 Burst p7 main Shot_Gun: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 573 Burst p7 main Shot_Gun: after pull: pellets 4 missiles 0 hits 0 kills 0 ammo taken 1 (mag 1) [mag 9 -> 8, res 100 -> 100]
+RSLD 573 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29987
+RSLD 573 Burst p7 main Shot_Gun: pellet 0 end: monster at (-1528 -3 39)
+RSLD 573 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29974
+RSLD 573 Burst p7 main Shot_Gun: pellet 1 end: monster at (-1528 -2 39)
+RSLD 573 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29961
+RSLD 573 Burst p7 main Shot_Gun: pellet 2 end: monster at (-1528 -2 39)
+RSLD 573 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29948
+RSLD 573 Burst p7 main Shot_Gun: pellet 3 end: monster at (-1528 -3 39)
+RSLD 574 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29935
+RSLD 574 Burst p7 main Shot_Gun: pellet 4 end: monster at (-1527 -2 39)
+RSLD 574 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29922
+RSLD 574 Burst p7 main Shot_Gun: pellet 5 end: monster at (-1527 -3 39)
+RSLD 574 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29909
+RSLD 574 Burst p7 main Shot_Gun: pellet 6 end: monster at (-1527 -1 39)
+RSLD 574 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29896
+RSLD 574 Burst p7 main Shot_Gun: pellet 7 end: monster at (-1527 -2 40)
+RSLD 574 Burst p7 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29883
+RSLD 574 Burst p7 main Shot_Gun: pellet 8 end: monster at (-1527 -4 40)
+RSLD 576 Burst p7 main Shot_Gun: pull end: 9 pellets, 9 recs
+RSLD 577 Burst p8 main Shot_Gun: pull
+RSLD 577 Burst p8 main Shot_Gun: burst shot 2 of 3
+RSLD 577 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29870
+RSLD 577 Burst p8 main Shot_Gun: pellet 0 end: monster at (-1524 1 39)
+RSLD 577 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29857
+RSLD 577 Burst p8 main Shot_Gun: pellet 1 end: monster at (-1524 -2 39)
+RSLD 577 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29844
+RSLD 577 Burst p8 main Shot_Gun: pellet 2 end: monster at (-1524 -2 39)
+RSLD 577 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29831
+RSLD 577 Burst p8 main Shot_Gun: pellet 3 end: monster at (-1524 0 40)
+RSLD 578 Burst p8 main Shot_Gun: after pull: pellets 9 missiles 0 hits 4 kills 0 ammo taken 1 (mag 1) [mag 8 -> 7, res 100 -> 100]
+RSLD 578 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29818
+RSLD 578 Burst p8 main Shot_Gun: pellet 4 end: monster at (-1522 -2 40)
+RSLD 578 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29805
+RSLD 578 Burst p8 main Shot_Gun: pellet 5 end: monster at (-1522 -3 40)
+RSLD 578 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29792
+RSLD 578 Burst p8 main Shot_Gun: pellet 6 end: monster at (-1522 -3 39)
+RSLD 578 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29779
+RSLD 578 Burst p8 main Shot_Gun: pellet 7 end: monster at (-1522 -2 39)
+RSLD 578 Burst p8 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29766
+RSLD 578 Burst p8 main Shot_Gun: pellet 8 end: monster at (-1522 -1 39)
+RSLD 580 Burst p8 main Shot_Gun: pull end: 9 pellets, 9 recs
+RSLD 581 Burst p9 main Shot_Gun: pull
+RSLD 581 Burst p9 main Shot_Gun: burst shot 3 of 3
+RSLD 581 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29753
+RSLD 581 Burst p9 main Shot_Gun: pellet 0 end: monster at (-1515 -3 40)
+RSLD 581 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29740
+RSLD 581 Burst p9 main Shot_Gun: pellet 1 end: monster at (-1515 -3 40)
+RSLD 581 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29727
+RSLD 581 Burst p9 main Shot_Gun: pellet 2 end: monster at (-1515 -1 40)
+RSLD 581 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29714
+RSLD 581 Burst p9 main Shot_Gun: pellet 3 end: monster at (-1515 -3 40)
+RSLD 582 Burst p9 main Shot_Gun: after pull: pellets 9 missiles 0 hits 4 kills 0 ammo taken 1 (mag 1) [mag 7 -> 6, res 100 -> 100]
+RSLD 582 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29701
+RSLD 582 Burst p9 main Shot_Gun: pellet 4 end: monster at (-1513 -1 41)
+RSLD 582 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29688
+RSLD 582 Burst p9 main Shot_Gun: pellet 5 end: monster at (-1513 -2 40)
+RSLD 582 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29675
+RSLD 582 Burst p9 main Shot_Gun: pellet 6 end: monster at (-1513 -1 39)
+RSLD 582 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29662
+RSLD 582 Burst p9 main Shot_Gun: pellet 7 end: monster at (-1513 -1 40)
+RSLD 582 Burst p9 main Shot_Gun: hit BaronofHell2 dmg 13 hp 29649
+RSLD 582 Burst p9 main Shot_Gun: pellet 8 end: monster at (-1513 -2 39)
+RSLD 584 Burst p9 main Shot_Gun: pull end: 9 pellets, 9 recs
+RSLD probe: Shot_Gun magazine 6 reserve 100

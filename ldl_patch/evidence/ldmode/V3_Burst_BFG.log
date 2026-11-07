@@ -1,0 +1,28 @@
+# V3_Burst_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR 2.0.4c -> XMVE 04-07, round 4's open arena. 2.0.4c test run (ShotCount sees projectiles).
+RSLD probe: Burst on BIG_FUCKING_GUN slot BFG9000 rarity Uncommon
+RSLD probe: 3 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLDT press 1
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 600
+RSLD 358 Burst p4 main BIG_FUCKING_GUN: pull
+RSLD 358 Burst p4 main BIG_FUCKING_GUN: burst shot 1 of 3 (the next 4 tics apart, from what is loaded)
+RSLD 358 Burst p4 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+RSLD 359 Burst p4 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 600 -> 550]
+RSLD 360 Burst p4 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+RSLD 362 Burst p5 main BIG_FUCKING_GUN: pull
+RSLD 362 Burst p5 main BIG_FUCKING_GUN: burst shot 2 of 3
+RSLD 362 Burst p5 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+RSLD 363 Burst p5 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 550 -> 500]
+RSLD 364 Burst p5 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+RSLD 366 Burst p6 main BIG_FUCKING_GUN: pull
+RSLD 366 Burst p6 main BIG_FUCKING_GUN: burst shot 3 of 3
+RSLD 366 Burst p6 main BIG_FUCKING_GUN: missile SuperBFGBall (dmg 1500) 44 from the player
+RSLD 367 Burst p6 main BIG_FUCKING_GUN: after pull: pellets 0 missiles 1 hits 0 kills 0 ammo taken 50 (mag 0) [mag 0 -> 0, res 500 -> 450]
+RSLD 368 Burst p6 main BIG_FUCKING_GUN: pull end: 0 pellets, 0 recs
+RSLD 370 Burst p4 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 1500 hp 28500
+RSLD 370 Burst p4 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 191 hp 28309
+RSLD 371 Burst p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 69 hp 28240
+RSLD 371 Burst p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 78 hp 28162
+RSLD 371 Burst p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 54 hp 28108
+RSLD 371 Burst p0 main BIG_FUCKING_GUN: hit BaronofHell2 dmg 55 hp 28053
+RSLD probe: BIG_FUCKING_GUN magazine 0 reserve 450

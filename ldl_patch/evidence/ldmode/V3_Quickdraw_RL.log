@@ -1,0 +1,24 @@
+# V3_Quickdraw_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR 2.0.4c -> XMVE 04-07, round 4's open arena. 2.0.4c test run (ShotCount sees projectiles).
+RSLD probe: Quickdraw on Rocket_Launcher slot RocketLauncher rarity Common
+RSLD probe: 2 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (-1200 -0), health 30000; player at (-1600 0) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLDT press 1
+RSLD probe: Rocket_Launcher magazine 6 reserve 100
+RSLD 1085 Quickdraw p12 main Rocket_Launcher: pull
+RSLD 1085 Quickdraw p12 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 1085 Quickdraw p12 main Rocket_Launcher: missile RocketBackblast (dmg 12) 100 from the player
+RSLD 1085 Quickdraw p12 main Rocket_Launcher: missile RocketBackblast2 (dmg 12) 100 from the player
+RSLD 1085 Quickdraw p12 main Rocket_Launcher: missile RocketBackblast3 (dmg 12) 100 from the player
+RSLD 1086 Quickdraw p12 main Rocket_Launcher: after pull: pellets 0 missiles 4 hits 0 kills 0 ammo taken 1 (mag 1) [mag 6 -> 5, res 100 -> 100]
+RSLD 1087 Quickdraw p12 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD 1091 Quickdraw p12 main Rocket_Launcher: hit BaronofHell2 dmg 150 hp 29850
+RSLDT press 2
+RSLD probe: Rocket_Launcher magazine 5 reserve 100
+RSLD 1157 Quickdraw p13 main Rocket_Launcher: pull
+RSLD 1157 Quickdraw p13 main Rocket_Launcher: missile Rocket2 (dmg 150) 44 from the player
+RSLD 1157 Quickdraw p13 main Rocket_Launcher: missile RocketBackblast (dmg 12) 100 from the player
+RSLD 1157 Quickdraw p13 main Rocket_Launcher: missile RocketBackblast2 (dmg 12) 100 from the player
+RSLD 1157 Quickdraw p13 main Rocket_Launcher: missile RocketBackblast3 (dmg 12) 100 from the player
+RSLD 1158 Quickdraw p13 main Rocket_Launcher: after pull: pellets 0 missiles 4 hits 0 kills 0 ammo taken 1 (mag 1) [mag 5 -> 4, res 100 -> 100]
+RSLD 1159 Quickdraw p13 main Rocket_Launcher: pull end: 0 pellets, 0 recs
+RSLD probe: Rocket_Launcher magazine 4 reserve 100

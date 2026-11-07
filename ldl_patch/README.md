@@ -184,6 +184,18 @@ Rig only, not headset-confirmed.
   RazorEdge logged on every cut with the player not moved; Quickdraw: two presses, two balls, 600 -> 550 -> 500.
   Rig only, not headset-confirmed.
 
+## 2.0.4c (2026-11-07): the shot counter sees projectiles for every user (owner-approved)
+
+- 2.0.4b's sector-list count moved into the shared shot counter (`RSLD_G5.ShotCount`, ld_g5_core.zs), so Burst
+  (its 2nd and 3rd shots) and every ShootNow user also see a fresh projectile; Quickdraw uses the shared counter again
+  (same count as 2.0.4b). Pellets (hitscan) are counted as before.
+- Shown in one rig run (full order, LegenDoom first, round 4's open arena, 0 script errors from ours) plus a load-only
+  check: `evidence/ldmode/V3_*.log`, frames `evidence/ldmode/frames_2.0.4c/`. Burst on the rocket launcher: one press,
+  3 rockets 4 tics apart (113, 117, 121), magazine 6 -> 3, no restart; on the BFG: 3 balls 4 tics apart, 600 -> 450
+  cells; on the pump shotgun (hitscan): 3 blasts of 9 pellets 4 tics apart, magazine 9 -> 6 (as round 4). Quickdraw on
+  the BFG: two presses, two balls, 600 -> 550 -> 500; on the rocket launcher: two presses, two rockets, 6 -> 5 -> 4.
+  Rig only, not headset-confirmed.
+
 ## Build
 
 ```

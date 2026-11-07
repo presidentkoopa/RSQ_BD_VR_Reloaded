@@ -685,3 +685,10 @@ explosions chain (section 5).
   are not in the blockmap, and the stepping ran into A_Refire). Status: rig only, not headset-confirmed
   (`V2_Quickdraw_BFG.log`, cause in `V2_Quickdraw_BFG_diagnosis_2.0.4a.log`).
 - Not changed: Quickdraw's weapon-switch speed (owner: not now).
+
+### Fix 2026-11-07 (BD22 VR 2.0.4c, owner-approved 11:11)
+- The shared shot counter (`RSLD_G5.ShotCount`) finds the hand's fresh projectiles in the sector lists (2.0.4b did it
+  for Quickdraw only), so Burst and every ShootNow user see projectiles; hitscan counting unchanged. Burst on the
+  rocket launcher: 3 rockets per press, 4 tics apart, magazine -3, no restart; Burst on the BFG and the pump shotgun as
+  expected; Quickdraw on the BFG and the rocket launcher: one shot per press. Status: rig only, not headset-confirmed
+  (`ldl_patch/evidence/ldmode/V3_*.log`, frames `frames_2.0.4c/`).
