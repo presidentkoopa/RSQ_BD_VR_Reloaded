@@ -74,8 +74,40 @@ class RSLD play
 		return h.EffName(mo.PlayerNumber(), slot);
 	}
 
-	// copies of an effect the player owns over all nine slots (LegenDoom's LD_CountEffect, LEGENDFNC.acs:69)
+	// THE PASSIVES COUNTER. Owner, round 3 (Q9): "only the legendary gun IN HAND gives its passive (not every owned one)".
+	// Copies of an effect on the slots of the guns in the player's hands: the main hand's, and the off hand's when
+	// rsld_offhand_legendary is on (a slot counts once). LegenDoom's own rule (LD_CountEffect, LEGENDFNC.acs:69: every
+	// owned legendary) is CountOwned.
 	static int Count(Actor mo, string eff)
+	{
+		let p = PlayerPawn(mo);
+		if (!p || !p.player) return CountOwned(mo, eff);
+		int n = 0;
+		int s0 = SlotOf(p.player.ReadyWeapon), s1 = -1;
+		cvar oc = cvar.FindCvar("rsld_offhand_legendary");
+		if (!oc || oc.GetBool()) s1 = SlotOf(p.player.OffhandWeapon);
+		for (int k = 0; k < 2; k++)
+		{
+			int s = k == 0 ? s0 : s1;
+			if (s < 0 || (k == 1 && s == s0)) continue;
+			class<Inventory> c = "LD" .. RSLD_Data.Slots[s] .. "Effect_" .. eff;
+			if (c && mo.CountInv(c) > 0) n++;
+			else { let h = H(); if (h && h.EffName(p.PlayerNumber(), s) ~== eff) n++; }	// a rig-probe-forced effect
+		}
+		return n;
+	}
+	// is this slot's gun in one of the player's hands (Count's rule)
+	static bool HeldSlot(Actor mo, int s)
+	{
+		let p = PlayerPawn(mo);
+		if (!p || !p.player || s < 0) return false;
+		if (SlotOf(p.player.ReadyWeapon) == s) return true;
+		cvar oc = cvar.FindCvar("rsld_offhand_legendary");
+		return (!oc || oc.GetBool()) && SlotOf(p.player.OffhandWeapon) == s;
+	}
+	// copies of an effect the player owns over all nine slots (LegenDoom's LD_CountEffect): effects that count
+	// owned legendaries by their own rule (Thematic) and the Upgrading meter
+	static int CountOwned(Actor mo, string eff)
 	{
 		int n = 0;
 		for (int s = 0; s < 9 && mo; s++)

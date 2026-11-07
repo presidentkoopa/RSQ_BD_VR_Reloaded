@@ -1,0 +1,59 @@
+# G7 (R3b, round 3): LegenDoom 3.0 numbers for the melee effects (fists, chainsaw). Every key is read from LegenDoom's pk3.
+# effect      key        file                                   state label / re                 call / pattern     arg
+# --- the base: LegenDoom's fist punch (2 x random(1,10), berserk 20 x, range 64) and chainsaw (A_Saw 2, range 65)
+Base          fi_dmg     decorate/Fist/Fist.dec                 re  "(?s)NormalFire:.*?A_CustomPunch \((\d+) \* random"
+Base          fi_range   decorate/Fist/Fist.dec                 NormalFire       A_CustomPunch   4
+Base          cs_range   decorate/Chainsaw/Chainsaw.dec         NormalFire       A_Saw           5
+# --- ColdBlooded: the fist hits at berserk level (20 x) without berserk, at the normal level (2 x) with it
+ColdBlooded   dmg        decorate/Fist/Fist.dec                 re  "(?s)FireColdBlooded:.*?A_CustomPunch \((\d+) \* random"
+ColdBlooded   dmg_bers   decorate/Fist/Fist.dec                 re  "(?s)FireColdBlooded:.*?A_CustomPunch \(\d+ \* random.*?A_CustomPunch \((\d+) \* random"
+# --- Extended: range 256 (fists), 256 (chainsaw), CPF_NOTURN / SF_NOPULLIN | SF_NOTURN
+Extended      fi_range   decorate/Fist/Fist.dec                 FireExtended     A_CustomPunch   4
+Extended      cs_range   decorate/Chainsaw/Chainsaw.dec         FireExtended     A_Saw           5
+# --- Lunging (owner round 3: no push): the lunge's punch 4 x random(1,10) at range 96
+Lunging       dmg        decorate/Fist/Fist.dec                 re  "(?s)FireLungingCycleAerial:.*?A_CustomPunch \((\d+) \* random"
+Lunging       range      decorate/Fist/Fist.dec                 FireLungingCycleAerial A_CustomPunch 4
+# --- Facekicking (no push): the kick 20 (berserk 200) at 120; the jump kick 40 (400) at 100, then LDFacekickingCooldown
+Facekicking   kick       decorate/Fist/Fist.dec                 FireFacekickingNormal2 A_CustomPunch#1 0
+Facekicking   kick_bers  decorate/Fist/Fist.dec                 FireFacekickingNormal2 A_CustomPunch#2 0
+Facekicking   kick_range decorate/Fist/Fist.dec                 FireFacekickingNormal2 A_CustomPunch#1 4
+Facekicking   jump       decorate/Fist/Fist.dec                 FireFacekickingJumpKickLoop A_CustomPunch#1 0
+Facekicking   jump_bers  decorate/Fist/Fist.dec                 FireFacekickingJumpKickLoop A_CustomPunch#2 0
+Facekicking   jump_range decorate/Fist/Fist.dec                 FireFacekickingJumpKickLoop A_CustomPunch#1 4
+Facekicking   cooldown   decorate/EpicSpecialEffects.dec        prop LDFacekickingCooldown Powerup.Duration
+Facekicking   ahead      decorate/Fist/Fist.dec                 re  "(?s)FireFacekickingNormal2:.*?LDFacekickingReflector\", cos\(pitch\)\*(\d+)"
+# --- OnePunch: 4 tics of charge, the punch 10000 at 96 + LDOnePunchProjectile; LDOnePunchCooldown (seconds when negative)
+OnePunch      charge     decorate/Fist/Fist.dec                 re  "(?s)FireOnePunch:.*?TNT1 A ([1-9]\d*)\s*\n"
+OnePunch      dmg        decorate/Fist/Fist.dec                 FireOnePunchHold A_CustomPunch   0
+OnePunch      range      decorate/Fist/Fist.dec                 FireOnePunchHold A_CustomPunch   4
+OnePunch      cooldown   decorate/EpicSpecialEffects.dec        prop LDOnePunchCooldown Powerup.Duration
+# --- Blaster: punch 4 + pre-shoot 6 + loop start 6 tics, then a ball every 14 (FireBlasterLoop less its A_ReFire frame)
+Blaster       lead1      decorate/Fist/Fist.dec                 FireBlaster      tics
+Blaster       lead2      decorate/Fist/Fist.dec                 FireBlasterPreShoot tics
+Blaster       lead3      decorate/Fist/Fist.dec                 FireBlasterLoopStart tics
+Blaster       loop       decorate/Fist/Fist.dec                 FireBlasterLoop  tics
+Blaster       loop_rf    decorate/Fist/Fist.dec                 re  "(?s)FireBlasterLoop:.*?RFIS M (\d+) A_ReFire"
+Blaster       dmg        decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDBlasterProjectile : PlasmaBall.*?Damage \((\d+)\)"
+Blaster       speed      decorate/RareSpecialEffects.dec        prop LDBlasterProjectile Speed
+Blaster       dmg_bers   decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDBlasterBerserkProjectile.*?Damage \((\d+)\)"
+Blaster       speed_bers decorate/RareSpecialEffects.dec        prop LDBlasterBerserkProjectile Speed
+# --- NorthernStar (silent): each hit stuns (LDNorthernStarStunActive, 60 tics) and leaves LDNorthernStarDamager (35)
+NorthernStar  stun       decorate/EpicSpecialEffects.dec        prop LDNorthernStarStunActive Powerup.Duration
+NorthernStar  dmg        decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDNorthernStarDamager\s*\{.*?Damage \((\d+)\)"
+# --- Lacerating: damage x (LDLaceratingCounter + 4) / 4, counter max 40, LDLaceratingTimer 10 tics between hits
+Lacerating    add        source/LEGNDLIB.acs                    re  "LDLaceratingCounter\"\)\+(\d+)\),4"
+Lacerating    div        source/LEGNDLIB.acs                    re  "LDLaceratingCounter\"\)\+\d+\),(\d+)"
+Lacerating    max        decorate/EpicSpecialEffects.dec        prop LDLaceratingCounter Inventory.MaxAmount
+Lacerating    timer      decorate/EpicSpecialEffects.dec        prop LDLaceratingTimer Powerup.Duration
+# --- Imaginary (silent): range 512, SF_NOPULLIN | SF_NOTURN, LDImaginaryEEEEAttackSpawner
+Imaginary     range      decorate/Chainsaw/Chainsaw.dec         FireImaginary    A_Saw           5
+# --- OnePunch's line of destruction (LDOnePunchProjectile): built by us with LegenDoom's numbers and visuals, our sound
+OnePunch      p_speed    decorate/EpicSpecialEffects.dec        prop LDOnePunchProjectile Speed
+OnePunch      p_dmg      decorate/EpicSpecialEffects.dec        prop LDOnePunchProjectile Damage
+OnePunch      p_scale    decorate/EpicSpecialEffects.dec        prop LDOnePunchProjectile Scale
+OnePunch      p_rad      decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDOnePunchProjectile.*?SpawnLoopEnd:\s*TNT1 A 0 A_Explode \((\d+)\*scalex"
+OnePunch      p_dist     decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDOnePunchProjectile.*?SpawnLoopEnd:\s*TNT1 A 0 A_Explode \(\d+\*scalex, (\d+)"
+OnePunch      p_grow     decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDOnePunchProjectile.*?A_SetScale \(scalex\+([\d.]+)\)"
+OnePunch      p_dscale   decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDOnePunchProjectile.*?Death:\s*TNT1 A 0 A_SetScale \(scalex\*([\d.]+)\)"
+OnePunch      p_ddist    decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDOnePunchProjectile.*?Death:.*?A_Explode \(\d+\*scalex, (\d+)"
+OnePunch      p_high     decorate/EpicSpecialEffects.dec        re  "(?s)ACTOR LDOnePunchProjectile.*?A_JumpIf \(z > floorz\+(\d+)"

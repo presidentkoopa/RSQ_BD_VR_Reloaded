@@ -1,0 +1,7 @@
+# R3_Raycaster_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: Raycaster on Rocket_Launcher slot RocketLauncher rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2893 Raycaster rider rocket p29: 20 rays, each target a blast of 50 over 150
+RSLD 2894 Raycaster: 2 ray targets, a blast on each

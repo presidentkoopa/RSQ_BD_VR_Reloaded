@@ -1,0 +1,9 @@
+# R3_Bouncy_PR: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot PlasmaRifle
+RSLD probe: Bouncy on Plasma_Gun slot PlasmaRifle rarity Uncommon
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (208 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 3260 Bouncy rider plasma p33: plasma ball -> bounce-capable copy (FastProjectile cannot bounce)
+RSLD 3271 Bouncy rider plasma p33: bounce 1: falls now
+RSLD 3276 Bouncy rider plasma p33: bounce 2: falls now
+RSLD 3282 Bouncy rider plasma p33: bounce 3: falls now

@@ -1,0 +1,14 @@
+# R3B_Chargeup_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: Chargeup on Rocket_Launcher slot RocketLauncher rarity Uncommon
+RSLD probe: Rocket_Launcher magazine 5 reserve 100
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (336 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 10763 Chargeup: main hand winds up (4 tics)
+RSLD 10767 Chargeup: 1 stored
+RSLD 10781 Chargeup: 2 stored
+RSLD 10795 Chargeup: 3 stored
+RSLD 10803 Chargeup: released 3 stored attacks in tic 10803
+RSLD 10803 Chargeup p220 main Rocket_Launcher: chargeup release: the gun's shot + 2 stored
+RSLD 10804 Chargeup p220 main Rocket_Launcher: take 2 <- RocketRounds
+RSLD 10804 Chargeup p220 main Rocket_Launcher: chargeup: 2 more rounds out of the magazine for the stored attacks
+RSLD probe: Rocket_Launcher magazine 2 reserve 100

@@ -1,0 +1,10 @@
+# R3B_Burst_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: Burst on BrutalPistol slot Pistol rarity Uncommon
+RSLD probe: BrutalPistol magazine 16 reserve 200
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 9060 Burst: main hand's BD22 VR secondary stands down (BrutalPistol)
+RSLD 9068 Burst p205 main BrutalPistol: burst shot 1 of 3 (the next 3 tics apart, from what is loaded)
+RSLD 9071 Burst p206 main BrutalPistol: burst shot 2 of 3
+RSLD 9074 Burst p207 main BrutalPistol: burst shot 3 of 3
+RSLD probe: BrutalPistol magazine 13 reserve 200

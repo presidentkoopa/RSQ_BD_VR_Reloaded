@@ -1,0 +1,8 @@
+# R3_Kinetic_BFG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot BFG9000
+RSLD probe: Kinetic on BIG_FUCKING_GUN slot BFG9000 rarity Common
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 4992 Kinetic rider bfg p51: no splash; +200 onto the direct hit (LegenDoom +128)
+RSLD 5007 Kinetic p51 main BIG_FUCKING_GUN: damage 143 -> 0 (x0.00) on BaronofHell2
+RSLD 5007 Kinetic p51 main BIG_FUCKING_GUN: damage 190 -> 0 (x0.00) on ExplosionSplashSpawner

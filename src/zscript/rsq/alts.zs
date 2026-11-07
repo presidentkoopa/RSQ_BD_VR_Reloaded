@@ -19,6 +19,16 @@ class RSA_ASlugOff : RSVR_Token {}	// ...off hand		// ...off hand
 
 class RSA_Handler : EventHandler
 {
+	// LD mode's stand-down tokens, by name at run time (they are defined in a later ZScript lump, zscript/rsld)
+	static bool AltDown(Actor mo)
+	{
+		if (!mo)
+			return false;
+		string a = "RSLD_AltDown", b = "RSLD_AltDownOff";
+		class<Inventory> ca = a, cb = b;
+		return (ca && mo.CountInv(ca) > 0) || (cb && mo.CountInv(cb) > 0);
+	}
+
 	override void WorldTick()
 	{
 		static const Name cv[] = { 'rsa_rev_slug', 'rsa_sg_slug', 'rsa_pistol_semi', 'rsa_asg_slug', 'rsa_rl_lock' };
@@ -36,9 +46,14 @@ class RSA_Handler : EventHandler
 				if (!playeringame[n] || !players[n].mo)
 					continue;
 				let mo = players[n].mo;
-				if (on && mo.CountInv(tok[k]) <= 0)
+				bool give = on;
+				// LD mode (round 3, owner Q12): the lock-on (k 4) and the slug alt (k 1) stand down while the gun carries
+				// the legendary power that uses them (zscript/rsld/g6_ammo.zs gives RSLD_AltDown / RSLD_AltDownOff)
+				if (give && (k == 1 || k == 4) && AltDown(mo))
+					give = false;
+				if (give && mo.CountInv(tok[k]) <= 0)
 					mo.GiveInventory(tok[k], 1);
-				else if (!on && mo.CountInv(tok[k]) > 0)
+				else if (!give && mo.CountInv(tok[k]) > 0)
 					mo.TakeInventory(tok[k], 1);
 			}
 		}

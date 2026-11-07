@@ -1,0 +1,14 @@
+# R3_Spreadfire_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: Spreadfire on Rocket_Launcher slot RocketLauncher rarity Common
+RSLD probe: 0 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 375 Spreadfire rider rocket p5: flat spread of 3, each x0.33, blast x0.33
+RSLD 381 Spreadfire rider rocket child p5: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 381 Spreadfire rider rocket child p5: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 382 Spreadfire rider rocket p5: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 448 Spreadfire rider rocket p6: upright spread of 3, each x0.33, blast x0.33
+RSLD 450 Spreadfire rider rocket child p6: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 451 Spreadfire p6 main Rocket_Launcher: damage 150 -> 50 (x0.33) on Baron_NobleHeadshot
+RSLD 451 Spreadfire rider rocket child p6: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)
+RSLD 455 Spreadfire rider rocket p6: blast RocketExplosion -> 33 over 49 (BD22's 100 / 150)

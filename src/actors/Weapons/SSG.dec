@@ -211,7 +211,11 @@ ACTOR SSG : BrutalWeapon
 		TNT1 A 1 A_Lower
 		Wait
 
+	RSLD_Jammed:	// LD mode (round 3): Perfect's jam or a G5 trigger hold: no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
 	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && (CountInv("RSLD_JamOff") > 0 || CountInv("RSLD_G5BlockOff") > 0)) || (OverlayID() != 1000000 && (CountInv("RSLD_JamMain") > 0 || CountInv("RSLD_G5BlockMain") > 0)), "RSLD_Jammed")	// LD mode (round 3): Perfect's jam or a G5 trigger hold (Chargeup, Overkill) stops the trigger (zscript/rsld/handler.zs, ld_g5_core.zs Block; never given without LegenDoom)
 		VSSG A 0 A_JumpIfInventory("IsPlayingAsPurist", 1,2)
 		SHT2 A 0
 		"####" A 0 A_TakeInventory("Reloading",1)

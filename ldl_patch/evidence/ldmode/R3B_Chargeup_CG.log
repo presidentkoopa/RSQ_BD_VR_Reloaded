@@ -1,0 +1,14 @@
+# R3B_Chargeup_CG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: Chargeup on Minigun slot Chaingun rarity Uncommon
+RSLD probe: Minigun magazine 0 reserve 800
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 10580 Chargeup: main hand winds up (4 tics)
+RSLD 10584 Chargeup: 1 stored
+RSLD 10598 Chargeup: 2 stored
+RSLD 10612 Chargeup: 3 stored
+RSLD 10620 Chargeup: released 3 stored attacks in tic 10620
+RSLD 10624 Chargeup p219 main Minigun: chargeup release: the gun's shot + 2 stored
+RSLD 10624 Chargeup p219 main Minigun: take 2 <- RSQ_MinigunAmmo
+RSLD 10624 Chargeup p219 main Minigun: chargeup: 2 more rounds out of the magazine for the stored attacks
+RSLD probe: Minigun magazine 0 reserve 797

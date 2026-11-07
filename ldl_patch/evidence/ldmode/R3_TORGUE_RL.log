@@ -1,0 +1,8 @@
+# R3_TORGUE_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: TORGUE on Rocket_Launcher slot RocketLauncher rarity Rare
+RSLD probe: 1 targets removed
+RSLD probe: target Imp (Imp) at 320 (128 -192), health 10; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: target BaronofHell2 (BaronofHell2) at 360 (168 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2391 TORGUE rider rocket p25: 2 enemies marked to explode on death
+RSLD 2391 TORGUE rider rocket p25: blast RocketExplosion -> 200 over 300 (BD22's 100 / 150)

@@ -348,12 +348,13 @@ ACTOR Rocket_Launcher : BrutalWeapon
 		"####" "#" 0 A_JumpIfInventory("IsPlayingAsPurist",1,"DeselectPurist")
 
 	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && (CountInv("RSLD_JamOff") > 0 || CountInv("RSLD_G5BlockOff") > 0)) || (OverlayID() != 1000000 && (CountInv("RSLD_JamMain") > 0 || CountInv("RSLD_G5BlockMain") > 0)), "RSLD_Jammed")	// LD mode (round 3): Perfect's jam or a G5 trigger hold (Chargeup, Overkill) stops the trigger (zscript/rsld/handler.zs, ld_g5_core.zs Block; never given without LegenDoom)
 		MISS W 0 A_JumpIfInventory("Zoomed",1,12)
 		MISG A 0 A_JumpIfInventory("NoReloading",1,4)
 		MISG J 0 A_JumpIfInventory("HasUnloadedRL", 1, 6)
 		MISG A 0 A_JumpIfInventory("RocketRounds", 3, 5)
 		MISG F 0 A_JumpIfInventory("RocketRounds", 2, 4)
-		Goto Fire+7
+		Goto Fire+8
 		MISG A 0 A_JumpIfInventory("AmmoRocket", 3, 3)
 		MISG F 0 A_JumpIfInventory("AmmoRocket", 2, 2)
 		MISG I 0
@@ -366,7 +367,11 @@ ACTOR Rocket_Launcher : BrutalWeapon
 		"####" "#" 0 A_JumpIfInventory("RocketRounds",1,1)
 		Goto NoAmmo
 		"####" "###" 0
-		Goto Fire+8
+		Goto Fire+9
+
+	RSLD_Jammed:	// LD mode (round 3): Perfect's jam or a G5 trigger hold: no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
 
 	NoReload:
 		"####" "#" 0 A_JumpIfInventory("AmmoRocket",1,1)

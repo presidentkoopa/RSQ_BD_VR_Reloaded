@@ -1,0 +1,28 @@
+# R3_Nuclear_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: Nuclear on Shot_Gun slot Shotgun rarity Rare
+RSLD probe: Shot_Gun magazine 9 reserve 100
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 5304 Nuclear p53 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 5304 Nuclear p53 main Shot_Gun: Nuclear (infinite ammo): 1 round(s) given back
+RSLD 5304 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5304 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5304 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5304 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5305 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5305 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5305 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5305 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5305 Nuclear p53 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5352 Nuclear p54 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 5352 Nuclear p54 main Shot_Gun: Nuclear (infinite ammo): 1 round(s) given back
+RSLD 5352 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5352 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5352 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5352 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5353 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5353 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5353 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5353 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD 5353 Nuclear p54 main Shot_Gun: damage 13 -> 7 (x0.60) on BaronofHell2
+RSLD probe: Shot_Gun magazine 9 reserve 100

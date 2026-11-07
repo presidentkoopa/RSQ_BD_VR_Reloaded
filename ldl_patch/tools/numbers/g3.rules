@@ -1,0 +1,320 @@
+# G3 / G4 / G6 (round 3, agent R3a): LegenDoom 3.0 numbers for the missile riders, the BFG family and the ammo effects.
+# Every key is read from LegenDoom's pk3 (gen_ld_numbers.py). Ratios are taken against LegenDoom's own base attack
+# (its rocket 20 x random(1,8) + A_Explode 128/128, its plasma ball 5 x random(1,8), its BFG ball 100 x random(1,8) and
+# 40 rays of 15 x random(1,8)) and applied to our projectile's own numbers (scope section 0, "R").
+# effect     key        file                                          rule
+# --- base attacks
+Base3        rk_dmg     decorate/RocketLauncher/RocketLauncher.dec    re "(?s)FireAccelerator:.*?A_FireBullets\(0, 0, -1, (\d+)\*random"
+Base3        rnd_max    decorate/RocketLauncher/RocketLauncher.dec    re "(?s)FireAccelerator:.*?A_FireBullets\(0, 0, -1, \d+\*random\(1,(\d+)\)"
+Base3        rk_expl    decorate/Attacks.dec                          re "(?s)ACTOR LDRocket : Rocket.*?A_Explode \((\d+),"
+Base3        rk_rad     decorate/Attacks.dec                          re "(?s)ACTOR LDRocket : Rocket.*?A_Explode \(\d+, (\d+)\)"
+Base3        pl_dmg     source/LEGNDLIB.acs                           re "(?s)LDSluggishDamageScaling_Plasma.*?int damage = \((\d+)\)"
+Base3        bfg_dmg    source/LEGNDLIB.acs                           re "(?s)LDSluggishDamageScaling_BFG9000.*?int damage = \((\d+)\)"
+Base3        bfg_rays   decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDKineticBFGBall.*?\* (\d+)\)\)"
+Base3        bfg_raydmg decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDKineticBFGBall.*?\*(\d+)\)\* \d+"
+# --- Penetrating: fixed damage (no random) and +RIPPER
+Penetrating  rk_dmg     decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDPenetratingRocket.*?Damage \((\d+)\)"
+Penetrating  pl_dmg     decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDPenetratingPlasmaBall.*?Damage \((\d+)\)"
+Penetrating  bfg_dmg    decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDPenetratingBFGBall.*?Damage \((\d+)\)"
+# --- Kinetic: the explosion moved onto the direct hit; the BFG's rays too
+Kinetic      rk_add     decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDKineticRocket.*?\+(\d+)\)"
+# --- Tricky: bounces
+Tricky       count      decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDTrickyRocket.*?BounceCount (\d+)"
+Tricky       factor     decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDTrickyRocket.*?BounceFactor ([\d.]+)"
+Tricky       wall       decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDTrickyRocket.*?WallBounceFactor ([\d.]+)"
+# --- Spreadfire: three smaller projectiles (1/3 damage, 42/42 explosion), +-5 degrees, alternating flat / upright
+Spreadfire   angle      decorate/RocketLauncher/RocketLauncher.dec    FireSpreadfire  A_FireCustomMissile#2 1
+Spreadfire   div        decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDSpreadfireRocket.*?random\(1,8\)\) / (\d+)\)"
+Spreadfire   expl       decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDSpreadfireRocket.*?A_Explode \((\d+),"
+Spreadfire   scale      decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDSpreadfireRocket.*?Scale ([\d.]+)"
+# --- Cluster: six minis at 30 + 60k degrees, 20 units a tic
+Cluster      first      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDClusterRocket.*?LDMiniClusterRocket\", 0,0,0, \d+,0,0, (\d+),"
+Cluster      second     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDClusterRocket.*?LDMiniClusterRocket.*?LDMiniClusterRocket\", 0,0,0, \d+,0,0, (\d+),"
+Cluster      vel        decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDClusterRocket.*?LDMiniClusterRocket\", 0,0,0, (\d+),"
+Cluster      rk_dmg     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterRocket.*?Damage (\d+)"
+Cluster      rk_expl    decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterRocket.*?A_Explode \((\d+),"
+Cluster      pl_dmg     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterPlasmaBall.*?Damage (\d+)"
+Cluster      bfg_dmg    decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterBFGBall.*?Damage (\d+)"
+Cluster      bfg_rays   decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterBFGBall.*?A_BFGSpray \(\"LDBFGFlash\", (\d+),"
+Cluster      bfg_raydmg decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterBFGBall.*?A_BFGSpray \(\"LDBFGFlash\", \d+, (\d+),"
+Cluster      bfg_fov    decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterBFGBall.*?A_BFGSpray \(\"LDBFGFlash\", \d+, \d+, (\d+)\)"
+Cluster      scale      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMiniClusterRocket.*?Scale ([\d.]+)"
+# --- Redirecting: two bounces, the first turns it to an enemy
+Redirecting  count      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDRedirectingRocket.*?BounceCount (\d+)"
+Redirecting  turn       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDRedirectingRocket.*?A_SeekerMissile \((\d+),"
+Redirecting  chance     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDRedirectingRocket.*?SMF_PRECISE, (\d+)\)"
+# --- Mysterious: a random +-32 jump every 13 tics
+Mysterious   period     decorate/UncommonSpecialEffects.dec           LDMysteriousRocket/Spawn tics
+Mysterious   dist       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDMysteriousRocket.*?A_Warp \(AAPTR_DEFAULT, frandom\(-([\d]+)\.0"
+# --- Bouncy: Hexen bounces, gravity after the first
+Bouncy       count      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDBouncyRocket.*?BounceCount (\d+)"
+Bouncy       factor     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDBouncyRocket.*?BounceFactor ([\d.]+)"
+Bouncy       wall       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDBouncyRocket.*?WallBounceFactor ([\d.]+)"
+# --- Sluggish: x0.98 a tic, ripper, damage x clamp(speed / 8, 0.05, 1), detonates under 1 unit a tic
+Sluggish     scale      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDSluggishRocket.*?A_ScaleVelocity \(([\d.]+)\)"
+Sluggish     vfull      source/LEGNDLIB.acs                           re "(?s)LDSluggishDamageScaling_Rocket.*?FixedDiv\(vel, ([\d.]+)\)"
+Sluggish     vmin       source/LEGNDLIB.acs                           re "(?s)LDSluggishDamageScaling_Rocket.*?FixedDiv\(vel, [\d.]+\), ([\d.]+),"
+Sluggish     stop       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDSluggishRocket.*?abs\(velx\) < (\d+)"
+# --- Hyper
+Hyper        scale      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDHyperRocket.*?A_ScaleVelocity \(([\d.]+)\)"
+# --- Arcing: a bouncing grenade
+Arcing       gravity    decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDArcingRocket.*?Gravity ([\d.]+)"
+Arcing       factor     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDArcingRocket.*?BounceFactor ([\d.]+)"
+Arcing       wall       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDArcingRocket.*?WallBounceFactor ([\d.]+)"
+Arcing       count      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDArcingRocket.*?BounceCount (\d+)"
+Arcing       life       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDArcingRocket.*?ReactionTime (\d+)"
+# --- GroupTherapy: no splash, explosion moved onto the hit; a kill makes enemies within 512 explode
+GroupTherapy add        decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDGroupTherapyRocket.*?\+ (\d+)\)"
+GroupTherapy radius     decorate/UncommonSpecialEffects.dec           re "(?s)actor LDGroupTherapyEffectCheckerP1.*?LDGroupTherapyEffectDeathP1\", (\d+),"
+GroupTherapy hit        decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDGroupTherapyExplosion.*?Damage (\d+)"
+GroupTherapy expl       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDGroupTherapyExplosion.*?A_Explode \((\d+),"
+# --- Proximity: slows x0.9 a tic, stops under 1, then drifts (speed 2) to enemies in reach
+Proximity    speed      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDProximityRocket.*?Speed (\d+)"
+Proximity    decel      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDProximityRocket.*?A_ScaleVelocity \(([\d.]+)\)"
+Proximity    drift      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDProximityRocket.*?A_SetSpeed \((\d+)\)"
+Proximity    reach      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDProximityRocket.*?A_JumpIfTracerCloser \((\d+),"
+Proximity    look       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDProximityRocket.*?SMF_CURSPEED, 256, (\d+)\)"
+Proximity    brake      decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDProximityRocket.*?SpawnLoop:.*?A_ScaleVelocity \(([\d.]+)\)"
+Proximity    pull       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDProximityRocket.*?A_Recoil\((-?[\d.]+)\)"
+# --- Seeker
+Seeker       turn       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSeekerRocket.*?A_SeekerMissile \((\d+),"
+Seeker       look       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSeekerRocket.*?SMF_PRECISE, 256, (\d+)\)"
+# --- Accelerator: the attack is a hitscan whose puff explodes 128/128 (the rocket's own blast)
+Accelerator  expl       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDAcceleratorRocketPuff.*?A_Explode \((\d+),"
+# --- Vidmaster / HighExplosive / ShapedCharge
+Vidmaster    full       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDVidmasterRocket.*?A_Explode \(\d+, \d+, \d+, \d+, (\d+)\)"
+HighExplosive rad       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDHighExplosiveRocket.*?A_Explode \(\d+, (\d+)\)"
+ShapedCharge flags      decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDShapedChargeRocket.*?A_Explode \(\d+, \d+, (\d+)\)"
+# --- Spamtastic: a chance a tic of a third-damage mini
+Spamtastic   skip       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSpamtasticRocket :.*?A_Jump\((\d+), 2\)"
+Spamtastic   div        decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSpamtasticRocket2.*?random\(1,8\)\) / (\d+)\)"
+Spamtastic   expl       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSpamtasticRocket2.*?A_Explode \((\d+),"
+# --- Concentrating: +1 counter a tic, damage x (count + 100) / 100, count up to 1000
+Concentrating max       decorate/RareSpecialEffects.dec               prop LDConcentratingCounter inventory.maxamount
+Concentrating base      source/LEGNDLIB.acs                           re "LDConcentratingCounter\"\)\+(\d+)\),"
+# --- Vacuum
+Vacuum       force      decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDVacuumRocket.*?A_RadiusThrust \((-?\d+),"
+Vacuum       range      decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDVacuumRocket.*?A_RadiusThrust \(-?\d+, (\d+),"
+# --- TORGUE: double explosion; the hit and enemies within 300 explode (128/128) when they die
+TORGUE       expl       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDTORGUERocket.*?A_Explode \((\d+),"
+TORGUE       rad        decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDTORGUERocket.*?A_Explode \(\d+, (\d+)\)"
+TORGUE       give       decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDTORGUERocket.*?A_RadiusGive \(\"LDTORGUEEffect\", (\d+),"
+TORGUE       chain      decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDTORGUEExplosion.*?A_Explode \((\d+),"
+# --- Irradiated: a 20 x random(1,8) pulse over 256 (full damage) at 0 and 17 tics of every 35
+Irradiated   dmg        decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDIrradiatedRocket.*?A_Explode \((\d+)\*random"
+Irradiated   rad        decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDIrradiatedRocket.*?A_Explode \(\d+\*random\(1,8\), (\d+),"
+Irradiated   period     decorate/EpicSpecialEffects.dec               LDIrradiatedRocket/Spawn tics
+# --- Plasmatic on the rocket launcher: 20 x random(6,13), the rocket's own 128/128 blast
+Plasmatic    rk_min     decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDPlasmaticRocket.*?random\((\d+),"
+Plasmatic    rk_max     decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDPlasmaticRocket.*?random\(\d+,(\d+)\)"
+# --- Overkill: the giga missile
+Overkill     dmg        decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverkillRocket.*?Damage (\d+)"
+Overkill     expl       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverkillRocket.*?A_Explode \((\d+),"
+Overkill     rad        decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverkillRocket.*?A_Explode \(\d+, (\d+)\)"
+# --- Goldeneye: random(18,30) blasts of random(16,32) over 128, random(3,6) tics apart, on the enemy hit
+Goldeneye    tmin       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDGoldeneyeDamage.*?user_boomtimer\", random\((\d+),"
+Goldeneye    tmax       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDGoldeneyeDamage.*?user_boomtimer\", random\(\d+,(\d+)\)"
+Goldeneye    dmin       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDGoldeneyeDamage.*?A_Explode \(random\((\d+),"
+Goldeneye    dmax       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDGoldeneyeDamage.*?A_Explode \(random\(\d+,(\d+)\)"
+Goldeneye    rad        decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDGoldeneyeDamage.*?A_Explode \(random\(\d+,\d+\), (\d+)\)"
+Goldeneye    imin       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDGoldeneyeDamage.*?TNT1 A random\((\d+),"
+Goldeneye    imax       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDGoldeneyeDamage.*?TNT1 A random\(\d+,(\d+)\)"
+# --- Raycaster (G4): 20 BFG rays from the rocket, each target hit by a 64/128 blast
+Raycaster    rays       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDRaycasterRocket .*?A_BFGSpray \(\"LDRaycasterRocketFlash\", (\d+)\)"
+Raycaster    expl       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDRaycasterRocketFlash.*?A_Explode \((\d+),"
+Raycaster    rad        decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDRaycasterRocketFlash.*?A_Explode \(\d+, (\d+)\)"
+# --- Suppression: five mini plasma balls of a fifth each, +-15 / +-5 degrees, one cell
+Suppression  spread     decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)FireSuppression:.*?LDSuppressionPlasmaBall\", frandom\(-([\d.]+),"
+Suppression  vspread    decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)FireSuppression:.*?LDSuppressionPlasmaBall\", frandom\(-[\d.]+,[\d.]+\), 1, 0,0, 0, frandom\(-([\d.]+),"
+Suppression  div        decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSuppressionPlasmaBall.*?random\(1,8\)\) / (\d+)\)"
+# --- Waveform: two weaving balls, the second half a cycle on
+Waveform     xspeed     decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDWaveformPlasmaBall .*?A_Weave \(([\d.]+),"
+Waveform     xdist      decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDWaveformPlasmaBall .*?A_Weave \([\d.]+,[\d.]+, ([\d.]+),"
+Waveform     index      decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDWaveformPlasmaBall2.*?WeaveIndexXY (\d+)"
+# --- G4 BFG family
+Annihilating expl       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDAnnihilatingBFGBall.*?A_Explode \((\d+),"
+Annihilating rad        decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDAnnihilatingBFGBall.*?A_Explode \(\d+, (\d+),"
+Annihilating rayexpl    decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDAnnihilatingBFGFlash.*?A_Explode \((\d+),"
+Annihilating rayrad     decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDAnnihilatingBFGFlash.*?A_Explode \(\d+, (\d+),"
+Energetic    rays       decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDEnergeticBFGBall.*?A_BFGSpray \(\"LDBFGFlash\", (\d+)\)"
+Energizing   dmg        decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDEnergizingBFGBall.*?Damage \((\d+)\)"
+Energizing   decel      decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDEnergizingBFGBall.*?A_ScaleVelocity \(([\d.]+)\)"
+Energizing   pulses     decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDEnergizingBFGBall.*?user_energizingcount\", (\d+)\)"
+Energizing   radius     decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDEnergizingBFGBall.*?A_RadiusGive \(\"LDEnergizingHealing\", (\d+),"
+Energizing   period     decorate/CommonSpecialEffects.dec             LDEnergizingBFGBall/SpawnLoop tics
+Nova         astep      decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDNovaBFGBall .*?user_novaangle\", user_novaangle\+(\d+)\)"
+Nova         pitch      decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDNovaBFGBall .*?user_novapitch\", -(\d+)\)"
+Nova         pstep      decorate/CommonSpecialEffects.dec             re "(?s)ACTOR LDNovaBFGBall .*?user_novapitch\", user_novapitch\+(\d+)\)"
+Scattering   cost       decorate/BFG9000/BFG9000.dec                  re "(?s)FireScattering:.*?A_TakeInventory \(\"Cell\", (\d+),"
+Shockwave    dmg        decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDShockwaveBFGBall.*?A_Explode \((\d+)\*random"
+Shockwave    rad        decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDShockwaveBFGBall.*?A_Explode \(\d+\*random\(1,8\), (\d+),"
+# --- G6 ammo effects (owner Q7: they act on the magazine)
+Nuclear      sg_dmg     decorate/Shotgun/Shotgun.dec                  FireNuclear     A_FireBullets   3
+Nuclear      rk_dmg     decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDNuclearRocket.*?Damage (\d+)"
+Nuclear      rk_expl    decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDNuclearRocket.*?A_Explode \((\d+),"
+Nuclear      rk_rad     decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDNuclearRocket.*?A_Explode \(\d+, (\d+)\)"
+Nuclear      pl_dmg     decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDNuclearPlasmaBall.*?Damage (\d+)"
+Nuclear      bfg_dmg    decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDNuclearBFGBall.*?Damage (\d+)"
+Nuclear      bfg_rays   decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDNuclearBFGBall.*?A_BFGSpray \(\"LDBFGFlash\", (\d+),"
+Nuclear      bfg_raydmg decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDNuclearBFGBall.*?A_BFGSpray \(\"LDBFGFlash\", \d+, (\d+)\)"
+Optional     sg_dmg     decorate/Shotgun/Shotgun.dec                  FireOptional    A_FireBullets   3
+Optional     rk_dmg     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDOptionalRocket.*?Damage \(?(\d+)"
+Optional     pl_dmg     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDOptionalPlasmaBall.*?Damage \(?(\d+)"
+Optional     bfg_dmg    decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDOptionalBFGBall.*?Damage \(?(\d+)"
+Base3        sg_dmg     decorate/Shotgun/Shotgun.dec                  NormalFire      A_FireBullets   3
+# Recycling, LegenDoom's counters per shot (Rocket Launcher, plasma rifle, BFG, bullet guns: <Gun>.dec FireRecycling)
+Recycling    max        decorate/UncommonSpecialEffects.dec           prop LDRecyclingClipCounter inventory.maxamount
+# --- Illuminating: LegenDoom's lights (lights/*.light), the BFG ammo use, plasma / BFG pulses, small numbers
+Illuminating rk_r               lights/rocketlauncher.light                   re "(?s)flickerlight LDROCK_ILLUM\s*\{\s*color ([\d.]+)"
+Illuminating rk_g               lights/rocketlauncher.light                   re "(?s)flickerlight LDROCK_ILLUM\s*\{\s*color [\d.]+ ([\d.]+)"
+Illuminating rk_b               lights/rocketlauncher.light                   re "(?s)flickerlight LDROCK_ILLUM\s*\{\s*color [\d.]+ [\d.]+ ([\d.]+)"
+Illuminating rk_size            lights/rocketlauncher.light                   re "(?s)flickerlight LDROCK_ILLUM\s*\{.*?size (\d+)"
+Illuminating rk_size2           lights/rocketlauncher.light                   re "(?s)flickerlight LDROCK_ILLUM\s*\{.*?secondarySize (\d+)"
+Illuminating rk_chance          lights/rocketlauncher.light                   re "(?s)flickerlight LDROCK_ILLUM\s*\{.*?chance ([\d.]+)"
+Illuminating pl_r               lights/plasmarifle.light                      re "(?s)pointlight LDPLASMABALL1_ILLUM\s*\{\s*color ([\d.]+)"
+Illuminating pl_g               lights/plasmarifle.light                      re "(?s)pointlight LDPLASMABALL1_ILLUM\s*\{\s*color [\d.]+ ([\d.]+)"
+Illuminating pl_b               lights/plasmarifle.light                      re "(?s)pointlight LDPLASMABALL1_ILLUM\s*\{\s*color [\d.]+ [\d.]+ ([\d.]+)"
+Illuminating pl_size            lights/plasmarifle.light                      re "(?s)pointlight LDPLASMABALL1_ILLUM\s*\{.*?size (\d+)"
+Illuminating bfg_r              lights/bfg9000.light                          re "(?s)pointlight LDBFGBALL1_ILLUM\s*\{.*?color ([\d.]+)"
+Illuminating bfg_g              lights/bfg9000.light                          re "(?s)pointlight LDBFGBALL1_ILLUM\s*\{.*?color [\d.]+ ([\d.]+)"
+Illuminating bfg_b              lights/bfg9000.light                          re "(?s)pointlight LDBFGBALL1_ILLUM\s*\{.*?color [\d.]+ [\d.]+ ([\d.]+)"
+Illuminating bfg_size           lights/bfg9000.light                          re "(?s)pointlight LDBFGBALL1_ILLUM\s*\{.*?size (\d+)"
+Illuminating idleRocket_r       lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Rocket\s*\{\s*color ([\d.]+)"
+Illuminating idleRocket_g       lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Rocket\s*\{\s*color [\d.]+ ([\d.]+)"
+Illuminating idleRocket_b       lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Rocket\s*\{\s*color [\d.]+ [\d.]+ ([\d.]+)"
+Illuminating idleRocket_size    lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Rocket\s*\{.*?size (\d+)"
+Illuminating idleRocket_size2   lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Rocket\s*\{.*?secondarysize (\d+)"
+Illuminating idleRocket_interval lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Rocket\s*\{.*?interval ([\d.]+)"
+Illuminating idlePlasma_r       lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Plasma\s*\{\s*color ([\d.]+)"
+Illuminating idlePlasma_g       lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Plasma\s*\{\s*color [\d.]+ ([\d.]+)"
+Illuminating idlePlasma_b       lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Plasma\s*\{\s*color [\d.]+ [\d.]+ ([\d.]+)"
+Illuminating idlePlasma_size    lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Plasma\s*\{.*?size (\d+)"
+Illuminating idlePlasma_size2   lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Plasma\s*\{.*?secondarysize (\d+)"
+Illuminating idlePlasma_interval lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_Plasma\s*\{.*?interval ([\d.]+)"
+Illuminating idleBFG_r          lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_BFG\s*\{\s*color ([\d.]+)"
+Illuminating idleBFG_g          lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_BFG\s*\{\s*color [\d.]+ ([\d.]+)"
+Illuminating idleBFG_b          lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_BFG\s*\{\s*color [\d.]+ [\d.]+ ([\d.]+)"
+Illuminating idleBFG_size       lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_BFG\s*\{.*?size (\d+)"
+Illuminating idleBFG_size2      lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_BFG\s*\{.*?secondarysize (\d+)"
+Illuminating idleBFG_interval   lights/generic.light                          re "(?s)pulselight LDIlluminatingIdle_BFG\s*\{.*?interval ([\d.]+)"
+Base3        bfg_ammo           decorate/BFG9000/BFG9000.dec                  re "Weapon.AmmoUse1 (\d+)"
+Irradiated   pl_dmg             decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDIrradiatedPlasmaBall.*?A_Explode \((\d+)\*random"
+Irradiated   bfg_dmg            decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDIrradiatedBFGBall.*?A_Explode \((\d+)\*random"
+Spamtastic   bfg_div            decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSpamtasticBFGBall2.*?random\(1,8\)\) / (\d+)\)"
+Suppression  scale              decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSuppressionPlasmaBall.*?Scale ([\d.]+)"
+Spamtastic   scale              decorate/RareSpecialEffects.dec               re "(?s)ACTOR LDSpamtasticRocket2.*?Scale ([\d.]+)"
+# --- Recycling per gun: direct gives (Clip, Shell, Cell) and counters (C, 100 = one round: LDRecyclingAmmoGeneration)
+Recycling    pi_ClipC   decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingClipCounter\", (\d+)\)"
+Recycling    pi_ShellC  decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingShellCounter\", (\d+)\)"
+Recycling    pi_RocketC decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingRocketCounter\", (\d+)\)"
+Recycling    pi_CellC   decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingCellCounter\", (\d+)\)"
+Recycling    sg_Clip    decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Clip\", (\d+)\)"
+Recycling    sg_ClipC   decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingClipCounter\", (\d+)\)"
+Recycling    sg_ShellC  decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingShellCounter\", (\d+)\)"
+Recycling    sg_RocketC decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingRocketCounter\", (\d+)\)"
+Recycling    sg_CellC   decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingCellCounter\", (\d+)\)"
+Recycling    ss_Clip    decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Clip\", (\d+)\)"
+Recycling    ss_ClipC   decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingClipCounter\", (\d+)\)"
+Recycling    ss_ShellC  decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingShellCounter\", (\d+)\)"
+Recycling    ss_RocketC decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingRocketCounter\", (\d+)\)"
+Recycling    ss_Cell    decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Cell\", (\d+)\)"
+Recycling    ss_CellC   decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingCellCounter\", (\d+)\)"
+Recycling    cg_ClipC   decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingClipCounter\", (\d+)\)"
+Recycling    cg_ShellC  decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingShellCounter\", (\d+)\)"
+Recycling    cg_RocketC decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingRocketCounter\", (\d+)\)"
+Recycling    cg_CellC   decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingCellCounter\", (\d+)\)"
+Recycling    rl_Clip    decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Clip\", (\d+)\)"
+Recycling    rl_ClipC   decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingClipCounter\", (\d+)\)"
+Recycling    rl_Shell   decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Shell\", (\d+)\)"
+Recycling    rl_ShellC  decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingShellCounter\", (\d+)\)"
+Recycling    rl_RocketC decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingRocketCounter\", (\d+)\)"
+Recycling    rl_Cell    decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Cell\", (\d+)\)"
+Recycling    rl_CellC   decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingCellCounter\", (\d+)\)"
+Recycling    pr_ClipC   decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingClipCounter\", (\d+)\)"
+Recycling    pr_ShellC  decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingShellCounter\", (\d+)\)"
+Recycling    pr_RocketC decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingRocketCounter\", (\d+)\)"
+Recycling    pr_CellC   decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingCellCounter\", (\d+)\)"
+Recycling    bf_Clip    decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Clip\", (\d+)\)"
+Recycling    bf_ClipC   decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingClipCounter\", (\d+)\)"
+Recycling    bf_Shell   decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Shell\", (\d+)\)"
+Recycling    bf_RocketC decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingRocketCounter\", (\d+)\)"
+Recycling    bf_Cell    decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"Cell\", (\d+)\)"
+Recycling    bf_CellC   decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireRecycling:(?:(?!Goto).)*?A_GiveInventory \(\"LDRecyclingCellCounter\", (\d+)\)"
+# --- Transmogrifier: out of its own ammo, the next kind in LegenDoom's order and its cost (<Gun>.dec FireTransmogrifierAmmoCheck)
+Transmogrifier pi_Clip      decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Clip\",\s*(\d+),"
+# order pi 1 Clip
+Transmogrifier pi_Shell     decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Shell\",\s*(\d+),"
+# order pi 2 Shell
+Transmogrifier pi_Cell      decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Cell\",\s*(\d+),"
+# order pi 3 Cell
+Transmogrifier pi_RocketAmmo decorate/Pistol/Pistol.dec                    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"RocketAmmo\",\s*(\d+),"
+# order pi 4 RocketAmmo
+Transmogrifier sg_Shell     decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Shell\",\s*(\d+),"
+# order sg 1 Shell
+Transmogrifier sg_Clip      decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Clip\",\s*(\d+),"
+# order sg 2 Clip
+Transmogrifier sg_Cell      decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Cell\",\s*(\d+),"
+# order sg 3 Cell
+Transmogrifier sg_RocketAmmo decorate/Shotgun/Shotgun.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"RocketAmmo\",\s*(\d+),"
+# order sg 4 RocketAmmo
+Transmogrifier ss_Shell     decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Shell\",\s*(\d+),"
+# order ss 1 Shell
+Transmogrifier ss_Clip      decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Clip\",\s*(\d+),"
+# order ss 2 Clip
+Transmogrifier ss_Cell      decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Cell\",\s*(\d+),"
+# order ss 3 Cell
+Transmogrifier ss_RocketAmmo decorate/SuperShotgun/SuperShotgun.dec        re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"RocketAmmo\",\s*(\d+),"
+# order ss 4 RocketAmmo
+Transmogrifier cg_Clip      decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Clip\",\s*(\d+),"
+# order cg 1 Clip
+Transmogrifier cg_Shell     decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Shell\",\s*(\d+),"
+# order cg 2 Shell
+Transmogrifier cg_Cell      decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Cell\",\s*(\d+),"
+# order cg 3 Cell
+Transmogrifier cg_RocketAmmo decorate/Chaingun/Chaingun.dec                re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"RocketAmmo\",\s*(\d+),"
+# order cg 4 RocketAmmo
+Transmogrifier rl_RocketAmmo decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"RocketAmmo\",\s*(\d+),"
+# order rl 1 RocketAmmo
+Transmogrifier rl_Clip      decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Clip\",\s*(\d+),"
+# order rl 2 Clip
+Transmogrifier rl_Shell     decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Shell\",\s*(\d+),"
+# order rl 3 Shell
+Transmogrifier rl_Cell      decorate/RocketLauncher/RocketLauncher.dec    re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Cell\",\s*(\d+),"
+# order rl 4 Cell
+Transmogrifier pr_Cell      decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Cell\",\s*(\d+),"
+# order pr 1 Cell
+Transmogrifier pr_Clip      decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Clip\",\s*(\d+),"
+# order pr 2 Clip
+Transmogrifier pr_Shell     decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Shell\",\s*(\d+),"
+# order pr 3 Shell
+Transmogrifier pr_RocketAmmo decorate/PlasmaRifle/PlasmaRifle.dec          re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"RocketAmmo\",\s*(\d+),"
+# order pr 4 RocketAmmo
+Transmogrifier bf_Cell      decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Cell\",\s*(\d+),"
+# order bf 1 Cell
+Transmogrifier bf_Clip      decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Clip\",\s*(\d+),"
+# order bf 2 Clip
+Transmogrifier bf_Shell     decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"Shell\",\s*(\d+),"
+# order bf 3 Shell
+Transmogrifier bf_RocketAmmo decorate/BFG9000/BFG9000.dec                  re "(?s)\n\s*FireTransmogrifierAmmoCheck:(?:(?!Goto).)*?A_JumpIfInventory\(\"RocketAmmo\",\s*(\d+),"
+# order bf 4 RocketAmmo
+# --- Overflowing: maxed Rocket -> a small blast (puff / projectile), maxed Cell -> x1.5, maxed Shell -> a free extra volley
+Overflowing  bul_aoe      decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOEBulletPuff.*?A_Explode \((\d+),"
+Overflowing  bul_aoerad   decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOEBulletPuff.*?A_Explode \(\d+, (\d+),"
+Overflowing  rk_aoe       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOERocket.*?A_Explode \((\d+),"
+Overflowing  rk_aoerad    decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOERocket.*?A_Explode \(\d+, (\d+),"
+Overflowing  pl_aoe       decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOEPlasmaBall.*?A_Explode \((\d+),"
+Overflowing  pl_aoerad    decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOEPlasmaBall.*?A_Explode \(\d+, (\d+),"
+Overflowing  bfg_aoe      decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOEBFGBall.*?A_Explode \((\d+),"
+Overflowing  bfg_aoerad   decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingAOEBFGBall.*?A_Explode \(\d+, (\d+),"
+Overflowing  rk_cell      decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingCellRocket.*?Damage (\d+)"
+Overflowing  pl_cell      decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingCellPlasmaBall.*?Damage (\d+)"
+Overflowing  bfg_cell     decorate/EpicSpecialEffects.dec               re "(?s)ACTOR LDOverflowingCellBFGBall.*?Damage (\d+)"
+Overflowing  bul_cell     decorate/Shotgun/Shotgun.dec                  re "(?s)FireOverflowingCell:.*?\(5 \* random\(1,3\)\) \* ([\d.]+)"
+Overflowing  sg_n         decorate/Shotgun/Shotgun.dec                  re "(?s)FireOverflowing:.*?A_FireBullets \(5.6, 0, (\d+), 5,"
+Overflowing  sg_extra     decorate/Shotgun/Shotgun.dec                  re "(?s)FireOverflowing:.*?A_FireBullets \(5.6, 0, \d+, 5, \"LDBulletPuff\", FBF_USEAMMO\).*?A_FireBullets \(5.6, 0, (\d+), 5,"
+Overflowing  ss_n         decorate/SuperShotgun/SuperShotgun.dec        re "(?s)FireOverflowing:.*?A_FireBullets \(11.2, 7.1, (\d+), 5,"
+Overflowing  ss_extra     decorate/SuperShotgun/SuperShotgun.dec        re "(?s)FireOverflowing:.*?A_FireBullets \(11.2, 7.1, \d+, 5, \"LDBulletPuff\", FBF_USEAMMO\).*?A_FireBullets \(11.2, 7.1, (\d+), 5,"
+Optional     rk_expl    decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDOptionalRocket.*?A_Explode \((\d+),"
+Optional     rk_rad     decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDOptionalRocket.*?A_Explode \(\d+, (\d+)\)"
+Optional     bfg_rays   decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDOptionalBFGBall.*?A_BFGSpray \(\"LDOptionalBFGFlash\", (\d+),"
+Optional     bfg_raydmg decorate/UncommonSpecialEffects.dec           re "(?s)ACTOR LDOptionalBFGBall.*?A_BFGSpray \(\"LDOptionalBFGFlash\", \d+, (\d+)\)"

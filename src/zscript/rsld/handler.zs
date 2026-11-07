@@ -60,6 +60,7 @@ class RSLD_Handler : EventHandler
 	RSLD_Held held;
 	bool inDamage;
 	Array<Actor> probeTargets;	// rig probe: monsters spawned by rsld_target
+	RSLD_G3Reg g3reg;			// round 3: G3/G4 riders' registry (g3_core.zs RSLD_G3.Reg)
 
 	// ---- replacements, drops
 	bool inRepl;
@@ -587,6 +588,8 @@ class RSLD_Handler : EventHandler
 			return;
 		}
 		string an = a.GetClassName();
+		if (an.Left(2) == "LD") RSLD_LDSounds.Spawned(a);	// round 3: LegenDoom's aura generators (ldsounds.zs)
+		else if (!a.bMISSILE && g3reg && (g3reg.catchS || level.maptime <= g3reg.flashMuteUntil)) g3reg.SpraySpawned(a);	// round 3: rays of ours / muted (g3_core.zs)
 		if (an.Left(2) == "LD" && !a.bMISSILE && RSLD_StartVisuals.Check(a)) return;
 		if (a is "RSQ_PlayerRound")	// a True Bullets round: it carries the oldest pellet still waiting for one
 		{
@@ -618,7 +621,9 @@ class RSLD_Handler : EventHandler
 			return;
 		}
 		if (Helper(a))
-		{	// NEEDS_B 4b: BD22's alert helpers of a pull already under way this tic (Stealth)
+		{
+			if (RSLD_G3.HelperSpawned(a, mo)) return;	// round 3: the blast of a projectile a G3/G4 rider rides (g3_core.zs)
+			// NEEDS_B 4b: BD22's alert helpers of a pull already under way this tic (Stealth)
 			string lc = cn.MakeLower();
 			int k = mo.PlayerNumber() * 2 + hand;
 			if (RSLD.DebugLevel() > 2) RSLD.Log(String.Format("helper %s (dmg %d): not a shot", cn, a.GetMissileDamage(0, 1)));
@@ -683,7 +688,7 @@ class RSLD_Handler : EventHandler
 	{
 		if (!ldOn || inDamage) return damage;
 		if (inflictor) { string ic = inflictor.GetClassName(); if (ic.Left(2) == "LD" && !TagOf(inflictor)) return damage; }	// LegenDoom's own effect damage (not a projectile a pull fired: s.TagMissile)
-		if (inflictor && inflictor.bMISSILE && inflictor.target == mo && !IsStrike(inflictor) && Helper(inflictor)) return damage;	// RocketGlassBreaker's 1
+		if (inflictor && inflictor.bMISSILE && inflictor.target == mo && !IsStrike(inflictor) && Helper(inflictor) && !TagOf(inflictor)) return damage;	// RocketGlassBreaker's 1 (round 3: a blast a rider claimed is tagged: it counts)
 		let s = FindShot(mo, inflictor);
 		if (!s || !s.fx) return damage;
 		hit.target = victim; hit.inflictor = inflictor; hit.damage = damage; hit.setDamage = -1; hit.flags = flags;
@@ -739,7 +744,7 @@ class RSLD_Handler : EventHandler
 		}
 		if (!mo || !mo.player || !t || t == mo || !t.bIsMonster) return;
 		if (e.Inflictor) { string ic = e.Inflictor.GetClassName(); if (ic.Left(2) == "LD" && !TagOf(e.Inflictor)) return; }
-		if (e.Inflictor && e.Inflictor.bMISSILE && e.Inflictor.target == mo && !IsStrike(e.Inflictor) && Helper(e.Inflictor)) return;
+		if (e.Inflictor && e.Inflictor.bMISSILE && e.Inflictor.target == mo && !IsStrike(e.Inflictor) && Helper(e.Inflictor) && !TagOf(e.Inflictor)) return;
 		let s = FindShot(mo, e.Inflictor);
 		if (!s || !s.fx) return;
 		hit.target = t; hit.inflictor = e.Inflictor; hit.damage = e.Damage; hit.setDamage = -1; hit.flags = e.DamageFlags;
@@ -761,6 +766,7 @@ class RSLD_Handler : EventHandler
 		if (!ldOn) return;
 		let t = e.Thing;
 		if (!t || !t.bIsMonster) return;
+		if (g3reg && g3reg.marked.Size()) g3reg.Died(t);	// round 3: TORGUE's marked enemies explode when they die (g3_core.zs)
 		class<Inventory> tok = RSLD.IC("LDLegendaryMonsterToken");
 		if (!tok || t.CountInv(tok) == 0) return;
 		let mb = ServiceIterator.Find("RSQMB_Service").Next();
@@ -914,6 +920,7 @@ class RSLD_Handler : EventHandler
 			if (jam && !had) { p.GiveInventory(tok, 1); if (RSLD.Debug()) Console.Printf("RSLD %d Perfect: %s hand JAMMED (trigger blocked)", level.maptime, RSLD.HandName(hand)); }
 			else if (!jam && had) { p.TakeInventory(tok, 1); if (RSLD.Debug()) Console.Printf("RSLD %d Perfect: %s hand jam cleared", level.maptime, RSLD.HandName(hand)); }
 		}
+		RSLD_G6.StandDown(self, p);	// round 3 (owner Q12): BD22 VR's secondaries stand down for a legendary power (g6_ammo.zs)
 		// the guns in the hands
 		for (int hand = 0; hand < 2; hand++)
 		{
@@ -1204,6 +1211,29 @@ class RSLD_Handler : EventHandler
 				}
 				Console.Printf("RSLD loadorder: %s in load order (the last read last):%s", lumps[k], l);
 			}
+			return;
+		}
+		if (n == "rsld_aura")	// rig probe (round 3): LegenDoom's aura generator on the last target, as LDMonsterInit spawns it
+		{
+			Actor who = null;
+			for (int i = probeTargets.Size() - 1; i >= 0 && !who; i--) who = probeTargets[i];
+			class<Actor> c = RSLD.AC(e.Args[0] > 0 ? "LDLegendaryMonsterSoundGeneratorBoss" : "LDLegendaryMonsterSoundGenerator");
+			if (!who || !c) { Console.Printf("RSLD probe: no target / no generator class"); return; }
+			let g = Actor.Spawn(c, who.pos, NO_REPLACE);
+			if (g) { g.master = who; Console.Printf("RSLD probe: %s on %s", g.GetClassName(), who.GetClassName()); }
+			return;
+		}
+		if (n.Left(12) == "rsld_jingle:")	// rig probe (round 3): the pickup jingle a legendary of <effect> plays (arg 0: rarity)
+		{
+			RSLD_LDSounds.Jingle(p, n.Mid(12), e.Args[0]);
+			return;
+		}
+		if (n == "rsld_auras")	// rig probe (round 3): what the aura register plays now
+		{
+			let g = RSLD_LDSoundReg.Get();
+			int on = 0;
+			for (int i = 0; i < g.gen.Size(); i++) if (g.playing[i]) on++;
+			Console.Printf("RSLD probe: %d LegenDoom aura generators, %d playing LegenDoom's aura (muted %s)", g.gen.Size(), on, RSLD_LDSounds.Muted() ? "yes" : "no");
 			return;
 		}
 		if (n == "rsld_list")

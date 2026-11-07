@@ -373,7 +373,11 @@ ACTOR Plasma_Gun : BrutalWeapon
 		PLAY A 0 ACS_ExecuteAlways(853, 0, 0, 0, 0)//Makes Player slower.
 		Goto Ready
 
+	RSLD_Jammed:	// LD mode (round 3): Perfect's jam or a G5 trigger hold: no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
 	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && (CountInv("RSLD_JamOff") > 0 || CountInv("RSLD_G5BlockOff") > 0)) || (OverlayID() != 1000000 && (CountInv("RSLD_JamMain") > 0 || CountInv("RSLD_G5BlockMain") > 0)), "RSLD_Jammed")	// LD mode (round 3): Perfect's jam or a G5 trigger hold (Chargeup, Overkill) stops the trigger (zscript/rsld/handler.zs, ld_g5_core.zs Block; never given without LegenDoom)
 		2RSG A 0 A_JumpIfInventory("IsPlayingAsPurist", 1,"NoReload")
 		PRSG F 0 A_JumpIfInventory("NoReloading",1,"NoReload")
 		"####" F 0 A_JumpIfInventory("PlasmaAmmo",1,1)
@@ -423,6 +427,7 @@ ACTOR Plasma_Gun : BrutalWeapon
 // Charging up secondary ------------------------------------------------------------
 
 	AltFire:
+		"####" "#" 0 A_JumpIfInventory("RSLD_AltDown", 1, "Ready")	// LD mode (round 3, owner Q12): a legendary power on this gun uses the secondary: it stands down (zscript/rsld g6_ammo.zs RSLD_AltDown*, R3a; never given without LegenDoom)
 		2HTN E 0 A_JumpIfInventory("IsPlayingAsPurist", 1,"PuristWarning")
 		PRSG F 0 A_JumpIfInventory("NoReloading",1,"AltNoReload")
 		PRSG F 0 A_JumpIfInventory("PlasmaAmmo",10,1)

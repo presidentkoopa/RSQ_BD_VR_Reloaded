@@ -1,0 +1,10 @@
+# R3B_Doubletap_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: Doubletap on Shot_Gun slot Shotgun rarity Rare
+RSLD probe: Shot_Gun magazine 9 reserve 2
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 9748 Doubletap p212 main Shot_Gun: doubletap: first tap, free (its rounds go back); the second may come before the pump
+RSLD 9748 Doubletap p212 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 9760 Doubletap: main hand: the second tap before the pump
+RSLD 9760 Doubletap p213 main Shot_Gun: doubletap: second tap, takes its rounds; then the pump / reload by hand
+RSLD probe: Shot_Gun magazine 8 reserve 2

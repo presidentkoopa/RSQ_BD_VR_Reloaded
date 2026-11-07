@@ -139,6 +139,16 @@ shows LegenDoom's pickup screen; Exorcist (x3 on a zombie), Vampiric, Murderous,
 fire through the bridge; dropping and re-picking a legendary works. Not yet shown: the other carried
 effects one by one, and anything in a headset.
 
+## Round 3 (2026-11-06 evening): G3 missile effects, G4 BFG family, G6 ammo effects, small items (agent R3a)
+
+Code: `src/zscript/rsld/g3_core.zs` (the per-projectile rider), `g3_fx.zs` (28 G3 effects + Plasmatic on the rocket
+launcher), `g4_bfg.zs` (9 BFG family), `g6_ammo.zs` (8 ammo effects, the alt-fire stand-down), `ldsounds.zs` +
+`src/SNDINFO.rsld` (option "Mute LegenDoom Pickup & Aura Sounds"); numbers `tools/numbers/g3.rules` -> `numbers_g3.zs`.
+Passives now count only the legendary gun(s) in hand (`RSLD.Count`; `RSLD.CountOwned` is LegenDoom's every-owned rule).
+One batched rig run (`tools/ldprove.py round3`, QuestZDoom 17.3, full order with LegenDoom: 0 script errors) and one
+boot without LegenDoom (0 script errors, LD mode silent). Logs: `evidence/ldmode/R3_*.log` (rig only, not
+headset-confirmed). What each log shows and what it does not: the round-3 report (coordinator).
+
 ## Build
 
 ```

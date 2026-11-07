@@ -1,0 +1,12 @@
+# R3_Cluster_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: Cluster on Rocket_Launcher slot RocketLauncher rarity Uncommon
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 320 (128 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 541 Cluster rider rocket p7: burst into 6 minis (x0.50, blast x0.50, speed 50)
+RSLD 542 Cluster rider rocket child p7: blast RocketExplosion -> 50 over 75 (BD22's 100 / 150)
+RSLD 543 Cluster rider rocket child p7: blast RocketExplosion -> 50 over 75 (BD22's 100 / 150)
+RSLD 544 Cluster rider rocket child p7: blast RocketExplosion -> 50 over 75 (BD22's 100 / 150)
+RSLD 547 Cluster rider rocket child p7: blast RocketExplosion -> 50 over 75 (BD22's 100 / 150)
+RSLD 547 Cluster rider rocket child p7: blast RocketExplosion -> 50 over 75 (BD22's 100 / 150)
+RSLD 550 Cluster rider rocket child p7: blast RocketExplosion -> 50 over 75 (BD22's 100 / 150)

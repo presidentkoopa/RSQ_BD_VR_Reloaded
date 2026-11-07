@@ -1,0 +1,33 @@
+# R3_Optional_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Optional on Shot_Gun slot Shotgun rarity Uncommon
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: Shot_Gun magazine 1 reserve 100
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 5747 Optional p61 main Shot_Gun: last round: a weaker free shot
+RSLD 5747 Optional p61 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 5747 Optional p61 main Shot_Gun: Optional (weak shot, no ammo used): 1 round(s) given back
+RSLD 5747 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5747 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5747 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5747 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5748 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5748 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5748 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5748 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5748 Optional p61 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5795 Optional p62 main Shot_Gun: last round: a weaker free shot
+RSLD 5795 Optional p62 main Shot_Gun: refund 1 -> ShotgunAmmo
+RSLD 5795 Optional p62 main Shot_Gun: Optional (weak shot, no ammo used): 1 round(s) given back
+RSLD 5795 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5795 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5795 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5795 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5796 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5796 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5796 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5796 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD 5796 Optional p62 main Shot_Gun: damage 13 -> 5 (x0.40) on BaronofHell2
+RSLD probe: Shot_Gun magazine 1 reserve 100

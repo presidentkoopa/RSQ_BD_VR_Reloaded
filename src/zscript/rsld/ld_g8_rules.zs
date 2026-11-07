@@ -270,6 +270,23 @@ class RSLD_B play
 		return false;
 	}
 
+	// Owner, round 3: "a full-ammo pickup of BD22-only ammo is worth what its gun's ammo is worth (grenades like rockets,
+	// gas like cells, ...)". BD22's ammo of guns outside LegenDoom's nine (brutal22test6 actors/Weapons, Weapon.AmmoType1):
+	// Gas (Flamethrower2, FlameCannon) -> Cell; GrenadeAmmo (HandGrenades), AmmoM202 (IncendiaryLauncher),
+	// MiniHellRocketAmmo (HellishMissileLauncher), Nuke (NukeLauncher), DevastatorAmmo (Devastator) -> Rocket;
+	// SoulAmmo (Unmaker) -> Cell; Mauser9mm (MP40), SniperAmmo (Sniper), Clip1 (SMG / pistol bullets) -> Clip.
+	// (Clip2 / AmmoShell / AmmoRocket / AmmoCell and BD22 VR's RSQ_MinigunAmmo are LegenDoom's four kinds already: KindOf.)
+	static int OnlyKind(Name n)
+	{
+		switch (n)
+		{
+			case 'Gas': case 'SoulAmmo': return 3;
+			case 'GrenadeAmmo': case 'AmmoM202': case 'MiniHellRocketAmmo': case 'Nuke': case 'DevastatorAmmo': return 2;
+			case 'Mauser9mm': case 'SniperAmmo': case 'Clip1': return 0;
+		}
+		return -1;
+	}
+
 	// LegenDoom's Upgrading points for a pickup of `amount` of kind k: the rate of its small or big pickup
 	// (clip 38 per 10, clip box 188 per 50, ...: DECORATE consts + LD_<Item>Activate amounts)
 	static int UpgradePoints(int k, int amount)
@@ -297,8 +314,9 @@ class RSLD_B play
 			// it is taken if any Upgrading weapon can still level, else it stays on the floor
 			// a maxed BD22-only ammo (k -1) has no LegenDoom points rate: it stays on the floor (owner question in the
 			// round 2 report)
-			int pts = k >= 0 ? UpgradePoints(k, base) : 0;
-			if (pts > 0 && RSLD.Count(p, "Upgrading") > 0 && Upgrade(st, p, pts, parent.GetClassName()))
+			int kk = k >= 0 ? k : OnlyKind(parent.GetClassName());	// round 3: BD22-only ammo is worth its gun's ammo
+			int pts = kk >= 0 ? UpgradePoints(kk, base) : 0;
+			if (pts > 0 && RSLD.CountOwned(p, "Upgrading") > 0 && Upgrade(st, p, pts, parent.GetClassName()))
 			{
 				item.bPickupGood = true;
 				return true;
@@ -317,7 +335,7 @@ class RSLD_B play
 		}
 		for (int s = 0; s < 9; s++)
 		{
-			if (!(RSLD.EffectOf(p, s) ~== "Hoarder") || !SlotUses(st, s, parent.GetClassName())) continue;
+			if (!(RSLD.EffectOf(p, s) ~== "Hoarder") || !RSLD.HeldSlot(p, s) || !SlotUses(st, s, parent.GetClassName())) continue;	// round 3: the gun in hand only
 			// +100% for each Hoarder slot whose gun uses this ammo (LD_ClipActivate: pistol and chaingun slots)
 			double hr = N("Hoarder", "clip_add") / max(1.0, N("Scrounger", "clip_base"));
 			int add = int(base * hr + 0.5);
@@ -643,7 +661,7 @@ class RSLD_B play
 			String n = am.GetClassName();
 			int ba = am.BackpackAmount;
 			int add = sc * int(ceil(ba * r - 0.0001));
-			for (int s = 0; s < 9; s++) if (RSLD.EffectOf(p, s) ~== "Hoarder" && SlotUses(st, s, n)) add += ba;
+			for (int s = 0; s < 9; s++) if (RSLD.EffectOf(p, s) ~== "Hoarder" && RSLD.HeldSlot(p, s) && SlotUses(st, s, n)) add += ba;
 			if (add <= 0) continue;
 			int a0 = am.Amount;
 			RSLD.AddAmmo(am, add);
@@ -651,7 +669,7 @@ class RSLD_B play
 		}
 		if (done != "") Log(p, sc > 0 ? "Scrounger" : "Hoarder", cn .. ":" .. done);
 		AmmoTaken(st, p, cn, 0);
-		if (RSLD.Count(p, "Upgrading") > 0) Upgrade(st, p, int(N("Upgrading", "backpack_pts")), cn);
+		if (RSLD.CountOwned(p, "Upgrading") > 0) Upgrade(st, p, int(N("Upgrading", "backpack_pts")), cn);
 		if (!st.sharing && multiplayer && (AnyPlayerHas("Shaman") || AnyPlayerHas("Quartermaster"))) ShareItem(st, p, cn, 0, "Quartermaster");
 		else if (RSLD.Count(p, "Quartermaster") + RSLD.Count(p, "Shaman") > 0) Log(p, "Quartermaster", String.Format("%s: %d other players (shared in multiplayer only)", cn, OtherPlayers(p)));
 	}

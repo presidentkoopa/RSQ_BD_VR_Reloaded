@@ -1,0 +1,9 @@
+# R3B_Perfect_DualRifles: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: LegenDoom has no LDChainsawEffect_Perfect token: the effect is forced for the probe only
+RSLD probe: Perfect on Chain_saw slot Chainsaw rarity Common (LegenDoom never rolls it on this slot)
+RSLD probe: 0 targets removed
+RSLD probe: player BDoomer has DoubleRifleAmmo x62 health 100 speed 8.0
+RSLD probe: player BDoomer has DoubleRifleAmmo x62 health 100 speed 8.0
+RSLD probe: player BDoomer has DoubleRifleAmmo x62 health 100 speed 8.0
+RSLD probe: player BDoomer has DoubleRifleAmmo x62 health 100 speed 8.0
+RSLD probe: cleared slot Chainsaw

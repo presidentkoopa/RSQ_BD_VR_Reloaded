@@ -25,8 +25,8 @@ class RSLD_Fx_Comrade : RSLD_Effect
 // (Shotgun.dec FireThematic: 5 * random(1, 3) * CallACS("LDEffectCount", EFFECT_THEMATIC)).
 class RSLD_Fx_Thematic : RSLD_Effect
 {
-	override void OnPull(RSLD_Shot s) { s.Log(String.Format("damage x%d (Thematic legendaries owned)", RSLD.Count(s.mo, name))); }
-	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h) { h.mult *= max(1, RSLD.Count(s.mo, name)); }
+	override void OnPull(RSLD_Shot s) { s.Log(String.Format("damage x%d (Thematic legendaries owned)", RSLD.CountOwned(s.mo, name))); }
+	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h) { h.mult *= max(1, RSLD.CountOwned(s.mo, name)); }
 }
 
 // NanoCircuit: "Attacks have a chance of giving a health and armor bonus": per pull, A_Jump(174, 1) into

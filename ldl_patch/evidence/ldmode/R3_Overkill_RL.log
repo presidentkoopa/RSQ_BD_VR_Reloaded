@@ -1,0 +1,10 @@
+# R3_Overkill_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: Overkill on Rocket_Launcher slot RocketLauncher rarity Epic
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 400 (208 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 2558 Overkill rider rocket p27: giga missile: direct x2.22, blast x10 over x5
+RSLD 2559 Overkill p27 main Rocket_Launcher: take 4 <- RocketRounds
+RSLD 2559 Overkill p27 main Rocket_Launcher: Overkill: 5 rockets for the shot (LegenDoom FireOverkill), cooldown 92 tics (LDOverkillCooldown)
+RSLD 2565 Overkill rider rocket p27: LegenDoom's giga ring: 410 visuals
+RSLD 2565 Overkill rider rocket p27: blast RocketExplosion -> 1000 over 750 (BD22's 100 / 150)

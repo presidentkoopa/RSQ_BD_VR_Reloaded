@@ -1,0 +1,38 @@
+// LD mode (round 3, owner: "LegenDoom's non-gun sounds: a toggle in BD22 VR's options"). LegenDoom 3.0 loads before
+// BD22 VR, so these definitions win: LegenDoom's legendary pickup jingles and the legendary-monster aura are silent here
+// and BD22 VR's LD mode plays LegenDoom's own lumps itself (rsld/ld/*, zscript/rsld/ldsounds.zs), unless the option
+// "Mute LegenDoom Pickup & Aura Sounds" (rsld_mute_ld_sounds) is on. Without LegenDoom these names are never played
+// and the lumps below do not exist (no sound). dsempty: the engine's silent lump (qzdoom.pk3 sounds/dsempty.lmp).
+effects/newlegendarypickup1		dsempty
+effects/newlegendarypickup2		dsempty
+effects/newlegendarypickup3		dsempty
+effects/epicnewlegendarypickup		dsempty
+effects/agitatingpickup			dsempty
+effects/mysteriouspickup		dsempty
+effects/seriouspickup			dsempty
+effects/desperatepickup			dsempty
+effects/augmentedpickup			dsempty
+effects/beampickup			dsempty
+effects/illegalpickup			dsempty
+effects/legendaryenemyloop		dsempty
+effects/legendaryenemy			dsempty
+effects/legendaryenemyboss		dsempty
+
+// LegenDoom's own lumps (LegenDoom 3.0 SNDINFO:286-306), played by the LD mode
+rsld/ld/newlegendarypickup1		LDLEGEN1
+rsld/ld/newlegendarypickup2		LDLEGEN2
+rsld/ld/newlegendarypickup3		LDLEGEN3
+$random rsld/ld/newlegendarypickup { rsld/ld/newlegendarypickup1 rsld/ld/newlegendarypickup2 rsld/ld/newlegendarypickup3 }
+rsld/ld/epicnewlegendarypickup		LDLEGENE
+rsld/ld/agitatingpickup			LDAGITAT
+rsld/ld/mysteriouspickup		LDMYSTER
+rsld/ld/seriouspickup			LDSERIOU
+rsld/ld/desperatepickup			LDDESPER
+rsld/ld/augmentedpickup			LDAUGMEN
+rsld/ld/beampickup			LDBEAMPK
+rsld/ld/illegalpickup			LDILLEGA
+rsld/ld/legendaryenemyloop		LDLELOOP
+rsld/ld/legendaryenemy			LDLETRAN
+$limit rsld/ld/legendaryenemy		0
+rsld/ld/legendaryenemyboss		LDLEBOSS
+$limit rsld/ld/legendaryenemyboss	0

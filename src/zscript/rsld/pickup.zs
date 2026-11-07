@@ -168,6 +168,7 @@ class RSLD_LegendaryPickup : Inventory
 		class<Inventory> disp = "LD" .. sn .. "LegendaryEffectDisplay";
 		if (disp) toucher.GiveInventory(disp, 1);
 		toucher.ACS_NamedExecuteAlways("LDWeaponPickupEffectActivation", 0);
+		RSLD_LDSounds.Jingle(toucher, effect, rarity);	// round 3: LegenDoom's jingle, behind rsld_mute_ld_sounds (ldsounds.zs)
 		toucher.A_StartSound("misc/w_pkup", CHAN_ITEM);
 		if (RSLD.Debug()) Console.Printf("RSLD pickup: %s took legendary %s %s (%s)", toucher.GetClassName(), sn, effect, rarity >= 0 ? RSLD_Data.Rarities[rarity] : "none");
 		let hh = RSLD.H();

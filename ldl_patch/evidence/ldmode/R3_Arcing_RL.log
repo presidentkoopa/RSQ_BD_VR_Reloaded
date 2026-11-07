@@ -1,0 +1,5 @@
+# R3_Arcing_RL: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot RocketLauncher
+RSLD probe: Arcing on Rocket_Launcher slot RocketLauncher rarity Uncommon
+RSLD probe: 0 targets removed
+RSLD 1190 Arcing rider rocket p13: grenade: gravity 0.15, 5 bounces, fuse 139 tics

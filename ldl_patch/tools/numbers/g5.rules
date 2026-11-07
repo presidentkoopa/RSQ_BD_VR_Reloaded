@@ -1,0 +1,87 @@
+# G5 (R3b, round 3): LegenDoom 3.0 numbers for the fire cadence effects. Every key is read from LegenDoom's pk3.
+# A cadence ratio is LegenDoom's own tic count of the normal shot cycle over the effect's (the state frames from the
+# shot to the A_ReFire frame; the A_ReFire frame's own tics only run when the trigger is let go, so they are taken
+# out). The ratio goes onto OUR gun's own cycle (scope section 0: "R", LegenDoom's ratio on our numbers).
+# effect     key        file                                   state label / re                 call / pattern     arg
+# --- the base: LegenDoom's pistol NormalFire (prefire) + NormalFireEnd, less the A_Refire frame
+Base         pi_pre     decorate/Pistol/Pistol.dec             NormalFire       tics
+Base         pi_end     decorate/Pistol/Pistol.dec             NormalFireEnd    tics
+Base         pi_rf      decorate/Pistol/Pistol.dec             re  "(?s)NormalFireEnd:.*?SPIS A (\d+) A_Refire"
+Base         pi_dmg     decorate/Pistol/Pistol.dec             NormalFire       A_FireBullets   3
+Base         pi_spread  decorate/Pistol/Pistol.dec             NormalFire       A_FireBullets   0
+Base         rnd_max    decorate/Shotgun/Shotgun.dec           re  "(?s)FireGauss:.*?A_RailAttack \(5\*random\(1,\s*(\d+)\)"
+Base         cg_cyc     decorate/Chaingun/Chaingun.dec         FireWindUp0      tics
+Base         cg_cyc0    decorate/Chaingun/Chaingun.dec         re  "(?s)FireWindUp:.*?RCHG E (\d+) Bright"
+Base         cg_dmg     decorate/Chaingun/Chaingun.dec         NormalFire       A_FireBullets   3
+# --- Rapid: FireRapid less its A_ReFire frame
+Rapid        pi_cyc     decorate/Pistol/Pistol.dec             FireRapid        tics
+Rapid        pi_rf      decorate/Pistol/Pistol.dec             re  "(?s)FireRapid:.*?RPIS A (\d+) A_ReFire"
+# --- Trailblazing: four 1-tic prefire frames, one skipped per health step (LD's pistol), then CommonFireEnd
+Trailblazing pre        decorate/Pistol/Pistol.dec             FireTrailblazing tics
+Trailblazing hp1        decorate/Pistol/Pistol.dec             re  "(?s)FireTrailblazing:.*?Health <= (\d+)"
+Trailblazing hp2        decorate/Pistol/Pistol.dec             re  "(?s)FireTrailblazing:.*?Health <= \d+.*?Health <= (\d+)"
+Trailblazing hp3        decorate/Pistol/Pistol.dec             re  "(?s)FireTrailblazing:.*?Health <= \d+.*?Health <= \d+.*?Health <= (\d+)"
+Trailblazing end        decorate/Pistol/Pistol.dec             CommonFireEnd    tics
+Trailblazing end_rf     decorate/Pistol/Pistol.dec             re  "(?s)CommonFireEnd:.*?CPIS A (\d+) A_Refire"
+# --- Hunting: LD's pistol FireHunting (cycle and damage), its puff's kickback
+Hunting      pi_cyc     decorate/Pistol/Pistol.dec             FireHunting      tics
+Hunting      pi_rf      decorate/Pistol/Pistol.dec             re  "(?s)FireHunting:.*?UPIS A (\d+) A_ReFire"
+Hunting      pi_dmg     decorate/Pistol/Pistol.dec             FireHunting      A_FireBullets   3
+Hunting      kick       decorate/UncommonSpecialEffects.dec    prop LDHuntingBulletPuff ProjectileKickBack
+# --- SixShooter: randompick(50..150) per shot (FBF_NORANDOM, spread 0): its lowest and highest pick
+SixShooter   dmg_lo     decorate/Pistol/Pistol.dec             re  "(?s)FireSixShooterAttack:.*?randompick\((\d+),"
+SixShooter   dmg_hi     decorate/Pistol/Pistol.dec             re  "(?s)FireSixShooterAttack:.*?randompick\([\d,]*?(\d+)\)"
+SixShooter   spread     decorate/Pistol/Pistol.dec             FireSixShooterAttack A_FireBullets 0
+# --- Advanced: random(18,21) per shot (FBF_NORANDOM), spread 2.2; its cycle FireAdvancedEnd + the 1-tic refire loop
+Advanced     dmg_lo     decorate/Pistol/Pistol.dec             re  "(?s)FireAdvanced:.*?random\((\d+),"
+Advanced     dmg_hi     decorate/Pistol/Pistol.dec             re  "(?s)FireAdvanced:.*?random\(\d+,\s*(\d+)\)"
+Advanced     spread     decorate/Pistol/Pistol.dec             FireAdvanced     A_FireBullets   0
+Advanced     cyc        decorate/Pistol/Pistol.dec             FireAdvancedEnd  tics
+Advanced     loop       decorate/Pistol/Pistol.dec             re  "(?s)FireAdvancedEndLoop:\s*RPIS A (\d+)"
+# --- Burst: the tics between LD's three shots (pistol: UPIS B C F 1 each; shotgun: USHT I J K L 1 each)
+Burst        pi_gap     decorate/Pistol/Pistol.dec             re  "(?s)FireBurst:.*?UPIS F (\d+) A_SetPitch"
+Burst        pi_frames  decorate/Pistol/Pistol.dec             re  "(?s)FireBurst:.*?UPIS B (\d+) Bright"
+Burst        sg_frames  decorate/Shotgun/Shotgun.dec           re  "(?s)FireBurst:.*?USHT I (\d+) Bright"
+Burst        shots      decorate/Pistol/Pistol.dec             re  "(?s)FireBurst:.*?A_TakeInventory \(\"Clip\", (\d+)"
+# --- Chargeup: a stored shot every LDPistolChargeMiniCounter tics, up to LDPistolChargeup's max; 4-tic wind-up
+Chargeup     pi_max     decorate/UncommonSpecialEffects.dec    prop LDPistolChargeup Inventory.MaxAmount
+Chargeup     pi_step    decorate/UncommonSpecialEffects.dec    prop LDPistolChargeMiniCounter Inventory.MaxAmount
+Chargeup     pi_wind    decorate/Pistol/Pistol.dec             re  "(?s)FireChargeup:\s*UPIS A (\d+)"
+# --- WindUp: shots counted (LDWindUpCounter, max 70); tiers 20 / 50 / max, LD's chaingun 4 / 3 / 2 / 1 tics a shot
+WindUp       max        decorate/RareSpecialEffects.dec        prop LDWindUpCounter Inventory.MaxAmount
+WindUp       t1         decorate/Chaingun/Chaingun.dec         FireWindUpAnimation A_JumpIfInventory#2 1
+WindUp       t2         decorate/Chaingun/Chaingun.dec         FireWindUpAnimation A_JumpIfInventory#1 1
+WindUp       c0         decorate/Chaingun/Chaingun.dec         FireWindUp0      tics
+WindUp       c1         decorate/Chaingun/Chaingun.dec         FireWindUp1      tics
+WindUp       c2         decorate/Chaingun/Chaingun.dec         FireWindUp2      tics
+# --- Focusing: LDFocusingCounter (max 100), tiers every 20 shots: spread and damage per tier (LD's chaingun)
+Focusing     max        decorate/UncommonSpecialEffects.dec    prop LDFocusingCounter Inventory.MaxAmount
+Focusing     t1         decorate/Chaingun/Chaingun.dec         FireFocusing     A_JumpIfInventory#5 1
+Focusing     t2         decorate/Chaingun/Chaingun.dec         FireFocusing     A_JumpIfInventory#4 1
+Focusing     t3         decorate/Chaingun/Chaingun.dec         FireFocusing     A_JumpIfInventory#3 1
+Focusing     t4         decorate/Chaingun/Chaingun.dec         FireFocusing     A_JumpIfInventory#2 1
+Focusing     s0         decorate/Chaingun/Chaingun.dec         FireFocusing0    A_FireBullets   0
+Focusing     s1         decorate/Chaingun/Chaingun.dec         FireFocusing1    A_FireBullets   0
+Focusing     s2         decorate/Chaingun/Chaingun.dec         FireFocusing2    A_FireBullets   0
+Focusing     s3         decorate/Chaingun/Chaingun.dec         FireFocusing3    A_FireBullets   0
+Focusing     s4         decorate/Chaingun/Chaingun.dec         FireFocusing4    A_FireBullets   0
+Focusing     s5         decorate/Chaingun/Chaingun.dec         FireFocusing5    A_FireBullets   0
+Focusing     d0         decorate/Chaingun/Chaingun.dec         FireFocusing0    A_FireBullets   3
+Focusing     d1         decorate/Chaingun/Chaingun.dec         FireFocusing1    A_FireBullets   3
+Focusing     d2         decorate/Chaingun/Chaingun.dec         FireFocusing2    A_FireBullets   3
+Focusing     d3         decorate/Chaingun/Chaingun.dec         FireFocusing3    A_FireBullets   3
+Focusing     d4         decorate/Chaingun/Chaingun.dec         FireFocusing4    A_FireBullets   3
+Focusing     d5         decorate/Chaingun/Chaingun.dec         FireFocusing5    A_FireBullets   3
+# --- Entrenched: LD's chaingun shot damage (2x its NormalFire) and the two powerups' length (LD's own items are given)
+Entrenched   cg_dmg     decorate/Chaingun/Chaingun.dec         FireEntrenched   A_FireBullets   3
+Entrenched   resist     decorate/RareSpecialEffects.dec        re  "(?s)ACTOR LDEntrenchedDamageResistance : PowerProtection.*?DamageFactor \"Normal\", ([\d.]+)"
+# --- Shielding: LD spawns its LDShieldingShield 32 units ahead of the aim (A_SpawnItemEx cos(pitch)*32)
+Shielding    ahead      decorate/Chaingun/Chaingun.dec         re  "(?s)FireShielding:.*?LDShieldingShield\", cos\(pitch\)\*(\d+)"
+# --- Recursive: LDRecursiveEffect re-fires the shot after 70 tics, twice
+Recursive    delay      decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDRecursiveEffectPistol.*?RecursiveAttack:\s*TNT1 A (\d+)"
+Recursive    delay2     decorate/CommonSpecialEffects.dec      re  "(?s)ACTOR LDRecursiveEffectPistol.*?RecursiveAttack:.*?LDRecursiveBullet.*?TNT1 A (\d+)"
+# --- Overkill (fire-state part): rockets per shot and the cooldown powerup
+Overkill     ammo       decorate/RocketLauncher/RocketLauncher.dec FireOverkill  A_TakeInventory 1
+Overkill     cooldown   decorate/EpicSpecialEffects.dec        prop LDOverkillCooldown Powerup.Duration
+# --- Accelerator (fire-state part): LD's rocket launcher prefire before the instant shot vs FireRapid's
+Accelerator  rl_pre     decorate/RocketLauncher/RocketLauncher.dec FireAccelerator tics

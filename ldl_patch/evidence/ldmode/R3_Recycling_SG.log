@@ -1,0 +1,10 @@
+# R3_Recycling_SG: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot Shotgun
+RSLD probe: Recycling on Shot_Gun slot Shotgun rarity Uncommon
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (-96 -192), health 30000; player at (-192 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 6091 Recycling p66 main Shot_Gun: Recycling: +2 Clip2 (counters 34 34 12 88)
+RSLD 6139 Recycling p67 main Shot_Gun: Recycling: +2 Clip2 +1 AmmoCell (counters 68 68 24 0)
+RSLD probe: player BDoomer has Clip2 x347 health 100 speed 8.0
+RSLD probe: player BDoomer has AmmoCell x26 health 100 speed 8.0
+RSLD probe: player BDoomer has AmmoRocket x50 health 100 speed 8.0

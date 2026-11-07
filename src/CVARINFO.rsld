@@ -7,3 +7,5 @@ server bool rsld_offhand_legendary = true;	// scope Q8 (OPEN): an off-hand copy 
 server bool rsld_slug_primary = true;		// Agent C (scope Q12 open): LegenDoom's Slug replaces the pump/SSG's primary fire only; BD22 VR's
 						// Slug alt fire stays as it ships. Off = Slug is not applied (re-rolled)
 server noarchive int rsld_debug = 0;		// 1: what each effect did; 2: every hook call
+server bool rsld_mute_ld_sounds = false;	// round 3 (owner): LegenDoom's non-gun sounds (legendary pickup jingles, the legendary-monster
+						// aura) muted; off = they play as LegenDoom's (zscript/rsld/ldsounds.zs, SNDINFO.rsld)

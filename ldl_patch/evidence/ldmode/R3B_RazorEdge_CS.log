@@ -1,0 +1,6 @@
+# R3B_RazorEdge_CS: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot Chainsaw
+RSLD probe: RazorEdge on Chain_saw slot Chainsaw rarity Common
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 48 (-16 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD probe: player BDoomer has RSLD_G7NoTurn x1 health 100 speed 8.0

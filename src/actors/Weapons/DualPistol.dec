@@ -1,0 +1,490 @@
+ACTOR DualPistols : BrutalWeapon
+{
+	Weapon.AmmoType1 "Clip1"
+	Weapon.AmmoType2 "BDDualPistolAmmo"
+	weapon.selectionorder 1900
+	+WEAPON.CHEATNOTWEAPON
+	+WEAPON.NO_AUTO_SWITCH
+	+WEAPON.WIMPY_WEAPON
+	-INVENTORY.UNDROPPABLE
+	Inventory.PickupSound "Pistol/Draw"
+	Inventory.PickupMessage "$GOTPISTOL"
+	Obituary "$OBBD_PISTOL"
+	Tag "$TAGBD_DUALPISTOLS"
+	States
+	{
+	KickFlash:
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,"KickFlashLoaded")
+		PI2G NOPQ 1
+		PI2G R 10
+		PI2G QPON 1
+		stop
+	SlideFlash:
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,"SlideFlashLoaded")	
+		PI2G NOPQ 1
+		PI2G R 35
+		stop
+	SlideFlashEnd:
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,"SlideFlashEndLoaded")	
+		PI2G R 5
+		PI2G QPON 1
+		stop
+	SlideFlashEndEarly: 
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,"SlideFlashEndEarlyLoaded")	
+		PI2G R 2
+		PI2G QPON 1
+		stop
+		
+	KickFlashLoaded:
+		PI2G BCDE 1
+		PI2G F 10
+		PI2G EDCB 1
+		stop
+	SlideFlashLoaded:
+		PI2G BCDE 1
+		PI2G F 35
+		stop
+	SlideFlashEndLoaded: 
+		PI2G F 5
+		PI2G EDCB 1
+		stop
+	SlideFlashEndEarlyLoaded: 
+		PI2G F 2
+		PI2G EDCB 1
+		stop		
+
+	Select:
+		TNT1 A 0 A_Giveinventory("GoSpecial",1)
+		TNT1 A 0 A_GiveInventory("TokenCleaner")
+		TNT1 F 0 A_Takeinventory("BrutalPistol",1)
+		TNT1 A 0 A_SetCrosshair( CallACS("GetCrosshair", 1) )
+		TNT1 A 0 A_GunFlash
+		TNT1 A 0 A_JumpIfInventory("SwitchDuals", 1, "SelectDual")
+		TNT1 A 1
+		TNT1 F 0 A_PlaySound("Pistol/Draw",5)
+		TNT1 A 0 A_JumpIfInventory("BDDualPistolAmmo",1,1)
+		Goto SelectAnimationEmpty
+	SelectAnimation:
+		PI2F ONML 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_Takeinventory("StartDualWield",1)
+		Goto Ready
+
+	SelectAnimationEmpty:
+		PI2F SRQP 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_Takeinventory("StartDualWield",1)
+		Goto Ready	
+
+	SelectDual:
+		TNT1 A 0 A_Takeinventory("SwitchDuals",1)
+		TNT1 A 0 A_JumpIfInventory("BDDualPistolAmmo", 1, 1)
+		Goto SelectDualEmpty
+		PI2G GHI 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 F 0 A_PlaySound("Pistol/Draw",5)
+		PI2G JKL 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_Takeinventory("StartDualWield",1)
+		Goto Ready
+
+	SelectDualEmpty:
+		PI2G STU 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 F 0 A_PlaySound("Pistol/Draw",5)
+		PI2G VWX 1 A_WeaponReady(WRF_NOFIRE)
+		TNT1 A 0 A_Takeinventory("StartDualWield",1)
+		Goto Ready
+		
+	NoAmmoOnSecondGun:
+		PI2G A 2
+	Ready3:
+	Ready:
+		PI2G A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
+		PI2G A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		PI2G A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		PI2G A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		PI2G A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		PI2G A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		PI2G A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,2)
+		PI2G M 0
+		PI2G "#" 1 A_WeaponReady//(WRF_ALLOWRELOAD)
+		PI2G "#" 0 A_JumpIfInventory("Unloading",1,"Unload")
+		PI2G "#" 0 A_JumpIfInventory("IsRunning",1,"StartSprint")
+		PI2G "#" 0 A_JumpIfInventory("StartDualWield",1,"DualWield")
+		Loop
+
+	User3:
+	DualWield:
+		PI2G "#" 1
+		PI2G "#" 0 A_GiveInventory("SwitchDuals",1)
+		PI2G "#" 0 A_GiveInventory("BrutalPistol",1)
+		PI2G "#" 0 A_Takeinventory("StartDualWield",1)
+		PI2G "#" 0 A_SelectWeapon("BrutalPistol")
+		Goto Ready
+
+	StartSprint:
+		PI2G CDE 1 A_WeaponReady(WRF_NOFIRE)
+		PI2G A 0 A_JumpIfInventory("UsedStamina", 40, "StopSprint")
+	Sprinting:
+		PI2G F 0 offset(-9,32)
+		//PI2G A 0 offset(-9,32) A_JumpIfInventory("IsStandingStill", 1, "Ready3")
+		PI2G A 0 offset(-9,32) A_JumpIfInventory("UsedStamina", 0, "StopSprint")
+		PLAY A 0 offset(-9,32) ACS_ExecuteAlways(852, 0, 0, 0, 0)//Makes player faster.
+		PI2G A 0 offset(-9,32) A_JumpIfInventory("PowerStrength", 1, 2)
+		PI2G A 0 offset(-9,32) A_GiveInventory("UsedStamina", 3)
+		PI2G A 0 offset(-9,32)
+		PI2G F 1 offset(-9,34) A_SetPitch(pitch -0.5)
+		PI2G F 1 offset(-6,36) A_SetPitch(pitch -0.5)
+		PI2G F 1 offset(-3,38) A_SetPitch(pitch -0.5)
+		PI2G F 1 offset(0,38) A_SetPitch(pitch -0.5)
+		PI2G F 1 offset(3,36) A_SetPitch(pitch -0.5)
+		PI2G F 1 offset(6,34) A_SetPitch(pitch -0.5)
+		PI2G F 1 offset(9,32) A_SetPitch(pitch -0.5)
+		PI2G A 0 offset(9,32) A_WeaponReady(WRF_NOBOB)
+		PI2G A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		PI2G A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		PI2G A 0 A_JumpIfInventory("Reloading",1,"Reload")
+		PI2G A 0 offset(-9,32) A_GiveInventory("UsedStamina", 3)
+		PI2G A 0 offset(9,33) A_SpawnItemEx("FootStep", 0, 0, 2, 0, 0, -4)
+		PI2G F 1 offset(9,34) A_SetPitch(pitch +0.5)
+		PI2G F 1 offset(6,36) A_SetPitch(pitch +0.5)
+		PI2G F 1 offset(3,38) A_SetPitch(pitch +0.5)
+		PI2G F 1 offset(0,38) A_SetPitch(pitch +0.5)
+		PI2G F 1 offset(-3,36) A_SetPitch(pitch +0.5)
+		PI2G F 1 offset(-6,34) A_SetPitch(pitch +0.5)
+		PI2G F 1 offset(-9,32) A_SetPitch(pitch +0.5)
+		PI2G A 0 offset(-9,32) A_WeaponReady(WRF_NOBOB)
+		PI2G A 0 offset(-9,32) A_JumpIfInventory("IsRunning", 1, "Sprinting")
+		Goto StopSprint
+
+	StopSprint:
+		PI2G EDC 1
+		PI2G A 0 A_JumpIfInventory("UsedStamina", 60, "StopSprintTired")
+		PLAY A 0 ACS_ExecuteAlways(853, 0, 0, 0, 0)//Makes player slower.
+		Goto Ready
+
+	Deselect:
+		PI2G A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 A 0 A_JumpIfInventory("SwitchDuals", 1, "DeselectInstant")
+		PI2G M 0 A_JumpIfInventory("BDDualPistolAmmo",1,1)
+		Goto DeselectEmpty
+		PI2F LMNO 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+
+	DeselectEmpty:
+		PI2F PQRS 1
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 1 A_Lower
+		Wait
+
+	RSLD_Jammed:	// LD mode (round 3): Perfect's jam or a G5 trigger hold: no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
+   	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && (CountInv("RSLD_JamOff") > 0 || CountInv("RSLD_G5BlockOff") > 0)) || (OverlayID() != 1000000 && (CountInv("RSLD_JamMain") > 0 || CountInv("RSLD_G5BlockMain") > 0)), "RSLD_Jammed")	// LD mode (round 3): Perfect's jam or a G5 trigger hold (Chargeup, Overkill) stops the trigger (zscript/rsld/handler.zs, ld_g5_core.zs Block; never given without LegenDoom)
+		"####" "#" 0 A_JumpIfInventory("NoReloading",1,"NoReload")
+		"####" "#" 0 A_JumpIfInventory("BDDualPistolAmmo",1,1)
+		Goto NoAmmo
+		"####" "#" 0 A_JumpIfInventory("BDPistolAmmo",1,1)
+		Goto FireLeft
+		"####" "#" 0 A_Takeinventory("BDPistolAmmo",1)
+		"####" "#" 0 A_Takeinventory("BDDualPistolAmmo",1)
+		"####" "#" 0 A_JumpIfInventory("BDPistolAmmo",6,2)
+		"####" "#" 0 A_PlaySound("weapons/lowammo",CHAN_AUTO)
+		"####" "###" 0
+		Goto FireContinueRight
+
+	NoReload:
+		"####" "#" 0 A_JumpIfInventory("Clip1",1,2)
+		PI2G M 0
+		Goto NoAmmo
+		"####" "#" 0 A_Takeinventory("Clip1",1,TIF_NOTAKEINFINITE)
+		"####" "###" 0
+	FireContinueRight:
+		TNT1 A 0 A_AlertMonsters
+		PI2G A 0 A_PlaySound("FARSHT", 6)
+		PI2G A 0 A_PlaySound("Pistol/Fire", 1)
+		PI2G A 0 A_JumpIFInventory("PistolBurstFire", 1, "Fire2")		
+		PI2G A 0 A_ZoomFactor(0.98)
+		PI2G A 0 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0)
+		//"####" A 0 A_JumpIfInventory("DMgame", 1, "DM")
+		PI2F A 1 BRIGHT A_FireBullets (4, 2, -1, 14, "WeakPuff", FBF_NORANDOM)//Right
+		PI2G A 0 A_ZoomFactor(1.0)
+		RIFF A 0 A_FireCustomMissile("DecorativeTracer", -1, 0, -4, -1)
+		PI2G A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,10,-4)
+		PI2F BCD 1
+	FireLeft:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && (CountInv("RSLD_JamOff") > 0 || CountInv("RSLD_G5BlockOff") > 0)) || (OverlayID() != 1000000 && (CountInv("RSLD_JamMain") > 0 || CountInv("RSLD_G5BlockMain") > 0)), "RSLD_Jammed")	// LD mode (round 3): Perfect's jam or a G5 trigger hold (Chargeup, Overkill) stops the trigger (zscript/rsld/handler.zs, ld_g5_core.zs Block; never given without LegenDoom)
+		PI2G A 0 A_JumpIfInventory("NoReloading",1,"NoReload2")
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,2)
+		PI2G M 0
+		Goto NoAmmo
+		PI2G A 0 A_Takeinventory("BDDualPistolAmmo",1)
+		"####" A 0 A_JumpIfInventory("BDDualPistolAmmo",5,2)
+		"####" A 0 A_PlaySound("weapons/lowammo",CHAN_AUTO)
+		"####" AAA 0
+		Goto FireContinueLeft
+	
+	DM:
+		PI2F A 1 BRIGHT A_FireBullets (4, 2, -1, 14, "WeakPuffDM", FBF_NORANDOM)//Right
+		PI2G A 0 A_ZoomFactor(1.0)
+		RIFF A 0 A_FireCustomMissile("DecorativeTracer", -1, 0, -4, -1)
+		PI2G A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,10,-4)
+		PI2F BCD 1
+		Goto FireLeft
+
+	NoReload2:
+		PI2G A 0 A_JumpIfInventory("Clip1",1,2)
+		PI2G M 0
+		Goto NoAmmo
+		PI2G A 0 A_Takeinventory("Clip1",1,TIF_NOTAKEINFINITE)
+		"####" AAA 0
+	FireContinueLeft:
+		TNT1 A 0 A_AlertMonsters
+		PI2G A 0 A_PlaySound("FARSHT", 6)
+		PI2G A 0 A_PlaySound("Pistol/Fire", 1)
+		PI2G A 0 A_JumpIFInventory("PistolBurstFire", 1, "Fire2Left")		
+		PI2G A 0 A_ZoomFactor(0.98)
+		PI2G A 0 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0)
+		//"####" A 0 A_JumpIfInventory("DMgame", 1, "DM2")
+		PI2F E 1 BRIGHT A_FireBullets (4, 2, -1, 14, "WeakPuff", FBF_NORANDOM)
+		PI2G A 0 A_ZoomFactor(1.0)
+		RIFF A 0 A_FireCustomMissile("DecorativeTracer", 1, 0, 4, -1)
+		PI2G A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,-10,-4)
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,2)
+		PI2G M 0
+		Goto NoAmmo+2
+		PI2F FGH 1
+		PI2G A 2 A_WeaponReady(WRF_NOBOB)
+		"####" "#" 0 A_Refire
+		Goto Ready
+	
+	DM2:
+		PI2F E 1 BRIGHT A_FireBullets (4, 2, -1, 14, "WeakPuffDM", FBF_NORANDOM)
+		Goto FireContinueLeft+9
+	
+
+	Fire2:
+		PI2G A 0 A_ZoomFactor(0.98)
+		PI2G A 0 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0)
+		//"####" A 0 A_JumpIfInventory("DMgame", 1, "DM3")
+		PI2F A 1 BRIGHT A_FireBullets (6, 6, -1, 14, "WeakPuff", FBF_NORANDOM)
+		PI2G A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_SetPitch(pitch-1)
+		RIFF A 0 A_FireCustomMissile("DecorativeTracer", -1, 0, -4, -1)
+		PI2G A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,10,-4)
+		Goto FireLeft
+	
+	DM3:
+		PI2F A 1 BRIGHT A_FireBullets (6, 6, -1, 14, "WeakPuffDM", FBF_NORANDOM)
+		PI2G A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_SetPitch(pitch-1)
+		RIFF A 0 A_FireCustomMissile("DecorativeTracer", -1, 0, -4, -1)
+		PI2G A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,10,-4)
+		Goto FireLeft
+	
+	Fire2Left:
+		PISG A 0 A_GiveInventory("BurstCounter",1)		
+		PI2G A 0 A_ZoomFactor(0.98)
+		PI2G A 0 A_FireCustomMissile("YellowFlareSpawn",0,0,0,0)
+		//"####" A 0 A_JumpIfInventory("DMgame", 1, "DM4")
+		PI2F E 1 BRIGHT A_FireBullets (6, 6, -1, 14, "WeakPuff", FBF_NORANDOM)
+		PI2G A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 A_SetPitch(pitch-1)
+		RIFF A 0 A_FireCustomMissile("DecorativeTracer", 1, 0, 4, -1)
+		PI2G A 0 A_FireCustomMissile("PistolCaseSpawn",5,0,-10,-4)
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,2)
+		PI2G M 0
+		Goto NoAmmo+2
+		PI2G A 0 A_JumpIfInventory("BurstCounter",3,2)	
+		Goto Fire
+		PI2G AAA 0
+		PI2F I 1 A_TakeInventory("BurstCounter",0)
+		PI2F JK 1
+		PI2G A 1 A_WeaponReady(WRF_NOBOB)
+		PI2G A 6 A_WeaponReady(WRF_NOBOB)
+		Goto Ready
+	
+	DM4:
+		PI2F E 1 BRIGHT A_FireBullets (6, 6, -1, 14, "WeakPuffDM", FBF_NORANDOM)
+		Goto Fire2Left+6
+
+	AltFire:
+		"####" "#" 0 A_JumpIfInventory("RSLD_AltDown", 1, "Ready")	// LD mode (round 3, owner Q12): a legendary power on this gun uses the secondary: it stands down (zscript/rsld g6_ammo.zs RSLD_AltDown*, R3a; never given without LegenDoom)
+		TNT1 A 0
+		TNT1 A 0 A_PlaySound("Weapon/Empty", 5)
+		TNT1 A 0 A_JumpIFInventory("PistolBurstFire", 1, 3)
+		TNT1 A 0 A_GiveInventory("PistolBurstFire", 1)
+		TNT1 A 0 A_Print("$BD_PISTOL_BURST_MODE",0.5)
+		Goto AltFire+8
+		TNT1 A 0 A_TakeInventory("PistolBurstFire", 1)
+		TNT1 A 0 A_Print("$BD_PISTOL_SINGLE_MODE",0.5)
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,2)
+		PI2G M 0
+		PI2G "#" 1 offset(0,34)
+		PI2G "#" 1 offset(0,33)
+		Goto Ready3
+
+	Reload:
+		"####" "#" 0 A_ZoomFactor(1.0)
+		"####" "#" 0 A_Takeinventory("Reloading",1)
+		"####" "#" 0 A_Takeinventory("Zoomed",1)
+		"####" "#" 0 A_Takeinventory("ADSmode",1)
+		"####" "#" 0 A_JumpIfInventory("NoReloading",1,"Ready")
+		"####" "#" 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		"####" "#" 0 A_JumpIfInventory("BDDualPistolAmmo",0,"Ready")
+		"####" "#" 0 A_JumpIfInventory("Clip1",1,3)
+		Goto Ready
+		TNT1 AAA 0
+		PI2G A 0 A_GiveInventory ("Pumping", 1)
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2F LMN 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)		
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2G A 0 A_JumpIfInventory("HasUnloadedDualPistols", 1, 3)
+		PIST F 0 A_PlaySound("Pistol/Reload1", 5)
+		RIFR C 0 A_FireCustomMissile("EmptyClip2Spawn",-5,0,8,-4)
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,"Reload2")
+		3ISR ABCDEFGG 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		3ISR HIJKKLLL 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		3ISR MNO 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		3IST F 0 A_PlaySound("Pistol/Reload2", 5)
+		PI2G A 0 A_Takeinventory("HasUnloadedPistol",1)
+		3ISR PQRSTT 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		3ISR UVWX 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2G A 0 A_JumpIfInventory("HasUnloadedDualPistols", 1, 3)
+		PIST F 0 A_PlaySound("Pistol/Reload1", 5)
+		RIFR C 0 A_FireCustomMissile("EmptyClip2Spawn",-5,0,8,-4)
+		4ISR ABCDEFGG 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		4ISR HIJKKLLL 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		4ISR MNO 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		4IST F 0 A_PlaySound("Pistol/Reload2", 5)
+		PI2G A 0 A_Takeinventory("HasUnloadedDualPistols",1)
+	InsertBullets:
+		TNT1 AAAA 0
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",30,15)
+		PI2G A 0 A_JumpIfInventory("Clip1",1,3)
+		Goto FinishReload
+		TNT1 AAAAAA 0
+		PI2G A 0 A_Giveinventory("BDDualPistolAmmo",1)
+		PI2G A 0 A_Giveinventory("BDPistolAmmo",1)
+		PI2G A 0 A_Takeinventory("Clip1",1,TIF_NOTAKEINFINITE)
+		Goto InsertBullets
+		TNT1 AAAAAAAAAA 0
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2G A 0 //A_Refire
+		Goto FinishReload
+		TNT1 AAAA 0
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2G A 0 //A_Refire
+		Goto FinishReload
+	FinishReload:	
+		4ISR PQRSTT 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		4ISR UVWX 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		5ISR ABCDD 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		"####" "#" 0 A_PlaySound("pistol/slide2", 5)
+		5ISR EFG 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		"####" "#" 0 A_PlaySound("pistol/slide2", 5)
+		5ISR HIJKKKLM 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		"####" "#" 0 A_ReFire
+		Goto Ready
+
+	Reload2:
+		PI2R ABCDEFGG 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2R HIJKKLLL 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2R MNO 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		3IST F 0 A_PlaySound("Pistol/Reload2", 5)
+		PI2R PQRSTT 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2R UVWX 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PIST F 0 A_PlaySound("Pistol/Reload1", 5)
+		RIFR C 0 A_FireCustomMissile("EmptyClip2Spawn",-5,0,8,-4)
+		2I2R ABCDEFGG 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		2I2R HIJKKLLL 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		2I2R MNO 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		4IST F 0 A_PlaySound("Pistol/Reload2", 5)
+	InsertBullets2:
+		TNT1 AAAA 0
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",0,15)
+		PI2G A 0 A_JumpIfInventory("Clip1",1,3)
+		Goto FinishReload2
+		TNT1 AAAAAA 0
+		PI2G A 0 A_Giveinventory("BDDualPistolAmmo",1)
+		PI2G A 0 A_Giveinventory("BDPistolAmmo",1)
+		PI2G A 0 A_Takeinventory("Clip1",1,TIF_NOTAKEINFINITE)
+		Goto InsertBullets2
+		TNT1 AAAAAAAAAA 0
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2G A 0 //A_Refire
+		Goto FinishReload2
+		TNT1 AAAA 0
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2G A 0 //A_Refire
+		Goto FinishReload2
+	FinishReload2:
+		2I2R PQRSTT 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		2I2R UVWX 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2F NML 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		Goto Ready
+
+	User2:
+	Unload:
+		PI2G A 1 A_WeaponReady
+		PI2G A 0 A_Takeinventory("Unloading",1)
+		PI2G A 0 A_Takeinventory("ADSmode",1)
+		PI2G A 0 A_JumpIfInventory("BDPistolAmmo",1,3)
+		Goto Ready
+		TNT1 AAA 0
+		PI2G A 0 A_Takeinventory("Zoomed",1)
+		PI2G A 0 A_ZoomFactor(1.0)
+		PI2G A 0 A_GiveInventory ("Pumping", 1)
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2F LMN 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		2I2R XWVU 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		2I2R TTSRQP 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PIST F 0 A_PlaySound("Pistol/Reload1", 5)
+		PIST F 0 A_Giveinventory("HasUnloadedPistol",1)		
+		4ISR ONM 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		4ISR LLLKKJIH 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		4ISR GGFEDCBA 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2R XWVU 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2R TTSRQP 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PIST F 0 A_PlaySound("Pistol/Reload1", 5)
+		PIST F 0 A_Giveinventory("HasUnloadedDualPistols",1)
+	RemoveBullets:
+		TNT1 AAAA 0
+		PI2G A 0 A_JumpIfInventory("BDDualPistolAmmo",1,3)
+		Goto FinishUnload
+		TNT1 AAAAAA 0
+		PI2G A 0 A_Takeinventory("BDPistolAmmo",1)
+		PI2G A 0 A_Takeinventory("BDDualPistolAmmo",1)
+		PI2G A 0 A_Giveinventory("Clip1",1)
+		Goto RemoveBullets
+		TNT1 AAAAAAAAAA 0
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2G A 0 //A_Refire
+		Goto FinishUnload
+		TNT1 AAAA 0
+		PI2G A 0 A_Takeinventory("Reloading",1)
+		PI2G A 0 //A_Refire
+		Goto FinishUnload
+	FinishUnload:	
+		3ISR ONM 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		3ISR LLLKKJIH 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		3ISR GGFEDCBA 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		TNT1 A 2 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		PI2F NML 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
+		Goto Ready
+
+	Spawn:
+		P3ST K -1
+		Stop
+
+	Steady:
+		TNT1 A 1
+		Goto Ready
+	}
+}

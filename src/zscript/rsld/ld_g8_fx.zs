@@ -1,6 +1,6 @@
 // LD mode, G8 pickup passives (Agent B): the 20 effects. Their rules live in ld_g8_rules.zs (RSLD_B): one rules
-// pass per pickup applies every owned passive at once, as LegenDoom's item scripts do (LEGENDITM.acs). Passives count
-// every legendary the player owns, held or not (LegenDoom's LD_CountEffect / LD_HasEffectAny).
+// pass per pickup applies every owned passive at once, as LegenDoom's item scripts do (LEGENDITM.acs). Round 3 (owner Q9):
+// a passive counts only the legendary guns in the player's hands (RSLD.Count, core.zs); Upgrading's meter counts owned.
 
 class RSLD_G8Passive : RSLD_Effect
 {

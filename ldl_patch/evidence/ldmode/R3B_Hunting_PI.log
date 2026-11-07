@@ -1,0 +1,13 @@
+# R3B_Hunting_PI: rig only, not headset-confirmed. QuestZDoom 17.3 rig, doom2 -> LegenDoom 3.0 -> brutal22test6 -> BD_VoxelPack -> BD22 VR (test build) -> XMVE 04-07 (ORDER=full). Batch round3.
+RSLD probe: cleared slot Pistol
+RSLD probe: Hunting on BrutalPistol slot Pistol rarity Uncommon
+RSLD probe: 1 targets removed
+RSLD probe: target BaronofHell2 (BaronofHell2) at 96 (32 -192), health 30000; player at (-64 -192) angle 0.0 pitch 0.0, gun angle -0.0 pitch -0.0
+RSLD 8163 Hunting p111 main BrutalPistol: cadence x0.78: first shot
+RSLD 8163 Hunting p111 main BrutalPistol: damage 14 -> 42 (x3.00) on Baron_NobleHeadshot
+RSLD 8163 Hunting p111 main BrutalPistol: knockback +0.00 (ProjectileKickBack 160) on Baron_NobleHeadshot
+RSLD 8177 Hunting p112 main BrutalPistol: cadence x0.78: 14 tics since the last shot, the gun's own 11 (+3 by the effect)
+RSLD 8177 Hunting p112 main BrutalPistol: damage 14 -> 42 (x3.00) on Baron_NobleHeadshot
+RSLD 8177 Hunting p112 main BrutalPistol: knockback +0.00 (ProjectileKickBack 160) on Baron_NobleHeadshot
+RSLD 8191 Hunting p113 main BrutalPistol: cadence x0.78: 14 tics since the last shot, the gun's own 11 (+3 by the effect)
+RSLD 8191 Hunting p113 main BrutalPistol: damage 14 -> 42 (x3.00) on BaronofHell2

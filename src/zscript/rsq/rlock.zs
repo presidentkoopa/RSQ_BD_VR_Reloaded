@@ -81,7 +81,8 @@ class RSQ_RocketLock : EventHandler
 			let mo = p.mo;
 			let w = p.ReadyWeapon;
 			let c = CVar.GetCVar('rsa_rl_lock', p);
-			bool on = c && c.GetBool() && w && w is 'Rocket_Launcher' && p.playerstate == PST_LIVE && mo.health > 0;
+			bool on = c && c.GetBool() && w && w is 'Rocket_Launcher' && p.playerstate == PST_LIVE && mo.health > 0
+				&& !RSA_Handler.AltDown(mo);	// LD mode (round 3): a Seeker rocket launcher's lock-on stands down
 			if (!on)
 			{
 				if (locks[n].Size() || salvo[n].Size())

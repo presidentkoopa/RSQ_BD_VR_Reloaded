@@ -96,9 +96,12 @@ class RSLD_G2_ProjRider : Thinker
 	}
 }
 
-// Plasmatic (Epic: Pi, Sg, SS, Cg here; the RocketLauncher's LDPlasmaticRocket is not done): "Fires powerful plasma projectiles"
+// Plasmatic (Epic: Pi, Sg, SS, Cg; round 3: the rocket launcher too, our rocket swapped for LegenDoom's plasma rocket:
+// RSLD_G3Plasmatic in g3_fx.zs): "Fires powerful plasma projectiles"
 class RSLD_Fx_Plasmatic : RSLD_G2_ProjFx
 {
+	override void OnMissile(RSLD_Shot s, Actor m) { if (s.slot == 6) RSLD_G3Plasmatic.Rocket(s, m); }
+	override void ModifyDamage(RSLD_Shot s, RSLD_Hit h) { RSLD_G3Plasmatic.Dmg(s, h); }
 	override string LDClass() { return "LDPlasmaticShotgunBall2"; }
 	override string FireSound() { return "Plasma/Fire"; }
 	override string HitSound() { return "Plasma/Impact"; }

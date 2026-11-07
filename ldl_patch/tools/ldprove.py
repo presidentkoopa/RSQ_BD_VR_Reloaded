@@ -240,9 +240,116 @@ def start_script():
           'wait 5', 'echo RSLDT end START', 'wait 5', 'quit']
     return '; '.join(s)
 
+
+# ---------------------------------------------------------------- round 3 (2026-11-06 evening): ONE batched run
+# (Round 3 rules: no per-effect runs). R3a's sections (G3 missile riders, G4 BFG, G6 ammo, the small items) and R3b's
+# (G5 / G7: R3B_SECTIONS, read from /home/claude/ldmerge/R3B_SECTIONS.py when R3b wrote it). Evidence: R3_<name>.log.
+RL, PR, BF = 'Rocket_Launcher', 'Plasma_Gun', 'BIG_FUCKING_GUN'
+
+def r3_sections():
+    S = []
+    def sec(name, gun, body, fx=None):
+        S.append((name, gun, body, fx))
+    def far(d=320, hp=30000, cls='BaronofHell2'):
+        return tgt(cls, hp, d)
+    rk = lambda: fire(1, 3, 70)
+    bfg = lambda: fire(1, 3, 110)
+    pl = lambda: fire(1, 3, 40)
+    none = 'netevent rsld_cleartargets; wait 2'
+    # ---- G3 on the rocket launcher
+    for e, body in [
+        ('Kinetic', far() + '; ' + rk()), ('Penetrating', far() + '; ' + rk()), ('Tricky', none + '; ' + fire(1, 3, 90)),
+        ('Spreadfire', far() + '; ' + rk() + '; ' + rk()), ('Cluster', far() + '; ' + rk()),
+        ('Redirecting', none + '; ' + fire(1, 3, 90)), ('Mysterious', none + '; ' + fire(1, 3, 60)), ('Bouncy', none + '; ' + fire(1, 3, 90)),
+        ('Sluggish', far(900) + '; ' + fire(1, 3, 230)), ('Hyper', none + '; ' + fire(1, 3, 50)), ('Arcing', none + '; ' + fire(1, 3, 160)),
+        ('GroupTherapy', 'netevent rsld_cleartargets; netevent rsld_target:Imp 320 10 1; netevent rsld_target:BaronofHell2 420 30000 1; wait 8; ' + rk()),
+        ('Proximity', far(620) + '; ' + fire(1, 3, 160)), ('Illuminating', far() + '; ' + rk()), ('Seeker', far(400) + '; ' + rk()),
+        ('Accelerator', far(400) + '; ' + rk()), ('Vidmaster', far() + '; ' + rk()), ('HighExplosive', far() + '; ' + rk()),
+        ('ShapedCharge', far() + '; ' + rk()), ('Spamtastic', none + '; ' + fire(1, 3, 60)), ('Concentrating', far(700) + '; ' + rk()),
+        ('Vacuum', far(500) + '; ' + rk()),
+        ('TORGUE', 'netevent rsld_cleartargets; netevent rsld_target:Imp 320 10 1; netevent rsld_target:BaronofHell2 360 30000 1; wait 8; ' + rk()),
+        ('Irradiated', far(700) + '; ' + rk()), ('Overkill', far(400) + '; ' + fire(1, 3, 90)), ('Goldeneye', far(320) + '; ' + fire(1, 3, 120)),
+        ('Plasmatic', far(320) + '; ' + rk()), ('Raycaster', far(320) + '; ' + rk()),
+        ('Nuclear', amm() + '; ' + far() + '; ' + rk() + '; ' + amm()),
+    ]:
+        sec('R3_%s_RL' % e, RL, body, e)
+    # ---- G3 on the plasma rifle
+    for e in ('Penetrating', 'Tricky', 'Bouncy', 'Spreadfire', 'Cluster', 'Suppression', 'Waveform', 'Seeker', 'Hyper', 'Sluggish', 'Irradiated', 'Spamtastic'):
+        sec('R3_%s_PR' % e, PR, far(400) + '; ' + pl(), e)
+    # ---- G4 on the BFG
+    for e, body in [
+        ('Annihilating', far() + '; ' + bfg()), ('Energetic', far() + '; ' + bfg()), ('Energizing', none + '; ' + fire(1, 3, 160)),
+        ('Nova', far() + '; ' + bfg()), ('Prototype', far() + '; ' + bfg()), ('Scattering', amm() + '; ' + far() + '; ' + bfg() + '; ' + amm()),
+        ('Shockwave', far() + '; ' + bfg()), ('Stasis', far(320, 30000, 'Imp') + '; ' + bfg()), ('Kinetic', far() + '; ' + bfg()),
+        ('Cluster', far() + '; ' + bfg()),
+    ]:
+        sec('R3_%s_BFG' % e, BF, body, e)
+    # ---- G6 on the pump shotgun (owner Q7: the magazine): last-round shots take the magazine down to 1 first
+    last = 'take ShotgunAmmo 99; give ShotgunAmmo 1; wait 2; ' + amm()
+    for e, body in [
+        ('Nuclear', amm() + '; ' + tgt() + '; ' + fire(2, 3, 45) + '; ' + amm()),
+        ('Unknown', 'give PowerInvisibility; ' + amm() + '; ' + tgt() + '; ' + fire(2, 3, 45) + '; ' + amm() + '; take PowerInvisibility'),
+        ('Illegal', 'give ShotgunAmmo 8; ' + tgt() + '; ' + fire(1, 3, 45) + '; ' + last + '; ' + tgt('Imp', 30000) + '; ' + fire(2, 3, 45) + '; netevent rsld_thas:LDIllegalActive; ' + amm()),
+        ('Optional', 'give ShotgunAmmo 8; ' + tgt() + '; ' + fire(1, 3, 45) + '; ' + last + '; ' + tgt() + '; ' + fire(2, 3, 45) + '; ' + amm()),
+        ('Transmogrifier', 'give ShotgunAmmo 8; ' + tgt() + '; ' + fire(1, 3, 45) + '; ' + last + '; netevent rsld_has:Clip2; ' + fire(1, 3, 45) + '; netevent rsld_has:Clip2; ' + amm()),
+        ('Unfathomable', 'give ShotgunAmmo 8; ' + amm() + '; ' + tgt() + '; ' + fire(1, 3, 60) + '; ' + amm()),
+        ('Recycling', 'take Clip2 50; take AmmoRocket 20; take AmmoCell 100; ' + tgt() + '; ' + fire(3, 3, 45) + '; netevent rsld_has:Clip2; netevent rsld_has:AmmoCell; netevent rsld_has:AmmoRocket'),
+        ('Overflowing', 'give all; give ShotgunAmmo 8; ' + tgt() + '; ' + fire(1, 3, 60)),
+    ]:
+        sec('R3_%s_SG' % e, SG, body, e)
+    sec('R3_Unfathomable_RL', RL, amm() + '; ' + far() + '; ' + rk() + '; ' + amm(), 'Unfathomable')
+    sec('R3_Overflowing_RL', RL, 'give all; ' + far() + '; ' + rk(), 'Overflowing')
+    # ---- small items
+    # (b) Upgrading: a full-ammo pickup of BD22-only ammo (Gas: like cells) feeds the meter
+    sec('R3_b_Upgrading_Gas', SG, 'netevent b_fill:Gas; netevent b_take:Gas; wait 60; netevent b_take:GrenadeAmmo; wait 60', 'Upgrading')
+    # (c) passives only for the legendary gun in hand: Hoarder on the shotgun, a shell pickup with the shotgun in hand, then
+    # with the Rifle in hand (no Hoarder bonus)
+    sec('R3_c_Hoarder_hand', SG, 'netevent b_zero:AmmoShell; netevent b_take:AmmoShell; wait 60; netevent rsld_has:AmmoShell; echo RSLDT rifle in hand now; '
+        'use Rifle; wait 90; netevent b_zero:AmmoShell; netevent b_take:AmmoShell; wait 60; netevent rsld_has:AmmoShell; use Shot_Gun; wait 90', 'Hoarder')
+    # (d) alt-fire stand-down: Seeker on the rocket launcher (RSA_Opt_RLLock taken), Burst on the pistol (PistolBurstFire)
+    sec('R3_d_Seeker_standdown', RL, 'wait 5; netevent rsld_has:RSLD_AltDown; netevent rsld_has:RSA_Opt_RLLock', 'Seeker')
+    sec('R3_d_Seeker_cleared', RL, 'wait 5; netevent rsld_has:RSLD_AltDown; netevent rsld_has:RSA_Opt_RLLock')
+    sec('R3_d_Burst_standdown', 'BrutalPistol', 'give PistolBurstFire; wait 5; netevent rsld_has:RSLD_AltDown; netevent rsld_has:PistolBurstFire', 'Burst')
+    # (e) LegenDoom's non-gun sounds behind rsld_mute_ld_sounds (rig: -nosound, so the code path is logged)
+    sec('R3_e_Sounds', SG, tgt() + '; netevent rsld_aura; wait 10; netevent rsld_auras; netevent rsld_jingle:Lucky 1; netevent rsld_jingle:Illegal 2; '
+        'rsld_mute_ld_sounds 1; wait 5; netevent rsld_auras; netevent rsld_jingle:Lucky 3; rsld_mute_ld_sounds 0; wait 5; netevent rsld_auras')
+    return S
+
+def r3b_sections():
+    f = '/home/claude/ldmerge/R3B_SECTIONS.py'
+    if not os.path.exists(f):
+        return []
+    g = {'fire': fire, 'shots': shots, 'tgt': tgt, 'amm': amm, 'taps': taps}
+    exec(open(f).read(), g)
+    return list(g.get('SECTIONS', []))
+
+def round3_script(nold=False):
+    secs = r3_sections() + r3b_sections()
+    only = os.environ.get('ONLY')
+    if only:
+        secs = [x for x in secs if any(o in x[0] for o in only.split(','))]
+    s = ['rsld_debug %s' % os.environ.get('DBG', '1'), 'rsr_reload 0', 'god', 'notarget', 'give all', GUNS,
+         'give RSQ_MinigunAmmo 300; give BrutalRevolver; give MiniGun; give Rifle; give BIG_FUCKING_GUN; give Plasma_Gun; give Rocket_Launcher; give AmmoCell 300; give AmmoRocket 50', 'wait 5']
+    gun = None
+    for name, g, body, fx in secs:
+        if g and g != gun:
+            s += ['use %s' % g, 'wait 90']
+            gun = g
+        s += ['echo RSLDT begin %s' % name]
+        if fx:
+            s += ['netevent rsld_fx:%s' % fx]
+        s += [body, 'wait 5']
+        if fx:
+            s += ['netevent rsld_fx_clear']
+        s += ['echo RSLDT end %s' % name]
+    s += ['wait 10', 'quit']
+    return '; '.join(x for x in s if x), [x[0] for x in secs]
+
 def run(batch, effects):
     if batch == 'round2':
         sc, effects = round2_script()
+    elif batch == 'round3':
+        sc, effects = round3_script()
     else:
         sc = start_script() if batch == 'start' else script(effects)
     secs = int(os.environ.get('SECS', 420 if batch == 'start' else 120 + 25 * max(1, len(effects))))
@@ -256,7 +363,7 @@ def run(batch, effects):
     for e in names:
         m = re.search(r'RSLDT begin %s\n(.*?)RSLDT end %s' % (e, e), log, re.S) or (re.search(r'RSLDT begin %s\n(.*)' % e, log, re.S) if e == 'START' else None)
         body = m.group(1) if m else '(no section: the run did not reach it)\n'
-        lines = [l for l in body.split('\n') if l.startswith('RSLD') or 'probe' in l or (batch == 'round2' and (l.startswith('B probe') or re.match(r'\s*\d+\. ', l) or 'LD_quakes' in l))]
+        lines = [l for l in body.split('\n') if l.startswith('RSLD') or 'probe' in l or (batch in ('round2', 'round3') and (l.startswith('B probe') or re.match(r'\s*\d+\. ', l) or 'LD_quakes' in l))]
         tag = os.environ.get('ORDER', 'full')
         fn = os.path.join(EVD, (('%s.log' % e.replace('@', '_on_')) if batch != 'start' else 'START_G9_Resupplying.log').replace('.log', '.log' if tag == 'full' else '.' + tag + '.log'))
         with open(fn, 'w') as f:

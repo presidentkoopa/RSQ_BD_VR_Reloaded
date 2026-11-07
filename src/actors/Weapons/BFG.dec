@@ -1,0 +1,521 @@
+ACTOR BIG_FUCKING_GUN : BrutalWeapon
+{
+	Game Doom
+	SpawnID 31
+	Weapon.AmmoUse 50
+	Weapon.AmmoType "AmmoCell"
+	Weapon.SelectionOrder 2800
+	-WEAPON.AMMO_CHECKBOTH
+	-WEAPON.NOALERT
+	+WEAPON.BFG
+	-INVENTORY.UNDROPPABLE
+	Inventory.PickupSound "BFG/Draw"
+	Inventory.PickupMessage "$BDGOTBFG9000"
+	Obituary "$OBBD_BFG"
+	Tag "$TAGBD_BFG9000"
+	States
+	{
+	KickFlash: 
+		BFGN A 0 A_JumpIfInventory("IsPlayingAsPurist",1,"PuristKickFlash")
+		BFGN BCDE 1
+		BFGN E 10
+		BFGN EDCB 1
+		stop
+	SlideFlash: 
+		BFGN A 0 A_JumpIfInventory("IsPlayingAsPurist",1,"PuristKickFlash")
+		BFGN BCDE 1
+		BFGN E 36
+		stop
+	SlideFlashEnd: 
+		BFGN A 0 A_JumpIfInventory("IsPlayingAsPurist",1,"PuristKickFlash")
+		BFGN E 5
+		BFGN EDCB  1
+		stop
+	SlideFlashEndEarly: 
+		BFGN A 0 A_JumpIfInventory("IsPlayingAsPurist",1,"PuristKickFlash")
+		BFGN E 2
+		BFGN EDCB  1
+		stop
+
+	Select:
+		TNT1 A 0 A_Giveinventory("GoSpecial",1)
+		TNT1 A 0 A_GiveInventory("TokenCleaner")
+		TNT1 A 0 A_SetCrosshair( CallACS("GetCrosshair", 12) )
+		TNT1 A 0 A_GunFlash
+		TNT1 A 1
+		TNT1 A 0 A_Giveinventory("BFGSelected",1)
+		TNT1 A 0 A_PlaySound("BFG/Draw", 5)
+		BFGN A 0 A_JumpIfInventory("IsPlayingAsPurist",1,"SelectPurist")
+	SelectAnimation:
+		BFGS ABCD 1 A_WeaponReady(WRF_NOFIRE)
+	Ready3:
+	Ready:
+		BFGN A 1 A_WeaponReady
+		BFGN A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		BFGN A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		BFGN A 0 A_JumpIfInventory("Salute1", 1, "Salute")
+		BFGN A 0 A_JumpIfInventory("Salute2", 1, "Salute")
+		BFGN A 0 A_JumpIfInventory("TossGrenade",1,"TossGrenade")
+		BFGN A 0 A_JumpIfInventory("IsRunning",1,"StartSprint")
+		Loop
+	
+	/*SelectPurist:
+        "####" "#" 0 A_JumpIfInventory("PuristBIG_FUCKING_GUN", 1,3)    
+        "####" "#" 0 A_Giveinventory("PuristBIG_FUCKING_GUN",1)
+        "####" "#" 0 A_SelectWeapon("PuristBIG_FUCKING_GUN")
+        "####" "####" 0 A_Raise
+        "####" "#" 1 A_Raise
+        "####" "#" 0 A_Takeinventory("BIG_FUCKING_GUN",1)
+        Goto SelectPurist+1*/
+
+	StartSprint:
+		BFGN A 0 A_JumpIfInventory("UsedStamina", 40, "StopSprintTired")
+		BFGN BCD 1 A_WeaponReady(WRF_NOFIRE)
+	Sprinting:
+		TNT1 E 0 offset(-9,32)
+		TNT1 A 0 offset(-9,32) A_JumpIfInventory("UsedStamina", 0, "StopSprint")
+		TNT1 A 0 offset(-9,32) ACS_ExecuteAlways(852, 0, 0, 0, 0)//Makes player faster.
+		TNT1 A 0 offset(-9,32) A_JumpIfInventory("PowerStrength", 1, 2)
+		TNT1 A 0 offset(-9,32) A_GiveInventory("UsedStamina", 13)
+		TNT1 A 0 offset(-9,32)
+		BFGN E 1 offset(-9,34) A_SetPitch(pitch -0.5)
+		BFGN E 1 offset(-6,36) A_SetPitch(pitch -0.5)
+		BFGN E 1 offset(-3,38) A_SetPitch(pitch -0.5)
+		BFGN E 1 offset(0,38) A_SetPitch(pitch -0.5)
+		BFGN E 1 offset(3,36) A_SetPitch(pitch -0.5)
+		BFGN E 1 offset(6,34) A_SetPitch(pitch -0.5)
+		BFGN E 1 offset(9,32) A_SetPitch(pitch -0.5)
+		BFGN A 0 offset(9,32) A_WeaponReady(WRF_NOBOB)
+		TNT1 A 0 A_JumpIfInventory("Kicking",1,"DoKick")
+		TNT1 A 0 A_JumpIfInventory("Taunting",1,"Taunt")
+		TNT1 A 0 offset(-9,32) A_GiveInventory("UsedStamina", 13)
+		TNT1 A 0 offset(9,33) A_SpawnItemEx("FootStep", 0, 0, 2, 0, 0, -4)
+		BFGN E 1 offset(9,34) A_SetPitch(pitch +0.5)
+		BFGN E 1 offset(6,36) A_SetPitch(pitch +0.5)
+		BFGN E 1 offset(3,38) A_SetPitch(pitch +0.5)
+		BFGN E 1 offset(0,38) A_SetPitch(pitch +0.5)
+		BFGN E 1 offset(-3,36) A_SetPitch(pitch +0.5)
+		BFGN E 1 offset(-6,34) A_SetPitch(pitch +0.5)
+		BFGN E 1 offset(-9,32) A_SetPitch(pitch +0.5)
+		TNT1 A 0 offset(-9,32) A_WeaponReady(WRF_NOBOB)
+		TNT1 A 0 offset(-9,32) A_JumpIfInventory("IsRunning", 1, "Sprinting")
+		Goto StopSprint
+
+	StopSprint:
+		BFGN DCB 1
+		BFGN A 0 A_JumpIfInventory("UsedStamina", 60, "StopSprintTired")
+		TNT1 A 0 ACS_ExecuteAlways(853, 0, 0, 0, 0)//Makes player slower.
+		Goto Ready
+
+	Deselect:
+		BFGN A 0 A_JumpIfInventory("IsPlayingAsPurist",1,"DeselectPurist")
+		BFGS EFGH 1
+		TNT1 AAAAAAAAAAAAAAAAAA 0 A_Lower
+		TNT1 A 0 A_TakeInventory("TossGrenade", 1)
+		TNT1 A 1 A_Lower
+		wait
+
+	NoAmmo:
+		"####" A 5
+		Goto Ready3
+
+	RSLD_Jammed:	// LD mode (round 3): Perfect's jam or a G5 trigger hold: no shot, sound, flash or casing; the hand works as in Ready
+		"####" "#" 1 A_WeaponReady(WRF_NOFIRE | WRF_NOBOB | WRF_ALLOWRELOAD)
+		Goto Ready
+	Fire:
+		"####" "#" 0 A_JumpIf((OverlayID() == 1000000 && (CountInv("RSLD_JamOff") > 0 || CountInv("RSLD_G5BlockOff") > 0)) || (OverlayID() != 1000000 && (CountInv("RSLD_JamMain") > 0 || CountInv("RSLD_G5BlockMain") > 0)), "RSLD_Jammed")	// LD mode (round 3): Perfect's jam or a G5 trigger hold (Chargeup, Overkill) stops the trigger (zscript/rsld/handler.zs, ld_g5_core.zs Block; never given without LegenDoom)
+		BFGN A 0 A_JumpIfNoAmmo("NoAmmo")
+		BFGN A 0 A_PlaySound("BFG/Charge",5)
+		BFGN A 0 A_AlertMonsters
+		BFGN AFAF 2
+		BFGN GHIJGHIJ 1 BRIGHT
+		BFGN KLMNKLMN 1 BRIGHT
+		BFGN OPQR 1 BRIGHT
+		BFGA A 2 BRIGHT A_FireCustomMissile("GreenFlareSpawn",0,0,0,0)
+		TNT1 A 0 A_StopSound(5)
+		TNT1 A 0 A_PlaySound("BFG/Fire",1)
+		TNT1 AAA 0 A_FireCustomMissile("GreenFlareSpawn",0,0,0,0)
+		TNT1 A 0 A_Recoil(8)
+		TNT1 A 0 A_FireCustomMissile("Alerter", 0, 0, -1, 0)
+		TNT1 A 0 A_JumpIfInventory("DMgame", 1, 3)
+		TNT1 A 0 A_FireCustomMissile("BFGBall")
+		Goto RecoilFire
+		TNT1 AA 0
+		TNT1 A 0 A_FireCustomMissile("BFGBallDM")
+
+	RecoilFire:
+		TNT1 A 0 A_ZoomFactor(0.9)
+		"####" "#" 0 A_Quake(4,6,0,12,"")
+		BFGA BC 1 BRIGHT A_SetPitch(pitch-3)
+		TNT1 A 0 A_ZoomFactor(1.0)
+		BFGA D 1 BRIGHT A_SetPitch(pitch+1)
+		BFGA EFGHH 1 A_SetPitch(pitch+1)
+		BFGA I 1
+		BFGA JJKL 1
+		BFGN A 0 A_Refire
+		Goto Ready3
+
+	Spawn:
+		BFUG A -1
+		Stop
+	}
+}
+
+ACTOR PuristBIG_FUCKING_GUN : BIG_FUCKING_GUN { -WEAPON.NOAUTOAIM +WEAPON.CHEATNOTWEAPON }
+
+Actor BFGTrailParticle
+{
+	Height 0
+	Radius 0
+	Mass 0
+	Speed 3
+	+Missile
+	+NoBlockMap
+	+NoGravity
+	+DontSplash
+	+FORCEXYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	RenderStyle "Add"
+	Scale 0.2
+	States
+	{
+	Spawn:
+		SPKG A 2 Bright A_FadeOut(0.02)
+		Loop
+	}
+}
+
+
+Actor SuperBFGBall : BFGBall replaces BFGBall
+{
+	+EXTREMEDEATH
+	Damage (random(1500, 1500))
+	Decal BFGLightning
+	DeathSound "BFG/Explosion"
+	DamageType Desintegrate
+	Scale 0.7
+	Species "Marines"
+	Height 1
+	+THRUSPECIES
+	+MTHRUSPECIES
+	+FORCEXYBILLBOARD
+	+BRIGHT
+	States
+	{
+	Spawn:
+		BFS1 A 0 A_SpawnItemEx("BFGFOG", 0, 0)
+		BFS1 AB 1 BRIGHT A_SpawnItemEx("BFGTrailParticle", Random(-13, 13), Random(-13, 13), Random(0, 18), Random(1, 3), 0, (0.1)*Random(-10, 10), Random(-20, 20), 128)
+		Loop
+
+	Death:
+		TNT1 A 0
+		TNT1 A 0 Radius_Quake(4,34,0,12,0)
+		TNT1 A 0 Radius_Quake(1,34,0,32,0)
+		TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, -20)
+		TNT1 A 0 A_SpawnItemEx ("UnderwaterExplosion",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 AA 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_PlaySOund("BFG/ExplosionDistant", 1)
+		TNT1 A 0 A_SpawnItem("GreenShockWave",0,0,0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", 0, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", 50, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", -50, 0, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", 0, 50, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", 0, -50, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", 50, 50, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", 50, -50, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", -50, 50, 0)
+		TNT1 A 0 A_SpawnItemEx("BFGBigFlare", -50, -50, 0)
+		TNT1 A 0 A_SpawnItemEX("SuperBFGBall_Particles",0,0,0)
+		TNT1 A 0 A_Explode(200,400,0)
+		BFGB A 2 BRIGHT
+		TNT1 A 0 A_BFGSpray("SuperBFGExtra", 50)
+		BFGB BCDEFG 2 Bright
+		TNT1 A 0 A_SPawnItem("SuperBFGExtraGiant")
+		TNT1 A 2
+	Stop
+  }
+}
+ACTOR SuperBFGBall_Particles: ClientSideSpawner
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 1
+		stop
+	}
+}
+
+
+Actor BFGBallDM : SuperBFGBall
+{
+	Species "None"
+	-THRUSPECIES
+	-MTHRUSPECIES
+}
+
+
+Actor FriendlyBFGBAll : SuperBFGBall
+{
+	Damagetype "FriendBullet"
+	+EXTREMEDEATH
+	States
+	{
+	Death:
+		BFGB A 0 Bright A_SpawnItem("GreenShockWave",0,0,0)
+		TNT1 A 0 A_SpawnItemEx ("ExplosionSplashSpawner", 0, 0, -20)
+		TNT1 A 0 A_SpawnItemEx ("DetectFloorCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 A 0 A_SpawnItemEx ("DetectCeilCrater",0,0,0,0,0,0,0,SXF_NOCHECKPOSITION,0)
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGBIGFOG", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleSuperFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 0 A_CustomMissile ("BFGDeathParticleFast", 0, 0, random (0, 360), 2, random (0, 360))
+		TNT1 A 0 A_Explode(120,350,0)
+		BFGB ABCDE 1 Bright A_SpawnItem("GreenFlare",0,0)
+		TNT1 A 0 A_SPawnItem("SuperBFGExtraGiant")
+		BFGB GHIJK 1 Bright A_SpawnItem("GreenFlare",0,0)
+		Stop
+	}
+}
+
+Actor BFGDeathParticleSpawner : ClientSideSpawner
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 AAAAA 0 A_SpawnItemEx("BFGDeathParticle", 0, 0, 0, (0.1)*Random(20, 45), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
+		TNT1 AAAAA 0 A_SpawnItemEx("BFGDeathParticle", 0, 0, 0, (0.1)*Random(20, 45), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
+		TNT1 AAAAA 0 A_SpawnItemEx("BFGDeathParticle", 0, 0, 0, (0.1)*Random(20, 45), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
+		TNT1 AAAAA 0 A_SpawnItemEx("BFGDeathParticle", 0, 0, 0, (0.1)*Random(20, 45), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
+		TNT1 A 1
+		Stop
+	}
+}
+
+Actor BFGDeathParticle
+{
+	Height 2
+	Radius 1
+	Mass 0
+	BounceFactor 0.5
+	RenderStyle "Add"
+	Scale 0.16
+	+Missile
+	+NoBlockMap
+	-NoGravity
+	+LowGravity
+	+DontSplash
+	+DoomBounce
+	+CLIENTSIDEONLY
+	+FORCEXYBILLBOARD
+	States
+	{
+	Spawn:
+	Death:
+		SPKG A 2 Bright A_FadeOut(0.02)
+		Loop
+	}
+}
+
+
+
+Actor BFGDeathParticleFast: BFGDeathParticle
+{
+	Speed 10
+	Scale 0.4
+	States
+	{
+	Spawn:
+	Death:
+		SPKG A 11 BRIGHT
+		SPKG AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 2 Bright A_FadeOut(0.06)
+		Stop
+	}
+}
+
+Actor BFGDeathParticleSuperFast: BFGDeathParticleFast { Speed 20 }
+
+/////////////BFGextra STUFF
+
+Actor SuperBFGExtra : BFGExtra Replaces BFGExtra
+{
+	RenderStyle "Add"
+	Alpha 0.75
+	Damage 2
+	Scale 0.6
+	Radius 1
+	Height 2
+	DamageType "Desintegrate"
+	+BRIGHT
+	+FORCERADIUSDMG
+	+THRUGHOST
+	+FORCEXYBILLBOARD
+	+NoBlockMap
+	+NoGravity
+	States
+	{
+	Spawn:
+		BFGB A 0
+		BFGB AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
+		BFGB AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
+		BFGB AAAAA 0 A_SpawnItemEx("BFGExtraParticle", 0, 0, 14, (0.1)*Random(10, 40), 0, (0.1)*Random(-40, 40), Random(0, 360), 128)
+		BFGB ABCDEFGHIJK 2 Bright A_SpawnItem("GreenFlareMedium",0,0)
+		stop
+	}
+}
+
+
+Actor SuperBFGExtraGiant : SuperBFGExtra
+{
+	Scale 2.9
+	States
+	{
+	Spawn:
+		BFGB A 0
+		BFGB ABCDEFGH 2 Bright
+		Stop
+	}
+}
+
+Actor BFGExtraParticle
+{
+	Height 0
+	Radius 0
+	Mass 0
+	RenderStyle "Add"
+	Scale 0.14
+	+Missile
+	+NOBLOCKMAP
+	+DONTSPLASH
+	+NOINTERACTION
+	+FORCEXYBILLBOARD
+	States
+	{
+	Spawn:
+	Death:
+		SPKG A 2 Bright A_FadeOut(0.1)
+		Loop
+	}
+}
+
+
+Actor BFGSuperParticleSpawner : ClientSideSpawner
+{
+	States
+	{
+	Spawn:
+		TNT1 A 0
+		TNT1 AAAAAAAAAAA 0 A_SpawnItemEx("BFGSuperParticle", 0, 0, 0, (0.1)*Random(10, 35), 0, (0.1)*Random(-20, 20), Random(0, 360), 128)
+		TNT1 AAAAAAAAAAA 0 A_SpawnItemEx("BFGSuperParticle", 0, 0, 0, (0.1)*Random(10, 35), 0, (0.1)*Random(-20, 20), Random(0, 360), 128)
+		TNT1 AAAAAAAAAAAAAAA 0 A_SpawnItemEx("BFGSuperParticle", 0, 0, 0, (0.1)*Random(10, 35), 0, (0.1)*Random(-20, 20), Random(0, 360), 128)
+		TNT1 A 1
+		Stop
+	}
+}
+
+Actor BFGSuperParticle
+{
+	Height 0
+	Radius 0
+	Mass 0
+	+Missile
+	+NoBlockMap
+	+NOGRAVITY
+	+DontSplash
+	+FORCEXYBILLBOARD
+	+NOINTERACTION
+	RenderStyle "Add"
+	Scale 0.16
+	Speed 24
+	States
+	{
+	Spawn:
+	Death:
+		SPKG A 2 Bright A_FadeOut(0.02)
+		Loop
+	}
+}
+
+/////////////SHOCKWAVES
+
+ACTOR GreenShockWave
+{
+	Speed 0
+	Height 64
+	Radius 32
+	Scale 2.25
+	RenderStyle "Add"
+	Alpha 0.9
+	+DROPOFF
+	+NOBLOCKMAP
+	+NOGRAVITY
+	+CLIENTSIDEONLY
+	+FORCEXYBILLBOARD
+	+NOINTERACTION
+	States
+	{
+	Spawn:
+		SHOK A 1 BRIGHT
+		Goto Death
+	Death:
+		SHOK BCDEFGHIJKLMNOPQR 1 BRIGHT A_FadeOut(0.05)
+		Stop
+	}
+}
+
+ACTOR WhiteShockWave: GreenShockwave
+{
+	Scale 2.0
+	Alpha 0.12
+	States
+	{
+	Spawn:
+		SHWK A 1
+		SHWK CEGIKMOQ 1 A_FadeOut(0.01)
+		Stop
+	}
+}
+
+ACTOR WhiteShockWaveBig: WhiteShockWave { Scale 3.0 }
+ACTOR WhiteShockWaveSmall: WhiteShockWave { Scale 1.0 }
+
+ACTOR BFGFOG
+{
+	Radius 1
+	Height 1
+	Alpha 0.7
+	RenderStyle "Add"
+	Scale 0.4
+	Speed 8
+	Gravity 0
+	+NOBLOCKMAP
+	+NOTELEPORT
+	+DONTSPLASH
+	+MISSILE
+	+FORCEXYBILLBOARD
+	+CLIENTSIDEONLY
+	+NOINTERACTION
+	States
+	{
+	Spawn:
+		BFOG A 2
+		BFOG ABCDEF 1 BRIGHT
+		Stop
+	}
+}
+
+ACTOR BFGBIGFOG: BFGFOG { Scale 0.8 }
+
+ACTOR SmallGreenFog: BFGFOG
+{
+	Speed 3
+	Scale 0.5
+}
