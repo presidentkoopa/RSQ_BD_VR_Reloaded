@@ -25,17 +25,33 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.3y.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4c.pk3
 ```
+
+With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4c.pk3`.
+Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.3y
+## Changelog: 2.0.3h to 2.0.4c
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.3y.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4c.pk3`. Builds marked
 *rig only* were tested on the development rig.
+
+- **What's new in 2.0.4c** (since 2.0.3y; all *rig only*, not headset-confirmed; details and logs in
+  [ldl_patch/README.md](ldl_patch/README.md)):
+  - **LegenDoom mode merged** (2.0.3z to 2.0.4a, 11-06): with LegenDoom 3.0 loaded, BD22 VR switches on its LD mode
+    (found by name; without LegenDoom nothing changes). Legendary monsters drop legendary BD22 VR guns, and 179 of
+    LegenDoom's 180 effects (all but Favoured, dropped) work on our guns. The separate LD_BD22VR_Patch.pk3 is gone. Not
+    yet shown on the rig: Energizing's heal, Hyper / Spamtastic on the plasma rifle, Perfect on dual guns.
+  - **Chainsaw effects in VR** (2.0.4b, 11-07): each bar cut counts as a chainsaw attack, so Lacerating, RazorEdge,
+    Extended and Imaginary work; Extended and Imaginary give the blade a longer reach.
+  - **Quickdraw / Burst fixes** (2.0.4b, 2.0.4c, 11-07): Quickdraw on the BFG no longer fires a second ball from one
+    press; the shot counter sees projectiles, so Burst fires its three shots on the rocket launcher and the BFG, and
+    Quickdraw fires one shot per press.
 
 - **2.0.3y** (11-06, *rig only*, not headset-confirmed: loads on the full order with no script error from the pack; the
   off-hand versions, the off-hand pistol whip on a door, the pump, the Silvergun, No Trigger Punch and the grenade

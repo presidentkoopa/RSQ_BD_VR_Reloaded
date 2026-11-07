@@ -133,8 +133,10 @@ LEGENDOOM MODE (in progress, rig only, not headset-confirmed)
 --------------------------------------------------------------
 With LegenDoom 3.0 loaded, BD22 VR switches on an LD mode (it finds LegenDoom by name; without LegenDoom
 nothing changes). LegenDoom's legendary monsters drop legendary BD22 VR guns, and the legendary power works on
-our guns, hands, reloads and sounds. Carried and shown on the test rig so far: 61 of LegenDoom's 180 effects
-(the 56 of the old LD_BD22VR_Patch, rebuilt, and the 5 map-start buffs). With LegenDoom the main menu stays
+our guns, hands, reloads and sounds. Carried: 179 of LegenDoom's 180 effects (all but Favoured, dropped), shown on
+the test rig round by round (2.0.4a; not yet shown there: Energizing's heal, Hyper / Spamtastic on the plasma rifle,
+Perfect on dual guns). 2.0.4b / 2.0.4c: the chainsaw's legendary effects work in VR (Lacerating, RazorEdge, Extended,
+Imaginary), Quickdraw fires one shot per press, Burst fires its three shots. With LegenDoom the main menu stays
 Brutal Doom's with a LegenDoom Options button, and Options is QuestZDoom's (VR Options included).
 Options: Options -> LegenDoom x BD22 VR. Do not also load LD_BD22VR_Patch.pk3: this replaces it.
 
