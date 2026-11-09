@@ -25,22 +25,27 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4c.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4d.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4c.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4d.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4c
+## Changelog: 2.0.3h to 2.0.4d
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4c.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4d.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4d** (11-09; *not yet run on the rig*):
+  - **Two-Hand Spread** (slider, default 0.5): with the off hand steadying the gun (Two-Hand Grip), every shot's
+    spread is multiplied by this. Bullets, pellets and projectiles. Dual-wielded guns are not affected.
+  - **Two-Hand Tightens Shotguns** (default Off): off keeps the pump, SSG, AA-12 and Shotvolver patterns as BD22's.
+  - **True Bullet Speed** (slider, 20-900 map units a tic, default 80 = as before).
 - **What's new in 2.0.4c** (since 2.0.3y; all *rig only*, not headset-confirmed; details and logs in
   [ldl_patch/README.md](ldl_patch/README.md)):
   - **LegenDoom mode merged** (2.0.3z to 2.0.4a, 11-06): with LegenDoom 3.0 loaded, BD22 VR switches on its LD mode
