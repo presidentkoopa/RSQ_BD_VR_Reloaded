@@ -157,13 +157,13 @@ class RSQ_PlayerRound : Actor
 
 class RSQ_PlayerRounds : EventHandler
 {
-	const SPEED = 80.0;	// map units a tic: RS_Ballistics' sv_rsb_enemy_round_speed default (CVARINFO.txt)
+	const ROUND_SPEED = 80.0;	// map units a tic: RS_Ballistics' sv_rsb_enemy_round_speed default (CVARINFO.txt)
 
-	// 2.0.5 (owner 2026-11-09): the "True Bullet Speed" slider, sv_rsq_round_speed (CVARINFO.rsx). SPEED is its default.
+	// 2.0.5 (owner 2026-11-09): the "True Bullet Speed" slider, sv_rsq_round_speed (CVARINFO.rsx). ROUND_SPEED is its default (renamed from SPEED 11-09: ZScript names are case-insensitive, so the const SPEED and Speed() clashed: "Attempt to redefine Speed").
 	static double Speed()
 	{
 		let cv = CVar.FindCVar('sv_rsq_round_speed');
-		return cv ? clamp(cv.GetFloat(), 10.0, 1000.0) : SPEED;
+		return cv ? clamp(cv.GetFloat(), 10.0, 1000.0) : ROUND_SPEED;
 	}
 
 	bool delivering;

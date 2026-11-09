@@ -25,22 +25,26 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4d.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4e.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4d.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4e.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4d
+## Changelog: 2.0.3h to 2.0.4e
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4d.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4e.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4e** (11-09): fixes 2.0.4d's start-up crash ("Attempt to redefine 'Speed'", playerrounds.zs:
+  ZScript names ignore case, so the constant SPEED and the new Speed() clashed; the constant is now ROUND_SPEED). Loads with
+  zero script errors on doom2 > brutal22test6 > BD_VoxelPack > this > LoB > Champions > Gun Bonsai > the RSQ series (rig
+  load check); not run in play.
 - **What's new in 2.0.4d** (11-09; *not yet run on the rig*):
   - **Two-Hand Spread** (slider, default 0.5): with the off hand steadying the gun (Two-Hand Grip), every shot's
     spread is multiplied by this. Bullets, pellets and projectiles. Dual-wielded guns are not affected.
