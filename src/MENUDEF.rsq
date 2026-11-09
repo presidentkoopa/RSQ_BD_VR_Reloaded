@@ -83,6 +83,9 @@ OptionMenu "RSQ_Options"
 	Option "Railgun Scope", "rsq_scope2_railgun", "RSQ_ScopeMode"
 	Option "Ballistics", "rsq_ballistics", "RSQ_Ballistics"
 	Option "True Bullets", "sv_rsq_true_bullets", "OnOff"	// 2.0.2 (owner r3 item 39): On = flying rounds with the Dakka look (playerrounds.zs, shotfx.zs); Off = stock BD22 hitscan and tracers
+	Slider "True Bullet Speed", "sv_rsq_round_speed", 20, 900, 10, 0	// 2.0.5 (owner 11-09): map units a tic, 80 = as it was; real rounds are 330-874 (playerrounds.zs)
+	Slider "Two-Hand Spread", "sv_rsq_twohand_spread", 0.0, 1.0, 0.05, 2	// 2.0.5 (owner 11-09): spread x this with the off hand steadying; 1 = BD22's (muzzle.zs Steady)
+	Option "Two-Hand Tightens Shotguns", "sv_rsq_twohand_shotguns", "OnOff"	// 2.0.5: off = pellet patterns stay BD22's
 	Option "Pump Shotgun Spread", "rsq_pump_spread", "RSQ_PumpSpread"	// BD 2.0: actors/Weapons/Shotgun.dec
 	StaticText " "
 	Submenu "Voxel Options", "RSQ_VoxelOptions"

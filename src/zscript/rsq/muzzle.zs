@@ -94,6 +94,10 @@ class RSQ_Muzzle : EventHandler
 		Vector3 bw = Dir(off ? mo.OffhandDir(mo, mo.angle + da, mo.pitch + dp) : mo.AttackDir(mo, mo.angle + da, mo.pitch + dp));
 		Vector3 hp = off ? mo.OffhandPos : mo.AttackPos;
 		Vector3 was = c.pos, wasVel = c.vel;
+		// 2.0.5: two hands on it, the projectile's spread (its velocity off the controller's forward) is shrunk first
+		double k = off ? 1.0 : Steady(mo, w);
+		if (k < 1.0 && vl > 0)
+			c.vel = Tighten(c.vel / vl, fw, k) * vl;
 		Vector3 step = Turn(c.pos - hp, fw, bw);
 		c.vel = Turn(c.vel, fw, bw);
 		if (vl > 0)
@@ -131,6 +135,34 @@ class RSQ_Muzzle : EventHandler
 		// A_FireProjectile turns a spread shot's velocity AFTER the spawn step (its angle / pitch arguments), so the step
 		// and the velocity differ by the spread: BD22's widest is the shotgun tracers' random(-5, 5) in angle and pitch
 		return vl > 0 && dl <= vl + 1 && (d dot v) / (dl * vl) > cos(15);
+	}
+
+	// 2.0.5 (owner 2026-11-09: "two handing a gun needs to cut down on spread"). The spread multiplier for a main-hand
+	// shot: sv_rsq_twohand_spread while the off hand steadies the gun (the engine's Two-Hand Grip, RSVR_VRHand.Steadied),
+	// 1 otherwise. A shotgun's pellet pattern is left alone unless sv_rsq_twohand_shotguns. An off-hand (dual) gun is
+	// never steadied: the other hand is holding a gun.
+	static double Steady(PlayerPawn mo, Weapon w)
+	{
+		if (!mo || !mo.player || !w || !RSVR_VRHand.InVR(mo) || !RSVR_VRHand.Steadied(mo))
+			return 1.0;
+		if (w is 'Shot_Gun' || w is 'SSG' || w is 'AssaultShotgun' || w is 'Revolver')
+		{
+			let sg = CVar.FindCVar('sv_rsq_twohand_shotguns');
+			if (!sg || !sg.GetBool())
+				return 1.0;
+		}
+		let cv = CVar.FindCVar('sv_rsq_twohand_spread');
+		return cv ? clamp(cv.GetFloat(), 0.0, 1.0) : 1.0;
+	}
+
+	// a unit direction u pulled toward the aim line fw: its angle off fw shrunk by k (tan of it, exactly: close enough
+	// for spreads of a few degrees)
+	static Vector3 Tighten(Vector3 u, Vector3 fw, double k)
+	{
+		double along = u dot fw;
+		Vector3 nu = fw * along + (u - fw * along) * k;
+		double l = nu.Length();
+		return l > 0 ? nu / l : u;
 	}
 
 	static Vector3 Dir(Vector3 ap)
@@ -357,13 +389,22 @@ class RSQ_Muzzle : EventHandler
 		// down the drawn barrel; melee traces are left as they are
 		let w = mo.player ? mo.player.ReadyWeapon : null;
 		bool bore = RSVR_VRHand.InVR(mo) && HasBore(w) && !(e.AttackLineFlags & LAF_ISMELEEATTACK);
-		if (!ok && !bore)
+		// 2.0.5: two hands on it, the shot's spread is shrunk. The engine maps an attack's angle and pitch through the
+		// controller RELATIVE to mo.angle / mo.pitch (AttackDir), so what A_FireBullets rolled on top of them is the spread.
+		double k = (e.AttackLineFlags & LAF_ISMELEEATTACK) ? 1.0 : Steady(mo, w);
+		if (!ok && !bore && k >= 1.0)
 			return false;
+		double sa = e.AttackAngle, sp = e.AttackPitch;
+		if (k < 1.0)
+		{
+			sa = mo.angle + Actor.DeltaAngle(mo.angle, sa) * k;
+			sp = mo.pitch + (sp - mo.pitch) * k;
+		}
 		double da = 0, dp = 0;
 		if (bore)
 			[da, dp] = AimOffset(w, FromFLU(w, ok));
 		busy = true;
-		mo.LineAttack(e.AttackAngle + da, e.AttackDistance, e.AttackPitch + dp, e.Damage, e.DamageType, e.AttackPuffType,
+		mo.LineAttack(sa + da, e.AttackDistance, sp + dp, e.Damage, e.DamageType, e.AttackPuffType,
 			e.AttackLineFlags | LAF_ABSPOSITION, null, at.z, at.x, at.y);
 		busy = false;
 		return true;	// the engine's own trace, from the controller, is not run

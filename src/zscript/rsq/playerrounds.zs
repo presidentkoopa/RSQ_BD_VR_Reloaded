@@ -73,6 +73,7 @@ class RSQ_PlayerRound : Actor
 	Vector3 dir;
 	double flySpeed;
 	int life;
+	int maxLife;					// 2.0.5: enough tics for the whole range at the slider's speed
 	double dotCarry;				// shotfx.zs: where the next Dakka dot falls on the next step
 
 	const MAX_LIFE = 350;			// 10 s: 8192 units at 80 a tic is 103 tics
@@ -94,13 +95,14 @@ class RSQ_PlayerRound : Actor
 		puffType = puff;
 		laf = flags & ~(LAF_ABSPOSITION | LAF_ABSOFFSET | LAF_ISOFFHAND | LAF_OVERRIDEZ | LAF_TARGETISSOURCE);
 		flySpeed = spd;
+		maxLife = max(MAX_LIFE, int(dist / max(spd, 1.0)) + 35);
 	}
 
 	override void Tick()
 	{
 		if (isFrozen())
 			return;
-		if (life++ > MAX_LIFE || rangeLeft <= 0)
+		if (life++ > maxLife || rangeLeft <= 0)
 		{
 			Destroy();
 			return;
@@ -156,6 +158,13 @@ class RSQ_PlayerRound : Actor
 class RSQ_PlayerRounds : EventHandler
 {
 	const SPEED = 80.0;	// map units a tic: RS_Ballistics' sv_rsb_enemy_round_speed default (CVARINFO.txt)
+
+	// 2.0.5 (owner 2026-11-09): the "True Bullet Speed" slider, sv_rsq_round_speed (CVARINFO.rsx). SPEED is its default.
+	static double Speed()
+	{
+		let cv = CVar.FindCVar('sv_rsq_round_speed');
+		return cv ? clamp(cv.GetFloat(), 10.0, 1000.0) : SPEED;
+	}
 
 	bool delivering;
 
@@ -269,7 +278,7 @@ class RSQ_PlayerRounds : EventHandler
 		if (!r)
 			return false;
 		r.Setup(mo, at, ang, pit, e.AttackDistance, e.Damage, e.DamageType, e.AttackPuffType,
-			e.AttackLineFlags, SPEED);
+			e.AttackLineFlags, Speed());
 		return true;	// the hitscan is not run now: the round carries it
 	}
 
@@ -299,7 +308,7 @@ class RSQ_PlayerRounds : EventHandler
 		let r = RSQ_PiercingRound(Actor.Spawn('RSQ_PiercingRound', at, ALLOW_REPLACE));
 		if (!r)
 			return false;
-		r.Setup(mo, at, ang, pit, e.AttackDistance, e.Damage, e.DamageType, e.AttackPuffType, 0, SPEED);
+		r.Setup(mo, at, ang, pit, e.AttackDistance, e.Damage, e.DamageType, e.AttackPuffType, 0, Speed());
 		return true;
 	}
 }
@@ -320,7 +329,7 @@ class RSQ_PiercingRound : RSQ_PlayerRound
 	{
 		if (isFrozen())
 			return;
-		if (life++ > MAX_LIFE || rangeLeft <= 0)
+		if (life++ > maxLife || rangeLeft <= 0)
 		{
 			Destroy();
 			return;

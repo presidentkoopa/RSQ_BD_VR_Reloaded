@@ -19,3 +19,17 @@ server int rsq_pump_spread = 0;
 // "Hand Skin Tone" (owner, 2026-10-27 20:05): 0 = the FBX hands as drawn, 1..17 = tools/handtones.py's tones
 // (zscript/rsq/handtone.zs). Local: your own hands.
 user int rsq_hand_tone = 0;
+
+// 2.0.5 (owner 2026-11-09): "True Bullet Speed", map units a tic. 80 is what True Bullets has always flown at
+// (RS_Ballistics' sv_rsb_enemy_round_speed default). Real rounds are 330 (9mm) to 874 (5.56) a tic at 34 units
+// a metre. Server: how long a round takes decides what it hits. Read by zscript/rsq/playerrounds.zs.
+server float sv_rsq_round_speed = 80.0;
+
+// 2.0.5 (owner 2026-11-09): "Two-Hand Spread". With the off hand steadying the gun (the engine's Two-Hand Grip,
+// WF_TWOHANDSTABILIZED), every main-hand shot's spread is multiplied by this: 1.0 = BD22's own spread, 0.5 = half,
+// 0 = dead on. Hitscans, pellets and the player's projectiles alike (zscript/rsq/muzzle.zs RSQ_Muzzle.Steady).
+// Server: it decides where shots go.
+server float sv_rsq_twohand_spread = 0.5;
+// Shotguns too: off = a shotgun's pellet pattern stays BD22's when two-handed (a pattern is the choke, not
+// the shooter's wobble: the shotgun stays a shotgun); on = it tightens like everything else.
+server bool sv_rsq_twohand_shotguns = false;
