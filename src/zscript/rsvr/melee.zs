@@ -835,6 +835,45 @@ class RSVR_Hand play
 		return fH + w * vu;
 	}
 
+	// ONE THROW (RSQ series, owner 11-10: "one throw for everything"): WHETHER the axe is thrown is read off the HAND, the
+	// series' one sampler (RSQ Grenade hand.zs Sample / Peak, RSQ Saber, RSQ ShieldSaw, this pack's grenade): the hand
+	// relative to the pawn, turned by the pawn's yaw, the fastest 2-tic window over the last 7 tics in real m/s (the
+	// vertical squash taken out), a collapsed pose and over a metre in two tics no motion, against THROW_MIN (2.5 m/s). It
+	// was the axe's EDGE, single tics, the pawn's travel taken out but not its turn. How hard it flies still comes from
+	// the edge (Throw below), so a thrown axe flies as before.
+	const TWIN = 7;
+	Vector3 tHist[TWIN];
+	bool tOk[TWIN];
+	int tAt;
+	bool tSame;
+	void ThrowSample(PlayerPawn mo)
+	{
+		bool same = mo.AttackPos == mo.OffhandPos;
+		bool collapsed = same && !tSame;
+		tSame = same;
+		Vector3 off = fH - mo.pos;
+		double c = cos(mo.angle), sn = sin(mo.angle);
+		tHist[tAt] = (off.x * c + off.y * sn, off.y * c - off.x * sn, off.z);
+		tOk[tAt] = !same && !collapsed;
+		tAt = (tAt + 1) % TWIN;
+	}
+	double ThrowMs()
+	{
+		double ps = level.pixelstretch > 0.1 ? level.pixelstretch : 1.2;
+		double u = vu > 0 ? vu : 34;
+		double bestM = 0;
+		for (int i = 0; i + 2 < TWIN; i++)
+		{
+			int ka = (tAt - 1 - i + 2 * TWIN) % TWIN, kb = (tAt - 3 - i + 2 * TWIN) % TWIN;
+			if (!tOk[ka] || !tOk[kb]) continue;
+			Vector3 v = (tHist[ka] - tHist[kb]) * 0.5;
+			double mm = (v.x, v.y, v.z * ps).Length() / u;
+			if (mm >= 0.5) continue;
+			bestM = max(bestM, mm);
+		}
+		return bestM * TICRATE;
+	}
+
 	void Push(Vector3 tip, Vector3 pos)
 	{
 		head = (head + 1) % HIST;
@@ -907,6 +946,7 @@ class RSVR_Hand play
 		Vector3 bin = Place(BladeIn(k));
 		Vector3 bout = Place(BladeOut(k));
 		Push(bout, mo.pos);
+		ThrowSample(mo);
 		if (!havePrev)
 		{
 			prevIn = bin; prevH = fH;
@@ -1546,7 +1586,7 @@ class RSVR_Hand play
 			t1 = t0;
 			p1 = p0;
 		}
-		if (best < THROW_MIN * vu / 35. || vel.Length() <= 0)
+		if (ThrowMs() < THROW_MIN || vel.Length() <= 0)     // ONE THROW: the hand decides (ThrowSample)
 			return false;
 
 		double spd = clamp(vel.Length() * 3, 14, 42);

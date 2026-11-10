@@ -1,4 +1,4 @@
-RS_Brutal22WeaponsQ -- BD22 VR Reloaded 2.0.4e
+RS_Brutal22WeaponsQ -- BD22 VR Reloaded 2.0.4f
 =====================================
 
 BRUTAL DOOM v22, IN VR, ON A QUEST. As an addon, on the stock engine.
@@ -38,13 +38,13 @@ says so plainly here rather than faking it.
 
 LOAD ORDER
 ----------
-    doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4e.pk3
+    doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4f.pk3
 
 Doom 2, not Freedoom: BD_VoxelPack's voxeldef names Doom 2's own sprites and Freedoom fails on it.
 
 With LegenDoom 3.0 (the LD mode below), LegenDoom goes right after doom2, so Brutal Doom's title map, HUD and
 sounds win:
-    doom2.wad  ->  LegenDoom_3.0.pk3  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4e.pk3
+    doom2.wad  ->  LegenDoom_3.0.pk3  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4f.pk3
 
 
 RELOADING, WITH YOUR HANDS

@@ -347,7 +347,7 @@ class RSG_State play
 	const FUSE = 48;				// BD22: GrenadeTime 3, 16 tics a count
 	const RING_GRAB = 12.0;			// cm round the ring the off hand can take it
 	const PULL = 8.0;				// cm past that: the pin is out
-	const HIST = 6;
+	const HIST = 7;		// ONE THROW (RSQ 11-10): the series' 7 tics (was 6)
 	const RING_F = 3.45;		// the ring's centre: nade.md3 as drawn in the FBX hand (MODELDEF.rsq RQNP, fit_nade.py), gun hand cm (F, L, U)
 	const RING_L = 5.12;
 	const RING_U = 5.06;
@@ -642,16 +642,23 @@ class RSG_State play
 	}
 
 	// the fastest step of the hand over the last tics, in the BODY'S frame (forward, left, up),
-	// so the player's own walking and turning are already out of it
+	// so the player's own walking and turning are already out of it.
+	// ONE THROW (RSQ series, owner 11-10: "one throw for everything"): the series' one sampler, as in RSQ Grenade (hand.zs
+	// Sample / Peak), RSQ Saber, RSQ ShieldSaw and this pack's axe: the fastest 2-TIC window over the last 7 tics (it was
+	// the fastest single-tic step), the vertical squash (pixelstretch) taken out of the speed, and over a metre in two
+	// tics no motion (a pose jump). Still map units a tic, so THROW_MIN (2.5 m/s) and the flight read it as before.
 	Vector3 Swing(out double best)
 	{
 		best = 0;
 		Vector3 vel = (0, 0, 0);
-		for (int i = 0; i < count - 1; i++)
+		double ps = level.pixelstretch > 0.1 ? level.pixelstretch : 1.2;
+		double vu = geo.vu > 0 ? geo.vu : 34;
+		for (int i = 0; i + 2 < count; i++)
 		{
-			int a = (head - i + HIST) % HIST, b = (head - i - 1 + HIST) % HIST;
-			Vector3 v = (hx[a] - hx[b], hy[a] - hy[b], hz[a] - hz[b]);
-			double rel = v.Length();
+			int a = (head - i + HIST) % HIST, b = (head - i - 2 + HIST) % HIST;
+			Vector3 v = (hx[a] - hx[b], hy[a] - hy[b], hz[a] - hz[b]) * 0.5;
+			double rel = (v.x, v.y, v.z * ps).Length();
+			if (rel / vu >= 0.5) continue;
 			if (rel > best)
 			{
 				best = rel;
