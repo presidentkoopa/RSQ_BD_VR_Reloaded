@@ -25,22 +25,26 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4g.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4h.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4g.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4h.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4g
+## Changelog: 2.0.3h to 2.0.4h
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4g.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4h.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4h** (11-11; *not yet run*): the RSQ series' haptic buzz no longer counts as a shot. With RSQ
+  Accessibility's Rumble Backup on and Quake Haptics at 0, every buzz is a 0.1-unit hitscan that touches nothing; the
+  muzzle flash, the gun's sound tail and the recoil kick took it for a shot (`rsq/flash.zs`, `rsq/recoil.zs`). Both now
+  skip a trace under one unit long with LAF_NOINTERACT (`RSQ_Ballistics.IsBuzzTrace`).
 - **What's new in 2.0.4g** (11-11; *code only, not shown: not run, not load-checked, by the owner's order*): the live
   scope's eye and the grenade throw's mouth use the engine's fixed standing eye height (the player class's ViewHeight,
   `RSVR_VRHand.StandEyeHeight`), not the pawn's ViewHeight. RSQ SlowMo's DOWN scales the pawn's ViewHeight to 40%, which

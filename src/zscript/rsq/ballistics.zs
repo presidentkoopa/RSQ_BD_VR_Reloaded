@@ -53,6 +53,14 @@ class RSQ_Ballistics : EventHandler
 		RSQ_Tracer.Attach(a, self);
 	}
 
+	// 2.0.4h: the RSQ series' haptic buzz (RSQ Accessibility's Rumble Backup with Quake Haptics 0, and the same 0.1-unit
+	// pulse in DistanceGrab, Grapple, Wheel) is a hitscan of 0.1 units with LAF_NOINTERACT that touches nothing. It is
+	// not a shot: no muzzle flash, no tail, no kick. No gun of BD22's fires a trace under a unit long.
+	static bool IsBuzzTrace(int flags, double dist)
+	{
+		return (flags & LAF_NOINTERACT) && dist > 0 && dist < 1.0;
+	}
+
 	// F11: what counts as a SHOT for recoil and the flash, the test trails already used
 	static bool IsShot(Actor a)
 	{

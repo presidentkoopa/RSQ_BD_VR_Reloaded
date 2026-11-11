@@ -249,6 +249,8 @@ class RSQ_Recoil : EventHandler
 	// return value is whether to BLOCK the shot. We only watch, so always false.
 	override bool WorldHitscanPreFired(WorldEvent e)
 	{
+		if (RSQ_Ballistics.IsBuzzTrace(e.AttackLineFlags, e.AttackDistance))	// 2.0.4h: a haptic buzz, not a shot
+			return false;
 		Kick(PlayerPawn(e.Thing));
 		return false;
 	}

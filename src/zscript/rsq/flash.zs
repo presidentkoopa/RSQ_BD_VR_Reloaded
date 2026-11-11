@@ -120,6 +120,8 @@ class RSQ_FlashHandler : EventHandler
 
 	override bool WorldHitscanPreFired(WorldEvent e)
 	{
+		if (RSQ_Ballistics.IsBuzzTrace(e.AttackLineFlags, e.AttackDistance))	// 2.0.4h: a haptic buzz, not a shot
+			return false;
 		Shot(PlayerPawn(e.Thing));
 		return false;
 	}
