@@ -622,7 +622,19 @@ class RSB_State play
 			}
 			ch[0] = RSB.EMPTY;
 			// the set's own casings where it does not throw them itself (BD22: its SSGCaseSpawner)
-			mo.GiveInventory('RSB_EjectT', RSB_Guns.WorldEject(i) ? 1 : max(1, liveAtOpen));
+			// 2.0.4i (owner 11-11: "bd22 revolver empties one at a time instead of all at once on reload"): one casing
+			// per EMPTY in the cylinder, all on the tic it opens (the set's count of live rounds was used here, so an
+			// emptied cylinder threw one casing). The capacity is the set's own loaded count's maximum.
+			int empties = 1;
+			if (!RSB_Guns.WorldEject(i))
+			{
+				class<Inventory> lc = RSB_Guns.Loaded(i);
+				int cap = lc ? GetDefaultByType(lc).MaxAmount : 6;
+				empties = max(1, cap - liveAtOpen);
+			}
+			mo.GiveInventory('RSB_EjectT', empties);
+			if (RSB.Debug(mo.player))
+				Console.Printf("rsb t%d speedloader gun %d open: %d empties out (live %d)", mo.Level.maptime, i, empties, liveAtOpen);
 			return;
 		}
 		if (spent == 0)

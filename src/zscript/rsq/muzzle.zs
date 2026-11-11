@@ -63,6 +63,22 @@ class RSQ_Muzzle : EventHandler
 		let mo = PlayerPawn(c.target);
 		if (!mo || !mo.player || !RSVR_VRHand.InVR(mo))
 			return;
+		// 2.0.4i (owner 11-11: "while DOWN the shots seem to come from far to my right"; rig R3): BD22's muzzle glow
+		// (PlayerMuzzle1-3: a bright sprite with a dynamic light, A_SpawnItemEx 30 forward, 5 right, 30-45 up) is placed
+		// from the PAWN, not the gun: it stays at standing chest height to the front right wherever the gun is, about
+		// 0.8 m above a gun held while DOWN. It is put on the drawn muzzle (the hand when the wall guard says no).
+		if (c.Speed == 0 && c.vel == (0, 0, 0))
+		{
+			String cn = c.GetClassName();
+			if (cn.Left(12) ~== "PlayerMuzzle")
+			{
+				Vector3 at; bool ok;
+				[at, ok] = Where(mo);	// the main hand's gun (BD22's own states spawn it; an off-hand copy's glow lands there too)
+				c.SetOrigin(at, false);
+				c.ClearInterpolation();
+				return;
+			}
+		}
 		if (RSQ_Ballistics.IsMelee(c) || RSQ_Ballistics.MeleeHeld(mo))
 			return;
 		Name n = c.GetClassName();

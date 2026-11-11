@@ -262,6 +262,7 @@ class RSQ_Hands : Weapon
 	int offMesh, offMeshPrev;			// the off fist's punch frame
 	int offPunchTic;					// -1 idle; the off-hand trigger punch's tic
 	bool offTrigPrev;	// sprites where BD22's own hand model shows (taunts, grabs, carries)
+	Weapon readyWas;	// 2.0.4i: the main hand's weapon last tic (Upkeep: a switch TO a gun takes the off glove back)
 	bool dotClash;		// the scope reticle's layer id clashes with another lane's: said once
 
 	override void BeginPlay()
@@ -330,7 +331,22 @@ class RSQ_Hands : Weapon
 		// now, put there on purpose (a holster, the Wheel, a catch, switch hand), so no copy is stale any more: it stays
 		// until the player moves it. (A copy whose gun left the main hand used to be swapped for the fist here.)
 		bool stale = false;
-		if (h && (!off || stale) && p.PendingWeapon == WP_NOCHANGE)
+		// 2.0.4i (owner 11-11: no hands on the guns, no pump, no rifle grenade load): RSQ Melee's off glove
+		// (RSQ_GloveOff: Start With Melee Hands, a Wheel pick of the gloves) stayed in the off hand after the main
+		// hand went back to a gun, so these hands never came back. When the main hand SWITCHES to a gun of the hand
+		// table and the off hand holds a glove, the glove goes back to the inventory and the hands return. Only on
+		// the switch: a glove picked into the off hand while a gun is already held stays.
+		let rh = RSQ_Hands(h);
+		if (rh && off && !stale && p.ReadyWeapon && p.ReadyWeapon != rh.readyWas && RSQ_HandTable.Index(p.ReadyWeapon) > 0)
+		{
+			String on = off.GetClassName();
+			if (on ~== "RSQ_GloveOff")
+				stale = true;
+		}
+		bool can = p.PendingWeapon == WP_NOCHANGE;
+		if (rh && (!stale || can))	// a switch still pending: try again next tic
+			rh.readyWas = p.ReadyWeapon;
+		if (h && (!off || stale) && can)
 			p.PendingWeapon = h;
 	}
 

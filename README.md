@@ -25,22 +25,32 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4h.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4i.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4h.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4i.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4h
+## Changelog: 2.0.3h to 2.0.4i
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4h.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4i.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4i** (11-11; *not yet run*): the hands come back to the off hand when you switch the main hand
+  to a gun while RSQ Melee's off glove (`RSQ_GloveOff`) holds it (Start With Melee Hands, a Wheel pick of the gloves).
+  Before, the glove stayed and the gun had no hands, no pump and no rifle grenade load (`RSQ_Hands.Upkeep`). A glove
+  picked into the off hand while a gun is already held stays.
+  Also: BD22's muzzle glow (PlayerMuzzle1-3, a bright sprite with a light) is put on the drawn muzzle. BD22 places it
+  from the pawn (30 forward, 5 right, 30-45 up), so it stayed at standing chest height to the front right wherever the
+  gun was, about 0.8 m above a gun held while RSQ SlowMo's DOWN has you low (owner: "the shots seem to come from far to
+  my right while DOWN").
+  Also: BD22's Revolver (Real reload, speedloader) throws one casing per empty chamber when it opens, all on that tic;
+  it threw one casing per open, counted from the live rounds (owner: "empties one at a time instead of all at once").
 - **What's new in 2.0.4h** (11-11; *not yet run*): the RSQ series' haptic buzz no longer counts as a shot. With RSQ
   Accessibility's Rumble Backup on and Quake Haptics at 0, every buzz is a 0.1-unit hitscan that touches nothing; the
   muzzle flash, the gun's sound tail and the recoil kick took it for a shot (`rsq/flash.zs`, `rsq/recoil.zs`). Both now
