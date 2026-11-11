@@ -20,6 +20,16 @@ class RSVR_VRHand play
 		return mo && mo.player && mo.player.PlayInVR && mo.OverrideAttackPosDir;
 	}
 
+	// THE ENGINE'S FIXED EYE HEIGHT (2.0.4g, owner 2026-11-11). With vr_crouch_use_button on, QuestZDoom places the eyes and
+	// the hands at viewz + the headset's height - a height it caches ONCE (hw_openxrdevice.cpp:158-170,
+	// getDoomPlayerHeightWithoutCrouch: player->DefaultViewHeight(), the pawn's ViewHeight at its first frame). RSQ SlowMo's
+	// DOWN scales the pawn's ViewHeight to 40% while you are down, so mo.ViewHeight is not that number then; the class's
+	// default is, crouched or not. A crouch still reaches the eye through viewz. Code only, not shown.
+	static clearscope double StandEyeHeight(PlayerPawn mo)
+	{
+		return mo ? mo.Default.ViewHeight : 41.0;
+	}
+
 	// the weapon controller, world position -- 2.0.3s: where it is NOW (RSVR_HandSync below), not where
 	// the last rendered frame left it
 	static Vector3 HandPos(PlayerPawn mo)

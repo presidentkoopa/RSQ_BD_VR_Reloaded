@@ -227,7 +227,7 @@ class RSQ_Scope abstract
 		Vector3 eye = (mo.pos.x, mo.pos.y, p.viewz);
 		let cb = CVar.FindCVar('vr_crouch_use_button');
 		if (!cb || cb.GetBool())
-			eye.z += (mo.HmdPosition.y + CVarF('vr_height_adjust', 0)) * vu / ps - mo.ViewHeight;
+			eye.z += (mo.HmdPosition.y + CVarF('vr_height_adjust', 0)) * vu / ps - RSVR_VRHand.StandEyeHeight(mo);	// 2.0.4g: never DOWN's scaled ViewHeight
 		if (side != 0)
 		{
 			double half = CVarF('vr_ipd', 0.064) * 0.5 * vu * side;

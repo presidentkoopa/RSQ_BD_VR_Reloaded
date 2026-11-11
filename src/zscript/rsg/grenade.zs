@@ -561,7 +561,7 @@ class RSG_State play
 		Vector3 e = (mo.pos.x, mo.pos.y, p.viewz);
 		let cb = CVar.FindCVar('vr_crouch_use_button');
 		if (mo.HmdPosition.y > 0.3 && (!cb || cb.GetBool()))
-			e.z += (mo.HmdPosition.y + RSR.Float('vr_height_adjust', 0)) * geo.vu / geo.ps - mo.ViewHeight;
+			e.z += (mo.HmdPosition.y + RSR.Float('vr_height_adjust', 0)) * geo.vu / geo.ps - RSVR_VRHand.StandEyeHeight(mo);	// 2.0.4g: never DOWN's scaled ViewHeight
 		return e;
 	}
 
