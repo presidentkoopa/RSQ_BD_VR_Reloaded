@@ -25,22 +25,25 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4i.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4j.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4i.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4j.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4i
+## Changelog: 2.0.3h to 2.0.4j
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4i.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4j.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4j** (11-12; *rig only, not headset-confirmed*): Ballistics defaults to **Low** (it was Stock). A
+  config saved under the old default is moved from Stock to Low once (`rsq_ballistics_cfg`); after that the
+  Ballistics row stays as you set it, Stock included.
 - **What's new in 2.0.4i** (11-11; *not yet run*): the hands come back to the off hand when you switch the main hand
   to a gun while RSQ Melee's off glove (`RSQ_GloveOff`) holds it (Start With Melee Hands, a Wheel pick of the gloves).
   Before, the glove stayed and the gun had no hands, no pump and no rifle grenade load (`RSQ_Hands.Upkeep`). A glove

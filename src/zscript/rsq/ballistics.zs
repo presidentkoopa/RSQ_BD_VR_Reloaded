@@ -1,6 +1,6 @@
 // RS enhanced ballistics for BD22 on QuestZDoom 17.x, rsq_ballistics 1.
-// Off (the default) is BD22's own ballistics: with the cvar off nothing here
-// runs. On, it only adds to shots that already happened, owning none of BD22's
+// Low is the default since 2.0.4j (owner 11-12: "enhanced ballistics default on").
+// Stock is BD22's own ballistics: with the cvar at 0 nothing here runs. On, it only adds to shots that already happened, owning none of BD22's
 // actors: impacts throw chips and dust that match the surface (SURFACES lump),
 // and players' damaging projectiles get a short particle trail and the same
 // impacts where they land. Hard caps keep it cheap on Quest.
@@ -37,6 +37,19 @@ class RSQ_Ballistics : EventHandler
 	static RSQ_Ballistics Get()
 	{
 		return RSQ_Ballistics(EventHandler.Find('RSQ_Ballistics'));
+	}
+
+	// 2.0.4j: a config saved before the default became Low still holds 0, and a saved value outlives a new default.
+	// Once per config, a saved Stock is moved to Low; after that the Ballistics row is the player's and stays as set.
+	override void WorldLoaded(WorldEvent e)
+	{
+		let done = CVar.FindCVar('rsq_ballistics_cfg');
+		if (!done || done.GetInt() >= 1)
+			return;
+		let cv = CVar.FindCVar('rsq_ballistics');
+		if (cv && cv.GetInt() == 0)
+			cv.SetInt(1);
+		done.SetInt(1);
 	}
 
 	override void WorldThingSpawned(WorldEvent e)

@@ -2,7 +2,8 @@
 user bool rsq_hands = true;			// VR hands on the controllers
 user int rsr_reload = 1;			// Reloading: 1 VR (zscript/rsr, on the guns that have it; the rest stock), 0 stock
 user bool rsq_reload_nonstd = true;	// 1.99x: Reload Non-Standard Guns -- the guns Brutal Doom gives no reload (zscript/rsq/counters.zs GUN[]); off = Brutal Doom's own
-server int rsq_ballistics = 0;	// 1.97 F5: 0 Stock (BD22), 1 Low, 2 Max	// enhanced impacts and projectile trails (server: they use playsim random)
+server int rsq_ballistics = 1;	// 1.97 F5: 0 Stock (BD22), 1 Low, 2 Max; 2.0.4j (owner 11-12 03:41: "enhanced ballistics default on"): Low is the default
+server int rsq_ballistics_cfg = 0;	// 2.0.4j: 1 once a config saved under the old default (Stock) has been moved to Low (ballistics.zs WorldLoaded)	// enhanced impacts and projectile trails (server: they use playsim random)
 user int rsq_punch = 0;			// VR punching: a real punch with either fist lands (zscript/rsq/fists.zs)
 // 2026-10-23: a punch that lands on a switch or any usable line works it, at the fist's own reach
 // instead of the engine's 64-unit use range. The LINE'S SPECIAL decides, not its texture.
