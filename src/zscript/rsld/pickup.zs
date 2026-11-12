@@ -44,6 +44,18 @@ class RSLD_Converter : Thinker
 				return;
 			}
 			if (RSLD.Debug()) Console.Printf("RSLD drop: %s kept (%s)", src.GetClassName(), from == 1 ? "from a Bossfight" : "no legendary death matched");
+			// 2.0.4k (owner 11-12 05:37: "miniboss fights drop legendary weapons of any rarity on a weighted scale, so the more
+			// rare, the less likely to drop. maybe that can be eased as the miniboss tier gets higher?"): a Bossfight's drop
+			// has its rarity rolled here, by the fight's tier (RSLD_Reroll.TierRarity), with an effect LegenDoom rolls at that
+			// rarity on this slot. No such effect carried: the drop stays as LegenDoom rolled it.
+			cvar tw = cvar.FindCvar("rsld_tier_rarity");
+			if (from == 1 && rarity >= 0 && (!tw || tw.GetBool()))
+			{
+				int nr = RSLD_Reroll.TierRarity(hb.dropTier);
+				string ne = nr == rarity ? eff : RSLD_Reroll.PickAt(slot, nr);
+				if (RSLD.Debug()) Console.Printf("RSLD drop: Bossfight tier %d rolls %s (LegenDoom rolled %s)%s", hb.dropTier, RSLD_Data.Rarities[nr], RSLD_Data.Rarities[rarity], ne == "" ? ": no effect carried at that rarity on this slot, kept as it was" : "");
+				if (ne != "") { rarity = nr; eff = ne; }
+			}
 		}
 		// LegenDoom tossed it from (0,0) + 4 because the monster actor was gone (handler.zs WorldThingDied)
 		if (abs(src.pos.x) < 64 && abs(src.pos.y) < 64)
@@ -219,6 +231,33 @@ class RSLD_Reroll play
 
 	// keep e if the LD mode carries it (an RSLD_Fx_<e> class exists); else one it carries from LegenDoom's own roll
 	// list for that slot and rarity (tables.zs Rolls, parsed from LD<Slot>RandomLegendary). Option rsld_reroll.
+	// 2.0.4k: A BOSSFIGHT DROP'S RARITY BY ITS TIER. Weights for the four rarities, commonest first: 55 / 28 / 12 / 5 at
+	// tier 1; each tier above it multiplies rarity r's weight by 1 + 0.5 r (tier 2: 41 / 31 / 18 / 9 %, tier 3: 33 / 34 /
+	// 22 / 12 %). The rarer, the less likely; a higher tier eases it.
+	static int TierRarity(int tier)
+	{
+		static const double BASE[] = { 55, 28, 12, 5 };
+		double w[4]; double tot = 0;
+		for (int r = 0; r < 4; r++) { w[r] = BASE[r] * (1.0 + 0.5 * r * max(0, tier - 1)); tot += w[r]; }
+		double x = frandom(0, tot);
+		for (int r = 0; r < 4; r++) { if (x < w[r]) return r; x -= w[r]; }
+		return 0;
+	}
+	// an effect LegenDoom rolls on slot s at rarity r that the LD mode carries; "" none
+	static string PickAt(int s, int r)
+	{
+		Array<string> pool;
+		string key = RSLD_Data.Slots[s] .. "|" .. RSLD_Data.Rarities[r] .. "|";
+		for (int i = 0; i < RSLD_Tables.Rolls.Size(); i++)
+		{
+			string row = RSLD_Tables.Rolls[i];
+			if (row.Left(key.Length()) != key) continue;
+			string eff = row.Mid(key.Length());
+			if (Carried(eff)) pool.Push(eff);
+		}
+		return pool.Size() ? pool[random(0, pool.Size() - 1)] : "";
+	}
+
 	static string Reroll(int s, int r, string e)
 	{
 		if (Carried(e) || r < 0) return e;
