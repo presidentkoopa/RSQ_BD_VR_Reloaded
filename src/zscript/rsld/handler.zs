@@ -71,6 +71,8 @@ class RSLD_Handler : EventHandler
 	Array<int> deathTier;	// 2.0.4k: the Bossfight's tier the legendary died in (RSQMB_Service "tier"; 1 when it gives none)
 	Array<int> deathBoss;	// 2.0.4l: 1 the miniboss itself, 0 one of its boosted legendary thralls
 	int dropBoss;
+	Array<int> deathDown;	// 2.0.4m: 0, or 1-3 the DOWN bar's step a DOWN target died in
+	int dropDown;
 	int dropTier;		// the tier of the death DropFromBossfight matched last
 	int bfTier;		// the last tier a dying Bossfight monster reported
 	vector3 spot;
@@ -819,7 +821,20 @@ class RSLD_Handler : EventHandler
 		if (tr < 0) tr = max(1, bfTier);
 		else { tr += 1; bfTier = tr; }
 		deathX.Push(t.pos.x); deathY.Push(t.pos.y); deathZ.Push(t.pos.z); deathT.Push(level.maptime); deathBF.Push(bf); deathTier.Push(tr); deathBoss.Push((mb && mb.GetInt("wasboss", "", 0, 0, t) == 1) ? 1 : 0);
-		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); deathBF.Delete(0); deathTier.Delete(0); deathBoss.Delete(0); }
+		// 2.0.4m: RSQ SlowMo's DOWN target (its boosted legendary champion), and the step of the bar it died in (1-3)
+		let smi = ServiceIterator.Find("RSQSM_Service"); let sms = smi.Next();
+		// A BOOSTED LEGENDARY DORMANT CHAMPION (owner 11-12 14:15: "I mean boosted legendary dormant champions. Not down revenge
+		// targets unless they are boosted dormant legendary champions. Not thralls."): what the monster IS, not who made it --
+		// a LegenDoom legendary (boosted by LegenDoom, and here it has just died as one) that is also a Champion (Champions'
+		// champion_PersistentInfo; its powers dormant until the legendary transformed), and not part of a Bossfight. The
+		// value is its drop row: the DOWN bar's step when it is also RSQ SlowMo's DOWN target, else the first.
+		class<Inventory> chc = RSLD.IC("champion_PersistentInfo");
+		bool champ = chc && t.FindInventory(chc);
+		// (or a Champion by a colour token given by name, as RSQ SlowMo's DOWN and RSQ Miniboss make them)
+		for (let ci = t.Inv; ci && !champ; ci = ci.Inv) { string cn = ci.GetClassName(); if (cn.Left(9) ~== "champion_" && cn.IndexOf("Token") >= 0) champ = true; }
+		int dstep = sms ? sms.GetInt("down.target", "", 0, 0, t) : 0;
+		deathDown.Push((champ && bf == 0) ? max(1, dstep) : 0);
+		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); deathBF.Delete(0); deathTier.Delete(0); deathBoss.Delete(0); deathDown.Delete(0); }
 		if (RSLD.Debug() && bf) Console.Printf("RSLD legendary died: %s came with a Bossfight", t.GetClassName());
 	}
 
@@ -850,13 +865,14 @@ class RSLD_Handler : EventHandler
 		for (int i = deathT.Size() - 1; i >= 0; i--)
 		{
 			if (level.maptime - deathT[i] > 105) break;
-			if (origin) { dropTier = i < deathTier.Size() ? deathTier[i] : 1; dropBoss = i < deathBoss.Size() ? deathBoss[i] : 0; return i < deathBF.Size() ? deathBF[i] : -1; }
+			if (origin) { dropTier = i < deathTier.Size() ? deathTier[i] : 1; dropBoss = i < deathBoss.Size() ? deathBoss[i] : 0; dropDown = i < deathDown.Size() ? deathDown[i] : 0; return i < deathBF.Size() ? deathBF[i] : -1; }
 			double dx = deathX[i] - at.x, dy = deathY[i] - at.y, d = dx * dx + dy * dy;
 			if (d < bd) { bd = d; best = i; }
 		}
 		if (best < 0 || bd > 256.0 * 256.0 || best >= deathBF.Size()) return -1;
 		dropTier = best < deathTier.Size() ? deathTier[best] : 1;
 		dropBoss = best < deathBoss.Size() ? deathBoss[best] : 0;
+		dropDown = best < deathDown.Size() ? deathDown[best] : 0;
 		return deathBF[best];
 	}
 

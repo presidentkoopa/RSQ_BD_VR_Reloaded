@@ -36,24 +36,27 @@ class RSLD_Converter : Thinker
 		{
 			let hb = RSLD_Handler(EventHandler.Find("RSLD_Handler"));
 			int from = hb ? hb.DropFromBossfight(at) : -1;
-			if (from == 0)
+			// WHO DROPS A LEGENDARY WEAPON (2.0.4m, owner 11-12 14:11: "legendary weapons: only dropped by
+			// boostedlegendarydormantchampions and miniboss, not thralls"): the Bossfight's MINIBOSS, and any monster
+			// that is a LegenDoom legendary and a Champion outside a Bossfight (handler.zs, hb.dropDown). A thrall's, and any other monster's, drops nothing.
+			bool down = hb && hb.dropDown > 0 && from >= 0;
+			bool boss = from == 1 && hb.dropBoss != 0;
+			if (from == 0 && !down || from == 1 && !boss && !down)
 			{
-				if (RSLD.Debug()) Console.Printf("RSLD drop: %s suppressed (not from a Bossfight; LegenDoom + Champions + RSQ Miniboss)", src.GetClassName());
+				if (RSLD.Debug()) Console.Printf("RSLD drop: %s suppressed (%s)", src.GetClassName(), from == 1 ? "a thrall's" : "not the miniboss's nor a legendary champion's");
 				src.Destroy();
 				Destroy();
 				return;
 			}
-			if (RSLD.Debug()) Console.Printf("RSLD drop: %s kept (%s)", src.GetClassName(), from == 1 ? "from a Bossfight" : "no legendary death matched");
-			// 2.0.4k (owner 11-12 05:37: "miniboss fights drop legendary weapons of any rarity on a weighted scale, so the more
-			// rare, the less likely to drop. maybe that can be eased as the miniboss tier gets higher?"): a Bossfight's drop
-			// has its rarity rolled here, by the fight's tier (RSLD_Reroll.TierRarity), with an effect LegenDoom rolls at that
-			// rarity on this slot. No such effect carried: the drop stays as LegenDoom rolled it.
+			if (RSLD.Debug()) Console.Printf("RSLD drop: %s kept (%s)", src.GetClassName(), down ? "a boosted legendary dormant champion's" : boss ? "the miniboss's" : "no legendary death matched");
+			// the rarity is rolled here (RSLD_Reroll.TierRarity): the miniboss by the fight's tier, a DOWN target by the step
+			// of the bar it died in, with an effect LegenDoom rolls at that rarity on this slot. None carried: as it was.
 			cvar tw = cvar.FindCvar("rsld_tier_rarity");
-			if (from == 1 && rarity >= 0 && (!tw || tw.GetBool()))
+			if ((boss || down) && rarity >= 0 && (!tw || tw.GetBool()))
 			{
-				int nr = RSLD_Reroll.TierRarity(hb.dropTier, hb.dropBoss != 0);
+				int nr = down ? RSLD_Reroll.TierRarity(hb.dropDown, false) : RSLD_Reroll.TierRarity(hb.dropTier, true);
 				string ne = nr == rarity ? eff : RSLD_Reroll.PickAt(slot, nr);
-				if (RSLD.Debug()) Console.Printf("RSLD drop: Bossfight tier %d %s rolls %s (LegenDoom rolled %s)%s", hb.dropTier, hb.dropBoss ? "miniboss" : "thrall", RSLD_Data.Rarities[nr], RSLD_Data.Rarities[rarity], ne == "" ? ": no effect carried at that rarity on this slot, kept as it was" : "");
+				if (RSLD.Debug()) Console.Printf("RSLD drop: %s rolls %s (LegenDoom rolled %s)%s", down ? String.Format("legendary champion, row %d,", hb.dropDown) : String.Format("miniboss, tier %d,", hb.dropTier), RSLD_Data.Rarities[nr], RSLD_Data.Rarities[rarity], ne == "" ? ": no effect carried at that rarity on this slot, kept as it was" : "");
 				if (ne != "") { rarity = nr; eff = ne; }
 			}
 		}
@@ -232,8 +235,9 @@ class RSLD_Reroll play
 	// keep e if the LD mode carries it (an RSLD_Fx_<e> class exists); else one it carries from LegenDoom's own roll
 	// list for that slot and rarity (tables.zs Rolls, parsed from LD<Slot>RandomLegendary). Option rsld_reroll.
 	// A BOSSFIGHT DROP'S RARITY (2.0.4k; the owner's numbers 2.0.4l, 11-12 05:50), weights Common / Uncommon / Rare / Epic:
-	//   a boosted legendary THRALL, by the fight's tier:  85 / 12 / 2 / 1 first,  75 / 20 / 3 / 2 second,  65 / 35 / 6 / 4
-	//   third and above
+	//   a BOOSTED LEGENDARY DORMANT CHAMPION (a legendary that is a Champion, outside a Bossfight):  85 / 12 / 2 / 1;
+	//   when it is also RSQ SlowMo's DOWN target, by the step of the bar it died in:  that row the bottom third,
+	//   75 / 20 / 3 / 2 the middle,  65 / 35 / 6 / 4 the top (2.0.4m: these were on the thralls, who drop nothing now)
 	//   the MINIBOSS:  50 / 30 / 15 / 5 "to start" (the first tier); each tier above it multiplies rarity r's weight by
 	//   1 + 0.5 r, as 2.0.4k eased it (my numbers past the first tier: the owner gave the start only)
 	static int TierRarity(int tier, bool boss)

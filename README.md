@@ -25,22 +25,26 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4l.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4m.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4l.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4m.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4l
+## Changelog: 2.0.3h to 2.0.4m
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4l.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4m.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4m** (11-12; *loads; not run*): legendary weapons drop only from a Bossfight's miniboss and from
+  boosted legendary dormant champions (a LegenDoom legendary that is also a Champion, outside a Bossfight). Thralls
+  drop nothing. A legendary champion rolls 85 / 12 / 2 / 1; when it is also the DOWN target, 75 / 20 / 3 / 2 or
+  65 / 35 / 6 / 4 for the middle and top of the DOWN bar.
 - **What's new in 2.0.4l** (11-12; *loads; the roll not run*): the owner's drop weights (Common / Uncommon / Rare /
   Epic). A boosted legendary thrall: 85 / 12 / 2 / 1 at the first tier, 75 / 20 / 3 / 2 at the second, 65 / 35 / 6 / 4
   at the third. The miniboss: 50 / 30 / 15 / 5 to start, rarer rarities gaining with each tier.
