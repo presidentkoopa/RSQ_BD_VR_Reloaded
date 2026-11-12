@@ -25,22 +25,25 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4o.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4p.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4o.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4p.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4o
+## Changelog: 2.0.3h to 2.0.4p
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4o.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4p.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4p** (11-12; *rig only, not headset-confirmed*): the floor candle has its flame again. The voxel
+  pack's candle flame draws a sprite called WICK that nothing in the load order ships (RSQ Monsters' Wicked Archvile used
+  that name, so candles wore a piece of it until 11-12); this pack now ships a small three-frame flame under it.
 - **What's new in 2.0.4o** (11-12; *rig only, not headset-confirmed*): the HUD can leave out health and armour
   (`rsq_hud_nohp`, the row "Remove HUD Health and Armor" in RSQ Gun Cards' options), on every status bar style.
 - **What's new in 2.0.4n** (11-12; *loads; not run*): the sound on quitting the game is gone. It was LegenDoom's
