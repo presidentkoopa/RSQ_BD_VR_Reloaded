@@ -73,3 +73,4 @@ user int rsq_switch_log = 0;
 // behind the hands. Two-handing is the engine's own Two-Hand Grip (vr_two_handed_weapons). The cvar stays declared only so a
 // saved ini line for it causes no error; nothing reads it.
 user bool rsq_twohand_rifle = false;
+user bool rsq_hud_nohp = false;   // the HUD draws no health or armour (owner 2026-11-12 15:36; the row is in RSQ Gun Cards' options)

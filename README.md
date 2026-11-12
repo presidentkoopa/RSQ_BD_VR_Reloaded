@@ -25,22 +25,24 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4n.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4o.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4n.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4o.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4n
+## Changelog: 2.0.3h to 2.0.4o
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4n.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4o.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4o** (11-12; *rig only, not headset-confirmed*): the HUD can leave out health and armour
+  (`rsq_hud_nohp`, the row "Remove HUD Health and Armor" in RSQ Gun Cards' options), on every status bar style.
 - **What's new in 2.0.4n** (11-12; *loads; not run*): the sound on quitting the game is gone. It was LegenDoom's
   (`menu/quit1`, `menu/quit2`); Brutal Doom sets none. Silent with LegenDoom or without.
 - **What's new in 2.0.4m** (11-12; *loads; not run*): legendary weapons drop only from a miniboss and from
