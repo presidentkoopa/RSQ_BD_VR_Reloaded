@@ -51,9 +51,9 @@ class RSLD_Converter : Thinker
 			cvar tw = cvar.FindCvar("rsld_tier_rarity");
 			if (from == 1 && rarity >= 0 && (!tw || tw.GetBool()))
 			{
-				int nr = RSLD_Reroll.TierRarity(hb.dropTier);
+				int nr = RSLD_Reroll.TierRarity(hb.dropTier, hb.dropBoss != 0);
 				string ne = nr == rarity ? eff : RSLD_Reroll.PickAt(slot, nr);
-				if (RSLD.Debug()) Console.Printf("RSLD drop: Bossfight tier %d rolls %s (LegenDoom rolled %s)%s", hb.dropTier, RSLD_Data.Rarities[nr], RSLD_Data.Rarities[rarity], ne == "" ? ": no effect carried at that rarity on this slot, kept as it was" : "");
+				if (RSLD.Debug()) Console.Printf("RSLD drop: Bossfight tier %d %s rolls %s (LegenDoom rolled %s)%s", hb.dropTier, hb.dropBoss ? "miniboss" : "thrall", RSLD_Data.Rarities[nr], RSLD_Data.Rarities[rarity], ne == "" ? ": no effect carried at that rarity on this slot, kept as it was" : "");
 				if (ne != "") { rarity = nr; eff = ne; }
 			}
 		}
@@ -231,14 +231,22 @@ class RSLD_Reroll play
 
 	// keep e if the LD mode carries it (an RSLD_Fx_<e> class exists); else one it carries from LegenDoom's own roll
 	// list for that slot and rarity (tables.zs Rolls, parsed from LD<Slot>RandomLegendary). Option rsld_reroll.
-	// 2.0.4k: A BOSSFIGHT DROP'S RARITY BY ITS TIER. Weights for the four rarities, commonest first: 55 / 28 / 12 / 5 at
-	// tier 1; each tier above it multiplies rarity r's weight by 1 + 0.5 r (tier 2: 41 / 31 / 18 / 9 %, tier 3: 33 / 34 /
-	// 22 / 12 %). The rarer, the less likely; a higher tier eases it.
-	static int TierRarity(int tier)
+	// A BOSSFIGHT DROP'S RARITY (2.0.4k; the owner's numbers 2.0.4l, 11-12 05:50), weights Common / Uncommon / Rare / Epic:
+	//   a boosted legendary THRALL, by the fight's tier:  85 / 12 / 2 / 1 first,  75 / 20 / 3 / 2 second,  65 / 35 / 6 / 4
+	//   third and above
+	//   the MINIBOSS:  50 / 30 / 15 / 5 "to start" (the first tier); each tier above it multiplies rarity r's weight by
+	//   1 + 0.5 r, as 2.0.4k eased it (my numbers past the first tier: the owner gave the start only)
+	static int TierRarity(int tier, bool boss)
 	{
-		static const double BASE[] = { 55, 28, 12, 5 };
+		static const double W_THRALL[] = { 85, 12, 2, 1,  75, 20, 3, 2,  65, 35, 6, 4 };
+		static const double W_BOSS[] = { 50, 30, 15, 5 };
 		double w[4]; double tot = 0;
-		for (int r = 0; r < 4; r++) { w[r] = BASE[r] * (1.0 + 0.5 * r * max(0, tier - 1)); tot += w[r]; }
+		int row = clamp(tier, 1, 3) - 1;
+		for (int r = 0; r < 4; r++)
+		{
+			w[r] = boss ? W_BOSS[r] * (1.0 + 0.5 * r * max(0, tier - 1)) : W_THRALL[row * 4 + r];
+			tot += w[r];
+		}
 		double x = frandom(0, tot);
 		for (int r = 0; r < 4; r++) { if (x < w[r]) return r; x -= w[r]; }
 		return 0;

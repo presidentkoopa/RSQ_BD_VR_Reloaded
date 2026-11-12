@@ -25,22 +25,25 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 Download the pk3 from the Releases page and load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4k.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4l.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4k.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4l.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4k
+## Changelog: 2.0.3h to 2.0.4l
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4k.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4l.pk3`. Builds marked
 *rig only* were tested on the development rig.
 
+- **What's new in 2.0.4l** (11-12; *loads; the roll not run*): the owner's drop weights (Common / Uncommon / Rare /
+  Epic). A boosted legendary thrall: 85 / 12 / 2 / 1 at the first tier, 75 / 20 / 3 / 2 at the second, 65 / 35 / 6 / 4
+  at the third. The miniboss: 50 / 30 / 15 / 5 to start, rarer rarities gaining with each tier.
 - **What's new in 2.0.4k** (11-12; *loads; the roll itself not run*): with LegenDoom, Champions and RSQ Miniboss, a
   Bossfight's legendary weapon drop has its rarity rolled by the fight's tier: 55 / 28 / 12 / 5 % weights at tier 1,
   rarer rarities gaining with each tier (`rsld_tier_rarity`, on).

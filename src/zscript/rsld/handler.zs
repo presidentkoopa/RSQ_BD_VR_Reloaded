@@ -69,6 +69,8 @@ class RSLD_Handler : EventHandler
 	Array<double> deathX, deathY, deathZ;
 	Array<int> deathT, deathBF;
 	Array<int> deathTier;	// 2.0.4k: the Bossfight's tier the legendary died in (RSQMB_Service "tier"; 1 when it gives none)
+	Array<int> deathBoss;	// 2.0.4l: 1 the miniboss itself, 0 one of its boosted legendary thralls
+	int dropBoss;
 	int dropTier;		// the tier of the death DropFromBossfight matched last
 	int bfTier;		// the last tier a dying Bossfight monster reported
 	vector3 spot;
@@ -816,8 +818,8 @@ class RSLD_Handler : EventHandler
 		// its own (-1): the fight's last known one.
 		if (tr < 0) tr = max(1, bfTier);
 		else { tr += 1; bfTier = tr; }
-		deathX.Push(t.pos.x); deathY.Push(t.pos.y); deathZ.Push(t.pos.z); deathT.Push(level.maptime); deathBF.Push(bf); deathTier.Push(tr);
-		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); deathBF.Delete(0); deathTier.Delete(0); }
+		deathX.Push(t.pos.x); deathY.Push(t.pos.y); deathZ.Push(t.pos.z); deathT.Push(level.maptime); deathBF.Push(bf); deathTier.Push(tr); deathBoss.Push((mb && mb.GetInt("wasboss", "", 0, 0, t) == 1) ? 1 : 0);
+		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); deathBF.Delete(0); deathTier.Delete(0); deathBoss.Delete(0); }
 		if (RSLD.Debug() && bf) Console.Printf("RSLD legendary died: %s came with a Bossfight", t.GetClassName());
 	}
 
@@ -848,12 +850,13 @@ class RSLD_Handler : EventHandler
 		for (int i = deathT.Size() - 1; i >= 0; i--)
 		{
 			if (level.maptime - deathT[i] > 105) break;
-			if (origin) { dropTier = i < deathTier.Size() ? deathTier[i] : 1; return i < deathBF.Size() ? deathBF[i] : -1; }
+			if (origin) { dropTier = i < deathTier.Size() ? deathTier[i] : 1; dropBoss = i < deathBoss.Size() ? deathBoss[i] : 0; return i < deathBF.Size() ? deathBF[i] : -1; }
 			double dx = deathX[i] - at.x, dy = deathY[i] - at.y, d = dx * dx + dy * dy;
 			if (d < bd) { bd = d; best = i; }
 		}
 		if (best < 0 || bd > 256.0 * 256.0 || best >= deathBF.Size()) return -1;
 		dropTier = best < deathTier.Size() ? deathTier[best] : 1;
+		dropBoss = best < deathBoss.Size() ? deathBoss[best] : 0;
 		return deathBF[best];
 	}
 
