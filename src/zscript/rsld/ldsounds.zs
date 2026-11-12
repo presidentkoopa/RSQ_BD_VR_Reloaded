@@ -107,7 +107,7 @@ class RSLD_LDSoundReg : Thinker
 // BD22 VR's MAPINFO.rsld names this delegate, which plays the engine's own lumps (rsld/qz/*, SNDINFO.rsld: the lumps of
 // QuestZDoom's doomchex sndinfo.txt) in their place while LegenDoom is loaded and the option is on, and the same name
 // otherwise (exactly DoomMenuDelegate: without LegenDoom nothing changes). Not covered: the quit sounds (menu/quit1,
-// quit2: the engine plays them itself, not through the delegate): LegenDoom's stay.
+// quit2: the engine plays them itself, not through the delegate): silent since 2.0.4n (SNDINFO.rsld).
 class RSLD_MenuSounds
 {
 	clearscope static string Map(string snd)

@@ -20,6 +20,11 @@ effects/legendaryenemyboss		dsempty
 // round 4: LegenDoom's info screen open / close (LEGENDMEN.acs LocalAmbientSound): played by the LD mode (ldsounds.zs InfoTick)
 menu/infoopen				dsempty
 menu/infoclose				dsempty
+// 2.0.4n (owner 2026-11-12 14:11: "find out if bd or ld is making the on game exit sound, and disable the sound"): it is
+// LegenDoom's (its SNDINFO:717-718, menu/quit1 and quit2 -> LDQUIT1 / LDQUIT2; Brutal Doom defines neither). The engine
+// plays them itself on quitting. Silent here, with LegenDoom or without (without it this is Doom's own quit sound).
+menu/quit1				dsempty
+menu/quit2				dsempty
 
 // LegenDoom's own lumps (LegenDoom 3.0 SNDINFO:286-306), played by the LD mode
 rsld/ld/newlegendarypickup1		LDLEGEN1
