@@ -22,7 +22,8 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download the pk3 from the Releases page and load, in this order:
+Download `03_BD22_VR-Reloaded_2.0.4p.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+load, in this order:
 
 ```
 doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4p.pk3
@@ -36,32 +37,38 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.3h to 2.0.4p
+## Changelog: 2.0.2a to 2.0.4p
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4p.pk3`. Builds marked
-*rig only* were tested on the development rig.
+*rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
 - **What's new in 2.0.4p** (11-12; *rig only, not headset-confirmed*): the floor candle has its flame again. The voxel
   pack's candle flame draws a sprite called WICK that nothing in the load order ships (RSQ Monsters' Wicked Archvile used
-  that name, so candles wore a piece of it until 11-12); this pack now ships a small three-frame flame under it.
+  that name, so candles wore a piece of it until RSQ Monsters renamed its sprite RVWK on 11-12); this pack now ships a small three-frame flame under it.
 - **What's new in 2.0.4o** (11-12; *rig only, not headset-confirmed*): the HUD can leave out health and armour
   (`rsq_hud_nohp`, the row "Remove HUD Health and Armor" in RSQ Gun Cards' options), on every status bar style.
 - **What's new in 2.0.4n** (11-12; *loads; not run*): the sound on quitting the game is gone. It was LegenDoom's
   (`menu/quit1`, `menu/quit2`); Brutal Doom sets none. Silent with LegenDoom or without.
-- **What's new in 2.0.4m** (11-12; *loads; not run*): legendary weapons drop only from a miniboss and from
+- **What's new in 2.0.4m** (11-12; *rig only, not headset-confirmed*): legendary weapons drop only from a miniboss and from
   boosted legendary dormant champions (a LegenDoom legendary that is also a Champion, outside a miniboss encounter). Thralls
   drop nothing. A legendary champion rolls 85 / 12 / 2 / 1; when it is also the DOWN target, 75 / 20 / 3 / 2 or
-  65 / 35 / 6 / 4 for the middle and top of the DOWN bar.
-- **What's new in 2.0.4l** (11-12; *loads; the roll not run*): the owner's drop weights (Common / Uncommon / Rare /
-  Epic). A boosted legendary thrall: 85 / 12 / 2 / 1 at the first tier, 75 / 20 / 3 / 2 at the second, 65 / 35 / 6 / 4
-  at the third. The miniboss: 50 / 30 / 15 / 5 to start, rarer rarities gaining with each tier.
-- **What's new in 2.0.4k** (11-12; *loads; the roll itself not run*): with LegenDoom, Champions and RSQ Miniboss, a
+  65 / 35 / 6 / 4 for the middle and top of the DOWN bar. On the rig (run `thralls`): two thralls' drops and one
+  other monster's were removed, and a legendary champion's drop was kept and rolled (Common). A drop the pack cannot tie
+  to any monster's death is still kept, as before.
+- **What's new in 2.0.4l** (11-12; *loads; the roll with these numbers not run*): the owner's drop weights (Common /
+  Uncommon / Rare / Epic). A boosted legendary thrall: 85 / 12 / 2 / 1 at the first tier, 75 / 20 / 3 / 2 at the second,
+  65 / 35 / 6 / 4 at the third (2.0.4m moved these to legendary champions: thralls now drop nothing). The miniboss:
+  50 / 30 / 15 / 5 to start, rarer rarities gaining with each tier.
+- **What's new in 2.0.4k** (11-12; *rig only, not headset-confirmed*): with LegenDoom, Champions and RSQ Miniboss, a
   Bossfight's legendary weapon drop has its rarity rolled by the fight's tier: 55 / 28 / 12 / 5 % weights at tier 1,
-  rarer rarities gaining with each tier (`rsld_tier_rarity`, on).
+  rarer rarities gaining with each tier. Option **Bossfight Drop Rarity By Tier** (`rsld_tier_rarity`, On). On the rig
+  (run `fightcard`): three drops from a first-tier Bossfight rolled Common, Uncommon and Common.
 - **What's new in 2.0.4j** (11-12; *rig only, not headset-confirmed*): Ballistics defaults to **Low** (it was Stock). A
   config saved under the old default is moved from Stock to Low once (`rsq_ballistics_cfg`); after that the
   Ballistics row stays as you set it, Stock included.
-- **What's new in 2.0.4i** (11-11; *not yet run*): the hands come back to the off hand when you switch the main hand
+- **What's new in 2.0.4i** (11-11; *rig only, not headset-confirmed*: the hands coming back and the revolver's empties
+  shown in the rig's logs; the glow's new place shown in the log, but the rig's low-resolution frames could not show the
+  glow itself): the hands come back to the off hand when you switch the main hand
   to a gun while RSQ Melee's off glove (`RSQ_GloveOff`) holds it (Start With Melee Hands, a Wheel pick of the gloves).
   Before, the glove stayed and the gun had no hands, no pump and no rifle grenade load (`RSQ_Hands.Upkeep`). A glove
   picked into the off hand while a gun is already held stays.
@@ -71,7 +78,8 @@ Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4
   my right while DOWN").
   Also: BD22's Revolver (Real reload, speedloader) throws one casing per empty chamber when it opens, all on that tic;
   it threw one casing per open, counted from the live rounds (owner: "empties one at a time instead of all at once").
-- **What's new in 2.0.4h** (11-11; *not yet run*): the RSQ series' haptic buzz no longer counts as a shot. With RSQ
+- **What's new in 2.0.4h** (11-11; *rig only, not headset-confirmed*: in the log the buzzes gave no muzzle flash and the
+  real shots did; the recoil-kick half was not shown): the RSQ series' haptic buzz no longer counts as a shot. With RSQ
   Accessibility's Rumble Backup on and Quake Haptics at 0, every buzz is a 0.1-unit hitscan that touches nothing; the
   muzzle flash, the gun's sound tail and the recoil kick took it for a shot (`rsq/flash.zs`, `rsq/recoil.zs`). Both now
   skip a trace under one unit long with LAF_NOINTERACT (`RSQ_Ballistics.IsBuzzTrace`).
@@ -162,6 +170,30 @@ Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4
   a thrown axe is gone until you pick one up, and axe cuts reach 33% further.
 - **2.0.3h**: the Unmaker's firing loop stops when the skull empties mid-fire, and its reload sounds only the
   out and in clicks.
+- **2.0.3g** (10-29; *loads; not run*): the pistol whip needs a harder swing (5.0 m/s, was 3.2), with a slider,
+  **Pistol Whip: Swing Needed** (2 to 10).
+- **2.0.3f** (10-29; *loads; not run*): **Lift Doors by Hand** (On), ported from RSQ Distance Grab. Put an empty hand on
+  the door (the off hand without a gun, or a bare main hand), take hold with the off grip, Use, or the palm turned out,
+  and lift. Let go past 40% open and the door finishes opening; earlier, it drops shut.
+- **2.0.3e** (10-28; *loads; not run*): the axe **tags** a monster and keeps it while you wind up to throw (raising
+  your arm used to lose the lock). The tag goes when the monster dies, leaves range, or is out of sight for 2 seconds,
+  and is kept 3 seconds (was 1) after a let-go that was not a throw.
+- **2.0.3d** (10-28; *loads; not run*): **Melee Hit Flash** On / Off (On); the old picker is now Melee Hit Flash Style.
+- **2.0.3c** (10-28; *loads; the lock-on itself not shown*): the Rocket Launcher's lock-on salvo is always three
+  rockets, shared round the locks (three locks: one each; two: A, B, A; one: all three).
+- **2.0.2a** (10-28; *rig only* where marked):
+  - **Instant Weapon Switch** (On): a new gun is ready the moment you switch to it; Off is Brutal Doom's raise and
+    lower. *Shown in the rig's log.*
+  - The Moonlight revolver is renamed the **Silvergun** (pickup, name, menus); saved options carry over. *Shown.*
+  - The pump shotgun's slug alt fire now takes a shell and needs the pump (it fired for free). *Shown in the log.*
+  - **Assault Shotgun Slugshot Alt Fire** (On): one slug per pull, taking a shell from the gun. *Shown in the log.*
+  - Super Shotgun flick reload: flick an empty SSG and it reloads, from ready or while it waits open for the hand
+    reload. *Shown with one SSG; two SSGs use the same path, not shown.*
+  - **Rocket Launcher Lock-On Alt Fire** (On): hold alt fire to lock up to three different monsters near the barrel's
+    line, let go and the rockets home on them. *Not shown: the rig could not put a monster in front of the gun.*
+  - Built, not shown: the grenade's pin comes out with the off-hand trigger only; the axe lock is tighter (picked
+    within 8 degrees of your hand's line, was 16; the mark sits above the monster's head) and a locked axe throw homes
+    on its monster; the Unmaker plays a click when the skull comes out.
 
 ## What's new in 2.0
 Everything here was checked on the test rig on the load order above, with no script errors from
@@ -447,7 +479,9 @@ butt strike, the dual-wield and voxel pages, and a tuning and debug page for rel
 
 Every option defaults to how Brutal Doom behaves, or to the gentler setting, except the VR hands
 and reloading themselves, the live scopes, Shoot Thrown Grenades, Ammo From the Rig's Pouch Only (it
-does nothing without RSQ Tactical Rig) and No Trigger Punch, which are on. Set Reloading to "Stock (BD22)" and every gun reloads the way it always
+does nothing without RSQ Tactical Rig), No Trigger Punch, Instant Weapon Switch, Lift Doors by Hand, the Assault
+Shotgun's slug and the Rocket Launcher's lock-on alt fires and Melee Hit Flash, which are on, and Ballistics, which is
+Low (since 2.0.4j). Set Reloading to "Stock (BD22)" and every gun reloads the way it always
 did.
 
 ## Known gaps
@@ -462,9 +496,8 @@ did.
   doesn't have.
 
 ## Versions
-Public releases are numbered 1.9x and are the only tags on this repo. `main` is always the latest
-public release plus any fixes on their way to the next one. Work in progress lives on the `dev`
-branch under internal 2.x numbers.
+Public releases are on the Releases page, up to 2.0.3x (tag `2.0.3.w`). `main` carries every build since, and
+the current one (2.0.4p, the number in `VERSION`) is in [pk3/](pk3/).
 
 This build is generated by the RSQ Weapon Depot. Every number in it is measured off a model or
 parsed out of Brutal Doom's own code, and `src/README.txt` (shipped inside the pk3) has the long
