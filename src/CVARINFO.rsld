@@ -2,6 +2,7 @@
 server bool rsld_reroll = true;			// a legendary drop whose effect the LD mode does not carry yet is re-rolled (same slot, same rarity)
 user bool rsld_screen_name = false;		// the held gun's legendary name at the top of the view (owner 11-05: off; RSQ Wheel's card names it)
 server bool rsld_tier_rarity = true;		// 2.0.4k: a Bossfight's legendary drop has its rarity rolled by the fight's tier (rarer = less likely, a higher tier eases it)
+server bool rsld_champion_drops = false;	// 2.0.4x (owner 11-13): a boosted legendary dormant champion (outside a miniboss fight) drops its legendary weapon; off: only the miniboss does
 server bool rsld_bossfight_only = true;		// with Champions and RSQ Miniboss's Bossfights: legendary weapons drop only from a Bossfight
 server bool rsld_offhand_legendary = true;	// scope Q8 (OPEN): an off-hand copy of a legendary gun carries that slot's legendary too (on, as
 						// the patch did: every shot got the held slot's effect); off = main hand only

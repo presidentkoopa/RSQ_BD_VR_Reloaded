@@ -26,38 +26,38 @@ statusbar normal, forcescaled // Standard Doom Status bar
 		InInventory RSQ_HudHasMag, 1
 			{
 			DrawImage "STMAG",-49,168;
-			drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMag, alignment(center), -25, 171;
-			InInventory RSQ_HudHasMagOff, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMagOff, alignment(center), -25, 152; }	// rsq: off hand
-			drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171;
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMag, alignment(center), -25, 171; }
+			IfCVarInt not rsq_hud_noammo, 1 { InInventory RSQ_HudHasMagOff, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMagOff, alignment(center), -25, 152; } }	// rsq: off hand
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171; }
 			}
 		}
 		
 	InInventory NoReloading,1 || IsPlayingAsPurist,1
 	{
-		drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171;
+		IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171; }
 	}
 	/*InInventory IsPlayingAsPurist,1
 	{
-		drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171;
+		IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171; }
 	}*/
 
 	InInventory not RSQ_HudHasMag, 1
 	{
-		drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171;
+		IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171; }
 	}
 
 	IsSelected "TankGun","ArtilleryTankGun"
 	{
 		DrawImage "STMAG",-49,168;
-		drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMag, alignment(center), -25, 171;
-		drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171;
+		IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMag, alignment(center), -25, 171; }
+		IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171; }
 	}
 
 	IsSelected "attackhelicopterGun"
 	{
 		DrawImage "STMAG",-49,168;
-		drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMag, alignment(center), -25, 171;
-		drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171;
+		IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudMag, alignment(center), -25, 171; }
+		IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, HUDFONT_DOOM, untranslated, RSQ_HudRes, 44, 171; }
 	}
 
 	InInventory D4BaronHUD
@@ -82,17 +82,17 @@ statusbar normal, forcescaled // Standard Doom Status bar
 	drawswitchableimage keyslot 1 && 4, "nullimage", "STKEYS2", "STKEYS5", "STKEYS8", 239, 191;
 
 
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Clip1, 284, 170;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Clip2, 284, 176;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo AmmoShell, 284, 182;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo AmmoRocket, 284, 188;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo AmmoCell, 284, 194;
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Clip1, 284, 170; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Clip2, 284, 176; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo AmmoShell, 284, 182; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo AmmoRocket, 284, 188; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo AmmoCell, 284, 194; }
 
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo GrenadeAmmo, 319, 170;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Gas, 319, 176;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo MiniHellRocketAmmo, 319, 182;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo SoulAmmo, 319, 188;
-	drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Nuke, 319, 194;
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo GrenadeAmmo, 319, 170; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Gas, 319, 176; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo MiniHellRocketAmmo, 319, 182; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo SoulAmmo, 319, 188; }
+	IfCVarInt not rsq_hud_noammo, 1 { drawnumber 3, INDEXFONT_DOOM, untranslated, ammo Nuke, 319, 194; }
 	gamemode deathmatch, teamgame
 	{
 		drawnumber 2, HUDFONT_DOOM, untranslated, frags, 138, 171;
@@ -200,8 +200,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			//ammo
 			IsSelected not D4RevenantHUD
 			{
-			drawimage ammoicon1, -44, -4, centerbottom;
-			drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -55, -20;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -44, -4, centerbottom; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -55, -20; }
 			}
 
 			usesammo
@@ -211,24 +211,24 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 				{
 					InInventory not NoReloading,1 || IsPlayingAsPurist,1
 					{
-					IsSelected not "Machinegun" { drawimage ammoicon2, -44, -22, centerbottom; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-					drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -55, -38;
-					InInventory RSQ_HudHasMagOff, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMagOff, drawshadow, -110, -38; }	// rsq: off hand
+					IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -44, -22, centerbottom; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -55, -38; }
+					IfCVarInt not rsq_hud_noammo, 1 { InInventory RSQ_HudHasMagOff, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMagOff, drawshadow, -110, -38; } }	// rsq: off hand
 					}
 					
 					IsSelected "Rifle"
 					{
 						InInventory not NoReloading,1 || IsPlayingAsPurist,1
 						{
-							drawswitchableimage "RFGLoaded", "NoGren", "Gren", -44, -40, centerbottom;
-							drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -55, -56;
+							IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -44, -40, centerbottom; }
+							IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -55, -56; }
 						}
 						else
 						{
 							InInventory not IsPlayingAsPurist,1
 							{
-							drawswitchableimage "RFGLoaded", "NoGren", "Gren", -44, -22, centerbottom;
-							drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -55, -38;
+							IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -44, -22, centerbottom; }
+							IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -55, -38; }
 							}
 						}
 					}
@@ -244,8 +244,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 					{
 						InInventory not IsPlayingAsPurist,1
 						{
-						drawswitchableimage "RFGLoaded", "NoGren", "Gren", -44, -22, centerbottom;
-						drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -55, -38;
+						IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -44, -22, centerbottom; }
+						IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -55, -38; }
 						}
 					}		
 				
@@ -265,24 +265,24 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			IsSelected "TankGun","ArtilleryTankGun"
 			{
-				IsSelected not "Machinegun" { drawimage ammoicon2, -44, -22, centerbottom; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -55, -38;
-				drawimage ammoicon1, -44, -4, centerbottom;
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -55, -20;
+				IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -44, -22, centerbottom; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -55, -38; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -44, -4, centerbottom; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -55, -20; }
 			}
 
 			IsSelected "attackhelicopterGun"
 			{
-				IsSelected not "Machinegun" { drawimage ammoicon2, -44, -22, centerbottom; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -55, -38;
-				drawimage ammoicon1, -44, -4, centerbottom;
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -55, -20;
+				IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -44, -22, centerbottom; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -55, -38; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -44, -4, centerbottom; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -55, -20; }
 			}
 
 			IsSelected not "HandGrenades"
 			{
-			drawimage "GRNDA", -118, -5;
-			drawnumber 4, SMALLFONT, untranslated, Ammo GrenadeAmmo, drawshadow, -112, -15;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage "GRNDA", -118, -5; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, SMALLFONT, untranslated, Ammo GrenadeAmmo, drawshadow, -112, -15; }
 			}
 
 			IsSelected D4BaronHUD
@@ -339,8 +339,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			//ammo
 			IsSelected not D4RevenantHUD
 			{		
-			drawimage ammoicon1, -14, -4, centerbottom;
-			drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -25, -20;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -14, -4, centerbottom; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -25, -20; }
 			}
 
 			usesammo
@@ -350,23 +350,23 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 				{
 					InInventory not NoReloading,1 || IsPlayingAsPurist,1
 					{
-					IsSelected not "Machinegun" { drawimage ammoicon2, -14, -22, centerbottom; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-					drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -25, -38;
+					IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -14, -22, centerbottom; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -25, -38; }
 					}
 			
 					IsSelected "Rifle"
 					{
 						InInventory not NoReloading,1 || IsPlayingAsPurist,1
 						{
-							drawswitchableimage "RFGLoaded", "NoGren", "Gren", -14, -40, centerbottom;
-							drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -25, -56;
+							IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -14, -40, centerbottom; }
+							IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -25, -56; }
 						}
 						else
 						{
 							InInventory not IsPlayingAsPurist,1
 							{
-							drawswitchableimage "RFGLoaded", "NoGren", "Gren", -14, -22, centerbottom;
-							drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -25, -38;
+							IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -14, -22, centerbottom; }
+							IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -25, -38; }
 							}
 						}
 					}
@@ -380,8 +380,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 				{
 					IsSelected "Rifle"
 					{
-						drawswitchableimage "RFGLoaded", "NoGren", "Gren", -14, -22, centerbottom;
-						drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -25, -38;
+						IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -14, -22, centerbottom; }
+						IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, ammo AmmoRocket, drawshadow, -25, -38; }
 					}		
 				
 					inventorybarnotvisible
@@ -400,18 +400,18 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			IsSelected "TankGun","ArtilleryTankGun"
 			{
-				IsSelected not "Machinegun" { drawimage ammoicon2, -14, -22, centerbottom; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -25, -38;
-				drawimage ammoicon1, -14, -4, centerbottom;
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -25, -20;
+				IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -14, -22, centerbottom; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -25, -38; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -14, -4, centerbottom; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -25, -20; }
 			}
 
 			IsSelected "attackhelicopterGun"
 			{
-				IsSelected not "Machinegun" { drawimage ammoicon2, -14, -22, centerbottom; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -25, -38;
-				drawimage ammoicon1, -14, -4, centerbottom;
-				drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -25, -20;
+				IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -14, -22, centerbottom; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudMag, drawshadow, -25, -38; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -14, -4, centerbottom; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 2147483647, HUDFONT_DOOM, untranslated, RSQ_HudRes, drawshadow, -25, -20; }
 			}
 
 			InInventory D4BaronHUD
@@ -426,8 +426,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			IsSelected not "HandGrenades"
 			{
-			drawimage "GRNDA", -90, -5;
-			drawnumber 4, SMALLFONT, untranslated, Ammo GrenadeAmmo, drawshadow, -85, -15;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage "GRNDA", -90, -5; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, SMALLFONT, untranslated, Ammo GrenadeAmmo, drawshadow, -85, -15; }
 			}
 
 			InInventory IsPlayer,1
@@ -537,15 +537,15 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			{
 				InInventory RSQ_HudHasMag, 1
 				{
-					IsSelected not "Machinegun" { drawimage ammoicon2, -125, -25, center; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-					drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -130, -15, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -125, -25, center; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -130, -15, 0; }
 				}
 			}
 			
 			IsSelected not D4RevenantHUD
 			{
-				drawimage ammoicon1, -80, -25, center;
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -80, -15, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -80, -25, center; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -80, -15, 0; }
 			}			
 
 
@@ -553,15 +553,15 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			{
 				InInventory not NoReloading,1 || IsPlayingAsPurist,1
 				{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -78, -64, center;
-					drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow,alignment(center), -80, -54, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -78, -64, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow,alignment(center), -80, -54, 0; }
 				}
 				else
 				{
 					InInventory not IsPlayingAsPurist,1
 					{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -128, -25, center;
-					drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow, alignment(center), -130, -15, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -128, -25, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow, alignment(center), -130, -15, 0; }
 					}
 				}
 			}
@@ -571,12 +571,12 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			IsSelected "TankGun","ArtilleryTankGun"
 			{
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -130, -15, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -130, -15, 0; }
 			}
 
 			IsSelected "attackhelicopterGun"
 			{
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -130, -15, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -130, -15, 0; }
 			}
 
 			IsSelected D4BaronHUD
@@ -595,8 +595,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			IsSelected not "HandGrenades"
 			{
-			drawimage "GRNDA", -167, -3;
-			drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -175, -15, 0;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage "GRNDA", -167, -3; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -175, -15, 0; }
 			}
 
 			gamemode deathmatch, teamgame
@@ -681,30 +681,30 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			{
 				InInventory RSQ_HudHasMag, 1
 				{
-					IsSelected not "Machinegun" { drawimage ammoicon2, -85, -25, center; }	// rsq: its AmmoType2 is the 40 mm, not its magazine
-					drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -87, -15, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { IsSelected not "Machinegun" { drawimage ammoicon2, -85, -25, center; } }	// rsq: its AmmoType2 is the 40 mm, not its magazine
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -87, -15, 0; }
 				}
 			}
 	
 			IsSelected not D4RevenantHUD
 			{
-				drawimage ammoicon1, -24, -25, center;
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -27, -15, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawimage ammoicon1, -24, -25, center; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -27, -15, 0; }
 			}
 
 			IsSelected "Rifle"
 			{
 				InInventory not NoReloading,1 || IsPlayingAsPurist,1
 				{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -25, -64, center;
-					drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow, alignment(center), -27, -54, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -25, -64, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow, alignment(center), -27, -54, 0; }
 				}
 				else
 				{
 					InInventory not IsPlayingAsPurist,1
 					{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -85, -25, center;
-					drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow, alignment(center), -87, -15, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -85, -25, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow, alignment(center), -87, -15, 0; }
 					}
 				}
 			}
@@ -714,14 +714,14 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			IsSelected "TankGun","ArtilleryTankGun"
 			{
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -87, -15, 0;
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -27, -15, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -87, -15, 0; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -27, -15, 0; }
 			}
 
 			IsSelected "attackhelicopterGun"
 			{
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -87, -15, 0;
-				drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -27, -15, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudMag, drawshadow, alignment(center), -87, -15, 0; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, DIGINUMBER, untranslated, RSQ_HudRes, drawshadow, alignment(center), -27, -15, 0; }
 			}
 
 			IsSelected D4BaronHUD
@@ -740,8 +740,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			//GRENADES
 			IsSelected not "HandGrenades"
 			{
-			drawimage "GRNDA", -127, -3;
-			drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -135, -15, 0;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage "GRNDA", -127, -3; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -135, -15, 0; }
 			}
 
 			gamemode deathmatch, teamgame
@@ -774,41 +774,41 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			InInventory not NoReloading,1 || IsPlayingAsPurist,1
 			{
-				drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -148, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -148, -17, 0; }
 			}
 			
 			IsSelected not D4RevenantHUD
 			{	
-				drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -100, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -100, -17, 0; }
 			}
 			
 
 
 			IsSelected "TankGun","ArtilleryTankGun"
 			{
-				drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -150, -17, 0;
-				drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -100, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -150, -17, 0; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -100, -17, 0; }
 			}
 
 			IsSelected "attackhelicopterGun"
 			{
-				drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -150, -17, 0;
-				drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -100, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -150, -17, 0; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -100, -17, 0; }
 			}
 
 			IsSelected "Rifle"
 			{
 				InInventory not NoReloading,1 || IsPlayingAsPurist,1
 				{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -125, -20, center;
-					drawnumber 4, INDEXFONT, red, ammo AmmoRocket, alignment(center), -125, -12, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -125, -20, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, INDEXFONT, red, ammo AmmoRocket, alignment(center), -125, -12, 0; }
 				}
 				else
 				{
 					InInventory not IsPlayingAsPurist,1
 					{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -146, -27, center;
-					drawnumber 4, BIGFONT, red, ammo AmmoRocket, drawshadow, alignment(center), -148, -17, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -146, -27, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, ammo AmmoRocket, drawshadow, alignment(center), -148, -17, 0; }
 					}
 				}
 			}
@@ -828,8 +828,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			IsSelected not "HandGrenades"
 			{
-			drawimage "GRNDA", -95, -25;
-			drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -100, -35, 0;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage "GRNDA", -95, -25; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -100, -35, 0; }
 			}
 
 			gamemode deathmatch, teamgame
@@ -878,41 +878,41 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 			InInventory not NoReloading,1 || IsPlayingAsPurist,1
 			{
-				drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -75, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -75, -17, 0; }
 			}
 			
 			IsSelected not D4RevenantHUD
 			{	
-				drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -25, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -25, -17, 0; }
 			}			
 			
 			
 
 			IsSelected "TankGun","ArtilleryTankGun"
 			{
-				drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -75, -17, 0;
-				drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -25, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -75, -17, 0; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -25, -17, 0; }
 			}
 
 			IsSelected "attackhelicopterGun"
 			{
-				drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -75, -17, 0;
-				drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -25, -17, 0;
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudMag, drawshadow, alignment(center), -75, -17, 0; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, RSQ_HudRes, drawshadow, alignment(center), -25, -17, 0; }
 			}
 
 			IsSelected "Rifle"
 			{
 				InInventory not NoReloading,1 || IsPlayingAsPurist,1
 				{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -75, -47, center;
-					drawnumber 4, BIGFONT, red, ammo AmmoRocket, drawshadow, alignment(center), -75, -37, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -75, -47, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, ammo AmmoRocket, drawshadow, alignment(center), -75, -37, 0; }
 				}
 				else
 				{
 					InInventory not IsPlayingAsPurist,1
 					{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", -75, -27, center;
-					drawnumber 4, BIGFONT, red, ammo AmmoRocket, drawshadow, alignment(center), -75, -17, 0;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", -75, -27, center; }
+					IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, BIGFONT, red, ammo AmmoRocket, drawshadow, alignment(center), -75, -17, 0; }
 					}
 				}
 			}
@@ -931,8 +931,8 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			
 			IsSelected not "HandGrenades"
 			{
-			drawimage "GRNDA", -17, -25;
-			drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -25, -35, 0;
+			IfCVarInt not rsq_hud_noammo, 1 { drawimage "GRNDA", -17, -25; }
+			IfCVarInt not rsq_hud_noammo, 1 { drawnumber 4, SMALLFONT, red, Ammo GrenadeAmmo, drawshadow, alignment(center), -25, -35, 0; }
 			}
 
 			gamemode deathmatch, teamgame
@@ -986,18 +986,18 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 
 				InInventory not NoReloading,1 || IsPlayingAsPurist,1
 				{
-					DrawNumber 3, DIGIFONT_SMALL, DoomNukemStatusBarGreen, RSQ_HudMag, fillzeros, 110+center, -21;
+					IfCVarInt not rsq_hud_noammo, 1 { DrawNumber 3, DIGIFONT_SMALL, DoomNukemStatusBarGreen, RSQ_HudMag, fillzeros, 110+center, -21; }
 				}
 
 				IsSelected not D4RevenantHUD
 				{
-				DrawNumber 3, DIGIFONT_LARGE, DoomNukemStatusBarGreen, RSQ_HudRes, fillzeros, 146+center, -27;
+				IfCVarInt not rsq_hud_noammo, 1 { DrawNumber 3, DIGIFONT_LARGE, DoomNukemStatusBarGreen, RSQ_HudRes, fillzeros, 146+center, -27; }
 				}
 
 				IsSelected not "HandGrenades"
 				{
-				DrawImage "HELMGREN", 95+center, -31;
-				drawNumber 2, INDEXFONT, white, ammo GrenadeAmmo, fillzeros, 112+center, -30;
+				IfCVarInt not rsq_hud_noammo, 1 { DrawImage "HELMGREN", 95+center, -31; }
+				IfCVarInt not rsq_hud_noammo, 1 { drawNumber 2, INDEXFONT, white, ammo GrenadeAmmo, fillzeros, 112+center, -30; }
 				}
 
 				IsSelected D4BaronHUD
@@ -1088,18 +1088,18 @@ statusbar Fullscreen, fullscreenoffsets, forcescaled
 			{
 				InInventory not NoReloading,1 || IsPlayingAsPurist,1
 				{
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", 65+center, -28, center, 10,10;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", 65+center, -28, center, 10,10; }
 					//drawnumber 4, INDEXFONT, red, ammo AmmoRocket, alignment(center), -105, -15, 0;
-					drawNumber 2, DIGIFONT_SMALL, white, ammo AmmoRocket, fillzeros, 72+center, -24;
+					IfCVarInt not rsq_hud_noammo, 1 { drawNumber 2, DIGIFONT_SMALL, white, ammo AmmoRocket, fillzeros, 72+center, -24; }
 				}
 				else
 				{
 					InInventory not IsPlayingAsPurist,1
 					{
 					
-					drawswitchableimage "RFGLoaded", "NoGren", "Gren", 65+center, -28, center;
+					IfCVarInt not rsq_hud_noammo, 1 { drawswitchableimage "RFGLoaded", "NoGren", "Gren", 65+center, -28, center; }
 					//drawnumber 4, DIGINUMBER, untranslated, ammo AmmoRocket, drawshadow, alignment(center), -80, -54, 0;
-					DrawNumber 3, DIGIFONT_SMALL, DoomNukemStatusBarGreen, ammo AmmoRocket, fillzeros, 110+center, -21;
+					IfCVarInt not rsq_hud_noammo, 1 { DrawNumber 3, DIGIFONT_SMALL, DoomNukemStatusBarGreen, ammo AmmoRocket, fillzeros, 110+center, -21; }
 					}
 				}
 			}

@@ -39,7 +39,12 @@ class RSLD_Converter : Thinker
 			// WHO DROPS A LEGENDARY WEAPON (2.0.4m, owner 11-12 14:11: "legendary weapons: only dropped by
 			// boostedlegendarydormantchampions and miniboss, not thralls"): the Bossfight's MINIBOSS, and any monster
 			// that is a LegenDoom legendary and a Champion outside a Bossfight (handler.zs, hb.dropDown). A thrall's, and any other monster's, drops nothing.
-			bool down = hb && hb.dropDown > 0 && from >= 0;
+			// 2.0.4x (owner 11-13: "i am getting legendary drops literally all the time, at map start, on revive, on killing
+			// a dormant boosted legendary champion. remember we are changing their drop rate"): a legendary champion outside a
+			// miniboss fight drops nothing unless Legendary Champions Drop is on (rsld_champion_drops, off). The miniboss's
+			// drop is unchanged.
+			cvar cdc = cvar.FindCvar("rsld_champion_drops");
+			bool down = hb && hb.dropDown > 0 && from >= 0 && cdc && cdc.GetBool();
 			bool boss = from == 1 && hb.dropBoss != 0;
 			if (from == 0 && !down || from == 1 && !boss && !down)
 			{

@@ -74,3 +74,4 @@ user int rsq_switch_log = 0;
 // saved ini line for it causes no error; nothing reads it.
 user bool rsq_twohand_rifle = false;
 user bool rsq_hud_nohp = false;   // the HUD draws no health or armour (owner 2026-11-12 15:36; the row is in RSQ Gun Cards' options)
+user bool rsq_hud_noammo = false; // the HUD draws no ammo counts or ammo icons (owner 2026-11-13; the row is in RSQ Gun Cards' options: the cards show them)

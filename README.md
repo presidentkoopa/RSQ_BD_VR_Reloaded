@@ -22,26 +22,32 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.4w.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.4x.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4w.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4x.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4w.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4x.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.4w
+## Changelog: 2.0.2a to 2.0.4x
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4w.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.4x** (11-13; *loads only until the rig run below says otherwise*): **legendary weapons drop only
+  from a miniboss** (owner: "i am getting legendary drops literally all the time"). A boosted legendary dormant champion
+  outside a miniboss fight (and so a DOWN target, or one killed by a revive) drops nothing now; **Legendary Champions Drop
+  Too** (`rsld_champion_drops`, off) on the LegenDoom page brings their drop back. **Remove HUD Ammo** (`rsq_hud_noammo`,
+  off; the row is on RSQ Gun Cards' page, beside Remove HUD Health and Armor): the HUD draws no ammo counts or ammo icons,
+  in every status bar style.
 - **What's new in 2.0.4w** (11-13): **the hand poses are 2.0.4u's again.** 2.0.4v's re-posed hands were wrong in the engine
   (hands slid off the triggers and sat in the guns) and are withdrawn. The 25 hand files in `models/rsq/fbx` are byte-for-byte
   2.0.4u's; nothing else changed. Use this build instead of 2.0.4v.
