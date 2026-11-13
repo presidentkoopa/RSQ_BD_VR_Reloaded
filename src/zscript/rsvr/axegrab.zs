@@ -44,6 +44,44 @@ class RSVR_AxeGrabEventService : Service play
 		int h = intArg & 1;
 		if (!mo || mo.health <= 0)
 			return 0;
+		// 2.0.4q (owner 2026-11-12: "when i try to distance grab my axe it says ammo full"; ONE axe per hand, the rhythm
+		// throw -> distance-grab it back -> throw). The engine refuses a floor BrutalAxe to a player who carries the main
+		// axe -- in the main hand, in a Tactical Rig holster or in the Wheel -- because it gives no ammo; since Distance
+		// Grab's 11-10 AMMO FULL rule that refusal ended the grab ("AMMO FULL", dropped at the feet) before the carried path
+		// below was ever reached, so the off hand's thrown axe could never be grabbed back. Distance Grab now asks first
+		// ("pickup.claim", flight.zs TakeInto): with the main axe carried and the off-hand axe NOT (it is the one that was
+		// thrown), this axe is the off hand's again: given (RSQ_Dual.GiveCopy: never a second copy), and
+		//   - grabbed by the OFF hand: held in the off hand at once (2.0.3y "auto-equip every time");
+		//   - grabbed by the MAIN hand: the main hand holds an axe -- its own, from wherever it was carried -- and the new
+		//     one goes into the off hand if that hand is free (else it is carried, in the Wheel).
+		// Both axes carried already: not claimed -- one per hand, so Distance Grab's AMMO FULL stands.
+		if (stringArg == "pickup.claim")
+		{
+			if (!IsAxeItem(objectArg) || RSQ.PlayerInt(mo, 'rsq_dual_axe', 1) == 0)
+				return 0;
+			bool main = HasMain(mo), off = HasOff(mo);
+			if (!main || off)
+			{
+				Say(mo, h, off && main ? "refused: both axes carried, one per hand (AMMO FULL)" : "not claimed (no main axe: the pickup itself gives it)");
+				return 0;
+			}
+			if (h == 1)
+				GiveOff(mo, true, true);
+			else
+			{
+				let axe = Weapon(mo.FindInventory(RSVR_MeleeHandler.Inv('BrutalAxe'), false));
+				GiveOff(mo, p.ReadyWeapon == axe);
+				if (axe && p.ReadyWeapon != axe)
+				{
+					axe.bOffhandWeapon = false;
+					p.PendingWeapon = axe;
+				}
+			}
+			mo.A_StartSound("Axe/Draw", CHAN_ITEM);
+			Actor(objectArg).Destroy();
+			Say(mo, h, h == 1 ? "claimed: the off hand's axe again, held in the off hand" : "claimed: the main hand holds its axe, this one is the off hand's");
+			return 1;
+		}
 		if (stringArg == "pull.start")
 		{
 			coming[h] = IsAxeItem(objectArg);
