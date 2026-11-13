@@ -22,26 +22,44 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.4t.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.4u.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4t.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4u.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4t.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4u.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.4t
+## Changelog: 2.0.2a to 2.0.4u
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4t.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4u.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.4u** (11-13; *rig only, not headset-confirmed*, runs club1 / club0): **RSQ Melee is the melee mod**
+  (owner 11-13 01:32: "GET THE MELEE INTO RSQ MELEE"). The **butt strike**, the **pistol whip** (both hands) and the fists'
+  **VR Punching** moved into RSQ Melee, ported line for line with every number kept: the swing needed (2.4 m/s at the
+  stock, 5.0 at the muzzle), the forward / downward shares, the 90-unit reach ahead of the stock, the striking points on
+  each gun's model, Brutal Doom's own KickAttack / MeleeStrikeNormal blows, the swing sound and the buzz. **With RSQ Melee
+  loaded** (2026-11-13 or later) this pack asks it by name and its own three stand down; their rows here now read
+  "(without RSQ Melee)" and RSQ Melee's options have them. The first time both load, your values for these rows are copied
+  into RSQ Melee's once. **Without RSQ Melee** they are this pack's own, exactly as in 2.0.4t. The axe, the Dragonslayer
+  and the chainsaw stay here (each weapon's own attack), and so do the Melee Hit Flash (it draws on RSQ Melee's hits too)
+  and No Trigger Punch. New: **Log who does the butt strike, whip, VR punch** (`rsvr_melee_log`, on the reload debug page).
+  On the rig, with RSQ Melee loaded (the owner's full order, run club1): a Rifle shove and both pistol whips hit through
+  RSQ Melee, and this pack logged its butt strike and its pistol whip (main and off hand) standing down. The VR punch
+  landed once, through RSQ Melee. Without RSQ Melee (run club0, the same order minus RSQ_Melee.pk3): this pack's own VR
+  punch hit, but **its own butt strike and pistol whip were not shown**: no strike came in that run. The rig drew a frame
+  only every 3 to 9 tics in that run, against 1 to 2 in club1, and both pose readers (this pack's and RSQ Melee's copy)
+  need a fresh hand pose at least every 3 tics. That is the likely cause, and it is not proved. This pack's own path
+  changed only by the stand-down check, which logged nothing in club0, so it did not stand down. A short BD-alone run is
+  still owed. Only the 4 voxeldef.txt errors from 02_BD22_VoxelPack.pk3, which were there before.
 - **What's new in 2.0.4t** (11-12; *rig only, not headset-confirmed*, runs trio1 / trio2): two small changes the owner picked. **Miniboss, not Bossfight**, in what you see: the LegenDoom page's rows now read **Legendary Guns Only From Minibosses** (`rsld_bossfight_only`) and **Miniboss Drop Rarity By Tier** (`rsld_tier_rarity`), and the debug line says "came with a miniboss fight"; the cvar names, and the RSQ Miniboss requests this pack asks by name, are unchanged, so your settings stay. **RSQ Accessibility's Rumble Backup covers this pack's buzzes** (the axe, the hand reload, the break-action guns): with RSQ Accessibility loaded and its Rumble Backup on, each buzz asks it by name first, and when it sends its buzz this pack does not send its own (one buzz, not two). Without RSQ Accessibility, or with Rumble Backup off, the buzz is this pack's own as before. On the rig (no controller, the log is the evidence): with Rumble Backup off the main- and off-hand buzz each spawned this pack's own; with it on, RSQ Accessibility logged "RSQA_BACKUP RSVR right controller (main hand)" and "... left controller (off hand)" and this pack's own was not sent; the probe listed both renamed rows; no script error from our packs on the owner's full order.
 - **What's new in 2.0.4s** (11-12; *rig only, not headset-confirmed*, runs axs1 / axs2): two axe fixes from the owner's
   headset (11-12 21:36). **The axe count is the axes you have, the ones in your hands included.** In 2.0.4r both hands
@@ -450,6 +468,8 @@ damage you do are still exactly Brutal Doom's.
 - **Butt strike**: drive the stock forward with both hands. Works on all eight guns with a stock.
   Off by default.
 - **Real punching** with either fist. Punching a switch or a door works it. Off by default.
+- With **RSQ Melee** loaded (2.0.4u), the pistol whip, the butt strike and real punching are RSQ Melee's, with the
+  same numbers; their rows are in its options.
 
 ### Every gun shoots like itself
 These are behind the **Ballistics** switch. Stock is Brutal Doom's own.
@@ -539,7 +559,7 @@ did.
 
 ## Versions
 Public releases are on the Releases page, up to 2.0.3x (tag `2.0.3.w`). `main` carries every build since, and
-the current one (2.0.4t, the number in `VERSION`) is in [pk3/](pk3/).
+the current one (2.0.4u, the number in `VERSION`) is in [pk3/](pk3/).
 
 This build is generated by the RSQ Weapon Depot. Every number in it is measured off a model or
 parsed out of Brutal Doom's own code, and `src/README.txt` (shipped inside the pk3) has the long

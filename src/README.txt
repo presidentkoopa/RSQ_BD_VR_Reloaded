@@ -1,4 +1,4 @@
-RS_Brutal22WeaponsQ -- BD22 VR Reloaded 2.0.4t
+RS_Brutal22WeaponsQ -- BD22 VR Reloaded 2.0.4u
 =====================================
 
 BRUTAL DOOM v22, IN VR, ON A QUEST. As an addon, on the stock engine.
@@ -38,13 +38,13 @@ says so plainly here rather than faking it.
 
 LOAD ORDER
 ----------
-    doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4t.pk3
+    doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4u.pk3
 
 Doom 2, not Freedoom: BD_VoxelPack's voxeldef names Doom 2's own sprites and Freedoom fails on it.
 
 With LegenDoom 3.0 (the LD mode below), LegenDoom goes right after doom2, so Brutal Doom's title map, HUD and
 sounds win:
-    doom2.wad  ->  LegenDoom_3.0.pk3  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4t.pk3
+    doom2.wad  ->  LegenDoom_3.0.pk3  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4u.pk3
 
 
 RELOADING, WITH YOUR HANDS
@@ -86,6 +86,11 @@ MELEE
 
 It reads your arm, not your body. Walking, strafing and turning move the gun and are subtracted;
 only the swing counts.
+
+WITH RSQ MELEE LOADED (2.0.4u): the pistol whip, the butt strike and the fists' VR punch are RSQ
+Melee's, ported there with the same numbers, and their rows are in RSQ Melee's options; this pack's
+own stand down (its rows say "without RSQ Melee"). Without RSQ Melee they are this pack's, as before.
+The axe, the Dragonslayer and the chainsaw stay here.
 
 Out of VR, or with these turned off, Brutal Doom's own melee is untouched.
 

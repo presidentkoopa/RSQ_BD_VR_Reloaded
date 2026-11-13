@@ -6,6 +6,7 @@ user float rsvr_melee_swing = 1.0;
 // How much of the blade's motion must point DOWN for a swing to cut: 0.25 is about 15 degrees
 // below level (owner, 2026-10-16: only a meaningful downward swing cuts; never level, never up).
 user float rsvr_melee_down = 0.25;
+user int rsvr_melee_log = 0;	// 2.0.4u: 1 logs who does the butt strike / pistol whip / VR punch (this pack or RSQ Melee: rsvr/yield.zs)
 
 // What you HOLD to ready the axe throw, as a usercmd button mask. Default 32 = BT_ALTATTACK
 // (F11: it was 16, which is BT_TURN180 -- d_event.h:46-47 -- so alt fire never held it),

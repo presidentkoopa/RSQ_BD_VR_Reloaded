@@ -105,21 +105,21 @@ OptionMenu "RSQ_Options"
 	Option "Faster Grenades in Slow Motion", "rsg_slowmo_fast", "OnOff"
 	Slider "Grenade Speed in Slow Motion", "rsg_slowmo_speed", 0.0, 1.0, 0.05, 2
 	Option "Two-Hand Grip (engine)", "vr_two_handed_weapons", "OnOff"	// 2.0.2: QuestZDoom's own two-hand cvar, unchanged; the row only says so
-	Option "VR Punching", "rsq_punch", "OnOff"
+	Option "VR Punching (without RSQ Melee)", "rsq_punch", "OnOff"
 	Option "No Trigger Punch", "rsq_no_trigger_punch", "OnOff"	// 2.0.3y (owner 11-06, on): BD22's fists throw no canned punch on trigger / alt fire in VR; grabs, throws and fatalities unchanged
-	Option "Punch Switches Open", "rsq_punch_use", "OnOff"
-	Option "Pistol Whip", "rsq_pistol_whip", "OnOff"	// 2.0.2 (owner r3 item 39): swing a pistol or revolver into something (zscript/rsvr/melee.zs); the kick-key gun bash is gone
-	Slider "Pistol Whip: Swing Needed", "rsq_whip_speed", 2.0, 10.0, 0.5, 1	// 2.0.3g: higher = whip harder (was 3.2)
+	Option "Punch Switches Open (without RSQ Melee)", "rsq_punch_use", "OnOff"
+	Option "Pistol Whip (without RSQ Melee)", "rsq_pistol_whip", "OnOff"	// 2.0.2 (owner r3 item 39): swing a pistol or revolver into something (zscript/rsvr/melee.zs); the kick-key gun bash is gone
+	Slider "Pistol Whip: Swing Needed (without RSQ Melee)", "rsq_whip_speed", 2.0, 10.0, 0.5, 1	// 2.0.3g: higher = whip harder (was 3.2)
 	Option "Instant Weapon Switch", "rsq_instant_switch", "OnOff"	// 2.0.2a (owner 19:47): no raise / lower (zscript/rsq/switch.zs)
 	Option "Lift Doors by Hand", "rsq_door", "OnOff"	// 2.0.3f: from RSQ_DistanceGrab (zscript/rsvr/door.zs)
-	Option "Two-Handed Butt Strike", "rsq_butt", "OnOff"
-	Slider "Butt Strike: Swing Needed", "rsq_butt_speed", 1.0, 6.0, 0.1, 1	// 2.0.3y (owner item 33): higher = shove harder (was a fixed 3.6)
+	Option "Two-Handed Butt Strike (without RSQ Melee)", "rsq_butt", "OnOff"
+	Slider "Butt Strike: Swing Needed (without RSQ Melee)", "rsq_butt_speed", 1.0, 6.0, 0.1, 1	// 2.0.3y (owner item 33): higher = shove harder (was a fixed 3.6)
 	Option "Real Casing Models", "rsq_casing_models", "OnOff"
 	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
 	Option "Melee Hit Flash", "rsq_bash_flash", "OnOff"
 	Option "Melee Hit Flash Style", "rsq_bash_fx", "RSQ_BashFXOpt"
 	Option "Melee Hit Flash Colour", "rsq_bash_tint", "RSQ_BashTintOpt"
-	Slider "Melee swing strength", "rsvr_melee_swing", 0.2, 3.0, 0.1
+	Slider "Melee swing strength", "rsvr_melee_swing", 0.2, 3.0, 0.1	// 2.0.4u: with RSQ Melee loaded, the axe and the sword only (the whip and the butt read RSQ Melee's Gun Club Swing Strength)
 	StaticText " "
 	Option "Extra weapons with cheats", "rsq_extra_weapons", "OnOff"
 	StaticText " "
@@ -131,6 +131,7 @@ OptionMenu "RSR_Debug"
 	Title "RELOAD: TUNING AND DEBUG"
 	Option "Show the capture zones", "rsr_assist_debug", "OnOff"
 	Option "Print each reload step", "rsr_debug", "OnOff"
+	Option "Log who does the butt strike, whip, VR punch", "rsvr_melee_log", "OnOff"	// 2.0.4u: this pack or RSQ Melee (rsvr/yield.zs)
 }
 
 // owner 2026-10-27 20:47: what the HUD shows of the held gun's ammo (zscript/rsq/counters.zs RSQ_Counters.Hud)

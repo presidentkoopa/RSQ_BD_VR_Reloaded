@@ -24,6 +24,23 @@ class RSVR_MeleeHandler : EventHandler
 {
 	RSVR_Hand hands[MAXPLAYERS];
 	RSVR_Hand offHands[MAXPLAYERS];	// 2.0.2: the off-hand axe (RSQ_Off_BrutalAxe)
+	// 2.0.4u (yield.zs): RSQ Melee does the butt strike and the pistol whip (mlClub) and the VR punch (mlPunch) while it
+	// is loaded; asked by name once a second and on each map
+	bool mlClub, mlPunch;
+	int mlAskAt;
+	void AskMelee()
+	{
+		bool c = RSVR_MeleeYield.Ask("club"), p = RSVR_MeleeYield.Ask("punch");
+		mlAskAt = level.maptime;
+		if (c == mlClub && p == mlPunch)
+			return;
+		mlClub = c;
+		mlPunch = p;
+		let mo = players[consoleplayer].mo;
+		if (RSVR_MeleeYield.Logs(mo))
+			Console.Printf("RSVR melee t%d: RSQ Melee %s: this pack's butt strike and pistol whip %s, its VR punch %s", level.maptime,
+				c || p ? "is loaded" : "is not loaded", c ? "stand down (RSQ Melee does them)" : "are its own", p ? "stands down" : "is its own");
+	}
 
 	// rsvr_axe_keys: the weapon hand's grip arrives as a KEY, not a usercmd button, so its codes
 	// become a synchronised event the same way rsr_grip_keys does in vreload.zs. Every machine
@@ -89,6 +106,9 @@ class RSVR_MeleeHandler : EventHandler
 	// the old level.
 	override void WorldLoaded(WorldEvent e)
 	{
+		mlClub = false;
+		mlPunch = false;
+		AskMelee();
 		for (int n = 0; n < MAXPLAYERS; n++)
 		{
 			keyDown[n] = false;	// a grip held through the exit is not a throw readied here
@@ -110,6 +130,8 @@ class RSVR_MeleeHandler : EventHandler
 
 	override void WorldTick()
 	{
+		if (level.maptime - mlAskAt >= 35 || level.maptime < mlAskAt)
+			AskMelee();
 		AxePickupTick();
 		for (int i = 0; i < MAXPLAYERS; i++)
 		{
@@ -691,6 +713,15 @@ class RSVR_Hand play
 			return SWORD;
 		if (n == 'Chain_saw')
 			return SAW;
+		// 2.0.4u: with RSQ Melee loaded the gun as a club is RSQ Melee's (yield.zs); without it, this pack's own as before
+		if (RSVR_MeleeYield.Club(mo))
+			return 0;
+		return ClubKind(mo, n);
+	}
+
+	// the butt strike and the pistol whip of the main hand's gun, whoever does them (KindOf; the stand-down log)
+	static int ClubKind(PlayerPawn mo, Name n)
+	{
 		if (RSQ.PlayerInt(mo, 'rsq_butt', 0) != 0)
 		{
 			if (n == 'Rifle')
@@ -733,6 +764,15 @@ class RSVR_Hand play
 			return 0;
 		if (p.OffhandWeapon is 'RSQ_Off_BrutalAxe')
 			return AXE;
+		// 2.0.4u: the off-hand pistol whip is RSQ Melee's with it loaded (yield.zs)
+		if (RSVR_MeleeYield.Club(mo))
+			return 0;
+		return OffClubKind(mo);
+	}
+
+	static int OffClubKind(PlayerPawn mo)
+	{
+		let p = mo.player;
 		// 2.0.3y (owner, BUGS_1.0 item 34: "i sometimes move weapons between hands, but i cannot pistol whip in
 		// offhand?"): a pistol or revolver in the off hand whips like the main hand's (same points, same swing,
 		// "Pistol Whip" and its Swing Needed row). With the off-hand rule (dual.zs) the off hand holds the off-hand
@@ -750,6 +790,26 @@ class RSVR_Hand play
 	int KindFor(PlayerPawn mo)
 	{
 		return off ? KindOfOff(mo) : KindOf(mo);
+	}
+
+	// 2.0.4u (rsvr_melee_log): the gun in this hand would whip or butt-strike here, but RSQ Melee does it (yield.zs)
+	int yieldLogged;
+	void YieldLog(PlayerPawn mo)
+	{
+		let p = mo.player;
+		int yk = 0;
+		if (p && mo.health > 0 && RSVR_MeleeYield.Club(mo))
+		{
+			let w = off ? p.OffhandWeapon : p.ReadyWeapon;
+			if (w && (off || p.PendingWeapon == WP_NOCHANGE))
+				yk = off ? OffClubKind(mo) : ClubKind(mo, w.GetClassName());
+		}
+		if (yk == yieldLogged)
+			return;
+		yieldLogged = yk;
+		if (yk != 0)
+			Console.Printf("RSVR melee t%d: %s in the %s hand: this pack's %s stands down (RSQ Melee does it)", mo.Level.maptime,
+				(off ? p.OffhandWeapon : p.ReadyWeapon).GetClassName(), off ? "off" : "main", yk == PISTOL || yk == REVOLVER ? "pistol whip" : "butt strike");
 	}
 
 	// the weapon is in its held pose (AXEG A or a blood-colour copy, DSLA A):
@@ -963,6 +1023,8 @@ class RSVR_Hand play
 			lockRing.SetOrigin(RSVR_AxeLock.Above(lockTarget), true);
 
 		int k = KindFor(mo);
+		if (RSVR_MeleeYield.Logs(mo))
+			YieldLog(mo);
 		if (k != kind)
 		{
 			Reset();
@@ -1405,6 +1467,10 @@ class RSVR_Hand play
 				// and what the gun bash already lands.
 				Launch(mo, mo.CountInv('PowerStrength') > 0 ? 'SuperKickAttack' : 'KickAttack', p, dir);
 			}
+			if (RSVR_MeleeYield.Logs(mo))	// 2.0.4u: this pack's own (RSQ Melee not loaded)
+				Console.Printf("RSVR melee t%d: this pack's own %s (%s hand, %s) hit %s, power %.2f", mo.Level.maptime,
+					k == PISTOL || k == REVOLVER ? "pistol whip" : "butt strike", off ? "off" : "main",
+					(off ? mo.player.OffhandWeapon : mo.player.ReadyWeapon).GetClassName(), t.GetClassName(), power);
 		}
 		if (!off)
 			Buzz(mo);	// the engine buzzes the WEAPON hand only; the off axe goes without
