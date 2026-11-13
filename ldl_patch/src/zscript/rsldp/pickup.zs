@@ -38,12 +38,12 @@ class RSLDP_Converter : Thinker
 			int from = hb ? hb.DropFromBossfight(at) : -1;
 			if (from == 0)
 			{
-				if (RSLDP_Handler.Debug()) Console.Printf("RSLDP drop: %s suppressed (not from a Bossfight; LegenDoom + Champions + RSQ Miniboss)", src.GetClassName());
+				if (RSLDP_Handler.Debug()) Console.Printf("RSLDP drop: %s suppressed (not from a miniboss fight; LegenDoom + Champions + RSQ Miniboss)", src.GetClassName());
 				src.Destroy();
 				Destroy();
 				return;
 			}
-			if (RSLDP_Handler.Debug()) Console.Printf("RSLDP drop: %s kept (%s)", src.GetClassName(), from == 1 ? "from a Bossfight" : "no legendary death matched");
+			if (RSLDP_Handler.Debug()) Console.Printf("RSLDP drop: %s kept (%s)", src.GetClassName(), from == 1 ? "from a miniboss fight" : "no legendary death matched");
 		}
 		// LegenDoom tossed it from (0,0) + 4 because the monster actor was gone (handler.zs WorldThingDied)
 		if (abs(src.pos.x) < 64 && abs(src.pos.y) < 64)

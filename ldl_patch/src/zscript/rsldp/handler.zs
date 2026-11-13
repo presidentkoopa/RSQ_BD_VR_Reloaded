@@ -454,7 +454,7 @@ class RSLDP_Handler : EventHandler
 		while (deathBF.Size() < deathT.Size()) deathBF.Insert(0, -1);	// a save from before deathBF
 		deathX.Push(t.pos.x); deathY.Push(t.pos.y); deathZ.Push(t.pos.z); deathT.Push(level.maptime); deathBF.Push(bf);
 		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); deathBF.Delete(0); }
-		if (Debug() && bf) Console.Printf("RSLDP legendary died: %s came with a Bossfight", t.GetClassName());
+		if (Debug() && bf) Console.Printf("RSLDP legendary died: %s came with a miniboss fight", t.GetClassName());
 	}
 
 	// a drop that landed at the map origin -> the most recent legendary death within 3 seconds

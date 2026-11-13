@@ -835,7 +835,7 @@ class RSLD_Handler : EventHandler
 		int dstep = sms ? sms.GetInt("down.target", "", 0, 0, t) : 0;
 		deathDown.Push((champ && bf == 0) ? max(1, dstep) : 0);
 		if (deathT.Size() > 16) { deathX.Delete(0); deathY.Delete(0); deathZ.Delete(0); deathT.Delete(0); deathBF.Delete(0); deathTier.Delete(0); deathBoss.Delete(0); deathDown.Delete(0); }
-		if (RSLD.Debug() && bf) Console.Printf("RSLD legendary died: %s came with a Bossfight", t.GetClassName());
+		if (RSLD.Debug() && bf) Console.Printf("RSLD legendary died: %s came with a miniboss fight", t.GetClassName());
 	}
 
 	bool DeathSpot()

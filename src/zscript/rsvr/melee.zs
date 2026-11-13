@@ -1431,10 +1431,38 @@ class RSVR_Hand play
 	}
 
 	// controller rumble: the engine buzzes the weapon hand when the player
-	// fires a projectile (p_mobj.cpp P_SpawnPlayerMissile)
-	static void Buzz(PlayerPawn mo)
+	// fires a projectile (p_mobj.cpp P_SpawnPlayerMissile); off: the off hand
+	// (ALF_ISOFFHAND). Every buzz of this pack comes through here (the axe, the
+	// hand reload RSR_Reload and the break-action RSR_Break call it).
+	static void Buzz(PlayerPawn mo, bool off = false)
 	{
-		mo.SpawnPlayerMissile('RSVR_Buzz', mo.angle, noautoaim: true);
+		if (RumbleBackup(mo, off))
+			return;
+		mo.SpawnPlayerMissile('RSVR_Buzz', mo.angle, noautoaim: true, aimflags: off ? ALF_ISOFFHAND : 0);
+	}
+
+	// 2.0.4t: RSQ ACCESSIBILITY'S RUMBLE BACKUP, asked by name (owner 2026-11-12:
+	// rumble backup for ALL mods; RSQ Accessibility's README, Rumble Strength and
+	// Rumble Backup). With RSQ Accessibility loaded and its Rumble Backup on, the
+	// buzz is asked of it (RSQA_Service "buzz", this pack's name "RSVR"): at
+	// QuestZDoom's Quake Haptics 0 it sends the engine's buzz on that controller
+	// itself (and logs it with its Debug Log), and this pack's own buzz is then not
+	// sent, one buzz, not two. Without RSQ Accessibility, with Rumble Backup off,
+	// or when it does not send one, the buzz is this pack's own, as before. Only the
+	// machine whose player it is can be answered yes (QuestZDoom has no netplay).
+	static bool RumbleBackup(PlayerPawn mo, bool off)
+	{
+		if (!mo || !mo.player)
+			return false;
+		let cv = CVar.FindCVar('rsqa_rumble_backup');
+		if (!cv || cv.GetInt() == 0)
+			return false;
+		let s = ServiceIterator.Find("RSQA_Service").Next();
+		if (!s)
+			return false;
+		let cs = CVar.FindCVar('vr_control_scheme');
+		bool left = off != (cs && cs.GetInt() >= 10);	// the off hand is the left controller for a right-handed player
+		return s.GetInt("buzz", "RSVR", mo.PlayerNumber(), left ? 1 : 0) == 1;
 	}
 
 	// the blade going into a wall, floor or ceiling at speed: BD22's axe impact
