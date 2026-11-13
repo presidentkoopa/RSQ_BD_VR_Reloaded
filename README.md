@@ -22,27 +22,30 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.4v.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.4w.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4v.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4w.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4v.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4w.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.4v
+## Changelog: 2.0.2a to 2.0.4w
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4v.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4w.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
-- **What's new in 2.0.4v** (11-13; *pictures only, not run in the engine, not headset-confirmed*): **the FBX hand is fitted
+- **What's new in 2.0.4w** (11-13): **the hand poses are 2.0.4u's again.** 2.0.4v's re-posed hands were wrong in the engine
+  (hands slid off the triggers and sat in the guns) and are withdrawn. The 25 hand files in `models/rsq/fbx` are byte-for-byte
+  2.0.4u's; nothing else changed. Use this build instead of 2.0.4v.
+- **2.0.4v (withdrawn)** (11-13; *pictures only, not run in the engine, not headset-confirmed*): **the FBX hand is fitted
   to every gun's grip.** On 26 of the 28 held weapons, the right hand's "finger on the trigger" and "squeezed" frames are
   re-posed: the pack's own FBX hand, at the pack's own size, closed on that gun's grip by Quake VR's grasp solve (each
   finger curls until it meets the gun; the thumb and palm are kept out of it), the index finger on the trigger, and on the
