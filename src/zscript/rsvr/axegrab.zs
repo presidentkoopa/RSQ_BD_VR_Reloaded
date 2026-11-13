@@ -1,214 +1,461 @@
-// 2.0.3j (owner 2026-11-01): THE AXE IS A THROWING WEAPON THAT CAN ALSO CUT. "Throw axe (which gives me an empty
-// hand after throwing), distancegrab it back into my hand, throw again, repeat."
+// 2.0.4r THE AXE POOL (owner 2026-11-12 20:42-20:5x; replaces 2.0.3j..2.0.4q's two separate axes, one per hand).
 //
-// Only with RSQ_DistanceGrab loaded. DistanceGrab tells every Service whose class name has "GrabEventService" in it
-// what its pulls do (RSQ_UBQSeries DistanceGrab/zscript/rsqdg/feel.zs RSQDG_Events.Tell):
-//   GetInt("grab.event", <event>, hand, fromAir, <thing>, 'RSQ_DistanceGrab'), hand 0 the main, 1 the off.
-// Without DistanceGrab nobody calls this, and the axe is exactly the axe.pk3 hotfix's.
+//   1. Axes are a count, up to 10 (RSVR_Axes, the axe's own ammo: Axe.dec), shared by both hands. One axe in the Wheel;
+//      either or both hands can hold one at once. Holding costs nothing, each throw from either hand spends one
+//      (melee.zs HoldOrThrow); at 0 the hand that threw goes to its fist, and so does a hand still holding one
+//      (melee.zs AxePool). Gun Bonsai VR treats the axe as one weapon (RSQ_UBQSeries GunBonsaiOffhandVR).
+//   2. A pickup is +1, like any weapon you own giving its ammo -- walked over, or grabbed with Distance Grab (an axe you
+//      did NOT throw: a map axe, an enemy's drop).
+//   3. YOUR THROWN AXE lies on the ground 5 s: from 2 s it blinks RED, faster and faster, and at 5 s it is gone (no
+//      litter). Distance-grabbed back before then: that throw HIT something (a monster, anything shootable) -> +2, and
+//      with MK Crits loaded the NEXT axe throw is a guaranteed critical; it hit nothing -> +1. Never above 10.
+//   4. (RSQ Tactical Rig) the axe's holster gives an axe while you have axes, and is unassigned at 0.
+//   5. AMMO FULL for axes only at 10.
 //
-// An axe pulled in (BrutalAxe, or BrutalAxeOnWall from a berserk throw) goes to THE HAND THAT PULLED IT:
-//   - that hand has no axe: it is that hand's. A free hand (fists / off fist) holds it at once; a hand holding a gun
-//     keeps the gun and the axe is stored (cycle to it).
-//   - that hand has an axe already: the other hand's, by the same rule.
-//   - both hands have one: DistanceGrab keeps it in the hand as a thing to carry or throw.
-// DistanceGrab first tries the item's own pickup (CallTryPickup). The pickup gives the MAIN axe when there is none,
-// so an off-hand pull that was taken that way is moved to the off hand here, and a pickup the engine refused
-// (the main axe already owned) arrives as a carried thing and is turned into the off-hand axe.
-class RSVR_AxeGrabEventService : Service play
-{
-	// per hand, from pull.start: an axe is on its way, and what the player had then
-	bool coming[2];
-	bool hadMain[2], hadOff[2];
-	Weapon mainWas[2];
+// Distance Grab asks before the pickup ("pickup.first", grab.event; RSQ_UBQSeries DistanceGrab flight.zs TakeInto): an
+// axe is ours to give -- +1, or +2 for your own thrown axe after a hit -- into the hand that grabbed it; -1 at 10 (AMMO
+// FULL). Without Distance Grab nothing asks, and every axe is the engine's own pickup (+1).
 
-	static bool IsAxeItem(Object o)
+class RSVR_Axes : Ammo
+{
+	Default
 	{
-		let a = Actor(o);
-		if (!a)
+		Inventory.MaxAmount 10;
+		Ammo.BackpackAmount 0;
+		Ammo.BackpackMaxAmount 10;
+		Inventory.PickupMessage "";
+		Tag "Axes";
+		+INVENTORY.IGNORESKILL		// a pickup is one axe on every skill
+		+INVENTORY.KEEPDEPLETED		// 0 is a count too (melee.zs AxePool: no item = a game from before 2.0.4r)
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+	}
+}
+
+class RSVR_AxeCritNext : RSVR_Token {}	// the next axe throw is a guaranteed critical (MK Crits)
+class RSVR_AxePoolInit : RSVR_Token {}	// melee.zs AxePool: a game from before 2.0.4r was given its count (once)
+
+// one thrown axe of one player: in the air, then on the ground (or in a wall)
+class RSVR_ThrownAxe play
+{
+	PlayerPawn who;
+	Actor proj;		// ThrowedAxe / ThrowedAxeStrong in flight
+	Actor item;		// what it left: a BrutalAxe on the floor, a BrutalAxeOnWall
+	Vector3 lastPos;	// where the flight was last seen (what it leaves is spawned as it ends, and first seen a tic later)
+	int goneTic;		// the tic the flight ended with nothing found yet
+	bool hit, crit, critDone;
+	int id, landTic, flipTic;	// flipTic 0: not blinking yet
+	bool red, wall;		// wall: it lies as BrutalAxeOnWall (which drops a BrutalAxe when shot)
+	int origStyle;
+	double origAlpha;
+	bool origBright;
+	Color origShade;
+}
+
+class RSVR_AxePool : EventHandler
+{
+	const MAXAXES = 10;
+	const LIFE = 175;	// 5 s on the ground
+	const BLINK = 70;	// red from 2 s
+	Array<RSVR_ThrownAxe> axes;
+	int nextId;
+
+	static RSVR_AxePool Get() { return RSVR_AxePool(EventHandler.Find('RSVR_AxePool')); }
+	static bool Logs(PlayerPawn mo) { return RSQ.PlayerInt(mo, 'rsq_switch_log', 0) > 0; }
+	static bool IsAxeItem(Actor a)
+	{
+		if (!a || (Inventory(a) && Inventory(a).Owner))
 			return false;
 		Name n = a.GetClassName();
 		return n == 'BrutalAxe' || n == 'BrutalAxeOnWall';
 	}
 
-	static bool HasMain(PlayerPawn mo) { return mo.FindInventory(RSVR_MeleeHandler.Inv('BrutalAxe'), false) != null; }
-	static bool HasOff(PlayerPawn mo) { return mo.FindInventory(RSVR_MeleeHandler.Inv('RSQ_Off_BrutalAxe')) != null; }
+	// MK Crits (mk-crits, csh_*) is loaded and its criticals are on
+	static bool CritsLoaded()
+	{
+		Name cn = 'csh_critController';
+		class<Inventory> c = cn;
+		if (!c)
+			return false;
+		let cv = CVar.FindCVar('csh_critical_enabled');
+		return !cv || cv.GetBool();
+	}
 
-	static bool Logs(PlayerPawn mo) { return RSQ.PlayerInt(mo, 'rsq_switch_log', 0) > 0; }
+	static void Thrown(PlayerPawn mo, Actor proj)
+	{
+		let h = Get();
+		if (!h || !mo || !proj)
+			return;
+		let t = new('RSVR_ThrownAxe');
+		t.who = mo;
+		t.proj = proj;
+		t.landTic = -1;
+		t.id = ++h.nextId;
+		if (mo.CountInv('RSVR_AxeCritNext') > 0)
+		{
+			// THE GUARANTEED CRITICAL (after a hit and a catch): where this throw lands in a monster, MK Crits' critical
+			// (Crit, below). Spent on this throw, hit or miss.
+			mo.TakeInventory('RSVR_AxeCritNext', 999);
+			t.crit = true;
+			if (Logs(mo))
+				Console.Printf("RSQ axes t%d: throw #%d carries the guaranteed critical", mo.Level.maptime, t.id);
+		}
+		h.axes.Push(t);
+	}
 
+	static void Spent(PlayerPawn mo, int hand)
+	{
+		if (Logs(mo))
+			Console.Printf("RSQ axes t%d: hand %d threw an axe: %d left", mo.Level.maptime, hand, mo.CountInv('RSVR_Axes'));
+	}
+
+	RSVR_ThrownAxe FindItem(Actor a)
+	{
+		for (int i = 0; i < axes.Size(); i++)
+			if (axes[i] && axes[i].item == a)
+				return axes[i];
+		return null;
+	}
+
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		let a = e.Thing;
+		if (!IsAxeItem(a))
+			return;
+		// the axe a thrown axe leaves: spawned where it ends (ThrowedAxe's Death / XDeath, the wall axe), or a wall axe
+		// that falls (BrutalAxeOnWall's SpawnAxe) -- the same throw, the same clock
+		for (int i = 0; i < axes.Size(); i++)
+		{
+			let t = axes[i];
+			if (!t)
+				continue;
+			Actor from = t.proj ? t.proj : t.item;
+			if (from == a)
+				continue;
+			// (a thing is "spawned" for these events on its first tic: the flight that left it is usually gone by then)
+			Vector3 at = from ? from.pos : t.lastPos;
+			if (!from && t.landTic >= 0 && !t.wall)
+				continue;
+			if ((at - a.pos).Length() > (from ? 64 : 96))	// (lastPos is up to one tic of flight behind)
+				continue;
+			if (t.item && t.item != a && t.item.GetClassName() != 'BrutalAxeOnWall')
+				continue;
+			t.item = a;
+			t.proj = null;
+			t.goneTic = 0;
+			t.wall = a.GetClassName() == 'BrutalAxeOnWall';
+			t.red = false;
+			t.origStyle = a.GetRenderStyle();
+			t.origAlpha = a.Alpha;
+			t.origBright = a.bBRIGHT;
+			t.origShade = a.fillcolor;
+			if (t.landTic < 0)
+				t.landTic = level.maptime;
+			if (t.who && Logs(t.who))
+				Console.Printf("RSQ axes t%d: throw #%d lies as %s (it %s)", level.maptime, t.id, a.GetClassName(), t.hit ? "HIT something" : "hit nothing");
+			return;
+		}
+	}
+
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!e.Inflictor || !e.Thing)
+			return;
+		for (int i = 0; i < axes.Size(); i++)
+		{
+			let t = axes[i];
+			if (!t || t.proj != e.Inflictor || e.Thing == t.who)
+				continue;
+			if (!t.hit && t.who && Logs(t.who))
+				Console.Printf("RSQ axes t%d: throw #%d HIT %s (%d damage)", level.maptime, t.id, e.Thing.GetClassName(), e.Damage);
+			t.hit = true;
+			if (t.crit && !t.critDone && e.Thing.bIsMonster)
+			{
+				t.critDone = true;
+				Crit(t, e.Thing, e.Inflictor, e.Damage);
+			}
+			return;
+		}
+	}
+
+	// MK Crits' critical, as MK Crits itself deals and shows it (csh_classes/core.txt csh_Brain / csh_critController): the
+	// blow times csh_critical_factor (the rest dealt now as MK Crits' own 'critical' damage, which its code never counts
+	// again), its sound on the thrower, its hit effect where the blow landed, and its 50-tic stun on a monster that
+	// lives. MK Crits has no way for another mod to ask for a critical (no token, flag, service or damage type: its
+	// critical is only a hit in the first 10 tics of a monster's attack), so its classes and sounds are named here, never
+	// compiled against (it is optional), and its own settings (csh_critical_*) are read.
+	static void Crit(RSVR_ThrownAxe t, Actor m, Actor inf, int dmg)
+	{
+		static const String sounds[] = { "", "criticalshots/mmz/clash", "criticalshots/cod/hitmark", "criticalshots/dks/dink",
+			"criticalshots/dks/kill1", "criticalshots/dks/kill2", "criticalshots/dks/meat", "criticalshots/tf2/crit",
+			"criticalshots/tf2/rec", "criticalshots/tf2/mini", "criticalshots/csz/headshot", "criticalshots/csg/helmet",
+			"criticalshots/csg/headshot", "criticalshots/re1/slash", "criticalshots/re1/pop", "criticalshots/nmc/cutbody",
+			"criticalshots/htd/splat" };
+		static const Name fxs[] = { 'None', 'csh_visual_SmallBloodSplatter', 'csh_visual_LargeBloodSplatter',
+			'csh_visual_SharpBlueFlash', 'csh_visual_RoundRedFlash', 'csh_visual_RoundBlueRedFlash', 'csh_visual_BloodSplat',
+			'csh_visual_TF2Crit' };
+		int si = 1, ei = 3;
+		double vol = 1.0;
+		let c1 = CVar.FindCVar('csh_critical_sound');
+		if (c1) si = c1.GetInt();
+		let c2 = CVar.FindCVar('csh_critical_effect');
+		if (c2) ei = c2.GetInt();
+		let c3 = CVar.FindCVar('csh_critical_vol');
+		if (c3) vol = c3.GetFloat();
+		String fxName = "none";
+		if (ei > 0 && ei < fxs.Size())
+		{
+			class<Actor> fc = fxs[ei];
+			let fx = fc ? Actor.Spawn(fc, inf.pos, NO_REPLACE) : null;
+			if (fx && (ei <= 2 || ei == 6))
+				fx.Translation = m.BloodTranslation;
+			if (fx)
+				fxName = fx.GetClassName();
+		}
+		double f = 2.0;
+		let fc = CVar.FindCVar('csh_critical_factor');
+		if (fc)
+			f = max(1.0, fc.GetFloat());
+		int extra = int(dmg * (f - 1.0));
+		if (m.health > 0 && extra > 0)
+			m.DamageMobj(inf, t.who, extra, 'critical', DMG_THRUSTLESS);
+		String snd = (si > 0 && si < sounds.Size()) ? sounds[si] : "";
+		if (t.who && snd != "")
+			t.who.A_StartSound(snd, 99, 0, vol);
+		bool stun = m.health > 0;
+		if (stun)
+		{
+			RSVR_AxeStun.Start(m);
+			Name jn = 'csh_JustStunned';	// MK Crits' own mark of a fresh critical (its stun damage is not doubled on it)
+			class<Inventory> jc = jn;
+			if (jc)
+				m.GiveInventory(jc, 1);
+		}
+		if (t.who && Logs(t.who))
+			Console.Printf("RSQ axes t%d: CRITICAL -- throw #%d into %s: %d + %d (x%.1f, MK Crits' factor), health now %d; MK Crits' sound %s, effect %s, %s", level.maptime, t.id,
+				m.GetClassName(), dmg, extra, f, m.health, snd == "" ? "(none)" : snd, fxName, stun ? "stunned 50 tics" : "killed");
+	}
+
+	override void WorldTick()
+	{
+		bool calm = false;
+		let pc = CVar.FindCVar('rsqa_photosafe');	// RSQ Accessibility's Photosensitive Mode: steady red, no blinking
+		if (pc)
+			calm = pc.GetInt() != 0;
+		for (int i = axes.Size() - 1; i >= 0; i--)
+		{
+			let t = axes[i];
+			if (!t || !t.who)
+			{
+				axes.Delete(i);
+				continue;
+			}
+			if (t.proj)
+			{
+				t.lastPos = t.proj.pos;		// still flying
+				continue;
+			}
+			if (!t.item && t.landTic < 0)
+			{
+				// the flight just ended: what it leaves is seen in the next tics (WorldThingSpawned)
+				if (t.goneTic == 0)
+					t.goneTic = level.maptime;
+				if (level.maptime - t.goneTic < 4)
+					continue;
+			}
+			if (t.item)
+				t.lastPos = t.item.pos;
+			if (!t.item && t.wall && t.landTic >= 0)
+			{
+				// the wall axe was shot down: the axe it drops is seen in the next tics
+				if (t.goneTic == 0)
+					t.goneTic = level.maptime;
+				if (level.maptime - t.goneTic < 4)
+					continue;
+			}
+			if (!t.item || (Inventory(t.item) && Inventory(t.item).Owner))
+			{
+				// picked up (walked over, grabbed), or it left nothing behind
+				if (t.landTic >= 0 && Logs(t.who))
+					Console.Printf("RSQ axes t%d: throw #%d %s", level.maptime, t.id, t.item ? "picked up" : "gone");
+				axes.Delete(i);
+				continue;
+			}
+			int age = level.maptime - t.landTic;
+			if (age >= LIFE)
+			{
+				if (Logs(t.who))
+					Console.Printf("RSQ axes t%d: throw #%d faded after %d tics on the ground", level.maptime, t.id, age);
+				t.item.Destroy();
+				axes.Delete(i);
+				continue;
+			}
+			if (age < BLINK)
+				continue;
+			if (calm)
+			{
+				// Photosensitive Mode: red, steady, until it is gone
+				if (!t.red)
+				{
+					t.red = true;
+					Look(t);
+					if (Logs(t.who))
+						Console.Printf("RSQ axes t%d: throw #%d on the ground %d tics: RED, steady (Photosensitive Mode)", level.maptime, t.id, age);
+				}
+				continue;
+			}
+			// faster and faster: a flip every 10 tics at 2 s, every 2 tics at the end
+			if (t.flipTic > 0 && level.maptime < t.flipTic)
+				continue;
+			int period = max(2, int(10.0 - 8.0 * double(age - BLINK) / double(LIFE - BLINK) + 0.5));
+			t.red = t.flipTic == 0 ? true : !t.red;
+			t.flipTic = level.maptime + period;
+			Look(t);
+			if (Logs(t.who))
+				Console.Printf("RSQ axes t%d: throw #%d on the ground %d tics: %s (period %d)", level.maptime, t.id, age, t.red ? "RED" : "plain", period);
+		}
+	}
+
+	static void Look(RSVR_ThrownAxe t)
+	{
+		let a = t.item;
+		if (!a)
+			return;
+		if (t.red)
+		{
+			a.A_SetRenderStyle(1.0, STYLE_Stencil);
+			a.SetShade(Color(255, 255, 32, 32));
+			a.bBRIGHT = true;
+		}
+		else
+		{
+			a.A_SetRenderStyle(t.origAlpha, t.origStyle);
+			a.SetShade(t.origShade);
+			a.bBRIGHT = t.origBright;
+		}
+	}
+
+	// ---- DISTANCE GRAB (pickup.first) -----------------------------------------------------------------------------------
+	// 1 taken (given to the hand that grabbed it), -1 AMMO FULL (10 axes), 0 not an axe
+	int Claim(PlayerPawn mo, int h, Actor a)
+	{
+		if (!IsAxeItem(a))
+			return 0;
+		let pool = mo.FindInventory('RSVR_Axes');
+		int have = pool ? pool.Amount : 0;
+		let t = FindItem(a);
+		bool own = t && t.who == mo;
+		if (have >= MAXAXES)
+		{
+			if (Logs(mo))
+				Console.Printf("RSQ axes t%d: hand %d grabbed %s: 10 axes already -- AMMO FULL", mo.Level.maptime, h, own ? String.Format("its thrown axe #%d", t.id) : "an axe");
+			return -1;
+		}
+		int add = own && t.hit ? 2 : 1;
+		bool crit = own && t.hit && CritsLoaded();
+		bool hit = own && t.hit;
+		int tid = t ? t.id : 0;
+		if (t)
+			axes.Delete(axes.Find(t));	// before Give (no "picked up" line: this one is said here)
+		Give(mo, h, add);
+		if (crit)
+			mo.SetInventory('RSVR_AxeCritNext', 1);
+		mo.A_StartSound("Axe/Draw", CHAN_ITEM);
+		if (Logs(mo))
+			Console.Printf("RSQ axes t%d: hand %d grabbed %s -> +%d, %d axes%s", mo.Level.maptime, h,
+				own ? String.Format("its own thrown axe #%d (%s)", tid, hit ? "it hit" : "it missed") : "an axe it did not throw",
+				add, mo.CountInv('RSVR_Axes'), crit ? "; the next throw is a guaranteed critical (MK Crits)" : (hit ? " (no MK Crits: no critical)" : ""));
+		a.Destroy();
+		return 1;
+	}
+
+	// add axes (never above 10) and put one in the hand that grabbed: the off hand always (2.0.3y "auto-equip every
+	// time"), the main hand when it is free (fists); a main hand holding a gun keeps it (the axe is in the Wheel)
+	static void Give(PlayerPawn mo, int h, int add)
+	{
+		let p = mo.player;
+		mo.GiveInventory('RSVR_Axes', add);
+		let mainW = RSQ_Dual.GiveBare(mo, 'BrutalAxe');
+		let offW = RSQ_Dual.GiveBare(mo, 'RSQ_Off_BrutalAxe');
+		mo.TakeInventory('RSVR_MainAxeGone', 999);
+		mo.TakeInventory('RSVR_OffAxeGone', 999);
+		if (h == 1)
+		{
+			if (offW && p.OffhandWeapon != offW)
+			{
+				offW.bOffhandWeapon = true;
+				p.PendingWeapon = offW;
+			}
+			return;
+		}
+		let rw = p.ReadyWeapon;
+		bool free = !rw || rw is 'RSQ_Hands' || rw.GetClassName() == 'Melee_Attacks';
+		if (mainW && free)
+		{
+			mainW.bOffhandWeapon = false;
+			p.PendingWeapon = mainW;
+		}
+	}
+}
+
+// MK Crits' stun (csh_critController.initStun / endStun), for the guaranteed critical: the monster held in its pain
+// state 50 tics, then let go with its own NOPAIN back
+class RSVR_AxeStun : Thinker
+{
+	Actor m;
+	int left;
+	bool noPain;
+
+	static void Start(Actor m)
+	{
+		let s = new('RSVR_AxeStun');
+		s.m = m;
+		s.left = 50;
+		s.noPain = m.bNOPAIN;
+		m.bNOPAIN = true;
+		let ps = m.FindState("Pain");
+		if (ps)
+			m.SetState(ps);
+		m.tics = -1;
+	}
+
+	override void Tick()
+	{
+		if (!m || m.health <= 0)
+		{
+			if (m)
+				m.bNOPAIN = noPain;
+			Destroy();
+			return;
+		}
+		if (level.isFrozen())
+			return;
+		if (--left > 0)
+		{
+			m.tics = -1;
+			return;
+		}
+		m.tics = 1;
+		m.bNOPAIN = noPain;
+		Destroy();
+	}
+}
+
+// Distance Grab's door (DistanceGrab/zscript/rsqdg/feel.zs RSQDG_Events): "pickup.first" before the pickup, and the old
+// "pickup.claim" after a refusal (answered the same way, never refused there)
+class RSVR_AxeGrabEventService : Service play
+{
 	override int GetInt(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{
 		if (!(request ~== "grab.event"))
 			return 0;
-		let p = players[consoleplayer];
-		let mo = p.mo;
-		int h = intArg & 1;
-		if (!mo || mo.health <= 0)
+		if (stringArg != "pickup.first" && stringArg != "pickup.claim")
 			return 0;
-		// 2.0.4q (owner 2026-11-12: "when i try to distance grab my axe it says ammo full"; ONE axe per hand, the rhythm
-		// throw -> distance-grab it back -> throw). The engine refuses a floor BrutalAxe to a player who carries the main
-		// axe -- in the main hand, in a Tactical Rig holster or in the Wheel -- because it gives no ammo; since Distance
-		// Grab's 11-10 AMMO FULL rule that refusal ended the grab ("AMMO FULL", dropped at the feet) before the carried path
-		// below was ever reached, so the off hand's thrown axe could never be grabbed back. Distance Grab now asks first
-		// ("pickup.claim", flight.zs TakeInto): with the main axe carried and the off-hand axe NOT (it is the one that was
-		// thrown), this axe is the off hand's again: given (RSQ_Dual.GiveCopy: never a second copy), and
-		//   - grabbed by the OFF hand: held in the off hand at once (2.0.3y "auto-equip every time");
-		//   - grabbed by the MAIN hand: the main hand holds an axe -- its own, from wherever it was carried -- and the new
-		//     one goes into the off hand if that hand is free (else it is carried, in the Wheel).
-		// Both axes carried already: not claimed -- one per hand, so Distance Grab's AMMO FULL stands.
-		if (stringArg == "pickup.claim")
-		{
-			if (!IsAxeItem(objectArg) || RSQ.PlayerInt(mo, 'rsq_dual_axe', 1) == 0)
-				return 0;
-			bool main = HasMain(mo), off = HasOff(mo);
-			if (!main || off)
-			{
-				Say(mo, h, off && main ? "refused: both axes carried, one per hand (AMMO FULL)" : "not claimed (no main axe: the pickup itself gives it)");
-				return 0;
-			}
-			if (h == 1)
-				GiveOff(mo, true, true);
-			else
-			{
-				let axe = Weapon(mo.FindInventory(RSVR_MeleeHandler.Inv('BrutalAxe'), false));
-				GiveOff(mo, p.ReadyWeapon == axe);
-				if (axe && p.ReadyWeapon != axe)
-				{
-					axe.bOffhandWeapon = false;
-					p.PendingWeapon = axe;
-				}
-			}
-			mo.A_StartSound("Axe/Draw", CHAN_ITEM);
-			Actor(objectArg).Destroy();
-			Say(mo, h, h == 1 ? "claimed: the off hand's axe again, held in the off hand" : "claimed: the main hand holds its axe, this one is the off hand's");
-			return 1;
-		}
-		if (stringArg == "pull.start")
-		{
-			coming[h] = IsAxeItem(objectArg);
-			if (coming[h])
-			{
-				hadMain[h] = HasMain(mo);
-				hadOff[h] = HasOff(mo);
-				mainWas[h] = p.ReadyWeapon;
-			}
+		let mo = players[consoleplayer].mo;
+		let h = RSVR_AxePool.Get();
+		if (!mo || mo.health <= 0 || !h)
 			return 0;
-		}
-		if (stringArg != "pull.caught")
-		{
-			// missed, blocked, aborted, unlocked: that pull is over (refused keeps flying: no change)
-			if (stringArg != "pull.refused" && stringArg != "pull.lock")
-				coming[h] = false;
-			return 0;
-		}
-		if (!coming[h] && !IsAxeItem(objectArg))
-			return 0;
-		coming[h] = false;
-
-		if (!objectArg)
-		{
-			// USED ON THE WAY IN: the item's own pickup took it, so the main hand got the axe (it had none)
-			// or, from a wall, the off hand's was asked for (Axe.dec BrutalAxeOnWall Pickup, RSVR_GiveOffAxe)
-			if (mo.CountInv('RSVR_GiveOffAxe') > 0)
-			{
-				mo.TakeInventory('RSVR_GiveOffAxe', 999);
-				GiveOff(mo, true, h == 1);
-				Say(mo, h, "off hand (main had one)");
-				return 0;
-			}
-			if (!HasMain(mo) || hadMain[h])
-				return 0;	// not an axe after all, or nothing new
-			if (h == 1)
-			{
-				// 2.0.3y (owner, BUGS_1.0 item 16: "distance-grabbing the axe to the offhand must auto-equip every
-				// time"; item 5: one axe picked up is both axes): pulled with the OFF hand, the off hand holds the
-				// off-hand axe now, whatever it held; the main axe that came with it is stored, the main hand keeps its gun
-				if (p.PendingWeapon && p.PendingWeapon.GetClassName() == 'BrutalAxe')
-					p.PendingWeapon = WP_NOCHANGE;
-				GiveOff(mo, true, true);
-				Say(mo, h, "off hand (equipped)");
-				return 0;
-			}
-			// the main hand's: held at once if the main hand was free, else stored and the gun kept
-			MainTake(mo, h);
-			Say(mo, h, "main hand");
-			return 0;
-		}
-
-		// CAUGHT AND CARRIED: the pickup was refused because the main hand has an axe
-		let a = Actor(objectArg);
-		bool main = HasMain(mo), off = HasOff(mo);
-		bool offOk = RSQ.PlayerInt(mo, 'rsq_dual_axe', 1) != 0;
-		// 2.0.3y (owner, BUGS_1.0 item 16): an axe pulled with the OFF hand is always equipped there as the off-hand
-		// axe (given if missing). Only when the off hand holds the off-hand axe already does Distance Grab keep carrying it.
-		if (h == 1 && !(p.OffhandWeapon && p.OffhandWeapon.GetClassName() == 'RSQ_Off_BrutalAxe'))
-		{
-			GiveOff(mo, true, true);
-			a.Destroy();
-			Say(mo, h, off ? "off hand (equipped, carried -> held)" : "off hand (carried -> held)");
-		}
-		else if (h == 0 && main && !off && offOk)
-		{
-			GiveOff(mo, true);
-			a.Destroy();
-			Say(mo, h, "off hand (carried -> held)");
-		}
-		else if (!main)
-		{
-			mo.GiveInventory(RSVR_MeleeHandler.Inv('BrutalAxe'), 1);
-			MainTake(mo, h);
-			a.Destroy();
-			Say(mo, h, "main hand (carried -> held)");
-		}
-		// both hands full: DistanceGrab keeps carrying it
-		return 0;
-	}
-
-	// the main axe was just given: hold it if the main hand is free, else keep the gun
-	void MainTake(PlayerPawn mo, int h)
-	{
-		let p = mo.player;
-		let axe = Weapon(mo.FindInventory(RSVR_MeleeHandler.Inv('BrutalAxe'), false));
-		Weapon was = mainWas[h] ? mainWas[h] : p.ReadyWeapon;
-		bool free = !was || was is 'RSQ_Hands' || was.GetClassName() == 'Melee_Attacks' || was.GetClassName() == 'BrutalAxe';
-		if (free && axe)
-			p.PendingWeapon = axe;
-		else if (p.PendingWeapon == axe)
-			p.PendingWeapon = WP_NOCHANGE;	// the engine's switch-on-pickup: the gun stays
-	}
-
-	// the off-hand axe; equip: held in the off hand at once, whatever the off hand held (2.0.3y, owner BUGS_1.0 item 16:
-	// "every time"; it was only into a free off hand). What it held stays in the inventory.
-	// force false (a MAIN-hand pull handing the axe across): only into a free off hand, as before
-	static void GiveOff(PlayerPawn mo, bool equip, bool force = false)
-	{
-		RSQ_Dual.GiveCopy(mo, RSQ_DualTable.AXE);
-		if (!equip)
-			return;
-		let p = mo.player;
-		let ow = p.OffhandWeapon;
-		let w = Weapon(mo.FindInventory(RSVR_MeleeHandler.Inv('RSQ_Off_BrutalAxe')));
-		if (w && ow != w && (force || !ow || ow is 'RSQ_Hands'))
-		{
-			w.bOffhandWeapon = true;
-			p.PendingWeapon = w;
-		}
-	}
-
-	static void Say(PlayerPawn mo, int h, String what)
-	{
-		if (Logs(mo))
-			Console.Printf("RSQ axegrab t%d: hand %d pulled an axe -> %s", mo.Level.maptime, h, what);
-	}
-}
-
-// the wall axe's off-hand gift, used by melee.zs (no equip: a floor or wall pickup keeps the hotfix's rule)
-class RSVR_AxeGrab play
-{
-	static void GiveOff(PlayerPawn mo)
-	{
-		if (RSQ.PlayerInt(mo, 'rsq_dual_axe', 1) == 0)
-			return;
-		RSQ_Dual.GiveCopy(mo, RSQ_DualTable.AXE);
-		mo.A_StartSound("Axe/Draw", CHAN_ITEM);
+		int r = h.Claim(mo, intArg & 1, Actor(objectArg));
+		return stringArg == "pickup.claim" ? max(r, 0) : r;
 	}
 }

@@ -2,6 +2,13 @@
 ACTOR BrutalAxe : BrutalWeapon
 {
 	Weapon.SelectionOrder 2300
+	// 2.0.4r THE AXE POOL (owner 2026-11-12 20:42-20:5x; zscript/rsvr/axegrab.zs): axes are a count, up to 10, shared by
+	// both hands. A pickup gives one (the engine's own weapon-ammo pickup: refused, AMMO FULL, at 10); holding costs
+	// nothing, each throw spends one (melee.zs HoldOrThrow); at 0 the axes are gone and the hands go to their fists.
+	Weapon.AmmoType1 "RSVR_Axes"
+	Weapon.AmmoUse1 0
+	Weapon.AmmoGive1 1
+	+WEAPON.AMMO_OPTIONAL
 	+WEAPON.AXEBLOOD
 	+WEAPON.MELEEWEAPON
 	-INVENTORY.UNDROPPABLE
@@ -49,11 +56,15 @@ ACTOR BrutalAxe : BrutalWeapon
 		THRW J 0 A_TakeInventory("PowerBlueBloodOnVisor", 1)
 		THRW J 0 A_TakeInventory("PowerGreenBloodOnVisor", 1)
 		THRW J 0 A_TakeInventory("PowerAlienBloodOnVisor", 1)
+		THRW J 0 A_JumpIfInventory("RSVR_Axes", 1, "AxeRearm")	// 2.0.4r: axes left -- the next one comes to the hand
 		THRW J 2
 		PONG RQP 1
 		PONG P 1 ACS_NamedExecuteAlways("FistSelect", 0, 0, 0, 0)
 		PONG P 5
 		Goto Ready
+	AxeRearm:
+		TNT1 A 6
+		Goto SelectAnimation
 	KickFlash: 
 		4XEG A 0 A_JumpIfInventory("IsPlayingAsPurist",1,"PuristKickFlash")
 		1XEG A 0 A_JumpIfInventory("PowerBloodOnVisor",1,5)
@@ -439,7 +450,8 @@ ACTOR BrutalAxe : BrutalWeapon
 // so the copy's Ready reads none of them. Out of VR (or VR throwing off) the off trigger is BD22's own chop.
 ACTOR RSQ_Off_BrutalAxe : BrutalAxe
 {
-	Tag "Off-hand Axe"
+	// 2.0.4r: one axe (owner 11-12): it carries the axe's own name (the Wheel's one entry); it gives no axes of its own
+	Weapon.AmmoGive1 0
 	Weapon.SelectionOrder 99999
 	+WEAPON.OFFHANDWEAPON
 	-WEAPON.NOHANDSWITCH	// 2.0.3y (owner, BUGS_1.0 item 5): it passes between hands; in the main hand it becomes its gun (dual.zs Hands)
@@ -478,10 +490,15 @@ ACTOR RSQ_Off_BrutalAxe : BrutalAxe
 	OffAxeThrown:
 		TNT1 A 0 A_TakeInventory("RSVR_OffAxeThrown", 1)
 		TNT1 A 0 A_TakeInventory("RSVR_OffAxeHolding", 1)
+		TNT1 A 0 A_JumpIfInventory("RSVR_Axes", 1, "OffAxeRearm")	// 2.0.4r: axes left -- the next one comes to the hand
 		TNT1 A 0 A_GiveInventory("RSVR_OffAxeGone", 1)
 	OffAxeGone:
 		TNT1 A 1 A_WeaponReady(WRF_NOFIRE)
 		Loop
+	OffAxeRearm:
+		TNT1 A 8
+		AXEG A 0 A_PlaySound("Axe/Draw", 5)
+		Goto Ready
 	}
 }
 
@@ -829,16 +846,11 @@ ACTOR BrutalAxeOnWall: CustomInventory
 		AXET A 1
 		AXET A -1
 		Stop
-	// 2.0.3j (owner 2026-11-01: "we need consistency"): the axe stuck in a wall follows the floor axe's rules:
-	// no axe -> the main hand's; an axe in the main hand -> the off hand's (melee.zs gives it); one in each hand ->
-	// it stays where it is. It used to be used up for nothing when the player already had the axe.
+	// 2.0.4r THE AXE POOL (owner 2026-11-12): the axe stuck in a wall is one axe, like the floor axe: +1, refused at 10
+	// (AMMO FULL). (2.0.3j's main-hand / off-hand rule is gone with the two separate axes.)
 	Pickup:
-		TNT1 A 0 A_JumpIfInventory("BrutalAxe", 1, "RSQ_HasMain")
+		TNT1 A 0 A_JumpIfInventory("RSVR_Axes", 10, "RSQ_Full")
 		TNT1 A 0 A_GiveInventory("BrutalAxe", 1)
-		Stop
-	RSQ_HasMain:
-		TNT1 A 0 A_JumpIfInventory("RSQ_Off_BrutalAxe", 1, "RSQ_Full")
-		TNT1 A 0 A_GiveInventory("RSVR_GiveOffAxe", 1)
 		Stop
 	RSQ_Full:
 		TNT1 A 0
