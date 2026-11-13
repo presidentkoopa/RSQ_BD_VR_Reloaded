@@ -195,6 +195,13 @@ class RSQ_Counters : EventHandler
 		bool magMode = RSQ.PlayerInt(mo, 'rsq_hud_ammo', 0) == 0;
 		int m, r;
 		[m, r] = GunAmmo(mo, p.ReadyWeapon);
+		// 2.0.4s (owner 11-12 21:36, "0 axes but still an axe in hand"): the main hand with nothing to count (its fist) read
+		// "0" here whatever the off hand held -- the off hand's axe too. Then the number is the off hand's count.
+		if ((!p.ReadyWeapon || !p.ReadyWeapon.Ammo1) && p.OffhandWeapon && p.OffhandWeapon.Ammo1)
+		{
+			int m2;
+			[m2, r] = GunAmmo(mo, p.OffhandWeapon);
+		}
 		SetCount(mo, 'RSQ_HudRes', r);
 		SetCount(mo, 'RSQ_HudMag', max(m, 0));
 		SetCount(mo, 'RSQ_HudHasMag', magMode && m >= 0 ? 1 : 0);

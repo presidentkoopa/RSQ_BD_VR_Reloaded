@@ -233,10 +233,13 @@ class RSVR_MeleeHandler : EventHandler
 
 	// 2.0.4r THE AXE POOL (owner 2026-11-12 20:42-20:5x; axegrab.zs). Axes are a count (RSVR_Axes, up to 10) shared by
 	// both hands; owning any means owning both versions (BrutalAxe for the main hand, RSQ_Off_BrutalAxe for the off hand),
-	// so either or both hands can hold one. A pickup is +1 (the engine's own weapon-ammo pickup), a throw -1. At 0 the
-	// axes are gone: the hand that threw goes to its fist (Axe.dec), and so does a hand still holding the other one.
+	// so either or both hands can hold one. A pickup is +1 (the engine's own weapon-ammo pickup), a throw -1.
+	// 2.0.4s (owner 21:36, "why do i have 0 axes but still an axe in hand?"): THE COUNT IS THE AXES YOU HAVE, THE ONES IN
+	// YOUR HANDS INCLUDED -- never more hands holding an axe than the count, and at 0 none (axegrab.zs, top).
 	// (Before 2.0.4r: two separate axes, one per hand, each gone when thrown -- the 2.0.2 / 2.0.3i / 2.0.3y rules.)
 	Weapon mainPrev[MAXPLAYERS];	// 2.0.3i: the main hand's weapon last tic
+	int axeSince[MAXPLAYERS * 2];	// 2.0.4s: the tic each hand (n * 2 + hand) last took an axe into it
+	bool axeHad[MAXPLAYERS * 2];
 
 	// DECORATE classes are not known when ZScript compiles: look them up by name at run time
 	static class<Inventory> Inv(Name n)
@@ -254,7 +257,7 @@ class RSVR_MeleeHandler : EventHandler
 			let mo = players[n].mo;
 			let p = mo.player;
 			if (p.playerstate == PST_LIVE)
-				AxePool(mo);
+				AxePool(mo, n);
 			// the off-hand axe is put away (off hand to the fist) when the main hand switches to a GUN (owner:
 			// "when you switch to a gun in mainhand"); fists or the axe leave it; it can be cycled back (slot 1, KEYCONF.rsq) or put there with the Dual key
 			let rw = p.ReadyWeapon;
@@ -270,16 +273,25 @@ class RSVR_MeleeHandler : EventHandler
 		}
 	}
 
-	// one player's axes against the count, every tic
-	static void AxePool(PlayerPawn mo)
+	// one player's axes against the count, every tic (WorldTick: before the weapons tick)
+	void AxePool(PlayerPawn mo, int n)
 	{
 		let p = mo.player;
 		let mainW = Weapon(mo.FindInventory(Inv('BrutalAxe'), false));
 		let offW = Weapon(mo.FindInventory(Inv('RSQ_Off_BrutalAxe')));
+		if (!mainW && !offW && mo.CountInv('RSVR_Axes') > 0)
+		{
+			// 2.0.4s: axes counted with no axe to hold (the count raised by anything but an axe: a refill of every ammo,
+			// a cheat) -- they are axes you have, so both versions are yours (rig axs1: the count came back with none)
+			mainW = RSQ_Dual.GiveBare(mo, 'BrutalAxe');
+			offW = RSQ_Dual.GiveBare(mo, 'RSQ_Off_BrutalAxe');
+		}
 		if (!mainW && !offW)
 		{
 			mo.TakeInventory('RSVR_MainAxeGone', 999);
 			mo.TakeInventory('RSVR_OffAxeGone', 999);
+			axeHad[n * 2] = false;
+			axeHad[n * 2 + 1] = false;
 			return;
 		}
 		if (mo.CountInv('RSVR_AxePoolInit') == 0)
@@ -289,10 +301,54 @@ class RSVR_MeleeHandler : EventHandler
 			if (!mo.FindInventory('RSVR_Axes'))
 				mo.GiveInventory('RSVR_Axes', (mainW ? 1 : 0) + (offW ? 1 : 0));
 		}
-		let pool = mo.FindInventory('RSVR_Axes');
+		let pool = Ammo(mo.FindInventory('RSVR_Axes'));
 		if (!pool)
 			return;
-		if (pool.Amount > 0)
+		// 2.0.4s: every display reads the count through the axe's Ammo1 (RSQ Gun Cards, Gun Bonsai VR's screens, the Wheel,
+		// this pack's HUD). An axe made before 2.0.4r (a saved game) has none: it is pointed at the count here.
+		for (int k = 0; k < 2; k++)
+		{
+			let w = k == 1 ? offW : mainW;
+			if (w && w.Ammo1 != pool)
+			{
+				w.AmmoType1 = (class<Ammo>)(pool.GetClass());
+				w.Ammo1 = pool;
+			}
+		}
+		int count = pool.Amount;
+		bool hasMain = RSVR_AxePool.HandHasAxe(mo, false);
+		bool hasOff = RSVR_AxePool.HandHasAxe(mo, true);
+		for (int h = 0; h < 2; h++)
+		{
+			bool now = RSVR_AxePool.IsAxeW(h == 1 ? p.OffhandWeapon : p.ReadyWeapon);
+			if (now && !axeHad[n * 2 + h])
+				axeSince[n * 2 + h] = mo.Level.maptime;
+			axeHad[n * 2 + h] = now;
+		}
+		int held = (hasMain ? 1 : 0) + (hasOff ? 1 : 0);
+		if (held > count)
+		{
+			// MORE AXES IN HANDS THAN YOU HAVE. At 0, every hand lets go. Short by one (two hands, one axe): the hand that
+			// took it last keeps it -- the one it is on its way to (the Wheel, a slot key, a holster), else the newer -- and
+			// the other is empty at once: the axe moved between your hands.
+			let pend = p.PendingWeapon;
+			int pendHand = (pend && pend != WP_NOCHANGE && RSVR_AxePool.IsAxeW(pend)) ? (pend.bOffhandWeapon ? 1 : 0) : -1;
+			if (count <= 0)
+			{
+				RSVR_AxePool.ToEmpty(mo, false, "no axes left");
+				RSVR_AxePool.ToEmpty(mo, true, "no axes left");
+			}
+			else
+			{
+				int keep;
+				if (pendHand >= 0 && !RSVR_AxePool.IsAxeW(pendHand == 1 ? p.OffhandWeapon : p.ReadyWeapon))
+					keep = pendHand;
+				else
+					keep = axeSince[n * 2 + 1] > axeSince[n * 2] ? 1 : 0;
+				RSVR_AxePool.ToEmpty(mo, keep == 0, String.Format("%d axe%s, it went to the %s hand", count, count == 1 ? "" : "s", keep == 1 ? "off" : "main"));
+			}
+		}
+		if (count > 0)
 		{
 			// owning an axe is owning both versions (either hand can hold one)
 			if (!mainW)
@@ -302,23 +358,8 @@ class RSVR_MeleeHandler : EventHandler
 			mo.TakeInventory('RSVR_MainAxeGone', 999);
 			return;
 		}
-		// NO AXES LEFT: each hand that holds one goes to its fist (the main hand that threw does it itself, Axe.dec
-		// AxeThrown's FistSelect; the off hand's throw is RSVR_OffAxeGone, WorldTick), then both versions are taken
-		if (p.PendingWeapon == WP_NOCHANGE)
-		{
-			if (mainW && p.ReadyWeapon == mainW && mo.CountInv('RSVR_MainAxeGone') == 0)
-			{
-				let fist = RSQ_Dual.EmptyHandOf(mo, false);
-				if (fist)
-					p.PendingWeapon = fist;
-			}
-			else if (offW && p.OffhandWeapon == offW && mo.CountInv('RSVR_OffAxeGone') == 0)
-			{
-				let fist = RSQ_Dual.EmptyHandOf(mo, true);
-				if (fist)
-					p.PendingWeapon = fist;
-			}
-		}
+		// NO AXES LEFT: no hand holds one (above); both versions are taken once out of the hands (BD22's FistSelect may
+		// have taken the main one already)
 		if (mainW && p.ReadyWeapon != mainW && p.PendingWeapon != mainW)
 		{
 			mo.TakeInventory(Inv('BrutalAxe'), 1);
@@ -1464,17 +1505,36 @@ class RSVR_Hand play
 			}
 			return;
 		}
+		// 2.0.4s: no axe, no throw (no hand holds one at 0: melee.zs AxePool; this is the guard)
+		let pool = mo.FindInventory('RSVR_Axes');
+		if (pool && pool.Amount <= 0)
+			return;
 		if (h && h.Throw(mo))
 		{
-			// 2.0.4r THE AXE POOL (owner 2026-11-12, axegrab.zs): a throw spends one axe; with axes left the next one
-			// comes to the hand (Axe.dec AxeRearm / OffAxeRearm), at 0 the axes are gone (AxePickupTick)
+			// 2.0.4r THE AXE POOL (owner 2026-11-12, axegrab.zs): a throw spends one axe.
+			// 2.0.4s: the next one comes to this hand (Axe.dec AxeRearm / OffAxeRearm) only if one is left that the other
+			// hand is not holding; otherwise this hand is empty at once (the count is the axes you have, hands included)
+			bool off = thrown != 'RSVR_AxeThrown';
 			mo.TakeInventory('RSVR_Axes', 1);
-			bool none = mo.CountInv('RSVR_Axes') <= 0;
-			mo.SetInventory(thrown, 1);
-			if (thrown == 'RSVR_AxeThrown' && none)
-				mo.SetInventory('RSVR_MainAxeGone', 1);	// 2.0.3i: gone (AxePickupTick)
-			RSVR_AxePool.Spent(mo, thrown == 'RSVR_AxeThrown' ? 0 : 1);
+			int left = mo.CountInv('RSVR_Axes');
+			bool next = left - (RSVR_AxePool.HandHasAxe(mo, !off) ? 1 : 0) >= 1;
+			RSVR_AxePool.Spent(mo, off ? 1 : 0, next);
 			h.Unlock();
+			if (next)
+			{
+				if (off)
+					mo.SetInventory('RSVR_OffAxeNext', 1);
+				else
+					mo.SetInventory('RSVR_MainAxeNext', 1);
+				mo.SetInventory(thrown, 1);
+			}
+			else if (!RSVR_AxePool.ToEmpty(mo, off, left > 0 ? "thrown; the axe left is in the other hand" : "thrown, the last axe"))
+			{
+				// (no empty hand to give it: the throw's own way out, BD22's FistSelect / the off hand's OffAxeGone)
+				mo.SetInventory(thrown, 1);
+				if (!off)
+					mo.SetInventory('RSVR_MainAxeGone', 1);
+			}
 		}
 		// F11 (owner): let go without a throw and the paint stays a second, as on the ShieldSaw and the
 		// saber -- pick the hold back up and it is still there; otherwise Tick takes it down

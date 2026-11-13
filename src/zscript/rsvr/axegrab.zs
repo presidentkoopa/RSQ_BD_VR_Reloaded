@@ -15,6 +15,21 @@
 // Distance Grab asks before the pickup ("pickup.first", grab.event; RSQ_UBQSeries DistanceGrab flight.zs TakeInto): an
 // axe is ours to give -- +1, or +2 for your own thrown axe after a hit -- into the hand that grabbed it; -1 at 10 (AMMO
 // FULL). Without Distance Grab nothing asks, and every axe is the engine's own pickup (+1).
+//
+// 2.0.4s THE COUNT IS THE AXES YOU HAVE, THE ONES IN YOUR HANDS INCLUDED (owner 2026-11-12 21:36, in his headset: "why do i
+// have 0 axes but still an axe in hand?"). 2.0.4r let both hands hold an axe on a count of 1 (the throwing hand took "the
+// next axe" while the other hand still held the last one; the Wheel, a slot key or a holster put the axe in the second
+// hand), so the next throw left the count at 0 with an axe still in the other hand until its switch-away played out (and
+// longer while that hand was winding up a throw -- which then threw an axe from nothing). Now, everywhere:
+//   - axes in hands <= the count. A throw spends one; the throwing hand takes the next axe only if one is left that the
+//     other hand is not holding (RSVR_MainAxeNext / RSVR_OffAxeNext, Axe.dec AxeRearm / OffAxeRearm); otherwise it is
+//     empty AT ONCE (ToEmpty: its empty hand, the tic of the throw, no lowering).
+//   - anything else that puts an axe in a second hand the count cannot cover (the Wheel, a slot key, a holster) moves the
+//     axe: the hand that held it is empty at once (melee.zs AxePool, every tic, before the weapons tick);
+//   - at 0 no hand holds an axe, none is on its way to one, and no throw is made.
+// 2.0.4s DISTANCE GRAB ALWAYS EQUIPS (owner 21:36: "lets have axe always switch to when distance grabbed"): an axe caught by
+// Distance Grab (a pull or the walk-up grip) goes INTO the hand that grabbed it -- a main hand holding a gun switches to it
+// too -- whatever neverswitchonpickup says. Walking over an axe stays Doom's own pickup (your neverswitchonpickup).
 
 class RSVR_Axes : Ammo
 {
@@ -24,6 +39,7 @@ class RSVR_Axes : Ammo
 		Ammo.BackpackAmount 0;
 		Ammo.BackpackMaxAmount 10;
 		Inventory.PickupMessage "";
+		Inventory.Icon "AXE9A0";	// 2.0.4s: BD22's own floor axe, so a HUD that draws the ammo's picture has one
 		Tag "Axes";
 		+INVENTORY.IGNORESKILL		// a pickup is one axe on every skill
 		+INVENTORY.KEEPDEPLETED		// 0 is a count too (melee.zs AxePool: no item = a game from before 2.0.4r)
@@ -33,6 +49,8 @@ class RSVR_Axes : Ammo
 }
 
 class RSVR_AxeCritNext : RSVR_Token {}	// the next axe throw is a guaranteed critical (MK Crits)
+class RSVR_MainAxeNext : RSVR_Token {}	// 2.0.4s: the main hand threw and an axe is left for it (Axe.dec AxeRearm)
+class RSVR_OffAxeNext : RSVR_Token {}	// 2.0.4s: the off hand threw and an axe is left for it (Axe.dec OffAxeRearm)
 class RSVR_AxePoolInit : RSVR_Token {}	// melee.zs AxePool: a game from before 2.0.4r was given its count (once)
 
 // one thrown axe of one player: in the air, then on the ground (or in a wall)
@@ -103,10 +121,83 @@ class RSVR_AxePool : EventHandler
 		h.axes.Push(t);
 	}
 
-	static void Spent(PlayerPawn mo, int hand)
+	static void Spent(PlayerPawn mo, int hand, bool next)
 	{
 		if (Logs(mo))
-			Console.Printf("RSQ axes t%d: hand %d threw an axe: %d left", mo.Level.maptime, hand, mo.CountInv('RSVR_Axes'));
+			Console.Printf("RSQ axes t%d: hand %d threw an axe: %d left, %s", mo.Level.maptime, hand, mo.CountInv('RSVR_Axes'),
+				next ? "the next one comes to this hand" : (mo.CountInv('RSVR_Axes') > 0 ? "the one left is in the other hand: this hand is empty" : "this hand is empty"));
+	}
+
+	// ---- 2.0.4s: AXES IN HANDS NEVER MORE THAN THE COUNT --------------------------------------------------------------
+	static bool IsAxeW(Weapon w)
+	{
+		if (!w)
+			return false;
+		Name n = w.GetClassName();
+		return n == 'BrutalAxe' || n == 'RSQ_Off_BrutalAxe';
+	}
+
+	// the hand holds an axe now (either version), or one is on its way to it (PendingWeapon, flagged for that hand)
+	static bool HandHasAxe(PlayerPawn mo, bool off)
+	{
+		let p = mo.player;
+		if (!p)
+			return false;
+		if (IsAxeW(off ? p.OffhandWeapon : p.ReadyWeapon))
+			return true;
+		let pend = p.PendingWeapon;
+		return pend && pend != WP_NOCHANGE && IsAxeW(pend) && pend.bOffhandWeapon == off;
+	}
+
+	// the hand is empty AT ONCE: its empty hand (BD22's Melee_Attacks in the main hand, RSQ_Hands in the off hand) put
+	// straight into its slot, no lowering (as RSQ_Dual.Become swaps a gun's versions in place); an axe on its way to that
+	// hand is called off. False when there is no empty hand to give it.
+	static bool ToEmpty(PlayerPawn mo, bool off, String why)
+	{
+		let p = mo.player;
+		if (!p)
+			return false;
+		let pend = p.PendingWeapon;
+		if (pend && pend != WP_NOCHANGE && IsAxeW(pend) && pend.bOffhandWeapon == off)
+			p.PendingWeapon = WP_NOCHANGE;
+		let w = off ? p.OffhandWeapon : p.ReadyWeapon;
+		if (!IsAxeW(w))
+			return true;
+		let e = RSQ_Dual.EmptyHandOf(mo, off);
+		if (!e)
+			return false;
+		e.bOffhandWeapon = off;
+		if (off)
+		{
+			p.OffhandWeapon = e;
+			if (p.ReadyWeapon == e)
+				p.ReadyWeapon = null;
+			mo.TakeInventory('RSVR_OffAxeHolding', 999);
+			mo.TakeInventory('RSVR_OffAxeThrown', 999);
+			mo.TakeInventory('RSVR_OffAxeNext', 999);
+		}
+		else
+		{
+			p.ReadyWeapon = e;
+			if (p.OffhandWeapon == e)
+				p.OffhandWeapon = null;
+			p.SetPsprite(PSP_FLASH, null);
+			mo.TakeInventory('RSVR_AxeHolding', 999);
+			mo.TakeInventory('RSVR_AxeThrown', 999);
+			mo.TakeInventory('RSVR_AxeTrig', 999);
+			mo.TakeInventory('RSVR_MainAxeNext', 999);
+			Name hc = 'HasCutingWeapon';	// BD22's mark of a blade in hand (the axe's Deselect takes it)
+			class<Inventory> hcc = hc;
+			if (hcc)
+				mo.TakeInventory(hcc, 999);
+		}
+		p.SetPsprite(off ? PSP_OFFHANDWEAPON : PSP_WEAPON, e.GetUpState(), false, e);
+		if (p.PendingWeapon == e)
+			p.PendingWeapon = WP_NOCHANGE;
+		if (Logs(mo))
+			Console.Printf("RSQ axes t%d: the %s hand's axe is gone at once (%s): %d axes, it holds %s now", mo.Level.maptime,
+				off ? "off" : "main", why, mo.CountInv('RSVR_Axes'), e.GetClassName());
+		return true;
 	}
 
 	RSVR_ThrownAxe FindItem(Actor a)
@@ -369,8 +460,11 @@ class RSVR_AxePool : EventHandler
 		return 1;
 	}
 
-	// add axes (never above 10) and put one in the hand that grabbed: the off hand always (2.0.3y "auto-equip every
-	// time"), the main hand when it is free (fists); a main hand holding a gun keeps it (the axe is in the Wheel)
+	// add axes (never above 10) and put one in the hand that grabbed, ALWAYS (2.0.4s, owner 2026-11-12 21:36: "lets have
+	// axe always switch to when distance grabbed ... the axe should auto switch on distance grab"): the off hand as since
+	// 2.0.3y, and now the main hand too whatever it holds -- a gun there goes back to the Wheel / its holster as any switch
+	// does. Not the player's neverswitchonpickup: that is for walking over things (the engine's own pickup, untouched).
+	// (2.0.4r: a main hand holding a gun kept it and the axe went to the Wheel.)
 	static void Give(PlayerPawn mo, int h, int add)
 	{
 		let p = mo.player;
@@ -379,22 +473,15 @@ class RSVR_AxePool : EventHandler
 		let offW = RSQ_Dual.GiveBare(mo, 'RSQ_Off_BrutalAxe');
 		mo.TakeInventory('RSVR_MainAxeGone', 999);
 		mo.TakeInventory('RSVR_OffAxeGone', 999);
-		if (h == 1)
-		{
-			if (offW && p.OffhandWeapon != offW)
-			{
-				offW.bOffhandWeapon = true;
-				p.PendingWeapon = offW;
-			}
-			return;
-		}
-		let rw = p.ReadyWeapon;
-		bool free = !rw || rw is 'RSQ_Hands' || rw.GetClassName() == 'Melee_Attacks';
-		if (mainW && free)
-		{
-			mainW.bOffhandWeapon = false;
-			p.PendingWeapon = mainW;
-		}
+		let w = h == 1 ? offW : mainW;
+		let held = h == 1 ? p.OffhandWeapon : p.ReadyWeapon;
+		if (!w || IsAxeW(held))
+			return;		// that hand holds an axe already: the count went up, nothing to switch
+		w.bOffhandWeapon = h == 1;
+		p.PendingWeapon = w;
+		if (Logs(mo))
+			Console.Printf("RSQ axes t%d: Distance Grab -- hand %d switches from %s to the axe (always, whatever neverswitchonpickup says)",
+				mo.Level.maptime, h, held ? String.Format("%s", held.GetClassName()) : "nothing");
 	}
 }
 
