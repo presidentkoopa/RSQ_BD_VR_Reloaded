@@ -22,26 +22,36 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.4u.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.4v.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4u.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4v.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4u.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4v.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.4u
+## Changelog: 2.0.2a to 2.0.4v
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4u.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4v.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.4v** (11-13; *pictures only, not run in the engine, not headset-confirmed*): **the FBX hand is fitted
+  to every gun's grip.** On 26 of the 28 held weapons, the right hand's "finger on the trigger" and "squeezed" frames are
+  re-posed: the pack's own FBX hand, at the pack's own size, closed on that gun's grip by Quake VR's grasp solve (each
+  finger curls until it meets the gun; the thumb and palm are kept out of it), the index finger on the trigger, and on the
+  trigger pulled for "squeezed". The hand stays where each gun's hold put it; only the fingers, thumb and palm settle on
+  the grip. Every other frame, every UV and skin, and every other file are as in 2.0.4u. **Not changed:** Sniper and
+  HellishMissileLauncher (their holds need a re-fit of the hand's place, not only its fingers), and the left / support
+  hands. Made and checked with UZDXREMA `tools/avatar/qvrgrasp` (`bake_fbx.py`, `check_bake.py`: each baked .md3 read back
+  as the game reads it, beside its gun). Known weak spots in the pictures: BrutalSMG and BFG10k thumb short of the gun;
+  RailGun, Unmaker, Chain_saw and SSG a finger 2-5 mm into the grip; Flamethrower and Machinegun pinky past the grip's end.
 - **What's new in 2.0.4u** (11-13; *rig only, not headset-confirmed*, runs club1 / club0): **RSQ Melee is the melee mod**
   (owner 11-13 01:32: "GET THE MELEE INTO RSQ MELEE"). The **butt strike**, the **pistol whip** (both hands) and the fists'
   **VR Punching** moved into RSQ Melee, ported line for line with every number kept: the swing needed (2.4 m/s at the
