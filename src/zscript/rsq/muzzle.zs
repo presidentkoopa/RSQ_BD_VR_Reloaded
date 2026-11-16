@@ -111,8 +111,9 @@ class RSQ_Muzzle : EventHandler
 		Vector3 hp = off ? mo.OffhandPos : mo.AttackPos;
 		Vector3 was = c.pos, wasVel = c.vel;
 		// 2.0.5: two hands on it, the projectile's spread (its velocity off the controller's forward) is shrunk first
-		double k = off ? 1.0 : Steady(mo, w);
-		if (k < 1.0 && vl > 0)
+		// 2.0.4z: and a worn gun's widened (RSQ Gun Cards' Weapon Condition, asked by name: CndSpread)
+		double k = (off ? 1.0 : Steady(mo, w)) * CndSpread(w);
+		if (k != 1.0 && vl > 0)
 			c.vel = Tighten(c.vel / vl, fw, k) * vl;
 		Vector3 step = Turn(c.pos - hp, fw, bw);
 		c.vel = Turn(c.vel, fw, bw);
@@ -169,6 +170,27 @@ class RSQ_Muzzle : EventHandler
 		}
 		let cv = CVar.FindCVar('sv_rsq_twohand_spread');
 		return cv ? clamp(cv.GetFloat(), 0.0, 1.0) : 1.0;
+	}
+
+	// 2.0.4z WEAPON CONDITION (RSQ UBQ Series design/WEAPON_CONDITION.md; RSQ Gun Cards' cnd.zs, asked by name, nothing links):
+	// the spread multiplier for this gun (RSQGC_Service GetDouble "cnd.spread": 1.0 at 90-100 condition, up to 1.9 on a
+	// Workhorse gun under 10, 2.8 on a Precision one). BD22's own spread (what A_FireBullets / A_FireProjectile rolled off
+	// the aim line) is widened by it, as the two-hand grip shrinks it. 1.0 without Gun Cards or with Weapon Condition off.
+	// Main-hand hitscans (an off-hand hitscan is the engine's own, never re-fired here) and either hand's missiles.
+	transient Service cndSvc;
+	transient bool cndLooked;
+	double CndSpread(Weapon w)
+	{
+		if (!w) return 1.0;
+		if (!cndLooked)
+		{
+			cndLooked = true;
+			let it = ServiceIterator.Find("RSQGC_Service");
+			Service s;
+			while (s = it.Next()) if (s.GetClassName() == 'RSQGC_Service') { cndSvc = s; break; }
+		}
+		if (!cndSvc) return 1.0;
+		return clamp(cndSvc.GetDouble("cnd.spread", "", 0, 0, w), 1.0, 4.0);
 	}
 
 	// a unit direction u pulled toward the aim line fw: its angle off fw shrunk by k (tan of it, exactly: close enough
@@ -407,11 +429,12 @@ class RSQ_Muzzle : EventHandler
 		bool bore = RSVR_VRHand.InVR(mo) && HasBore(w) && !(e.AttackLineFlags & LAF_ISMELEEATTACK);
 		// 2.0.5: two hands on it, the shot's spread is shrunk. The engine maps an attack's angle and pitch through the
 		// controller RELATIVE to mo.angle / mo.pitch (AttackDir), so what A_FireBullets rolled on top of them is the spread.
-		double k = (e.AttackLineFlags & LAF_ISMELEEATTACK) ? 1.0 : Steady(mo, w);
-		if (!ok && !bore && k >= 1.0)
+		// 2.0.4z: a worn gun's spread widened by RSQ Gun Cards' Weapon Condition (CndSpread; 1.0 without it or with it off)
+		double k = (e.AttackLineFlags & LAF_ISMELEEATTACK) ? 1.0 : Steady(mo, w) * CndSpread(w);
+		if (!ok && !bore && k == 1.0)
 			return false;
 		double sa = e.AttackAngle, sp = e.AttackPitch;
-		if (k < 1.0)
+		if (k != 1.0)
 		{
 			sa = mo.angle + Actor.DeltaAngle(mo.angle, sa) * k;
 			sp = mo.pitch + (sp - mo.pitch) * k;
