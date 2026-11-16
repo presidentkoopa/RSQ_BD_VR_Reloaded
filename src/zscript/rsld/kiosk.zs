@@ -24,8 +24,9 @@
 //                                            2 left lying there (he already carries a legendary of that slot: LegenDoom's
 //                                            one per slot; it stays for later), 0 could not be made
 //   GetInt("kiosk.take", "", 0, 0, boss)     RSQ Miniboss: this Boss's death drops a kiosk, so its one legendary weapon
-//                                            drop (RSLD_Converter, the miniboss's) is not made. Remembered for 105 tics
-//                                            within 256 units of where it died. Only this call suppresses anything;
+//                                            drop (RSLD_Converter, the miniboss's) is not made, nor any other drop the
+//                                            converter gives to that death, for 105 tics within 256 units of where it
+//                                            died. Only this call suppresses anything;
 //                                            without it every drop is as before.
 // rsld_debug 1 logs every roll, raise, give and suppressed drop ("RSLD kiosk: ...").
 class RSLD_KioskService : Service
@@ -221,7 +222,9 @@ extend class RSLD_Handler
 	Array<int> kioskT;
 	double dropX, dropY;		// the death DropFromBossfight matched last
 
-	// a kiosk took this drop (one record each, used up)
+	// a kiosk took this drop: every drop the converter puts on that Boss's death for the record's 105 tics (rig kq_e2e2:
+	// LegenDoom tossed four more from the map origin 50 tics after the Boss died, and the origin rule gave them to the
+	// miniboss's record; the kiosk takes the Boss's legendary, so none of them is made)
 	bool KioskTook(double x, double y)
 	{
 		for (int i = kioskT.Size() - 1; i >= 0; i--)
@@ -229,7 +232,6 @@ extend class RSLD_Handler
 			if (level.maptime - kioskT[i] > 105) { kioskX.Delete(i); kioskY.Delete(i); kioskT.Delete(i); continue; }
 			double dx = kioskX[i] - x, dy = kioskY[i] - y;
 			if (dx * dx + dy * dy > 256.0 * 256.0) continue;
-			kioskX.Delete(i); kioskY.Delete(i); kioskT.Delete(i);
 			return true;
 		}
 		return false;

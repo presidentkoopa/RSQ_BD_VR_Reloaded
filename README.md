@@ -37,11 +37,21 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.4x
+## Changelog: 2.0.2a to 2.0.4y
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.4y** (11-16; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.4y.pk3`, the pk3 is not in [pk3/](pk3/)): **the RSQ UBQ Series' Boss kiosk** (RSQ Miniboss,
+  design/KIOSK.md). A new service other mods ask by name, `RSLD_KioskService` (`src/zscript/rsld/kiosk.zs`): it rolls a
+  Boss's kiosk offers (three legendary weapons on three different guns, each rarity rolled at the Boss's tier the way the
+  Boss's own legendary drop is, with an effect LegenDoom rolls at that rarity on that gun), raises one a rarity step
+  (LUCKY), names them for the kiosk's card (gun, rarity, effect, its description, and what you hold on that gun), and
+  makes a bought one as the real legendary pickup and hands it to you. When RSQ Miniboss drops a kiosk it tells this mod
+  so (`kiosk.take`), and that Boss's own legendary drop is not made; without the kiosk every drop is exactly as in 2.0.4x.
+  Loads on the owner's full order with no script error from this pack (rig runs kq_e2e3, kq_in7: offers rolled, the
+  Boss's drop suppressed, bought legendaries taken).
 - **What's new in 2.0.4x** (11-13; *loads only until the rig run below says otherwise*): **legendary weapons drop only
   from a miniboss** (owner: "i am getting legendary drops literally all the time"). A boosted legendary dormant champion
   outside a miniboss fight (and so a DOWN target, or one killed by a revive) drops nothing now; **Legendary Champions Drop
