@@ -7,6 +7,7 @@ version "4.14"
 #include "zscript/rsld/tables.zs"
 #include "zscript/rsld/handler.zs"
 #include "zscript/rsld/pickup.zs"
+#include "zscript/rsld/kiosk.zs"         // 2.0.4y: the Boss kiosk's legendaries, asked by name (RSLD_KioskService)
 #include "zscript/rsld/menu.zs"
 #include "zscript/rsld/numbers_g0.zs"
 #include "zscript/rsld/fx_g0.zs"

@@ -53,6 +53,15 @@ class RSLD_Converter : Thinker
 				Destroy();
 				return;
 			}
+			// 2.0.4y: the Boss's own drop when RSQ Miniboss dropped a kiosk in its place (RSLD_KioskService "kiosk.take",
+			// kiosk.zs): not made. Without that call, as before.
+			if (boss && !down && hb.KioskTook(hb.dropX, hb.dropY))
+			{
+				if (RSLD.Debug()) Console.Printf("RSLD drop: %s suppressed (the miniboss's: a kiosk took its place)", src.GetClassName());
+				src.Destroy();
+				Destroy();
+				return;
+			}
 			if (RSLD.Debug()) Console.Printf("RSLD drop: %s kept (%s)", src.GetClassName(), down ? "a boosted legendary dormant champion's" : boss ? "the miniboss's" : "no legendary death matched");
 			// the rarity is rolled here (RSLD_Reroll.TierRarity): the miniboss by the fight's tier, a DOWN target by the step
 			// of the bar it died in, with an effect LegenDoom rolls at that rarity on this slot. None carried: as it was.

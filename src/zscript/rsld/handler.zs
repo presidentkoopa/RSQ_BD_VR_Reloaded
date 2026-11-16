@@ -865,11 +865,12 @@ class RSLD_Handler : EventHandler
 		for (int i = deathT.Size() - 1; i >= 0; i--)
 		{
 			if (level.maptime - deathT[i] > 105) break;
-			if (origin) { dropTier = i < deathTier.Size() ? deathTier[i] : 1; dropBoss = i < deathBoss.Size() ? deathBoss[i] : 0; dropDown = i < deathDown.Size() ? deathDown[i] : 0; return i < deathBF.Size() ? deathBF[i] : -1; }
+			if (origin) { dropX = deathX[i]; dropY = deathY[i]; dropTier = i < deathTier.Size() ? deathTier[i] : 1; dropBoss = i < deathBoss.Size() ? deathBoss[i] : 0; dropDown = i < deathDown.Size() ? deathDown[i] : 0; return i < deathBF.Size() ? deathBF[i] : -1; }
 			double dx = deathX[i] - at.x, dy = deathY[i] - at.y, d = dx * dx + dy * dy;
 			if (d < bd) { bd = d; best = i; }
 		}
 		if (best < 0 || bd > 256.0 * 256.0 || best >= deathBF.Size()) return -1;
+		dropX = deathX[best]; dropY = deathY[best];
 		dropTier = best < deathTier.Size() ? deathTier[best] : 1;
 		dropBoss = best < deathBoss.Size() ? deathBoss[best] : 0;
 		dropDown = best < deathDown.Size() ? deathDown[best] : 0;
