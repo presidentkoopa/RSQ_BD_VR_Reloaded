@@ -37,11 +37,18 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.4y
+## Changelog: 2.0.2a to 2.0.4z
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.4z** (11-16; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.4z.pk3`): **worn guns shoot wider** with the RSQ UBQ Series' Weapon Condition (RSQ Gun Cards, off by
+  default; its design/WEAPON_CONDITION.md). `muzzle.zs` asks Gun Cards by name (`RSQGC_Service` `"cnd.spread"`) and widens
+  BD22's own spread by the answer, beside the two-hand grip's tightening: main-hand hitscans and either hand's missiles
+  (an off-hand hitscan is the engine's own and keeps its spread). 1.0 without Gun Cards or with Weapon Condition off. Rig
+  (the Rifle, trigger held): 0.74 deg at condition 100, 0.87 at 55, 1.03 at 25; off: 0.73 / 0.69 / 0.71. Damage, rate,
+  backfire and misfire are Gun Cards' own (on hit, for every gun); the wild flip's extra pellets are not asked yet.
 - **What's new in 2.0.4y** (11-16; *rig only, not headset-confirmed*; source only: `python build.py` makes
   `BD22_VR-Reloaded_2.0.4y.pk3`, the pk3 is not in [pk3/](pk3/)): **the RSQ UBQ Series' Boss kiosk** (RSQ Miniboss,
   design/KIOSK.md). A new service other mods ask by name, `RSLD_KioskService` (`src/zscript/rsld/kiosk.zs`): it rolls a
