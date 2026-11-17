@@ -1224,6 +1224,17 @@ class RSQ_Hands : Weapon
 	OhHoldY: RQHF Y -1; Stop;	// rsm_M203_round
 	RsmRound: RQ2H A -1; Stop;	// 1.30 RSR-M203: the FBX hand round a 40 mm round (RQ2H A = RQHF Y + the round; was Ermac's ammo_hand 5)
 	RsmGrip: RQ2H B -1; Stop;	// ...the same grip, the round on the gun
+	// 2.0.5d: the same grip round RSQ Grenade's small grenade from the rig's grenade spot, a frame a kind (MODELDEF.rsmnade;
+	// rsr_m203.zs FreeHand "RsmNade<kind>")
+	RsmNade0: RQ2H C -1; Stop;	// frag
+	RsmNade1: RQ2H D -1; Stop;	// impact
+	RsmNade2: RQ2H E -1; Stop;	// incendiary
+	RsmNade3: RQ2H F -1; Stop;	// freeze
+	RsmNade4: RQ2H G -1; Stop;	// stun
+	RsmNade5: RQ2H H -1; Stop;	// smoke
+	RsmNade6: RQ2H I -1; Stop;	// flash
+	RsmNade7: RQ2H J -1; Stop;	// charm
+	RsmNade8: RQ2H K -1; Stop;	// infight
 	// dual wield (rsq/dualhands.zs): the gun hand as a layer CALLED BY A GUN must use weapon
 	// states (an inventory item's states are refused for a weapon caller), so they live here
 	DTrgA: RQGT A -1; Stop;

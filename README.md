@@ -37,11 +37,32 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5c
+## Changelog: 2.0.2a to 2.0.5d
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5d** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5d.pk3`): **RSQ Grenade's grenades in the under-barrel launchers, each round keeping its
+  kind** (owner 11-17: "we grab grenade, alt fire cycle to the one we want ... and we load it into the launcher. So, we
+  could load a charm grenade into the rifle, but still switch to a different kind of throwable grenade later"). With RSQ
+  Grenade's grenade the one you carry (it replaces Brutal Doom's, as 2.0.5b) and RSQ Tactical Rig on, the Rifle's and the
+  Machinegun's launcher, open for loading, take a round from the rig's **grenade spot** as well as from the ammo pouch.
+  **Grab**: the off hand at the grenade spot, "Grab ammo with" as for any round: a small grenade (RSQ Grenade's own mesh,
+  scaled to the 40 mm round) of your current kind, in that kind's skin. The rig keeps no kind of its own: "the type stored"
+  is the kind you last picked, RSQ Grenade's. **Cycle**: the off hand's alt trigger while you hold it cycles the kind with
+  RSQ Grenade's own rules (Alt Fire Cycles Grenade Types, the kinds you own) and that is your kind from then on, for the
+  hand grenade too. **Load**: push it home as a round; it costs one of RSQ Grenade's grenades, and the loaded round keeps
+  its kind whatever you pick afterwards. **Fire**: it flies as the launcher's own round (Brutal Doom's ShortGrenade:
+  speed, drop, trail, sprite) and bursts as that kind's grenade, through RSQ Grenade's own blast and art (asked by name:
+  `RSQGN_Service` "burst"), Brutal Doom's 40 mm explosion not played. The round's direct hit keeps its damage, except for
+  the kinds that do no blast damage (freeze, smoke, flash, charm, infight), whose direct hit does none. The ammo pouch's
+  round is the launcher's plain round as before (Rifle Underbarrel Ammo: rockets or hand grenades). While the launcher is
+  open the rig leaves the grenade spot to it (no hand grenade comes out there). Needs RSQ Grenade and RSQ Tactical Rig
+  from the same day (their "burst", "kind.next", "kind.share" and "nade.at"); without them nothing changes. New:
+  `DECORATE.rsm` (`RSM_KindRound`: ShortGrenade with only its explosion changed, fired by `Rifle.dec` FireGrenade /
+  FireGrenade2 and `Machinegun.dec` RSM_Fire while a grenade is loaded), `MODELDEF.rsmnade`, the grenade meshes and kind
+  skins made by `tools/rsm_nades/gen_rsm_nades.py`. No defaults changed.
 - **What's new in 2.0.5c** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
   makes `BD22_VR-Reloaded_2.0.5c.pk3`): **both guns show their shots when you fire two at once** (owner 11-17: "when i fire
   two weapons at once i only see bullets and shit from one gun even though technically both fire"). Both guns always
@@ -601,6 +622,8 @@ These are behind the **Ballistics** switch. Stock is Brutal Doom's own.
   assault shotgun bolts lock back when fired dry.
 - Shotgun shells go in through the real loading port, and you can top off any time.
 - Kitbash M4 + M203. In VR: unlatch the tube, slide it forward, push a round in, slide it shut.
+  With RSQ Grenade and RSQ Tactical Rig, a grenade from the rig's grenade spot goes in too: the off hand's alt
+  trigger picks its kind, and the round bursts as that kind of grenade (2.0.5d).
 - SMG alt fire toggles 3-round burst or full auto. Slug shots for the shotgun and the Shotvolver
   are menu options, off by default.
 - Pistol Semi Auto option: one shot per trigger pull.

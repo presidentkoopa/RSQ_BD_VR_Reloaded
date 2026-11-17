@@ -1,0 +1,32 @@
+// 2.0.5d RSQ GRENADE'S GRENADE FIRED FROM AN UNDER-BARREL LAUNCHER (zscript/rsr/rsr_m203.zs RSM_Nades).
+// The launcher's own round, Brutal Doom 22's ShortGrenade, with only its burst changed: where Brutal Doom's 40 mm
+// explosion went off, RSQ Grenade's grenade of the round's kind goes off (RSM_KindBurst, given to itself, does it at
+// once, at the round). Its flight, trail, sprite and direct hit are ShortGrenade's own (inherited). Every label that
+// leads to ShortGrenade's explosion is here: an inherited "Goto Explode" would still go to ShortGrenade's own.
+// Fired by the Rifle (Rifle.dec FireGrenade, FireGrenade2) and the Machinegun (Machinegun.dec RSM_Fire) in place of
+// ShortGrenade while an RSQ Grenade grenade is loaded (RSM_KindLoaded); it takes the kind on its first think
+// (RSK_M203Handler.WorldThingSpawned). With no kind it bursts as the plain round's damage (UGBLExplosion).
+
+ACTOR RSM_KindRound : ShortGrenade
+{
+	States
+	{
+	Death:
+	XDeath:
+		TNT1 A 1
+		Goto Explode
+
+	Explode:
+	Death.Slime:
+	Death.Fire:
+	Death.Bullet:
+	Death.Shotgun:
+	Death.SSG:
+	Death.Cutless:
+	Death.Shrapnel:
+		TNT1 A 0 A_ChangeFlag("SHOOTABLE", 0)
+		TNT1 A 0 A_GiveInventory("RSM_KindBurst", 1)
+		TNT1 A 2
+		Stop
+	}
+}

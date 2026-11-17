@@ -43,6 +43,7 @@ class RSM abstract play
 	const LEAVE_SIDE = 7.5;		// ...further off than this: back in the hand
 	const ENTER_ANGLE = 40.0;	// ...nose within this of the bore
 	const SEAT = 0.6;			// home within this
+	const KINDS = 9;			// 2.0.5d: RSQ Grenade's kinds (kinds.zs): frag, impact, incendiary, freeze, stun, smoke, flash, charm, infight
 
 	clearscope static bool IsRifle(Weapon w)
 	{
@@ -87,6 +88,68 @@ class RSM abstract play
 		return c;
 	}
 
+	// 2.0.5d RSQ GRENADE'S GRENADES IN THE LAUNCHER (owner 2026-11-17: "we grab grenade, alt fire cycle to the one we want
+	// (i assume the tacticalrig remembers the type of grenade stored) and we load it into the launcher. So, we could load a
+	// charm grenade into the rifle, but still switch to a different kind of throwable grenade later"). While RSQ Grenade's
+	// grenade is the one you carry (RSG_Handler.StandDown, as AmmoClass), the open launcher takes a grenade from RSQ Tactical
+	// Rig's GRENADE SPOT too (the rig's "nade.at"): a small grenade of your kind (RSQ Grenade's "kind": the rig keeps no kind of
+	// its own, the one you picked is the one you get) in the off hand, in its kind's skin (MODELDEF.rsmnade); the off hand's
+	// alt trigger cycles it with RSQ Grenade's own rules, and that is your kind ("kind.next"); pushed home it costs one of
+	// RSQ Grenade's grenades (RSQGN_Ammo) and the round keeps ITS kind (RSM_State.loadedNade) whatever kind you pick after.
+	// Fired, it flies as the launcher's own round (RSM_KindRound, DECORATE.rsm: ShortGrenade's flight) and bursts as that
+	// kind's grenade, through RSQ Grenade's own blast ("burst"). The ammo pouch's round is the launcher's plain round, as before.
+	// Everything of RSQ Grenade and the rig is asked by name: without them nothing here happens.
+	static bool RsqNades()
+	{
+		Name rn = 'RSQGN_Ammo';
+		class<Inventory> rc = rn;
+		return rc && RSG_Handler.StandDown();
+	}
+
+	static class<Inventory> NadeAmmo()
+	{
+		Name rn = 'RSQGN_Ammo';
+		class<Inventory> rc = rn;
+		return rc;
+	}
+
+	static Service GnSvc()
+	{
+		let it = ServiceIterator.Find("RSQGN_Service");
+		Service s;
+		while (s = it.Next())
+			if (s.GetClassName() == 'RSQGN_Service')
+				return s;
+		return null;
+	}
+
+	// the player's grenade kind now (RSQ Grenade's own choice), 0 the frag
+	static int CurKind(PlayerPawn mo)
+	{
+		let s = GnSvc();
+		return s ? clamp(s.GetInt("kind", "", mo.PlayerNumber()), 0, KINDS - 1) : 0;
+	}
+
+	// the off hand's alt trigger on the small grenade: RSQ Grenade's own cycle; the kind now, or -1 (no answer)
+	static int NextKind(PlayerPawn mo)
+	{
+		let s = GnSvc();
+		if (!s)
+			return -1;
+		int k = s.GetInt("kind.next", "", mo.PlayerNumber(), 1, mo);
+		return k >= 0 && k < KINDS ? k : -1;
+	}
+
+	// the off hand at the rig's grenade spot: 1 at it, 0 not, -1 no grenade spot (as RSR.RigPouch)
+	static int RigNadeSpot(PlayerPawn mo)
+	{
+		let it = ServiceIterator.Find("RSQTR_RigService");
+		Service s;
+		while (s = it.Next())
+			return s.GetInt("nade.at", "", 1, 0, mo);
+		return -1;
+	}
+
 	// real reload in VR (as RSR_ReloadHandler.Wanted, but the off hand may hold a gun: dual)
 	static bool VRReload(PlayerPawn mo)
 	{
@@ -129,6 +192,12 @@ class RSM_State play
 	RSR_State geo;
 	Vector3 palm;
 	Array<int> noTubeFrom, noTubeTo;	// rifle sprite -> its no-tube twin (1.33)
+	// 2.0.5d RSQ Grenade's grenades (RSM.RsqNades): 0 the launcher's plain round, else 1 + an RSQ Grenade kind
+	int roundNade;				// the round in the hand, in the breech or home in the open tube
+	int loadedNade;				// the round in the shut launcher (beside RFGLoaded; kept over a gun switch and a new map, as
+								// RFGLoaded is; gone with it)
+	bool altPrev;				// the off hand's alt trigger last tic (cycles the small grenade's kind)
+	bool rfgWas;				// RFGLoaded at the last WorldTick
 
 	void Log(PlayerPawn mo, String what)
 	{
@@ -160,6 +229,7 @@ class RSM_State play
 		pull = pullPrev = 0;
 		unlatched = held = isOpen = roundIn = false;
 		hand = RSM.EMPTY;
+		roundNade = 0;
 		rr = rrPrev = 0;
 	}
 
@@ -180,12 +250,22 @@ class RSM_State play
 		bool grab = rs && rs.Grip(mo);
 		bool grabPress = grab && !grabPrev;
 		grabPrev = grab;
+		// 2.0.5d: the off hand's alt trigger. QuestZDoom's grip can shift the trigger to alt fire (RSQ Grenade hand.zs: a
+		// hand closed round a grenade and squeezing sends alt fire), so while it holds a small grenade, alt fire held is
+		// holding it too, and its press cycles the kind
+		bool alt = (p.cmd.buttons & BT_OFFHANDALTATTACK) != 0;
+		bool altPress = alt && !altPrev;
+		altPrev = alt;
+		bool holding = grab || (roundNade > 0 && alt);
 		// a magazine reload has the hand
 		if (rs && rs.phase != RSR.IDLE && rs.weap == p.ReadyWeapon)
 		{
 			held = false;
 			if (hand != RSM.EMPTY)
+			{
 				hand = RSM.EMPTY;
+				roundNade = 0;
+			}
 			return;
 		}
 
@@ -257,7 +337,9 @@ class RSM_State play
 			{
 				roundIn = false;
 				mo.GiveInventory('RFGLoaded', 1);
-				Log(mo, "shut: loaded");
+				loadedNade = roundNade;		// 2.0.5d: the round keeps its own kind (0: the plain round)
+				roundNade = 0;
+				Log(mo, loadedNade > 0 ? String.Format("shut: loaded (RSQ Grenade kind %d)", loadedNade - 1) : "shut: loaded");
 			}
 			else
 				Log(mo, "shut: empty");
@@ -280,6 +362,21 @@ class RSM_State play
 		{
 			if (!grabPress || !isOpen || roundIn || loaded)
 				break;
+			// 2.0.5d: at the rig's grenade spot, RSQ Grenade's grenade of your kind (RSM.RsqNades); none carried, nothing
+			if (RSM.RsqNades() && RSM.RigNadeSpot(mo) == 1)
+			{
+				let nc = RSM.NadeAmmo();
+				if (!nc || mo.CountInv(nc) <= 0)
+				{
+					Log(mo, "grenade spot: no grenades");
+					break;
+				}
+				roundNade = 1 + RSM.CurKind(mo);
+				hand = RSM.CARRY;
+				geo.Buzz(mo);
+				Log(mo, String.Format("took a grenade from the grenade spot (kind %d)", roundNade - 1));
+				break;
+			}
 			let ac = RSM.AmmoClass();
 			if (!ac || mo.CountInv(ac) <= 0)
 				break;
@@ -289,6 +386,7 @@ class RSM_State play
 				break;
 			if (rp < 0 && (palm - breech).Length() < RSM.POUCH_MIN)
 				break;
+			roundNade = 0;				// the pouch: the launcher's plain round
 			hand = RSM.CARRY;
 			geo.Buzz(mo);
 			Log(mo, "took a round");
@@ -296,11 +394,22 @@ class RSM_State play
 		}
 		case RSM.CARRY:
 		{
-			if (!grab || !isOpen)
+			if (!holding || !isOpen)
 			{
 				hand = RSM.EMPTY;		// back in the pouch (nothing was taken)
+				roundNade = 0;
 				Log(mo, "let the round go");
 				break;
+			}
+			// 2.0.5d: the small grenade's kind, cycled by the off hand's alt trigger (RSQ Grenade's own cycle: your kind)
+			if (roundNade > 0 && altPress)
+			{
+				int nk = RSM.NextKind(mo);
+				if (nk >= 0 && nk != roundNade - 1)
+				{
+					roundNade = 1 + nk;
+					Log(mo, String.Format("grenade kind %d", nk));
+				}
 			}
 			double ang = acos(clamp(nose.x, -1, 1));
 			if (Side(mid) < RSM.ENTER_SIDE && ang < RSM.ENTER_ANGLE
@@ -317,11 +426,11 @@ class RSM_State play
 		{
 			rr = clamp(rear, RSM_Geo.FrameFront(gun) - RSM_Geo.RoundLen(gun), seatF);
 			bool home = rr >= seatF - RSM.SEAT;
-			if (!grab && rr >= seatF - RSM_Geo.RoundLen(gun) / 2)
+			if (!holding && rr >= seatF - RSM_Geo.RoundLen(gun) / 2)
 				home = true;			// let go half in: it slides home
 			if (home)
 			{
-				let ac = RSM.AmmoClass();
+				let ac = roundNade > 0 ? RSM.NadeAmmo() : RSM.AmmoClass();	// 2.0.5d: a grenade from the grenade spot is one of RSQ Grenade's
 				if (ac)
 					mo.TakeInventory(ac, 1);
 				roundIn = true;
@@ -331,9 +440,10 @@ class RSM_State play
 				Log(mo, "round home");
 				break;
 			}
-			if (!grab || !isOpen)
+			if (!holding || !isOpen)
 			{
 				hand = RSM.EMPTY;
+				roundNade = 0;
 				Log(mo, "let the round go");
 				break;
 			}
@@ -400,7 +510,8 @@ class RSM_State play
 			parts = RSR_GunParts(mo.FindInventory('RSR_GunParts'));
 		}
 		RSR.SetPart(p, RSM.TUBE, parts, swapped, gun == 2 ? 'RQ3P' : 'RQ2P', 0);
-		RSR.SetPart(p, RSM.ROUND, parts, round, gun == 2 ? 'RQ3P' : 'RQ2P', 1);
+		// 2.0.5d: an RSQ Grenade round is its kind's small grenade (MODELDEF.rsmnade frames C..K: 2 + the kind)
+		RSR.SetPart(p, RSM.ROUND, parts, round, gun == 2 ? 'RQ3P' : 'RQ2P', roundNade > 0 ? roundNade + 1 : 1);
 	}
 }
 
@@ -437,6 +548,93 @@ class RSM_LoadedOff : RSVR_Token {}		// the off-hand rifle's launcher has a roun
 class RSM_FiredOff : RSVR_Token {}		// ...and a spent case
 class RFGrenadeOff : RSVR_Token {}		// fire the off-hand rifle's launcher
 
+// 2.0.5d RSQ GRENADE'S GRENADE FIRED FROM THE LAUNCHER (RSM.RsqNades). With one loaded (RSM_KindLoaded) the Rifle and the
+// Machinegun fire RSM_KindRound in place of BD22's ShortGrenade (Rifle.dec FireGrenade / FireGrenade2, Machinegun.dec
+// RSM_Fire); on its first think it takes the kind loaded (RSK_M203Handler.WorldThingSpawned, Arm). RSM_KindRound
+// (DECORATE.rsm) is ShortGrenade itself -- its speed, fall, trail, sprite, direct hit -- with only its burst changed, which is
+// RSQ Grenade's grenade of the round's kind going off there (RSQGN_Service "burst": its look, blast and effect: the freeze,
+// the fire, the stun, the smoke, the flash, the charm, the infight). The direct hit keeps the round's own damage unless the
+// kind does no blast damage (RSQ Grenade's "kind.share" 0: freeze, smoke, flash, charm, infight), when it hits for none, so a
+// charm round does not kill the monster it charms. RSQ Grenade gone: Brutal Doom's own 40 mm explosion, as a plain round.
+class RSM_Nades play
+{
+	// the fired round (RSM_KindRound) takes its kind; a kind that does no blast damage hits for none
+	static void Arm(Actor r, int kind)
+	{
+		r.SetInventory('RSM_RoundKind', kind + 1);
+		if (Share(kind, r.target) <= 0)
+			r.SetDamage(0);
+		if (r.target && r.target.player && RSR.Debug(r.target.player))
+			Console.Printf("rsm t%d: fired RSQ Grenade kind %d", r.Level.maptime, kind);
+	}
+
+	static double Share(int kind, Actor by)
+	{
+		let s = RSM.GnSvc();
+		return s ? s.GetDouble("kind.share", "", kind, 0, by) : 1.0;
+	}
+
+	// the kind's burst where `at` is, `at.target`'s (kind -1, or no RSQ Grenade: Brutal Doom's own 40 mm explosion's
+	// damage, UGBLExplosion)
+	static void Burst(Actor at, int kind)
+	{
+		let s = kind >= 0 ? RSM.GnSvc() : null;
+		if (s && s.GetInt("burst", "", kind, 0, at) == 1)
+			return;
+		String un = "UGBLExplosion";
+		class<Actor> uc = un;
+		let e = uc ? Actor.Spawn(uc, at.pos, ALLOW_REPLACE) : null;
+		if (e)
+			e.target = at.target;
+	}
+}
+
+// the round's kind, carried by the fired round (1 + the kind)
+class RSM_RoundKind : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 16;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+	}
+}
+
+// given to RSM_KindRound by its own explosion frame (DECORATE.rsm): the burst, at once, where the round is
+class RSM_KindBurst : Inventory
+{
+	Default
+	{
+		Inventory.MaxAmount 1;
+		+INVENTORY.UNDROPPABLE
+		+INVENTORY.UNTOSSABLE
+	}
+
+	override void AttachToOwner(Actor other)
+	{
+		Super.AttachToOwner(other);
+		if (other)
+			RSM_Nades.Burst(other, other.CountInv('RSM_RoundKind') - 1);
+	}
+}
+
+// the player's launcher holds an RSQ Grenade grenade (RSM_State.loadedNade): its weapon fires RSM_KindRound
+class RSM_KindLoaded : RSVR_Token {}
+
+// RSQ Tactical Rig asks, by name: while the launcher is open for loading, that hand's press at the grenade spot is the
+// launcher's (the rig hands out no hand grenade then). "ubl.loading" intArg the hand (1 the off hand, the one that loads),
+// objectArg the pawn -> 1 / 0.
+class RSM_LauncherService : Service
+{
+	override int GetInt(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
+	{
+		if (request != "ubl.loading" || intArg != 1)
+			return 0;
+		let mo = Actor(objectArg);
+		return mo && RSK_M203Handler.Busy(mo.PlayerNumber()) ? 1 : 0;
+	}
+}
+
 // every sprite name MODELDEF.rsm keys, so the engine knows them; never spawned
 class RSM_Sprites : Actor
 {
@@ -446,10 +644,13 @@ class RSM_Sprites : Actor
 		RQ2T A 0;
 		RQ2P AB 0;
 		RQ3P AB 0;	// 1.97: the Machinegun's tube and round
+		RQ2P CDEFGHIJK 0;	// 2.0.5d: RSQ Grenade's small grenade in the tube, a frame a kind (MODELDEF.rsmnade)
+		RQ3P CDEFGHIJK 0;
 		QU00 A 0;
 		QU01 A 0;
 		QU02 A 0;
 		RQ2H AB 0;
+		RQ2H CDEFGHIJK 0;	// 2.0.5d: ...and in the off hand
 		RQ2S AB 0;
 		RQ2C A 0;
 		Stop;
@@ -490,7 +691,7 @@ class RSK_M203Handler : EventHandler
 		if (!s || !s.active)
 			return "";
 		if (s.hand == RSM.CARRY)
-			return "RsmRound";			// Ermac's open grip round a 40 mm round
+			return s.roundNade > 0 ? "RsmNade" .. (s.roundNade - 1) : "RsmRound";	// Ermac's open grip round a 40 mm round; 2.0.5d: or round RSQ Grenade's small grenade, its kind's skin
 		if (s.hand == RSM.INSERT)
 			return "RsmGrip";			// the same grip; the round is on the gun (layer RSM.ROUND)
 		if (s.held && !s.steadied)
@@ -551,6 +752,24 @@ class RSK_M203Handler : EventHandler
 		}
 	}
 
+	// 2.0.5d: a launcher just fired an RSQ Grenade grenade (Rifle.dec / Machinegun.dec: RSM_KindLoaded held, RSM_KindRound
+	// fired): the round takes the kind loaded (RSM_RoundKind). WorldThingSpawned comes on the round's first think, before it
+	// moves, with its target (the shooter) set (RSQ_Muzzle relies on the same).
+	override void WorldThingSpawned(WorldEvent e)
+	{
+		let a = e.thing;
+		if (!a || a.GetClassName() != 'RSM_KindRound')
+			return;
+		let pmo = PlayerPawn(a.target);
+		int n = pmo && pmo.player ? pmo.PlayerNumber() : -1;
+		let s = n >= 0 && n < MAXPLAYERS ? st[n] : null;
+		if (!s || s.loadedNade <= 0)
+			return;					// no kind: it bursts as the plain round (RSM_KindBurst)
+		RSM_Nades.Arm(a, s.loadedNade - 1);
+		s.loadedNade = 0;
+		pmo.TakeInventory('RSM_KindLoaded', 1);
+	}
+
 	override void WorldTick()
 	{
 		for (int n = 0; n < MAXPLAYERS; n++)
@@ -562,6 +781,12 @@ class RSK_M203Handler : EventHandler
 			if (!st[n])
 				st[n] = new('RSM_State');
 			let s = st[n];
+			// 2.0.5d: the round left the launcher another way (death, BD22's own reload): RFGLoaded gone for a whole tic. (On the
+			// tic it is fired, RFGLoaded is gone here already and the round has not thought yet: WorldThingSpawned takes it then.)
+			bool rfg = mo.CountInv('RFGLoaded') > 0;
+			if (s.loadedNade > 0 && !rfg && !s.rfgWas)
+				s.loadedNade = 0;
+			s.rfgWas = rfg;
 			bool vr = RSM.VRReload(mo);
 			bool dual = p.OffhandWeapon && !(p.OffhandWeapon is 'RSQ_Hands');
 			Sync(mo, 'RSM_VR', vr);
@@ -583,9 +808,14 @@ class RSK_M203Handler : EventHandler
 				s.held = false;
 				s.pullPrev = s.pull;
 				if (s.hand != RSM.EMPTY)
+				{
 					s.hand = RSM.EMPTY;
+					if (!s.roundIn)
+						s.roundNade = 0;
+				}
 			}
 			Sync(mo, 'RSM_Steady', s.active && s.steadied);
+			Sync(mo, 'RSM_KindLoaded', s.loadedNade > 0);	// 2.0.5d: the weapon fires RSM_KindRound (Rifle.dec, Machinegun.dec)
 			s.Draw(mo);
 		}
 	}
