@@ -37,11 +37,23 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5a
+## Changelog: 2.0.2a to 2.0.5b
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5b** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5b.pk3`): **the under-barrel 40 mm loads with RSQ Grenade's grenades** (owner 11-17: "i
+  cannot load bd22 overunder with the RSQ grenade"). With Rifle Underbarrel Ammo set to Hand grenades, the launcher took
+  Brutal Doom's `GrenadeAmmo`. When RSQ Grenade replaces Brutal Doom's grenade (its Replace Brutal Doom's Grenade, on by
+  default, or our Use RSQ Grenade Instead), the grenades you carry are RSQ Grenade's (`RSQGN_Ammo`), so no round was ever
+  taken. Now `rsr_m203.zs` `RSM.AmmoClass` takes RSQ Grenade's grenades whenever Brutal Doom's grenade stands down for it
+  (`RSG_Handler.StandDown`, by name at run time). Without RSQ Grenade, or with it standing down, it uses `GrenadeAmmo` as
+  before. Rockets (the default) are unchanged. **The Machinegun's launcher** (`Machinegun.dec`): a round loaded by hand
+  in VR now fires without a rocket in reserve. Its AltFire checked for a rocket before it checked for the hand-loaded
+  round, and its RSM_Fire shot used ammo, which took a second rocket or fired nothing without one. Now it works like
+  the Rifle's: the round is paid for when it goes in. Out of VR, or with Real reload off, BD21's own launcher is
+  unchanged. No defaults changed.
 - **What's new in 2.0.5a** (11-16; *rig only, not headset-confirmed*; source only: `python build.py` makes
   `BD22_VR-Reloaded_2.0.5a.pk3`): **the RSQ UBQ Series' Gun Cards small card on the off-hand guns is built in**, so the
   bridge pk3 `RSQ_GunCards_BD22VR.pk3` is gone (owner 11-16: no extra pk3s; delete it if you have it). A layer drawn on the

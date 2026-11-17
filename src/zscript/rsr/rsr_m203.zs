@@ -66,10 +66,23 @@ class RSM abstract play
 
 	// the option (Underbarrel ammo): 0 rockets (as BD22), 1 hand grenades. A server setting: it
 	// decides what is taken.
+	// 2.0.5b (owner 2026-11-17: "i cannot load bd22 overunder with the RSQ grenade"): Hand grenades
+	// means the hand grenades you carry. With RSQ Grenade's grenade replacing Brutal Doom's
+	// (RSG_Handler.StandDown: rsqgn_replace_bd, on by default, or rsg_rsq_nade), those are RSQ
+	// Grenade's (RSQGN_Ammo, by name at run time: nothing of it is named when this compiles), not
+	// BD22's GrenadeAmmo, which nothing shows or throws then: the launcher took no round. Without RSQ
+	// Grenade, or with it standing down, GrenadeAmmo as before.
 	static class<Inventory> AmmoClass()
 	{
 		let cv = CVar.FindCVar('rsm_ammo');
 		Name n = cv && cv.GetInt() == 1 ? 'GrenadeAmmo' : 'AmmoRocket';
+		if (n == 'GrenadeAmmo' && RSG_Handler.StandDown())
+		{
+			Name rn = 'RSQGN_Ammo';
+			class<Inventory> rc = rn;
+			if (rc)
+				return rc;
+		}
 		class<Inventory> c = n;
 		return c;
 	}
