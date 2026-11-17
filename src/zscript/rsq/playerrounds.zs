@@ -75,6 +75,7 @@ class RSQ_PlayerRound : Actor
 	int life;
 	int maxLife;					// 2.0.5: enough tics for the whole range at the slider's speed
 	double dotCarry;				// shotfx.zs: where the next Dakka dot falls on the next step
+	bool offHand;					// 2.0.5c: fired by the off hand (its delivery's flags no longer say so; shotfx.zs reads this)
 
 	const MAX_LIFE = 350;			// 10 s: 8192 units at 80 a tic is 103 tics
 
@@ -93,6 +94,7 @@ class RSQ_PlayerRound : Actor
 		dmg = damage;
 		dmgType = dtype;
 		puffType = puff;
+		offHand = (flags & LAF_ISOFFHAND) != 0;
 		laf = flags & ~(LAF_ABSPOSITION | LAF_ABSOFFSET | LAF_ISOFFHAND | LAF_OVERRIDEZ | LAF_TARGETISSOURCE);
 		flySpeed = spd;
 		maxLife = max(MAX_LIFE, int(dist / max(spd, 1.0)) + 35);

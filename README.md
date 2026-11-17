@@ -37,11 +37,27 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5b
+## Changelog: 2.0.2a to 2.0.5c
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5c** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5c.pk3`): **both guns show their shots when you fire two at once** (owner 11-17: "when i fire
+  two weapons at once i only see bullets and shit from one gun even though technically both fire"). Both guns always
+  fired and dealt damage; some of the look was kept per player or per tic, or read from the main hand, instead of per
+  hand. **Muzzle glow**: Brutal Doom spawns it from the body, not the gun, and `muzzle.zs` put every glow on the MAIN
+  gun's muzzle, the off-hand gun's too. The off-hand copies now tag their glow (`DECORATE.rsqdual`, `SXF_SETTRACER`) and
+  it goes on the off gun's muzzle. **Muzzle flash light** (`flash.zs`): one a tic for everybody, at the main hand, with
+  the main gun's light; now one per hand a tic, at that hand, with that hand's gun's light (the sound tail stays one a
+  tic). **The hand's own gun, not the main one**: Hitscan mode's round and impact look (`ballistics.zs`), the Ruger
+  check of the Dakka tracer (`shotfx.zs`: a gun beside a main-hand Ruger lost its tracer), and the melee check (a gun
+  in the off hand while the main hand holds fists or an axe lost its tracers, trails and flash). **Missiles**
+  (`muzzle.zs`): when both controllers fit a new missile, the one its line runs nearer to wins (the main hand used to be
+  tried first). Damage, aim and spread are unchanged. No defaults changed. An earlier rig run of 2.0.5a, made before the
+  owner stopped rig checks (dual rifles fired together on one tic, MAP01), logged one round and one Dakka/BD22 tracer per
+  hand, each from its own muzzle, but both muzzle glows on the main gun and one flash light at the main hand: those
+  two are what this changes. 2.0.5c itself has not been run.
 - **What's new in 2.0.5b** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
   makes `BD22_VR-Reloaded_2.0.5b.pk3`): **the under-barrel 40 mm loads with RSQ Grenade's grenades** (owner 11-17: "i
   cannot load bd22 overunder with the RSQ grenade"). With Rifle Underbarrel Ammo set to Hand grenades, the launcher took

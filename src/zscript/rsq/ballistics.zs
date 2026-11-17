@@ -61,7 +61,7 @@ class RSQ_Ballistics : EventHandler
 			return;
 		if (liveTracers >= CapTracers() || a.GetMissileDamage(0, 1) <= 0)
 			return;
-		if (IsMelee(a) || MeleeHeld(a.target) || a.DamageType == 'Trample')	// 1.11: BD22's footsteps are damaging missiles too
+		if (IsMelee(a) || MeleeHand(a.target, RSQ_Muzzle.MissileOff(a)) || a.DamageType == 'Trample')	// 1.11: BD22's footsteps are damaging missiles too; 2.0.5c: the hand that fired it
 			return;					// no trails on fists, kicks, axe, chainsaw, sword (owner, 2026-10-16)
 		RSQ_Tracer.Attach(a, self);
 	}
@@ -79,7 +79,7 @@ class RSQ_Ballistics : EventHandler
 	{
 		if (!a || !a.bMISSILE || a.bNOINTERACTION || !a.target || !a.target.player)
 			return false;
-		if (a is 'RSVR_Buzz' || a.DamageType == 'Trample' || IsMelee(a) || MeleeHeld(a.target))
+		if (a is 'RSVR_Buzz' || a.DamageType == 'Trample' || IsMelee(a) || MeleeHand(a.target, RSQ_Muzzle.MissileOff(a)))
 			return false;
 		return a.GetMissileDamage(0, 1) > 0;
 	}
@@ -111,11 +111,26 @@ class RSQ_Ballistics : EventHandler
 		return w.bMELEEWEAPON || n == 'Melee_Attacks' || n == 'BrutalAxe' || n == 'Chain_saw' || n == 'DSweap';
 	}
 
+	// 2.0.5c (owner 2026-11-17, dual wield: "i only see bullets and shit from one gun"): the same test for ONE hand's weapon.
+	// A gun in the off hand fires while fists or an axe are in the main hand, and its shots are shots: MeleeHeld (the main
+	// hand) took their tracers, trails and flash away. The off hand's own melee weapons (the off axe, RSQ_Hands) count.
+	static bool MeleeHand(Actor who, bool off)
+	{
+		if (!off)
+			return MeleeHeld(who);
+		if (!who || !who.player || !who.player.OffhandWeapon)
+			return false;
+		let w = who.player.OffhandWeapon;
+		Name n = w.GetClassName();
+		return w.bMELEEWEAPON || w is 'RSQ_Hands' || w is 'BrutalAxe' || n == 'Melee_Attacks' || n == 'Chain_saw' || n == 'DSweap';
+	}
+
 	// a hitscan shot (e.AttackPos: where it started, e.DamagePosition: where it
 	// ended); look at the last few units of it to see what it hit
 	override void WorldHitscanFired(WorldEvent e)
 	{
-		if (!On() || !e.Thing || MeleeHeld(e.Thing))
+		bool off = (e.AttackLineFlags & LAF_ISOFFHAND) != 0;	// 2.0.5c: the hand that fired it (a True Bullets round's delivery has neither)
+		if (!On() || !e.Thing || MeleeHand(e.Thing, off))
 			return;
 		Vector3 d = e.DamagePosition - e.AttackPos;
 		double len = d.Length();
@@ -124,13 +139,15 @@ class RSQ_Ballistics : EventHandler
 		d /= len;
 		// 1.97 F6: the round itself, muzzle to where the shot actually landed.
 		// Same event as the impact below, so the two cannot disagree about it.
-		if (e.Thing.player && e.Thing.player.ReadyWeapon)
-			RSQ_Bullet.Fire(e.Thing, e.AttackPos, e.DamagePosition,
-				e.Thing.player.ReadyWeapon.GetClassName());
-		Impact(e.Thing, e.DamagePosition - d * min(12, len), d, 24);
+		// 2.0.5c: the round and its impact are the gun of the hand that fired (an off-hand copy reads as its gun), not the
+		// main hand's for both
+		Name hg = RSQ_Muzzle.HandGunName(e.Thing, off);
+		if (hg != 'None')
+			RSQ_Bullet.Fire(e.Thing, e.AttackPos, e.DamagePosition, hg);
+		Impact(e.Thing, e.DamagePosition - d * min(12, len), d, 24, off);
 	}
 
-	void Impact(Actor tracer, Vector3 from, Vector3 dir, double dist)
+	void Impact(Actor tracer, Vector3 from, Vector3 dir, double dist, bool off = false)
 	{
 		if (!tracer)
 			return;
@@ -171,9 +188,7 @@ class RSQ_Ballistics : EventHandler
 		// NB the parameter is named `tracer` but RSQ_Tracer passes the SHOOTER:
 		// h.Impact(shooter, lastPos, ...). Going through .target here finds nothing on a
 		// player and every gun silently weighed 1.0.
-		Name gun = 'None';
-		if (tracer && tracer.player && tracer.player.ReadyWeapon)
-			gun = tracer.player.ReadyWeapon.GetClassName();
+		Name gun = RSQ_Muzzle.HandGunName(tracer, off);	// 2.0.5c: the hand that fired (off: the off hand's gun)
 		Name sname = surf.Of(t.HitTexture, flat);
 		Vector3 hp = t.HitLocation + n * 2;
 		// 1.97 F6: the sound, the ricochet and the light, which the pack had none of

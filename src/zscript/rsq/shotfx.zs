@@ -215,9 +215,10 @@ class RSQ_ShotFX : EventHandler
 		carry = s - len;
 	}
 
-	static bool Melee(Actor who, int flags)
+	// 2.0.5c: the hand that fired (an off-hand gun's shots are shots while the main hand holds fists or an axe)
+	static bool Melee(Actor who, int flags, bool off = false)
 	{
-		return (flags & LAF_ISMELEEATTACK) || RSQ_Ballistics.MeleeHeld(who);
+		return (flags & LAF_ISMELEEATTACK) || RSQ_Ballistics.MeleeHand(who, off);
 	}
 
 	// where the player's shot visibly starts: the drawn muzzle, else where the engine started it
@@ -228,7 +229,7 @@ class RSQ_ShotFX : EventHandler
 		return ok ? at : engine;
 	}
 
-	int rugerTic, rugerPlayer;
+	int rugerTic[MAXPLAYERS * 2];	// 2.0.5c: level.maptime + 1 of the Ruger tracer drawn, per player PER HAND
 
 	// THE RUGER (owner 20:05: our mesh is a sniper rifle, and the mesh wins). BD22's Sniper fires three
 	// hitscans and two rails on one tic (actors/Weapons/Sniper.dec:261-266): a 50 point-blank ShotgunPuff
@@ -236,9 +237,14 @@ class RSQ_ShotFX : EventHandler
 	// rail (now commented out: no beam) and the 30-damage piercing rail (range 500, colour None: invisible).
 	// It is drawn as ONE bullet: the Dakka tracer of the first SniperPuff shot each tic (True Bullets On).
 	// With True Bullets Off, Sniper.dec fires BD22's own gray trail rail instead.
-	static bool IsRuger(Actor who)
+	// 2.0.5c: of one hand (it was always the main hand's gun, so the off gun's shots were judged as the main gun's: an
+	// off-hand gun beside a main-hand Ruger lost its tracer and its impact, and an off-hand Ruger drew all three of its traces)
+	static bool IsRuger(Actor who, bool off = false)
 	{
-		return who && who.player && who.player.ReadyWeapon && who.player.ReadyWeapon.GetClassName() == 'Sniper';
+		if (!who || !who.player)
+			return false;
+		let w = off ? who.player.OffhandWeapon : who.player.ReadyWeapon;
+		return w && w.GetClassName() == 'Sniper';
 	}
 
 	override void WorldHitscanFired(WorldEvent e)
@@ -247,22 +253,20 @@ class RSQ_ShotFX : EventHandler
 			return;	// True Bullets Off: BD22's own hitscan look, no Dakka effect at all (the Ruger included)
 		let rnd = RSQ_PlayerRound(e.Thing);
 		Actor shooter = rnd ? rnd.target : e.Thing;
-		if (!shooter || !shooter.player || Melee(shooter, e.AttackLineFlags))
+		// 2.0.5c: which hand fired it: the round remembers (its delivery carries no hand flag), a hitscan says
+		bool off = rnd ? rnd.offHand : (e.AttackLineFlags & LAF_ISOFFHAND) != 0;
+		if (!shooter || !shooter.player || Melee(shooter, e.AttackLineFlags, off))
 			return;
-		if (IsRuger(shooter))
+		if (IsRuger(shooter, off))
 		{
 			Name pn = e.Inflictor ? e.Inflictor.GetClassName() : (rnd && rnd.puffType ? rnd.puffType.GetClassName() : 'None');
 			if (pn != 'SniperPuff' && pn != 'SniperPuffDM')
 				return;
-			if (rnd)
-			{	// Bullet mode: the round already drew its flight; the impact only, once
-				if (rugerTic == level.maptime && rugerPlayer == shooter.PlayerNumber())
-					return;
-			}
-			else if (rugerTic == level.maptime && rugerPlayer == shooter.PlayerNumber())
+			// one a tic per hand (Bullet mode: the round already drew its flight; the impact only, once)
+			int k = clamp(shooter.PlayerNumber(), 0, MAXPLAYERS - 1) * 2 + (off ? 1 : 0);
+			if (rugerTic[k] == level.maptime + 1)
 				return;
-			rugerTic = level.maptime;
-			rugerPlayer = shooter.PlayerNumber();
+			rugerTic[k] = level.maptime + 1;
 			RSQ_DakkaLine.Draw(e.AttackPos, e.DamagePosition);
 			Impact(e.DamagePosition, e.AttackPos);
 			return;

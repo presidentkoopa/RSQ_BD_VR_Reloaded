@@ -20,14 +20,14 @@ class RSQ_Flash : Actor
 
 	int life;
 
-	static void Fire(PlayerPawn mo, int radius, Color col, int tics)
+	static void Fire(PlayerPawn mo, int radius, Color col, int tics, bool off = false)
 	{
 		if (!mo || radius <= 0)
 			return;
-		// at the hand in VR, since that is where the gun is; at the pawn otherwise
+		// at the hand in VR, since that is where the gun is; at the pawn otherwise. 2.0.5c: the hand that fired
 		Vector3 at = mo.pos + (0, 0, mo.height * 0.7);
 		if (RSVR_VRHand.InVR(mo))
-			at = RSVR_VRHand.HandPos(mo);
+			at = off ? RSVR_VRHand.OffPos(mo) : RSVR_VRHand.HandPos(mo);
 		let f = RSQ_Flash(Actor.Spawn('RSQ_Flash', at, NO_REPLACE));
 		if (!f)
 			return;
@@ -97,23 +97,37 @@ class RSQ_FlashHandler : EventHandler
 		mo.A_StartSound(openSky ? sex : sin, CHAN_7, 0, min(vol, 1.0));
 	}
 
-	int lastShot;	// F11
-	void Shot(PlayerPawn mo)
+	// F11: one shot, one flash and one tail. 2.0.5c (owner 2026-11-17, dual wield: "i only see bullets and shit from one
+	// gun"): one flash PER HAND a tic, each at its own hand with its own gun's light. It was one a tic for everybody, at the
+	// main hand with the main gun's light, so the off gun firing on the same tic got none (and alone, lit the main gun).
+	// The tail stays one a tic per player: it is one sound channel on the pawn either way.
+	int lastFlash[MAXPLAYERS * 2];	// level.maptime + 1 of the hand's last flash
+	int lastTail[MAXPLAYERS];
+	void Shot(PlayerPawn mo, bool off = false)
 	{
 		if (!mo || !mo.player || RSQ_Ballistics.FxLevel() <= 0)
 			return;
-		if (lastShot == mo.Level.maptime)	// F11: one shot, one flash and one tail
+		int pn = mo.PlayerNumber();
+		if (pn < 0 || pn >= MAXPLAYERS)
 			return;
-		lastShot = mo.Level.maptime;
-		let w = mo.player.ReadyWeapon;
-		if (!w)
+		int k = pn * 2 + (off ? 1 : 0);
+		int now = mo.Level.maptime + 1;
+		if (lastFlash[k] == now)
 			return;
-		String n = w.GetClassName();
+		lastFlash[k] = now;
+		Name n = RSQ_Muzzle.HandGunName(mo, off);
+		if (n == 'None')
+			return;
+		String sn = n;
 		for (int i = 0; i < cls.Size(); i++)
-			if (cls[i] ~== n)
+			if (cls[i] ~== sn)
 			{
-				RSQ_Flash.Fire(mo, rad[i], Color(col[i]), len[i]);
-				Tail(mo, tin[i], tex[i], tvol[i]);
+				RSQ_Flash.Fire(mo, rad[i], Color(col[i]), len[i], off);
+				if (lastTail[pn] != now)
+				{
+					lastTail[pn] = now;
+					Tail(mo, tin[i], tex[i], tvol[i]);
+				}
 				return;
 			}
 	}
@@ -122,19 +136,19 @@ class RSQ_FlashHandler : EventHandler
 	{
 		if (RSQ_Ballistics.IsBuzzTrace(e.AttackLineFlags, e.AttackDistance))	// 2.0.4h: a haptic buzz, not a shot
 			return false;
-		Shot(PlayerPawn(e.Thing));
+		Shot(PlayerPawn(e.Thing), (e.AttackLineFlags & LAF_ISOFFHAND) != 0);
 		return false;
 	}
 
 	override bool WorldRailgunPreFired(WorldEvent e)
 	{
-		Shot(PlayerPawn(e.Thing));
+		Shot(PlayerPawn(e.Thing), (e.RailParams.flags & RGF_ISOFFHAND) != 0);
 		return false;
 	}
 
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		if (e.Thing && e.Thing.bMissile && RSQ_Ballistics.IsShot(e.Thing))	// F11: not a footstep, a kick, a fist or the haptic buzz
-			Shot(PlayerPawn(e.Thing.target));
+			Shot(PlayerPawn(e.Thing.target), RSQ_Muzzle.MissileOff(e.Thing));
 	}
 }

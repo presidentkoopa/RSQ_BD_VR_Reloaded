@@ -72,14 +72,26 @@ class RSQ_Muzzle : EventHandler
 			String cn = c.GetClassName();
 			if (cn.Left(12) ~== "PlayerMuzzle")
 			{
+				// 2.0.5c (owner 2026-11-17: "when i fire two weapons at once i only see bullets and shit from one gun"): every
+				// glow went to the MAIN gun, the off-hand gun's too, so a dual pair flashed twice on the right and never on the
+				// left. A_SpawnItemEx places it from the pawn whichever hand spawns it, so the off-hand copies tag theirs
+				// (DECORATE.rsqdual: SXF_SETTRACER, tracer = the pawn); BD22's own guns never set it. Each goes on its own
+				// hand's drawn muzzle.
+				bool offGlow = c.tracer == mo;
 				Vector3 at; bool ok;
-				[at, ok] = Where(mo);	// the main hand's gun (BD22's own states spawn it; an off-hand copy's glow lands there too)
+				if (offGlow)
+				{
+					[at, ok] = OffWhere(mo);
+					c.tracer = null;
+				}
+				else
+					[at, ok] = Where(mo);	// the main hand's gun (BD22's own states spawn it)
 				c.SetOrigin(at, false);
 				c.ClearInterpolation();
 				return;
 			}
 		}
-		if (RSQ_Ballistics.IsMelee(c) || RSQ_Ballistics.MeleeHeld(mo))
+		if (RSQ_Ballistics.IsMelee(c))
 			return;
 		Name n = c.GetClassName();
 		if (n == 'FlamethrowerProjectileNew' || n == 'FlamethrowerProjectileNew2' || n == 'FlamethrowerProjectileNew3'
@@ -89,12 +101,11 @@ class RSQ_Muzzle : EventHandler
 			return;
 		// born at which controller: the spawn step from it runs (within the spread) along the velocity, no longer than it
 		double vl = c.vel.Length();
-		bool off;
-		if (Born(c.pos - mo.AttackPos, c.vel, vl))
-			off = false;
-		else if (Born(c.pos - mo.OffhandPos, c.vel, vl))
-			off = true;
-		else
+		bool off, born;
+		[born, off] = BornAt(mo, c);
+		if (!born)
+			return;
+		if (RSQ_Ballistics.MeleeHand(mo, off))	// 2.0.5c: that hand's weapon (was the main hand's for both)
 			return;
 		let w = off ? mo.player.OffhandWeapon : mo.player.ReadyWeapon;
 		if (!HasBore(w))
@@ -142,6 +153,64 @@ class RSQ_Muzzle : EventHandler
 			if (s.IndexOf(words[i]) >= 0)
 				return true;
 		return false;
+	}
+
+	// 2.0.5c: which controller a player's missile was born at. Both are tried and, when both fit (the hands close together,
+	// or one held in front of the other), the one the missile's line runs nearer to wins: the spawn step runs from the
+	// true one along the velocity (off it by the spread at most), the other is off to the side. Before, the main hand was
+	// tried first and took an off-hand missile whenever its line also passed the main controller.
+	static bool, bool BornAt(PlayerPawn mo, Actor c)
+	{
+		if (!mo || !c)
+			return false, false;
+		double vl = c.vel.Length();
+		Vector3 dm = c.pos - mo.AttackPos, dof = c.pos - mo.OffhandPos;
+		bool bm = Born(dm, c.vel, vl), bo = Born(dof, c.vel, vl);
+		if (bm && bo)
+		{	// an empty off hand fires nothing: the main hand's, as before
+			Weapon ow = null;
+			if (mo.player)
+				ow = mo.player.OffhandWeapon;
+			if (!ow || ow is 'RSQ_Hands')
+				return true, false;
+			return true, Wide(dof, c.vel, vl) < Wide(dm, c.vel, vl);
+		}
+		return bm || bo, bo && !bm;
+	}
+
+	// how far a controller (d back from the missile) sits off the missile's line
+	static double Wide(Vector3 d, Vector3 v, double vl)
+	{
+		if (vl <= 0)
+			return d.Length();
+		Vector3 u = v / vl;
+		return (d - u * (d dot u)).Length();
+	}
+
+	// 2.0.5c: true when a player's missile came from the OFF hand (live VR only; otherwise the main hand, as before)
+	static bool MissileOff(Actor c)
+	{
+		if (!c)
+			return false;
+		let mo = PlayerPawn(c.target);
+		if (!mo || !mo.player || !mo.player.OffhandWeapon || !RSVR_VRHand.InVR(mo))
+			return false;
+		bool born, off;
+		[born, off] = BornAt(mo, c);
+		return born && off;
+	}
+
+	// 2.0.5c: the gun of one hand by the name the per-gun tables use (flash, rounds, impacts): an off-hand copy
+	// (RSQ_Off_<gun>) reads as the gun it is a copy of. 'None' without one.
+	static Name HandGunName(Actor who, bool off)
+	{
+		if (!who || !who.player)
+			return 'None';
+		let w = off ? who.player.OffhandWeapon : who.player.ReadyWeapon;
+		if (!w)
+			return 'None';
+		int i = off ? RSQ_Dual.CopyIndex(w) : -1;
+		return i >= 0 ? RSQ_DualTable.Gun(i) : w.GetClassName();
 	}
 
 	static bool Born(Vector3 d, Vector3 v, double vl)
