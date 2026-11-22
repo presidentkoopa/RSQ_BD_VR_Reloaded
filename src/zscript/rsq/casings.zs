@@ -144,6 +144,7 @@ class RSA_Casings : EventHandler
 		if (!mo || !mo.player)
 			return;
 		let p = mo.player;
+		Vector3 hp = RSVR_VRHand.HandPos(mo), op = RSVR_VRHand.OffPos(mo);   // 2.0.5e fix: still read below (pos)
 		bool off = OffCase(mo, c);
 		Weapon w = off ? p.OffhandWeapon : p.ReadyWeapon;
 		Vector3 port = Port(w);
