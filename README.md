@@ -37,11 +37,57 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5d
+## Changelog: 2.0.2a to 2.0.5e
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5e** (11-22; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5e.pk3`):
+  - **House of the Dead reload** (owner 11-22: the wrist flick hurts). Wherever the flick reloaded (a gun in each hand; a
+    lone rifle's launcher; a lone Super Shotgun; the main gun with a saber, Zippo, ShieldSaw or other RSQ item in the off
+    hand), now **point the gun off-screen and pull that hand's trigger**: it reloads instead of firing. Off-screen is at
+    least **Off-Screen Angle** (60 degrees by default, slider 40 to 85) below where your headset looks, or 120 degrees
+    off it (behind you). It is measured against your view, so a low shot at a crawling enemy you are looking at is on
+    screen and fires as always. No flick, no wrist speed. **Reload Gesture**: *Point Off-Screen + Trigger* (default) or
+    *Flick (old)*; **Dual Reload Gesture** (was "Dual Flick to Reload") still switches the gesture off. How the shot is
+    stopped with no engine change: a layer of our own ticks before the guns' layers and sends a gun pointed off-screen
+    into its Reload before the gun's own tick sees the trigger; a second one after them catches a gun that comes back
+    to its ready loop with the trigger still held (`zscript/rsq/flick.zs`). A lone rifle's off-screen press loads its
+    launcher and fires nothing while held; with nothing to load, it fires.
+  - **The Reload button reloads every hand, every time.** QuestZDoom's Reload (any of its reload buttons) reloads both
+    guns when you dual-wield, or the one gun you hold, in one press. A gun busy firing takes it as soon as it is ready
+    (the press waits up to 3 seconds). A one-gun hand reload (VR reloading) runs by itself from the press to the end:
+    the magazine falls, the new one goes home, the handle racks, at the gun's own sounds (`RSR_State.autoDone`). A
+    rifle's launcher that needs a round gets one. The pump shotgun and the break-open guns held alone keep their own VR
+    loading on the button (a shell goes in on it).
+  - **The rifle's launcher on the gesture and the button.** The flick, the off-screen trigger and the Reload button load
+    the launcher with hand-loading's ammo: a rocket in Rockets mode, a hand grenade in Hand grenades mode, and with RSQ
+    Grenade's grenades the one you carry, of your current kind. The empty shut launcher of either hand, and a lone
+    rifle's **open** tube: a round goes home (the one in your hand, if there is one) and the tube shuts. The off-hand
+    rifle's round now keeps its kind too (`RSM_KindRoundOff`, `RSM_KindLoadedOff`).
+  - **The under-barrel grenade's kind on the off trigger.** Holding the small grenade from the rig's grenade spot, the off
+    hand's **trigger** cycles its kind (its alt trigger still does). With the trigger as the grab (Grab Ammo With: off
+    trigger, the default) it is a tap: let go and squeeze again within a quarter second and the grenade stays in your
+    hand. The press fires nothing and drops nothing.
+  - **The kind's name on the grenade.** When you take the small grenade and whenever its kind changes, its name pops on it
+    as a small SOTN world word: IMPACT, STUN, FREEZE, FRAG... It rides the grenade and a new one replaces the last. RSQ
+    Grenade names the kind and RSQ VisualRewards draws it, both asked by name (`RSQGN_Service` "kind.word"); without
+    them, nothing.
+  - **Dual Minigun.** BD22's chaingun (the Minigun) can be held in both hands: `RSQ_Off_Minigun`, made the way every
+    off-hand copy is, generated from `Minigun.dec` (`tools/dual_minigun/gen_off_minigun.py`: `DECORATE.rsqdualmg`,
+    `MODELDEF.rsqdualmg`). The same shots, spread, damage and rate; each hand spins up on its own; its own 200-round
+    magazine, the reserve shared; it reloads on the gesture or the Reload button from the pouch, at BD22's belt sounds.
+    **Dual Options > Minigun** (on). The main Minigun, when the hand reload cannot take it (a gun or an RSQ item in the
+    off hand), tops its magazine up by itself instead of sitting empty.
+  - **The Minigun's magazine is the voxel ammo box**, as in GNRC Reloaded: Brutal Doom's voxel ammo box as an MD3 (the RSQ
+    UBQ Series' own, copied with GNRC's three placements), at the gun, in the off hand, and dropped. The dropped one is
+    smaller (three quarters) and dark grey, so it reads as empty (`tools/ammobox/empty_skin.py`); it falls, fades and is
+    cleaned up as every dropped magazine.
+  - **Both hands' projectile impacts** (owner: in slow motion, firing both hands showed our ballistic effects only on the
+    main hand). A projectile's landing (its sound, ricochet, light and chips) is now the gun of the hand that fired it
+    (`ballistics.zs` RSQ_Tracer, through `RSQ_Muzzle.MissileOff`); an off-hand gun's brass takes its own gun's casing
+    mesh and size (`casings.zs`).
 - **What's new in 2.0.5d** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
   makes `BD22_VR-Reloaded_2.0.5d.pk3`): **RSQ Grenade's grenades in the under-barrel launchers, each round keeping its
   kind** (owner 11-17: "we grab grenade, alt fire cycle to the one we want ... and we load it into the launcher. So, we
@@ -623,11 +669,14 @@ These are behind the **Ballistics** switch. Stock is Brutal Doom's own.
 - Shotgun shells go in through the real loading port, and you can top off any time.
 - Kitbash M4 + M203. In VR: unlatch the tube, slide it forward, push a round in, slide it shut.
   With RSQ Grenade and RSQ Tactical Rig, a grenade from the rig's grenade spot goes in too: the off hand's alt
-  trigger picks its kind, and the round bursts as that kind of grenade (2.0.5d).
+  trigger (2.0.5e: or its trigger) picks its kind, its name pops on it, and the round bursts as that kind of grenade
+  (2.0.5d).
 - SMG alt fire toggles 3-round burst or full auto. Slug shots for the shotgun and the Shotvolver
   are menu options, off by default.
 - Pistol Semi Auto option: one shot per trigger pull.
-- Dual wield, with each gun fired independently. Flick a gun down to reload when you're using two.
+- Dual wield, with each gun fired independently, the Minigun too (2.0.5e). Point a gun off-screen and pull its
+  trigger to reload it when you're using two (House of the Dead; the old flick is an option). The Reload button
+  reloads every hand.
 - Grenades: pull the pin with your off hand, swing and release to throw, or release while still
   to cook it.
 - Left-handed support. Purist mode gives you models and hands, without reloading.
@@ -683,6 +732,8 @@ Weapon models: **br_vr** by ajantaju (Brutal Doom VR Weapons, BD v21), made from
 - VR hands: Ermac (Force Unleashed / Rusted Legacy, MIT). The 2.0 hands were fitted starting
   from his 1.92 holds.
 - Brutal Doom: Sergeant Mark IV
+- Minigun magazine (2.0.5e): Brutal Doom's voxel ammo box (BD_VoxelPack, `Voxels/Ammo/AMMOA.kvx`), made into an MD3
+  by the RSQ UBQ Series (WoS_Reloaded `tools/ammobox_md3.py`), placed as GNRC Reloaded places it
 - QuestZDoom: Team Beef
 - Shot tracers, impact sparks and their sprites (DPUF, shipped as RSDP): **Dakka** by ijon
   (https://github.com/0dot0repeating/dakka, WTFPL), ported to ZScript

@@ -343,12 +343,17 @@ class RSQ_Tracer : Thinker
 	Vector3 lastVel;
 	Color col;
 	int age;
+	bool off;		// 2.0.5e: fired by the off hand (RSQ_Muzzle.MissileOff), so its landing is that hand's gun's
 
 	static void Attach(Actor m, RSQ_Ballistics h)
 	{
 		let t = new('RSQ_Tracer');
 		t.missile = m;
 		t.shooter = m.target;
+		// 2.0.5e (owner 2026-11-22: "in slow motion, firing both hands shows our ballistic effects only on the main hand"):
+		// the hand that fired it, read now, on the missile's first think, while it is still where it was born (MissileOff
+		// measures that); the landing below used the main hand's gun for every round
+		t.off = RSQ_Muzzle.MissileOff(m);
 		t.h = h;
 		t.lastPos = m.pos;
 		t.lastVel = m.vel;
@@ -388,7 +393,7 @@ class RSQ_Tracer : Thinker
 			h.liveTracers = max(0, h.liveTracers - 1);
 			double sp = lastVel.Length();
 			if (age < 350 && sp > 0 && shooter && RSQ_Ballistics.On())
-				h.Impact(shooter, lastPos, lastVel / sp, sp * 2 + 16);
+				h.Impact(shooter, lastPos, lastVel / sp, sp * 2 + 16, off);	// 2.0.5e: that hand's gun (its sound, ricochet, light and chips)
 		}
 		Destroy();
 	}

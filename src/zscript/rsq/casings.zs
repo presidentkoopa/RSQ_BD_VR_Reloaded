@@ -108,10 +108,13 @@ class RSA_Casings : EventHandler
 		// VR test below: a 12-gauge hull is a 12-gauge hull on a flat screen too.
 		// It sets scale 1.0 itself, because a lent model's size is the MODELDEF's
 		// and the actor's own scale multiplies into it.
-		bool lent = RSQ_CaseModels.Lend(c, mo.player.ReadyWeapon ? mo.player.ReadyWeapon.GetClassName() : 'None', n);
+		// 2.0.5e: the gun of the hand it came from (Place's own test; an off-hand copy reads as its gun), not always the
+		// main hand's: the off gun's brass took the main gun's mesh and size
+		Name gn = RSQ_Muzzle.HandGunName(mo, OffCase(mo, c));
+		bool lent = RSQ_CaseModels.Lend(c, gn, n);
 		if (!RSVR_VRHand.InVR(mo))
 			return;
-		double sz = Size(mo.player.ReadyWeapon ? mo.player.ReadyWeapon.GetClassName() : 'None', n);
+		double sz = Size(gn, n);
 		if (sz > 0 && !lent)	// F11: a lent 3D casing is real-size at 1.0 (casemodels.zs)
 			c.A_SetScale(sz, sz);
 		// r4 (owner: "the over-under machine gun's casings come out of the barrel"): placed
@@ -125,14 +128,23 @@ class RSA_Casings : EventHandler
 		Place(c);
 	}
 
+	// the casing came from the off hand's gun: it was spawned nearer the off controller, and that hand holds a gun
+	static bool OffCase(PlayerPawn mo, Actor c)
+	{
+		let p = mo.player;
+		if (!p || !p.OffhandWeapon || p.OffhandWeapon is 'RSQ_Hands' || !RSVR_VRHand.InVR(mo))
+			return false;
+		Vector3 hp = RSVR_VRHand.HandPos(mo), op = RSVR_VRHand.OffPos(mo);
+		return (c.pos - op).Length() < (c.pos - hp).Length();
+	}
+
 	void Place(Actor c)
 	{
 		let mo = Shooter(c);
 		if (!mo || !mo.player)
 			return;
 		let p = mo.player;
-		Vector3 hp = RSVR_VRHand.HandPos(mo), op = RSVR_VRHand.OffPos(mo);
-		bool off = (c.pos - op).Length() < (c.pos - hp).Length() && p.OffhandWeapon && !(p.OffhandWeapon is 'RSQ_Hands');
+		bool off = OffCase(mo, c);
 		Weapon w = off ? p.OffhandWeapon : p.ReadyWeapon;
 		Vector3 port = Port(w);
 		if (port == (0, 0, 0))

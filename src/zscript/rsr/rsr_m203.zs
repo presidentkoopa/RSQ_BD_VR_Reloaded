@@ -44,6 +44,10 @@ class RSM abstract play
 	const ENTER_ANGLE = 40.0;	// ...nose within this of the bore
 	const SEAT = 0.6;			// home within this
 	const KINDS = 9;			// 2.0.5d: RSQ Grenade's kinds (kinds.zs): frag, impact, incendiary, freeze, stun, smoke, flash, charm, infight
+	const NADE_TAP = 9;			// 2.0.5e: tics a small grenade stays in a hand that let go (the off trigger's tap, when the trigger is the grab)
+	// 2.0.5e: where the small grenade's word stands (RSQ VisualRewards "hand:" place): on its top, cm along the off hand's
+	// aim and up (RoundInHand: its middle 1.9 cm back, 4.5 cm down; it is held upright, about 9 cm tall)
+	clearscope static String WordPlace() { return "hand:1,-1.9,0"; }
 
 	clearscope static bool IsRifle(Weapon w)
 	{
@@ -157,21 +161,49 @@ class RSM abstract play
 			&& mo.CountInv('IsPlayingAsPurist') <= 0;
 	}
 
-	// rsq/flick.zs: a flick reloads this hand's empty launcher too (dual)
-	static void FlickLoad(PlayerPawn mo, bool offHand)
+	// rsq/flick.zs: a flick, the off-screen trigger or the Reload button loads this hand's launcher. 2.0.5e (owner
+	// 2026-11-22: "make the same gesture reload the launcher when it's the one that needs ammo, or when the launcher is
+	// open"): the empty shut launcher of either hand, or the OPEN tube of a lone rifle (a round goes home and the tube
+	// shuts: the round in the hand if there is one, else one taken), with hand-loading's ammo rules: the Underbarrel
+	// Ammo row's (a rocket, or a hand grenade: with RSQ Grenade's grenades the ones carried, of your kind now, RSQ
+	// Grenade's "kind"; else BD22's plain round). The round keeps its kind (loadedNade / loadedNadeOff). True when it
+	// loaded one.
+	static bool FlickLoad(PlayerPawn mo, bool offHand)
 	{
 		if (!VRReload(mo))
-			return;
+			return false;
+		let s = RSK_M203Handler.Peek(mo);
+		if (!offHand && s && s.active && s.isOpen)
+			return s.FlickShut(mo);
 		Name loaded = offHand ? 'RSM_LoadedOff' : 'RFGLoaded';
 		if (mo.CountInv(loaded) > 0)
-			return;
+			return false;
 		let ac = AmmoClass();
 		if (!ac || mo.CountInv(ac) <= 0)
-			return;
+			return false;
+		int nade = FlickNade(mo);
 		mo.TakeInventory(ac, 1);
 		mo.TakeInventory(offHand ? 'RSM_FiredOff' : 'FiredMGGrenade', 0x7FFFFFFF);
 		mo.GiveInventory(loaded, 1);
+		if (s)
+		{
+			if (offHand)
+				s.loadedNadeOff = nade;
+			else
+				s.loadedNade = nade;
+		}
 		mo.A_StartSound("GrenadeLauncher/Load", CHAN_AUTO, CHANF_OVERLAP);
+		if (s)
+			s.Log(mo, String.Format("flick load, %s hand (%s)", offHand ? "off" : "main", nade > 0 ? String.Format("RSQ Grenade kind %d", nade - 1) : "plain"));
+		return true;
+	}
+
+	// the round a flick load takes: 1 + your RSQ Grenade kind when the launcher takes RSQ Grenade's grenades, else 0 (plain)
+	static int FlickNade(PlayerPawn mo)
+	{
+		let ac = AmmoClass();
+		let nc = NadeAmmo();
+		return ac && nc && ac == nc ? 1 + CurKind(mo) : 0;
 	}
 }
 
@@ -198,6 +230,10 @@ class RSM_State play
 								// RFGLoaded is; gone with it)
 	bool altPrev;				// the off hand's alt trigger last tic (cycles the small grenade's kind)
 	bool rfgWas;				// RFGLoaded at the last WorldTick
+	// 2.0.5e
+	int nadeGap;				// tics the hand with the small grenade has let go (NADE_TAP: the trigger's tap keeps it)
+	int loadedNadeOff;			// the off-hand rifle's launcher (RSM_LoadedOff): 0 plain, else 1 + a kind (a flick load)
+	bool offWas;				// RSM_LoadedOff at the last WorldTick
 
 	void Log(PlayerPawn mo, String what)
 	{
@@ -230,7 +266,52 @@ class RSM_State play
 		unlatched = held = isOpen = roundIn = false;
 		hand = RSM.EMPTY;
 		roundNade = 0;
+		nadeGap = 0;
 		rr = rrPrev = 0;
+	}
+
+	// 2.0.5e THE KIND'S WORD (owner 2026-11-22): the small grenade's kind, a small world word on it, whenever it is taken or
+	// its kind changes -- RSQ Grenade's "kind.word" (it names the kind and asks RSQ VisualRewards, both by name)
+	void KindWord(PlayerPawn mo, int kind)
+	{
+		let s = RSM.GnSvc();
+		if (s)
+			s.GetInt("kind.word", RSM.WordPlace(), kind, 1, mo, 'None');
+	}
+
+	// 2.0.5e (RSM.FlickLoad): the open tube takes a round and shuts, as if the hand had done it. The round in the hand
+	// goes home (paid now, as hand-loading pays it home), or one is taken by the flick's rules; a round home already, or
+	// a launcher opened loaded, just shuts. True when it shut loaded.
+	bool FlickShut(PlayerPawn mo)
+	{
+		bool had = mo.CountInv('RFGLoaded') > 0;
+		if (!roundIn && !had)
+		{
+			int nade = hand != RSM.EMPTY ? roundNade : RSM.FlickNade(mo);
+			let ac = nade > 0 ? RSM.NadeAmmo() : RSM.AmmoClass();
+			if (!ac || mo.CountInv(ac) <= 0)
+				return false;
+			mo.TakeInventory(ac, 1);
+			roundNade = nade;
+			roundIn = true;
+			Snd(mo, "GrenadeLauncher/Load");
+		}
+		hand = RSM.EMPTY;
+		nadeGap = 0;
+		pull = 0;
+		isOpen = held = unlatched = false;
+		Snd(mo, "GrenadeLauncher/Close");
+		if (geo)
+			geo.Buzz(mo);
+		if (roundIn)
+		{
+			mo.GiveInventory('RFGLoaded', 1);
+			loadedNade = roundNade;
+		}
+		roundIn = false;
+		roundNade = 0;
+		Log(mo, loadedNade > 0 ? String.Format("flick: shut loaded (RSQ Grenade kind %d)", loadedNade - 1) : "flick: shut loaded");
+		return true;
 	}
 
 	void Tick(PlayerPawn mo)
@@ -252,11 +333,18 @@ class RSM_State play
 		grabPrev = grab;
 		// 2.0.5d: the off hand's alt trigger. QuestZDoom's grip can shift the trigger to alt fire (RSQ Grenade hand.zs: a
 		// hand closed round a grenade and squeezing sends alt fire), so while it holds a small grenade, alt fire held is
-		// holding it too, and its press cycles the kind
+		// holding it too, and its press cycles the kind.
+		// 2.0.5e (owner 2026-11-22): the off hand's TRIGGER cycles it too -- "firing" the hand that holds it. Its trigger
+		// held is holding it as well; a press cycles (CARRY below). With the trigger as the grab (Grab Ammo With: off
+		// trigger, the default) the press is a tap: let go and squeeze again within NADE_TAP tics, and the grenade stays
+		// in the hand meanwhile. A press that is only the grip's shift letting go (alt to fire, the trigger held all the
+		// while) is no press. The trigger fires nothing here: the off hand holds BD22 VR's hands, not a gun, and RSQ
+		// Tactical Rig hands out nothing while the launcher loads ("ubl.loading").
 		bool alt = (p.cmd.buttons & BT_OFFHANDALTATTACK) != 0;
+		bool altWas = altPrev;
 		bool altPress = alt && !altPrev;
 		altPrev = alt;
-		bool holding = grab || (roundNade > 0 && alt);
+		bool holding = grab || (roundNade > 0 && (alt || trig));
 		// a magazine reload has the hand
 		if (rs && rs.phase != RSR.IDLE && rs.weap == p.ReadyWeapon)
 		{
@@ -373,7 +461,9 @@ class RSM_State play
 				}
 				roundNade = 1 + RSM.CurKind(mo);
 				hand = RSM.CARRY;
+				nadeGap = 0;
 				geo.Buzz(mo);
+				KindWord(mo, roundNade - 1);	// 2.0.5e: its word, on it
 				Log(mo, String.Format("took a grenade from the grenade spot (kind %d)", roundNade - 1));
 				break;
 			}
@@ -394,21 +484,31 @@ class RSM_State play
 		}
 		case RSM.CARRY:
 		{
+			// 2.0.5e: a small grenade stays through a let-go of NADE_TAP tics (the trigger's tap)
+			if (isOpen && !holding && roundNade > 0 && nadeGap < RSM.NADE_TAP)
+			{
+				nadeGap++;
+				break;
+			}
 			if (!holding || !isOpen)
 			{
 				hand = RSM.EMPTY;		// back in the pouch (nothing was taken)
 				roundNade = 0;
+				nadeGap = 0;
 				Log(mo, "let the round go");
 				break;
 			}
-			// 2.0.5d: the small grenade's kind, cycled by the off hand's alt trigger (RSQ Grenade's own cycle: your kind)
-			if (roundNade > 0 && altPress)
+			nadeGap = 0;
+			// 2.0.5d: the small grenade's kind, cycled by the off hand's alt trigger (RSQ Grenade's own cycle: your kind);
+			// 2.0.5e: and by its trigger (a press that is not the grip's shift letting go)
+			if (roundNade > 0 && (altPress || trigPress && !altWas))
 			{
 				int nk = RSM.NextKind(mo);
 				if (nk >= 0 && nk != roundNade - 1)
 				{
 					roundNade = 1 + nk;
-					Log(mo, String.Format("grenade kind %d", nk));
+					KindWord(mo, nk);		// 2.0.5e: the new kind's word replaces the last one on it
+					Log(mo, String.Format("grenade kind %d (%s)", nk, altPress ? "alt trigger" : "trigger"));
 				}
 			}
 			double ang = acos(clamp(nose.x, -1, 1));
@@ -620,6 +720,7 @@ class RSM_KindBurst : Inventory
 
 // the player's launcher holds an RSQ Grenade grenade (RSM_State.loadedNade): its weapon fires RSM_KindRound
 class RSM_KindLoaded : RSVR_Token {}
+class RSM_KindLoadedOff : RSVR_Token {}	// 2.0.5e: ...the off-hand rifle's (loadedNadeOff): it fires RSM_KindRoundOff
 
 // RSQ Tactical Rig asks, by name: while the launcher is open for loading, that hand's press at the grenade spot is the
 // launcher's (the rig hands out no hand grenade then). "ubl.loading" intArg the hand (1 the off hand, the one that loads),
@@ -755,16 +856,29 @@ class RSK_M203Handler : EventHandler
 	// 2.0.5d: a launcher just fired an RSQ Grenade grenade (Rifle.dec / Machinegun.dec: RSM_KindLoaded held, RSM_KindRound
 	// fired): the round takes the kind loaded (RSM_RoundKind). WorldThingSpawned comes on the round's first think, before it
 	// moves, with its target (the shooter) set (RSQ_Muzzle relies on the same).
+	// 2.0.5e: the off-hand rifle's launcher fires RSM_KindRoundOff (DECORATE.rsqdual RSM_FireOff, DECORATE.rsm) with a kind
+	// loaded there (loadedNadeOff, a flick load), so each hand's round takes its own hand's kind
 	override void WorldThingSpawned(WorldEvent e)
 	{
 		let a = e.thing;
-		if (!a || a.GetClassName() != 'RSM_KindRound')
+		if (!a)
+			return;
+		Name cn = a.GetClassName();
+		bool off = cn == 'RSM_KindRoundOff';
+		if (!off && cn != 'RSM_KindRound')
 			return;
 		let pmo = PlayerPawn(a.target);
 		int n = pmo && pmo.player ? pmo.PlayerNumber() : -1;
 		let s = n >= 0 && n < MAXPLAYERS ? st[n] : null;
-		if (!s || s.loadedNade <= 0)
+		if (!s || (off ? s.loadedNadeOff : s.loadedNade) <= 0)
 			return;					// no kind: it bursts as the plain round (RSM_KindBurst)
+		if (off)
+		{
+			RSM_Nades.Arm(a, s.loadedNadeOff - 1);
+			s.loadedNadeOff = 0;
+			pmo.TakeInventory('RSM_KindLoadedOff', 1);
+			return;
+		}
 		RSM_Nades.Arm(a, s.loadedNade - 1);
 		s.loadedNade = 0;
 		pmo.TakeInventory('RSM_KindLoaded', 1);
@@ -787,6 +901,10 @@ class RSK_M203Handler : EventHandler
 			if (s.loadedNade > 0 && !rfg && !s.rfgWas)
 				s.loadedNade = 0;
 			s.rfgWas = rfg;
+			bool rfgOff = mo.CountInv('RSM_LoadedOff') > 0;	// 2.0.5e: the off-hand rifle's the same way
+			if (s.loadedNadeOff > 0 && !rfgOff && !s.offWas)
+				s.loadedNadeOff = 0;
+			s.offWas = rfgOff;
 			bool vr = RSM.VRReload(mo);
 			bool dual = p.OffhandWeapon && !(p.OffhandWeapon is 'RSQ_Hands');
 			Sync(mo, 'RSM_VR', vr);
@@ -816,6 +934,7 @@ class RSK_M203Handler : EventHandler
 			}
 			Sync(mo, 'RSM_Steady', s.active && s.steadied);
 			Sync(mo, 'RSM_KindLoaded', s.loadedNade > 0);	// 2.0.5d: the weapon fires RSM_KindRound (Rifle.dec, Machinegun.dec)
+			Sync(mo, 'RSM_KindLoadedOff', s.loadedNadeOff > 0);	// 2.0.5e: the off-hand rifle fires RSM_KindRoundOff (DECORATE.rsqdual)
 			s.Draw(mo);
 		}
 	}

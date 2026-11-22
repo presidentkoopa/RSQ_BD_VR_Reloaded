@@ -13,5 +13,6 @@ OptionMenu "RSQ_DualOptions"
 	Option "Super shotgun", "rsq_dual_ssg", "OnOff"
 	Option "Assault shotgun", "rsq_dual_asg", "OnOff"
 	Option "Railgun", "rsq_dual_railgun", "OnOff"
+	Option "Minigun", "rsq_dual_minigun", "OnOff"	// 2.0.5e
 	Option "Axe", "rsq_dual_axe", "OnOff"	// 2.0.2: dual axes (RSQ_Off_BrutalAxe)
 }

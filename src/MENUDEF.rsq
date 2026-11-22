@@ -21,6 +21,12 @@ OptionValue "RSR_ReloadMode"
 	0, "Stock (BD22)"
 }
 
+OptionValue "RSQ_ReloadGesture"
+{
+	0, "Point Off-Screen + Trigger"
+	1, "Flick (old)"
+}
+
 OptionValue "RSR_GrabWith"
 {
 	0, "Off-hand trigger"
@@ -91,7 +97,9 @@ OptionMenu "RSQ_Options"
 	Submenu "Voxel Options", "RSQ_VoxelOptions"
 	StaticText " "
 	Submenu "Dual Options", "RSQ_DualOptions"
-	Option "Dual Flick to Reload", "rsq_flick", "OnOff"
+	Option "Dual Reload Gesture", "rsq_flick", "OnOff"	// 2.0.5e: was "Dual Flick to Reload" (the same switch: the gesture on or off)
+	Option "Reload Gesture", "rsq_reload_gesture", "RSQ_ReloadGesture"	// 2.0.5e (owner 2026-11-22, House of the Dead)
+	Slider "Off-Screen Angle", "rsq_offscreen_deg", 40, 85, 1, 0	// 2.0.5e: degrees under your view
 	StaticText " "
 	Option "VR Throwing", "rsg_vr", "OnOff"
 	Option "Use RSQ Grenade Instead", "rsg_rsq_nade", "OnOff"	// 2.0.3y (owner item 21): with RSQ Grenade loaded, this grenade stands down (rsg/grenade.zs)

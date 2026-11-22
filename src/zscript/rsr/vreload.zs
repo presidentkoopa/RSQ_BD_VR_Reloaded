@@ -232,6 +232,9 @@ class RSR_State play
 	Weapon resumeWeap;		// 2.0.2: the ready weapon the resume check last looked at (RSR_ReloadHandler.Resume)
 	bool resumeDone;		// ...and whether it has been checked since it was selected
 	int resumeTries, resumeTic;	// ...tries so far (a select animation can eat the token: Rifle SelectAnimation), last try
+	// 2.0.5e THE RELOAD BUTTON (rsq/flick.zs RSQ_Flick.ButtonHand; owner 2026-11-22: "as long as the button press is
+	// guaranteed to work"): this reload finishes by itself, the hand's steps done for it (AutoStep)
+	bool autoDone;
 
 	// what is drawn (ui interpolates prev -> cur with ticfrac)
 	double d, dPrev;		// the magazine at the well: cm out of home along the axis
@@ -431,6 +434,7 @@ class RSR_State play
 		usedPresses = netPresses;
 		gripPrev = Grip(mo);		// a grip already held is not a new grab
 		lastTick = mo.Level.maptime;
+		autoDone = false;
 		SetPhase(mo, RSR.EMPTY);
 	}
 
@@ -472,6 +476,11 @@ class RSR_State play
 		bool press = (g && !gripPrev) || netPresses != usedPresses && !RSVR_VRHand.Steadied(mo);
 		usedPresses = netPresses;
 		int i = gun;
+		if (autoDone && AutoStep(mo))
+		{
+			gripPrev = g;
+			return;
+		}
 		switch (phase)
 		{
 		case RSR.DROP:
@@ -678,6 +687,49 @@ class RSR_State play
 		lockedGrab = false;
 		netGrip = false;
 		netUse = false;		// F11: a release lost in a menu must not latch the grab
+		autoDone = false;
+	}
+
+	// 2.0.5e THE RELOAD BUTTON: with autoDone, the reload does the hand's steps itself, AUTO_GAP tics apart, at the
+	// gun's own sounds: the old magazine falls as it always does (DROP), then the new one goes home (the magazine in the
+	// hand, or one from the pouch: the set's own fill loop takes the rounds, RSR_Seated), then the handle racks when the
+	// set's rule wants it (RSR_Done). True when it took this tic.
+	const AUTO_GAP = 6;
+	bool AutoStep(PlayerPawn mo)
+	{
+		int i = gun;
+		int t = mo.Level.maptime - phaseTic;
+		switch (phase)
+		{
+		case RSR.EMPTY:
+		case RSR.CARRY:
+		case RSR.INSERT:
+			if (t < AUTO_GAP)
+				return true;
+			d = dPrev = 0;
+			wellShown = handShown = false;
+			PlaySnd(mo, RSR_Guns.SndIn(i));
+			Buzz(mo);
+			mo.GiveInventory('RSR_Seated', 1);
+			SetPhase(mo, RSR.SEATED);
+			return true;
+		case RSR.CHARGE:
+		case RSR.PULL:
+		case RSR.RELEASED:
+			if (t < AUTO_GAP)
+				return true;
+			pull = pullPrev = 0;
+			lockedGrab = false;
+			slideLock = false;
+			racked = true;
+			PlaySnd(mo, RSR_Guns.SndBack(i));
+			PlaySnd(mo, RSR_Guns.SndFwd(i));
+			Buzz(mo);
+			mo.GiveInventory('RSR_Done', 1);
+			SetPhase(mo, RSR.DONE);
+			return true;
+		}
+		return false;		// DROP (the magazine falls on its own), SEATED and DONE (the weapon's turn)
 	}
 
 	// after the psprites have ticked (RSR_ReloadHandler.WorldTick): what the gun and the layers show

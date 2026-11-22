@@ -30,3 +30,7 @@ ACTOR RSM_KindRound : ShortGrenade
 		Stop
 	}
 }
+
+// 2.0.5e: the same round from the OFF-hand rifle (DECORATE.rsqdual / Rifle.dec RSM_FireOff, RSM_KindLoadedOff), so it takes
+// the off-hand launcher's kind (RSK_M203Handler.WorldThingSpawned: loadedNadeOff)
+ACTOR RSM_KindRoundOff : RSM_KindRound {}

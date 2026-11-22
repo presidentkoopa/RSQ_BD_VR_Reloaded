@@ -1946,65 +1946,53 @@ Model Minigun
 	FrameIndex RQCM A 0 4
 }
 
+// 2.0.5e (owner 2026-11-22: "The chaingun's reload uses a voxel ammo box, like the owner's GNRC weapon set does"): the
+// magazine is BD22's voxel ammo box (BD_VoxelPack Voxels/Ammo/AMMOA.kvx) as an MD3, 18 units long, its middle at its
+// origin -- the RSQ UBQ Series' own (weaponsets/WoS_Reloaded/tools/ammobox_md3.py; skin: rsqvox/ammoa.png, the palette),
+// copied with GNRC Reloaded's three blocks (weaponsets/GNRC_Reloaded/tools/build.py: each Offset / ZOffset solved so the
+// box's middle is where this magazine piece's middle was, Minigun_rsr.md3 surface 2, frame 4). At the gun, in the off
+// hand, and dropped: smaller and grey, it reads as empty (tools/ammobox/empty_skin.py). Pictures not made: code only.
 // the magazine alone, at the gun (main controller)
 Model RSR_GunParts
 {
-	Path "models/bd/Minigun"
-	Model 0 "Minigun_rsr.md3"
-	SurfaceSkin 0 0 "rsr_clear.png"
-	SurfaceSkin 0 1 "rsr_clear.png"
-	SurfaceSkin 0 2 "Minigun.png"
-	SurfaceSkin 0 3 "rsr_clear.png"
-	SurfaceSkin 0 4 "rsr_clear.png"
-	SurfaceSkin 0 5 "rsr_clear.png"
-	SurfaceSkin 0 6 "rsr_clear.png"
+	Path "models/rsq/ammobox"
+	Model 0 "ammobox.md3"
+	Skin 0 "ammoa.png"
 	Scale -1.0000 1.0000 1.0000
-	Offset -1.156 -5.106 0.0
-	ZOffset -1.923
+	Offset -6.308 -69.940 0.0
+	ZOffset -20.261
 	AngleOffset 3.854
 	PitchOffset 3.363
-	RollOffset 10.974	// r9 port (lane B): gun to the FBX hand fitted from 1.92
+	RollOffset 10.974
 	NoInterpolation
-	FrameIndex RQCP A 0 4
+	FrameIndex RQCP A 0 0
 }
 
 // the magazine alone, in the off hand (off controller)
 Model RSQ_Hands
 {
-	Path "models/bd/Minigun"
-	Model 0 "Minigun_rsr.md3"
-	SurfaceSkin 0 0 "rsr_clear.png"
-	SurfaceSkin 0 1 "rsr_clear.png"
-	SurfaceSkin 0 2 "Minigun.png"
-	SurfaceSkin 0 3 "rsr_clear.png"
-	SurfaceSkin 0 4 "rsr_clear.png"
-	SurfaceSkin 0 5 "rsr_clear.png"
-	SurfaceSkin 0 6 "rsr_clear.png"
+	Path "models/rsq/ammobox"
+	Model 0 "ammobox.md3"
+	Skin 0 "ammoa.png"
 	Scale -1.0000 1.0000 1.0000
-	Offset 0.0000 0.0000 0.0
-	ZOffset -5.0000
+	Offset 3.442 -63.846 0.0
+	ZOffset -26.866
 	NoInterpolation
-	FrameIndex RQCP A 0 4
+	FrameIndex RQCP A 0 0
 }
 
 // the dropped magazine (world)
 Model RSR_DroppedMag
 {
-	Path "models/bd/Minigun"
-	Model 0 "Minigun_rsr.md3"
-	SurfaceSkin 0 0 "rsr_clear.png"
-	SurfaceSkin 0 1 "rsr_clear.png"
-	SurfaceSkin 0 2 "Minigun.png"
-	SurfaceSkin 0 3 "rsr_clear.png"
-	SurfaceSkin 0 4 "rsr_clear.png"
-	SurfaceSkin 0 5 "rsr_clear.png"
-	SurfaceSkin 0 6 "rsr_clear.png"
-	Scale 0.3468 0.3468 0.3468
-	Offset -21.5270 1.3567 0.0
-	ZOffset 6.3229
+	Path "models/rsq/ammobox"
+	Model 0 "ammobox.md3"
+	Skin 0 "ammoa_empty.png"
+	Scale 0.2601 0.2601 0.2601	// 2.0.5e: GNRC's dropped box (0.3468) at three quarters: smaller than the full one, and grey (EMPTY)
+	Offset -22.721 -20.785 0.0
+	ZOffset -1.260
 	USEACTORPITCH
 	USEACTORROLL
-	FrameIndex RQCW A 0 4
+	FrameIndex RQCW A 0 0
 }
 
 // ---- F10: Machinegun (tools/bd22_plus.py late)

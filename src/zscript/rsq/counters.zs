@@ -348,6 +348,38 @@ class RSQ_Counters : EventHandler
 			am.MaxAmount = M202_CARRY;
 	}
 
+	// 2.0.5e THE OFF-HAND MINIGUN (DECORATE.rsqdualmg RSQ_Off_Minigun, its Reload: RSQ_OffFillMinigun). Its own magazine,
+	// MinigunAmmoOff, tops up from the pouch the two hands share: the reserve item less the rounds lent to the main hand's
+	// magazine (RealTick). The rounds it takes are no shots of the main hand's Minigun -- RealTick reads the reserve going
+	// down since its last tic as shots -- so its "last tic" goes down with them.
+	const GUN_MINIGUN = 8;			// GUN[]'s Minigun (a static function cannot read the static array on 17.3)
+	static void OffFill(PlayerPawn mo)
+	{
+		Name mn = 'MinigunAmmoOff';
+		Name rn = 'RSQ_MinigunAmmo';
+		Name ln = 'RSQ_Lent_Minigun';
+		class<Inventory> mc = mn;
+		class<Inventory> rc = rn;
+		class<Inventory> lc = ln;
+		if (!mo || !mc || !rc || !lc)
+			return;
+		let mag = mo.FindInventory(mc);
+		int cap = mag ? mag.MaxAmount : 200;
+		int have = mo.CountInv(mc);
+		int pouch = mo.CountInv(rc) - mo.CountInv(lc);
+		int n = clamp(min(cap - have, pouch), 0, cap);
+		if (n <= 0)
+			return;
+		mo.TakeInventory(rc, n);
+		mo.GiveInventory(mc, n);
+		let h = RSQ_Counters(EventHandler.Find('RSQ_Counters'));
+		int pn = mo.PlayerNumber();
+		if (h && pn >= 0 && pn < MAXPLAYERS)
+			h.lastRes[pn][GUN_MINIGUN] -= n;
+		if (RSR.Debug(mo.player))
+			Console.Printf("rsq t%d off-hand Minigun: RELOAD magazine %d -> %d, %d from the pouch", mo.Level.maptime, have, have + n, n);
+	}
+
 	static bool NonStdOn(PlayerPawn mo)
 	{
 		return RSQ.PlayerInt(mo, 'rsq_reload_nonstd', 1) != 0;
@@ -422,3 +454,12 @@ class RSQ_HudRes : Inventory { Default { Inventory.MaxAmount 0x7fffffff; +INVENT
 class RSQ_HudHasMag : Inventory { Default { Inventory.MaxAmount 1; +INVENTORY.UNDROPPABLE; +INVENTORY.UNTOSSABLE; +INVENTORY.QUIET } }
 class RSQ_HudMagOff : Inventory { Default { Inventory.MaxAmount 0x7fffffff; +INVENTORY.UNDROPPABLE; +INVENTORY.UNTOSSABLE; +INVENTORY.QUIET } }
 class RSQ_HudHasMagOff : Inventory { Default { Inventory.MaxAmount 1; +INVENTORY.UNDROPPABLE; +INVENTORY.UNTOSSABLE; +INVENTORY.QUIET } }
+
+// 2.0.5e: the off-hand Minigun's Reload gives this (DECORATE.rsqdualmg): its magazine tops up (RSQ_Counters.OffFill)
+class RSQ_OffFillMinigun : RSR_Call
+{
+	override void Called(PlayerPawn mo, RSR_State s)
+	{
+		RSQ_Counters.OffFill(mo);
+	}
+}
