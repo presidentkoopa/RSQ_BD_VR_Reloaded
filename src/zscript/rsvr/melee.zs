@@ -1752,8 +1752,15 @@ class RSVR_Hand play
 			t1 = t0;
 			p1 = p0;
 		}
-		if (ThrowMs() < THROW_MIN || vel.Length() <= 0)     // ONE THROW: the hand decides (ThrowSample)
+		// A MARKED RELEASE IS A THROW (2.0.5l; owner 2026-11-23 09:48: "i can throw the saber with a simple flick but i
+		// have to wail ... the axe"; his pick "Marked = flick throws"): with a monster painted, letting go throws, as the
+		// saber's painted release does. It flies straight at the mark below (RSVR_AxeSeek, at least 30). Unpainted, the
+		// hand still decides.
+		bool marked = lockTarget && lockTarget.health > 0;
+		if (!marked && (ThrowMs() < THROW_MIN || vel.Length() <= 0))     // ONE THROW: the hand decides (ThrowSample)
 			return false;
+		if (vel.Length() <= 0)
+			vel = fF.Length() > 0 ? fF.Unit() : (cos(mo.angle), sin(mo.angle), 0);   // a still hand: along the arm
 
 		double spd = clamp(vel.Length() * 3, 14, 42);
 		Vector3 dir = vel.Unit();
