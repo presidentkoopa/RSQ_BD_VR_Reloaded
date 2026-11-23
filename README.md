@@ -22,26 +22,32 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.5h.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.5i.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5h.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5i.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5h.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5i.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5h
+## Changelog: 2.0.2a to 2.0.5i
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5h.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5i.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5i** (11-23; *rig only, not headset-confirmed*): **the chaingun drops a NO AMMO box** (owner 09:11:
+  "it needs to say NO AMMO ... dark red is fine"; 09:16: "take the existing ammobox voxel, dye it red, make it say NO AMMO").
+  The spent box is the same voxel ammo box, full size, dyed dark red, with NO AMMO on its top in two lines once it lands.
+  Found on the rig: 2.0.5e's dropped box never showed (its offsets, copied from the Minigun magazine piece, put it out of
+  sight), so the chaingun looked like it dropped nothing. Rig mag5: the red box and its label on the floor beside a rifle
+  mag. Gate on the owner's order: only BD_VoxelPack's 4 voxeldef errors.
 - **What's new in 2.0.5h** (11-23; *rig only, not headset-confirmed*; source only: `python build.py` makes
   `BD22_VR-Reloaded_2.0.5h.pk3`):
   - **The Reload button leaves a lone gun to VR reloading** (owner 11-23: "if it was one gun every time... it would

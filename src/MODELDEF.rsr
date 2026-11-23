@@ -1986,10 +1986,12 @@ Model RSR_DroppedMag
 {
 	Path "models/rsq/ammobox"
 	Model 0 "ammobox.md3"
-	Skin 0 "ammoa_empty.png"
-	Scale 0.2601 0.2601 0.2601	// 2.0.5e: GNRC's dropped box (0.3468) at three quarters: smaller than the full one, and grey (EMPTY)
-	Offset -22.721 -20.785 0.0
-	ZOffset -1.260
+	Skin 0 "ammoa_noammo.png"
+	Scale 0.3468 0.3468 0.3468	// 2.0.5i (owner 2026-11-23 09:11): full size (GNRC's dropped box), dark red, NO AMMO on it (vreload.zs RSR_MagLabel)
+	// 2.0.5i: no Offset / ZOffset: the box's middle is the md3's origin already (ammobox_md3.py), and 2.0.5e's offsets
+	// (copied from the Minigun magazine piece) put it out of sight: it was never seen dropped (rig mag3, 11-23)
+	Offset 0.0 0.0 0.0
+	ZOffset 0.0
 	USEACTORPITCH
 	USEACTORROLL
 	FrameIndex RQCW A 0 0

@@ -410,6 +410,7 @@ class RSR_State play
 		m.vel = mo.vel + (0, 0, -1.5);
 		m.BounceSound = RSR_Guns.SndLand(gun);
 		m.target = mo;
+		m.noAmmo = RSR_Guns.SprWorld(gun) == 'RQCW';	// 2.0.5i: the chaingun's box says NO AMMO when it lands
 	}
 
 	void Buzz(PlayerPawn mo)
@@ -964,6 +965,21 @@ class RSR_PartStates : Weapon
 // the gun's own magazine, dropped: the same mesh and surface, at world scale (MODELDEF.rsr)
 class RSR_DroppedMag : Actor
 {
+	bool noAmmo;	// 2.0.5i (owner 2026-11-23 09:11: "it needs to say NO AMMO ... dark red is fine"): the chaingun's spent box
+
+	// landed: NO AMMO on its top (a flat label that stays with it and fades with it)
+	void Label()
+	{
+		if (!noAmmo)
+			return;
+		let l = Actor.Spawn('RSR_MagLabel', pos + (cos(angle), sin(angle), 0) * RSR_MagLabel.ALONG + (0, 0, RSR_MagLabel.UP));
+		if (l)
+		{
+			l.angle = angle;
+			l.master = self;
+		}
+	}
+
 	Default
 	{
 		Radius 2;
@@ -991,10 +1007,50 @@ class RSR_DroppedMag : Actor
 		"####" "#" 1;
 		Loop;
 	Death:
-		"####" "#" 0 { pitch = 0; roll = 90; }
+		"####" "#" 0 { pitch = 0; roll = 90; Label(); }
 		"####" "#" 350;
 		"####" "#" 1 A_FadeOut(0.05);
 		Wait;
+	}
+}
+
+// 2.0.5i: NO AMMO, two lines, lying on the chaingun's spent box (sprites/RSRNA0.png), following it and fading with it
+class RSR_MagLabel : Actor
+{
+	const UP = 3.4;		// map units over the box's origin: its top as it lies (rig mag4)
+	const ALONG = 3.0;	// ...and along its length: the md3's origin is at one end as it lies (rig mag4)
+	Default
+	{
+		Radius 1;
+		Height 1;
+		Scale 0.105;
+		RenderStyle "Translucent";
+		Alpha 1.0;
+		+NOINTERACTION
+		+NOBLOCKMAP
+		+NOGRAVITY
+		+FLATSPRITE
+		+DONTSPLASH
+		+NOTONAUTOMAP
+	}
+	override void Tick()
+	{
+		Super.Tick();
+		if (bDestroyed)
+			return;
+		if (!master)
+		{
+			Destroy();
+			return;
+		}
+		SetOrigin(master.pos + (cos(master.angle), sin(master.angle), 0) * ALONG + (0, 0, UP), true);
+		alpha = master.alpha;
+	}
+	States
+	{
+	Spawn:
+		RSRN A -1;
+		Stop;
 	}
 }
 
