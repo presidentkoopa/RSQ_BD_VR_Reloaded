@@ -22,26 +22,35 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.5g.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.5h.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5g.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5h.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5g.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5h.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5g
+## Changelog: 2.0.2a to 2.0.5h
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5g.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5h.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5h** (11-23; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.5h.pk3`):
+  - **The Reload button leaves a lone gun to VR reloading** (owner 11-23: "if it was one gun every time... it would
+    defeat the fucking point of a vr reloading mod"). Since 2.0.5e one press reloaded every gun in your hands, which
+    with a single gun finished its hand reload for you. Now the button reloads the off hand's gun always and the main
+    gun only while the off hand holds a gun too. A gun alone in the main hand is yours to reload by hand, as before
+    2.0.5e (the button does not touch it, finish its hand reload or load its launcher). *Rig `rl1` (the owner's order):
+    a lone Rifle, Reload pressed: "left to the hand reload", nothing reloaded. `rl2`: dual Rifles (a second Rifle and
+    the Dual key), one press: the off-hand copy and the main Rifle both reloaded.*
 - **What's new in 2.0.5g** (11-23; *rig only, not headset-confirmed*; source only: `python build.py` makes
   `BD22_VR-Reloaded_2.0.5g.pk3`):
   - **The plasma rifle's beep while moving** (owner 11-23: "when i had the plasma rifles out and dualed the 'charge beep'

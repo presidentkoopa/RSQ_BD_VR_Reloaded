@@ -26,8 +26,9 @@
 //     above REARM_DEG -- read from the barrel's elevation, which turning and walking do not change.
 // Either way the gun must be in its ready loop (its hand's ready flag), so it never cuts into firing or a reload.
 //
-// THE RELOAD BUTTON (owner 2026-11-22: "as long as the button press is guaranteed to work"): QuestZDoom's Reload (any
-// of BT_RELOAD, BT_MAINHANDRELOAD, BT_OFFHANDRELOAD) reloads EVERY hand that holds a gun, in one press, whatever the
+// THE RELOAD BUTTON (owner 2026-11-22: "as long as the button press is guaranteed to work"; 2.0.5h, owner 2026-11-23:
+// the main gun only while both hands hold guns, the off hand's always -- a lone main gun is the hand reload's, ButtonHand):
+// QuestZDoom's Reload (any of BT_RELOAD, BT_MAINHANDRELOAD, BT_OFFHANDRELOAD) reloads each hand that holds a gun, in one press, whatever the
 // pose, gesture or option: a gun busy firing takes it as soon as it is ready again (the press waits BUTTON_TICS); a
 // hand reload already under way on the main gun finishes by itself (rsr/vreload.zs RSR_State.autoDone: the magazine
 // falls, the new one goes home, the handle racks, at the gun's own sounds); a main gun the hand reload takes (VR
@@ -366,6 +367,16 @@ class RSQ_Flick : EventHandler
 		Weapon w = h == 0 ? p.ReadyWeapon : p.OffhandWeapon;
 		if (!IsGun(w))
 			return true;
+		// 2.0.5h (owner 2026-11-23: "if it was one gun every time... it would defeat the fucking point of a vr reloading
+		// mod"): the button reloads the OFF hand's gun always, the MAIN gun only while the off hand holds a gun too. A lone
+		// main gun is left to the hand reload (VR reloading) as before 2.0.5e: nothing of ours touches it, and no hand
+		// reload is finished for you (no autoWatch); its launcher is not loaded by the button either.
+		if (h == 0 && !IsGun(p.OffhandWeapon))
+		{
+			if (first && CVar.GetCVar('rsq_switch_log', p).GetInt() > 0)
+				Console.Printf("RSQ reload button t%d: %s alone in the main hand: left to the hand reload", mo.Level.maptime, w.GetClassName());
+			return true;
+		}
 		bool log = CVar.GetCVar('rsq_switch_log', p).GetInt() > 0;
 		// a rifle's launcher at once: it needs no ready gun
 		if (first && RSM.IsAnyRifle(w) && RSM.FlickLoad(mo, h != 0) && log)
