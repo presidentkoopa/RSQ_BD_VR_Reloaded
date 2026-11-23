@@ -646,7 +646,7 @@ class RSG_State play
 	// ONE THROW (RSQ series, owner 11-10: "one throw for everything"): the series' one sampler, as in RSQ Grenade (hand.zs
 	// Sample / Peak), RSQ Saber, RSQ ShieldSaw and this pack's axe: the fastest 2-TIC window over the last 7 tics (it was
 	// the fastest single-tic step), the vertical squash (pixelstretch) taken out of the speed, and over a metre in two
-	// tics no motion (a pose jump). Still map units a tic, so THROW_MIN (2.5 m/s) and the flight read it as before.
+	// tics no motion (a pose jump). Still map units a tic, so THROW_MIN (1.5 m/s since 2.0.5k) and the flight read it as before.
 	Vector3 Swing(out double best)
 	{
 		best = 0;
