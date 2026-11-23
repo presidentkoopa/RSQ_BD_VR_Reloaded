@@ -19,7 +19,17 @@
 //   GetString("class", "<offer>")            the BD22 VR gun the pickup shows and hands over (its class name)
 //   GetString("yours", "<offer>", 0, 0, player)  what the player holds on that slot, for the compare card:
 //                                            "<rarity>|<effect title>|<owns the gun 0/1>" (rarity -1 and "" when he has no
-//                                            legendary on that slot)
+//                                            legendary on that slot). 2.0.5f (owner 2026-11-22 "Yes, count the family"):
+//                                            owns counts the gun's family (RSLD_Data.Family: the starting Rifle for the
+//                                            Chaingun, the Silvergun for the Pistol, the Purist / Dual copies)
+//   GetString("stats", "<offer>")            2.0.5f (owner 2026-11-22 "Yes, add numbers"): the offer's effect's numbers, as
+//                                            this mod's own effect class applies them (Stats below): "label|unit|value|up"
+//                                            joined by ";", unit x (a multiplier, 1 = the plain gun) or % (a chance, 0 =
+//                                            the plain gun), up 1 when more is better, 0 when less is; "" for an effect that
+//                                            is a behaviour with no number (its "desc" says what it does)
+//   GetString("yours.stats", "<offer>", 0, 0, player)  the same for the effect the player holds on that offer's slot
+//                                            ("" for none, or one with no number)
+//   GetString("yours.desc", "<offer>", 0, 0, player)   the first line of that effect's description ("" for none)
 //   GetInt("give", "<offer>", 0, 0, player)  makes the real legendary pickup at the player and hands it over: 1 taken,
 //                                            2 left lying there (he already carries a legendary of that slot: LegenDoom's
 //                                            one per slot; it stays for later), 0 could not be made
@@ -204,13 +214,97 @@ class RSLD_KioskService : Service
 			title = title.MakeUpper();
 		}
 		class<Weapon> g = RSLD_Handler.GiveClassFor(s, who);
-		return String.Format("%d|%s|%d", he == "" ? -1 : hr, title, RSLD_Handler.OwnsGun(who, s, g) ? 1 : 0);
+		// 2.0.5f: the gun's family counts (the Rifle for a Chaingun offer, the Silvergun for a Pistol one)
+		bool owns = RSLD_Handler.OwnsGun(who, s, g) || RSLD_Handler.OwnsFamily(who, s);
+		return String.Format("%d|%s|%d", he == "" ? -1 : hr, title, owns ? 1 : 0);
+	}
+
+	// the effect the player holds on an offer's slot ("" none)
+	static play string YourEffect(string offer, Actor who)
+	{
+		int r; string e;
+		int s = SlotOf(offer, r, e);
+		if (s < 0 || !who) return "";
+		return RSLD_Reroll.EffectOf(who, s);
+	}
+
+	// ================================================================ THE NUMBERS (2.0.5f)
+	// What an effect does to the gun in numbers, worked out exactly as its class in this mod applies it, from LegenDoom's
+	// own numbers (numbers_*.zs, read from LegenDoom 3.0's code). Only effects whose class applies a plain number are here;
+	// many apply it only at a moment (Pristine at full health, Raging with Berserk, Lucky on its lucky pulls, Berserker and
+	// Trailblazing at their lowest health, WindUp at full wind-up): the number is the effect's, its description says when.
+	// Every other effect is a behaviour with no number: "".
+	static string Stat(string res, string label, string unit, double v, bool up)
+	{
+		return res .. (res == "" ? "" : ";") .. String.Format("%s|%s|%.2f|%d", label, unit, v, up ? 1 : 0);
+	}
+	static play double N(string e, string k) { return RSLD.Num(e, k); }
+	static double Ratio(double a, double b) { return b > 0 ? a / b : 0; }
+
+	static play string Stats(string e)
+	{
+		if (e == "") return "";
+		string res = "";
+		class<RSLD_Effect> c = "RSLD_Fx_" .. e;
+		// RSLD_DamageRatio (Pristine, Raging, Rampaging, Serious, ProStrat, SteadyShot, CQC, Machine): damage x dmg / base
+		if (c && (class<RSLD_DamageRatio>)(c) != null && N(e, "base") > 0) res = Stat(res, "DAMAGE", "x", Ratio(N(e, "dmg"), N(e, "base")), true);
+		// RSLD_GroupFx (Exorcist ... DemonSlayer): x mult against LegenDoom's monster group of the effect
+		if (c && (class<RSLD_GroupFx>)(c) != null && N(e, "mult") > 0) res = Stat(res, "DMG VS GROUP", "x", N(e, "mult"), true);
+		// the pistol's mean damage, LegenDoom's 5 x random(1, 3) (Advanced and SixShooter roll against it)
+		double mean = N("Base", "pi_dmg") * (1 + N("Base", "rnd_max")) / 2.0;
+		if (e ~== "CQC") res = Stat(res, "SPREAD", "x", Ratio(N(e, "spread"), N(e, "spreadbase")), false);
+		else if (e ~== "Machine") res = Stat(res, "FIRE RATE", "x", Ratio(RSLD_G5.BaseCycle(), max(1.0, N(e, "shottics"))), true);
+		else if (e ~== "Lucky")
+		{
+			res = Stat(res, "LUCKY SHOT", "%", N(e, "chance") * 100.0 / 256.0, true);
+			res = Stat(res, "DAMAGE", "x", Ratio(N(e, "dmg"), N(e, "base") * 3), true);
+		}
+		else if (e ~== "Berserker") res = Stat(res, "DAMAGE", "x", Ratio(N(e, "top"), N(e, "base")), true);
+		else if (e ~== "Hunting" || e ~== "Rapid")
+		{
+			if (e ~== "Hunting") res = Stat(res, "DAMAGE", "x", Ratio(N(e, "pi_dmg"), N("Base", "pi_dmg")), true);
+			res = Stat(res, "FIRE RATE", "x", Ratio(RSLD_G5.BaseCycle(), N(e, "pi_cyc") - N(e, "pi_rf")), true);
+		}
+		else if (e ~== "Advanced")
+		{
+			res = Stat(res, "DAMAGE", "x", Ratio((N(e, "dmg_lo") + N(e, "dmg_hi")) / 2.0, mean), true);
+			res = Stat(res, "FIRE RATE", "x", Ratio(RSLD_G5.BaseCycle(), N(e, "cyc") + N(e, "loop")), true);
+		}
+		else if (e ~== "SixShooter")
+		{
+			res = Stat(res, "DAMAGE", "x", Ratio((N(e, "dmg_lo") + N(e, "dmg_hi")) / 2.0, mean), true);
+			res = Stat(res, "FIRE RATE", "x", RSLD_Fx_SixShooter.OWNER_SPEED, true);
+		}
+		else if (e ~== "Trailblazing")
+		{
+			double b = N(e, "pre") + N(e, "end") - N(e, "end_rf");
+			res = Stat(res, "FIRE RATE", "x", Ratio(b, b - 3), true);
+		}
+		else if (e ~== "WindUp") res = Stat(res, "FIRE RATE", "x", Ratio(N("Base", "cg_cyc0") + N(e, "c0"), N("Base", "cg_cyc0")), true);
+		else if (e ~== "Entrenched")
+		{
+			res = Stat(res, "DAMAGE", "x", Ratio(N(e, "cg_dmg"), N("Base", "cg_dmg")), true);
+			res = Stat(res, "DMG TAKEN", "x", N(e, "resist"), false);
+		}
+		else if (e ~== "Efficient") res = Stat(res, "AMMO USE", "x", Ratio(N(e, "take"), N(e, "use")), false);
+		else if (e ~== "Unlikely" || e ~== "Improbable" || e ~== "Impossible") res = Stat(res, "FREE SHOT", "%", N(e, "chance") * 100.0 / 256.0, true);
+		else if (e ~== "NanoCircuit") res = Stat(res, "HP/AP BONUS", "%", N(e, "chance") * 100.0 / 256.0, true);
+		return res;
 	}
 
 	override String GetString(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{
 		if (request ~== "roll") return Roll(intArg, int(doubleArg));
 		if (request ~== "yours") return Yours(stringArg, Actor(objectArg));
+		if (request ~== "stats") { int r; string e; return SlotOf(stringArg, r, e) >= 0 ? Stats(e) : ""; }
+		if (request ~== "yours.stats") return Stats(YourEffect(stringArg, Actor(objectArg)));
+		if (request ~== "yours.desc")
+		{
+			string ye = YourEffect(stringArg, Actor(objectArg));
+			int r; string e;
+			int s = SlotOf(stringArg, r, e);
+			return (ye != "" && s >= 0) ? Text("desc", String.Format("%d|%d|%s", s, max(r, 0), ye)) : "";
+		}
 		if (request ~== "raise") return Raise(stringArg);
 		return Text(request, stringArg);
 	}

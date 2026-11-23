@@ -1,4 +1,4 @@
-RS_Brutal22WeaponsQ -- BD22 VR Reloaded 2.0.5e
+RS_Brutal22WeaponsQ -- BD22 VR Reloaded 2.0.5f
 =====================================
 
 BRUTAL DOOM v22, IN VR, ON A QUEST. As an addon, on the stock engine.

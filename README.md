@@ -37,11 +37,31 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5e
+## Changelog: 2.0.2a to 2.0.5f
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5f** (11-22; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.5f.pk3`). Two changes to the kiosk service RSQ Miniboss's Boss kiosk asks (`RSLD_KioskService`,
+  `zscript/rsld/kiosk.zs`); nothing else changed:
+  - **The kiosk counts the gun's family** (owner 11-22: "Yes, count the family"). `"yours"`'s third field (owns the gun)
+    now counts the whole family LegenDoom's legendary of that slot rides on: the starting Rifle for a Chaingun offer, the
+    Silvergun for a Pistol offer, the Purist and Dual copies (`RSLD_Handler.OwnsGun` or `OwnsFamily`). RSQ Miniboss's
+    kiosk only offers guns you carry, so with only the starting guns it used to roll nothing; now the Rifle brings
+    Chaingun offers. *Rig `kstrip2_frame`: a player with the starting Rifle gets owns 1 for a Chaingun offer, 0 for a
+    Pistol offer (no pistol or Silvergun carried) and 0 for a Shotgun offer.*
+  - **The effects' numbers** (owner 11-22: "Yes, add numbers"). `"stats"` (an offer), `"yours.stats"` and `"yours.desc"`
+    (the effect you hold on that offer's gun) give an effect's numbers, worked out exactly as this mod's own effect class
+    applies them from LegenDoom 3.0's numbers: damage (Pristine, Raging, Rampaging, Serious, Pro-Strat, Steady Shot, CQC,
+    Machine x2 to x3; Lucky x5 on its lucky pulls, 23% of them; Berserker up to x3; Hunting x3; Advanced x1.95;
+    Six Shooter x10; Entrenched x2), fire rate (Rapid x2, Machine x7, Advanced x2.8, Wind-Up up to x4, Trailblazing up to
+    x1.27, Hunting x0.78, Six Shooter x0.5), damage against the effect's monster group (x3, Demon Slayer x4), a free shot
+    (Unlikely 33%, Improbable 66%, Impossible 50%), the health and armour bonus chance (Nano-Circuit 68%), ammo used
+    (Efficient x0.5), spread (CQC x3) and damage taken (Entrenched x0.5). Every other effect is a behaviour with no number
+    and answers "": its description says what it does. Many numbers apply only at a moment (Pristine at full health,
+    Raging with Berserk), which the description says. *Rig `kstrip2_frame`: every effect's `"stats"` logged (30 of
+    LegenDoom's 182 effects have numbers), and the Boss kiosk's strip showing Pro-Strat x2.0 against Raging x3.0.*
 - **What's new in 2.0.5e** (11-22; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
   makes `BD22_VR-Reloaded_2.0.5e.pk3`):
   - **House of the Dead reload** (owner 11-22: the wrist flick hurts). Wherever the flick reloaded (a gun in each hand; a
