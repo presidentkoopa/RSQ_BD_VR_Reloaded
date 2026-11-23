@@ -22,15 +22,15 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.4x.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.5g.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.4x.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5g.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.4x.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5g.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
@@ -39,7 +39,7 @@ To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERS
 
 ## Changelog: 2.0.2a to 2.0.5g
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5g.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
 - **What's new in 2.0.5g** (11-23; *rig only, not headset-confirmed*; source only: `python build.py` makes
