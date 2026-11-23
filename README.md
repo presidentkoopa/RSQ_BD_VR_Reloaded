@@ -22,26 +22,31 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.5i.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.5j.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5i.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5j.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5i.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5j.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5i
+## Changelog: 2.0.2a to 2.0.5j
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5i.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5j.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5j** (11-23; *code only, not shown*: the card needs the watch check in a headset): **the off-hand
+  chaingun has its Gun Card** (owner 09:25: "offhand chaingun" had none). RSQ Gun Cards draws a card on each off-hand gun
+  from a model block per gun class, generated into this pack (MODELDEF.rsqgc, RSQGCOFF.rsq) by its tools/gen_modelcard.py;
+  2.0.5e's RSQ_Off_Minigun was never added to that list. Added and regenerated (only its blocks are new). Gate on the
+  owner's order: only BD_VoxelPack's 4 voxeldef errors.
 - **What's new in 2.0.5i** (11-23; *rig only, not headset-confirmed*): **the chaingun drops a NO AMMO box** (owner 09:11:
   "it needs to say NO AMMO ... dark red is fine"; 09:16: "take the existing ammobox voxel, dye it red, make it say NO AMMO").
   The spent box is the same voxel ammo box, full size, dyed dark red, with NO AMMO on its top in two lines once it lands.
