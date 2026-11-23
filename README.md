@@ -37,11 +37,20 @@ Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
 
 To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## Changelog: 2.0.2a to 2.0.5f
+## Changelog: 2.0.2a to 2.0.5g
 
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.4x.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5g** (11-23; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.5g.pk3`):
+  - **The plasma rifle's beep while moving** (owner 11-23: "when i had the plasma rifles out and dualed the 'charge beep'
+    was constantly firing when i moved, always"). Moving in VR is BD22's sprint, and once you are out of stamina the
+    sprint drops back through the gun's Ready every few tics; Ready plays BD22's low-magazine beep (Plasma/BeepQuiet)
+    whenever 10 or fewer cells are loaded, so it beeped nonstop. Ready now goes straight back to the sprint while you are
+    running and beeps once you stop. Plasma rifle, its off-hand copy and BD22's own dual plasma. *Rig `dp2` / `dp4` (two
+    plasma rifles, 8 cells each, out of stamina, running): before, the beep on every pass for the whole run; after, once
+    when the tiredness wore off and once on stopping. With a full magazine it never beeped, before or after.*
 - **What's new in 2.0.5f** (11-22; *rig only, not headset-confirmed*; source only: `python build.py` makes
   `BD22_VR-Reloaded_2.0.5f.pk3`). Two changes to the kiosk service RSQ Miniboss's Boss kiosk asks (`RSLD_KioskService`,
   `zscript/rsld/kiosk.zs`); nothing else changed:

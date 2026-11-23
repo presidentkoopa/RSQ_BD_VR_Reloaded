@@ -3715,6 +3715,7 @@ ACTOR RSQ_Off_Plasma_Gun : Plasma_Gun
 		Goto ReadyNormal
 		TNT1 AA 0
 		PRSG F 0 A_JumpIfInventory("PlasmaAmmoOff",11,"ReadyNormal")
+		PRSG F 0 A_JumpIfInventory("IsRunning",1,"StartSprint")	// 2.0.5g (owner 2026-11-23, "the charge beep was constantly firing when i moved"): moving in VR is BD22's sprint, and a tired sprint passes through Ready every few tics; the low-magazine beep now waits until you stand
 		PRSG F 0 A_PlaySound("Plasma/BeepQuiet", 5)
 		PRSG F 0 A_JumpIfInventory("Kicking",1,"DoKick")
 		PRSG F 0 A_JumpIfInventory("Taunting",1,"Taunt")

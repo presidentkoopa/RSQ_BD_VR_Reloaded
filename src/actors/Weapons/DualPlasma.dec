@@ -102,6 +102,7 @@ ACTOR DualPlasmaRifles : BrutalWeapon
 		Goto ReadyNormal
 		TNT1 AA 0
 		DUPR A 0 A_JumpIfInventory("DoublePlasmaAmmo",22,"ReadyNormal")
+		DUPR A 0 A_JumpIfInventory("IsRunning",1,"StartSprint")	// 2.0.5g (owner 2026-11-23, "the charge beep was constantly firing when i moved"): moving in VR is BD22's sprint, and a tired sprint passes through Ready every few tics; the low-magazine beep now waits until you stand
 		DUPR A 0 A_PlaySound("Plasma/BeepQuiet", 5)	
 		DUPR A 0 A_JumpIfInventory("Unloading",1,"Unload")
 		DUPR A 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
