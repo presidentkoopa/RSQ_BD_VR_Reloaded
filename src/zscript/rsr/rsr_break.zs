@@ -507,7 +507,7 @@ class RSB_State play
 		if (RSB.PlayerInt(mo.player, 'rsr_pouch', 0) == 1)
 		{
 			Vector3 op = RSVR_VRHand.OffPos(mo);
-			double below = (mo.player.viewz - op.z) * ps * 100.0 / vu;
+			double below = (RSVR_VRHand.EyeZ(mo, vu, ps) - op.z) * ps * 100.0 / vu;	// 2.0.5n: from the headset
 			if (below < RSB.POUCH_LOW)
 				return false;
 		}

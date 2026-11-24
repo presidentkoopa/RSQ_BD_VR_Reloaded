@@ -61,15 +61,17 @@ class RSQ_Recoil : EventHandler
 	Array<String> defCls;
 	Array<RSQ_RecoilDef> defs;
 
-	double pitch[MAXPLAYERS];
-	double yaw[MAXPLAYERS];
-	int    shots[MAXPLAYERS];
-	int    idle[MAXPLAYERS];
-	int    rising[MAXPLAYERS];
-	double riseLeft[MAXPLAYERS];
-	double addX[MAXPLAYERS], addY[MAXPLAYERS];	// F11: the kick added last tic
-	double wroteX[MAXPLAYERS], wroteY[MAXPLAYERS];	// F11: psp.x / psp.y as we left them
-	int lastKick[MAXPLAYERS];	// F11: one kick per tic, however many missiles a shot spawns
+	// 2.0.5n (owner 11-24: "Fix it"): one set per hand, index player * 2 + hand (0 main, 1 off). Before, every shot kicked
+	// the main gun: firing only the off gun kicked the main one and the off gun never moved
+	double pitch[MAXPLAYERS * 2];
+	double yaw[MAXPLAYERS * 2];
+	int    shots[MAXPLAYERS * 2];
+	int    idle[MAXPLAYERS * 2];
+	int    rising[MAXPLAYERS * 2];
+	double riseLeft[MAXPLAYERS * 2];
+	double addX[MAXPLAYERS * 2], addY[MAXPLAYERS * 2];	// F11: the kick added last tic
+	double wroteX[MAXPLAYERS * 2], wroteY[MAXPLAYERS * 2];	// F11: psp.x / psp.y as we left them
+	int lastKick[MAXPLAYERS * 2];	// F11: one kick per tic, however many missiles a shot spawns
 
 	override void OnRegister()
 	{
@@ -205,6 +207,13 @@ class RSQ_Recoil : EventHandler
 		  d.recover = 8.000; d.delay = 6;
 		  d.maxPitch = 3.000; d.maxYaw = 3.000;
 		  defCls.Push("Unmaker"); defs.Push(d); }	// unmaker
+		// 2.0.5n (owner 11-24: "Add them"): five guns had no profile and so no kick. Each borrows its nearest neighbour's
+		// until it is given numbers of its own
+		Alias("BrutalRevolver", "Revolver");			// the Silvergun
+		Alias("Sniper", "Rifle");						// the Ruger
+		Alias("NukeLauncher", "Rocket_Launcher");
+		Alias("Devastator", "Rocket_Launcher");
+		Alias("IncendiaryLauncher", "GrenadeLauncher");
 	}
 
 	RSQ_RecoilDef Find(Name cls)
@@ -216,19 +225,46 @@ class RSQ_Recoil : EventHandler
 		return null;
 	}
 
-	void Kick(PlayerPawn mo)
+	void Alias(String cls, String like)
+	{
+		for (int i = 0; i < defCls.Size(); i++)
+			if (defCls[i] ~== like)
+			{
+				defCls.Push(cls);
+				defs.Push(defs[i]);
+				return;
+			}
+	}
+
+	// 2.0.5n: the profile of a gun or of the gun it is a copy of (the off-hand copies are subclasses of their guns)
+	RSQ_RecoilDef FindFor(Weapon w)
+	{
+		if (!w)
+			return null;
+		class<Object> c = w.GetClass();
+		while (c)
+		{
+			let d = Find(c.GetClassName());
+			if (d)
+				return d;
+			c = c.GetParentClass();
+		}
+		return null;
+	}
+
+	void Kick(PlayerPawn mo, bool off = false)
 	{
 		if (!mo || !mo.player || !On(mo))
 			return;
-		if (lastKick[mo.PlayerNumber()] == mo.Level.maptime)	// F11: one shot, one kick
+		int n = mo.PlayerNumber() * 2 + (off ? 1 : 0);
+		if (lastKick[n] == mo.Level.maptime)	// F11: one shot, one kick (2.0.5n: for each hand)
 			return;
-		let w = mo.player.ReadyWeapon;
+		let w = off ? mo.player.OffhandWeapon : mo.player.ReadyWeapon;
 		if (!w)
 			return;
-		let d = Find(w.GetClassName());
+		let d = FindFor(w);
 		if (!d)
 			return;
-		int n = mo.PlayerNumber();
 		lastKick[n] = mo.Level.maptime;
 		shots[n]++;
 		idle[n] = 0;
@@ -251,13 +287,13 @@ class RSQ_Recoil : EventHandler
 	{
 		if (RSQ_Ballistics.IsBuzzTrace(e.AttackLineFlags, e.AttackDistance))	// 2.0.4h: a haptic buzz, not a shot
 			return false;
-		Kick(PlayerPawn(e.Thing));
+		Kick(PlayerPawn(e.Thing), (e.AttackLineFlags & LAF_ISOFFHAND) != 0);
 		return false;
 	}
 
 	override bool WorldRailgunPreFired(WorldEvent e)
 	{
-		Kick(PlayerPawn(e.Thing));
+		Kick(PlayerPawn(e.Thing), (e.RailParams.flags & RGF_ISOFFHAND) != 0);
 		return false;
 	}
 
@@ -265,61 +301,64 @@ class RSQ_Recoil : EventHandler
 	{
 		// the projectile guns: a missile the player just launched
 		if (e.Thing && e.Thing.bMissile && RSQ_Ballistics.IsShot(e.Thing))	// F11: not a footstep, a kick, a fist or the haptic buzz
-			Kick(PlayerPawn(e.Thing.target));
+			Kick(PlayerPawn(e.Thing.target), RSQ_Muzzle.MissileOff(e.Thing));
 	}
 
 	override void WorldTick()
 	{
-		for (int i = 0; i < MAXPLAYERS; i++)
+		for (int k = 0; k < MAXPLAYERS * 2; k++)
 		{
-			if (!playeringame[i])
+			int pnum = k / 2;
+			bool offh = (k % 2) == 1;
+			int layer = offh ? PSP_OFFHANDWEAPON : PSP_WEAPON;
+			if (!playeringame[pnum])
 				continue;
-			let mo = PlayerPawn(players[i].mo);
+			let mo = PlayerPawn(players[pnum].mo);
 			if (!mo || !mo.player)
 				continue;
-			let w = mo.player.ReadyWeapon;
-			RSQ_RecoilDef d = w ? Find(w.GetClassName()) : null;
+			let w = offh ? mo.player.OffhandWeapon : mo.player.ReadyWeapon;
+			RSQ_RecoilDef d = FindFor(w);
 			if (!d || !On(mo))
 			{
-				pitch[i] = 0; yaw[i] = 0; riseLeft[i] = 0; rising[i] = 0;
-				let pq = mo.player.FindPSprite(PSP_WEAPON);	// F11: and last tic's kick comes off
-				if (pq && pq.x == wroteX[i] && pq.y == wroteY[i]) { pq.x -= addX[i]; pq.y -= addY[i]; }
-				addX[i] = 0; addY[i] = 0;
+				pitch[k] = 0; yaw[k] = 0; riseLeft[k] = 0; rising[k] = 0;
+				let pq = mo.player.FindPSprite(layer);	// F11: and last tic's kick comes off
+				if (pq && pq.x == wroteX[k] && pq.y == wroteY[k]) { pq.x -= addX[k]; pq.y -= addY[k]; }
+				addX[k] = 0; addY[k] = 0;
 				continue;		// and nothing is written, so the channel is the weapon's own
 			}
 			// the snap pays itself out over its tics, then recovery takes over
 			double add = 0;
-			if (rising[i] > 0)
+			if (rising[k] > 0)
 			{
-				add = riseLeft[i] / rising[i];
-				riseLeft[i] -= add;
-				rising[i]--;
-				pitch[i] = min(pitch[i] + add, d.maxPitch + d.rise);
+				add = riseLeft[k] / rising[k];
+				riseLeft[k] -= add;
+				rising[k]--;
+				pitch[k] = min(pitch[k] + add, d.maxPitch + d.rise);
 			}
 			else
 			{
-				idle[i]++;
-				if (idle[i] > d.delay)
+				idle[k]++;
+				if (idle[k] > d.delay)
 				{
 					double back = d.recover / 35.0;
-					pitch[i] = pitch[i] > 0 ? max(0.0, pitch[i] - back) : min(0.0, pitch[i] + back);
-					yaw[i]   = yaw[i]   > 0 ? max(0.0, yaw[i]   - back) : min(0.0, yaw[i]   + back);
-					if (pitch[i] == 0 && yaw[i] == 0)
-						shots[i] = 0;
+					pitch[k] = pitch[k] > 0 ? max(0.0, pitch[k] - back) : min(0.0, pitch[k] + back);
+					yaw[k]   = yaw[k]   > 0 ? max(0.0, yaw[k]   - back) : min(0.0, yaw[k]   + back);
+					if (pitch[k] == 0 && yaw[k] == 0)
+						shots[k] = 0;
 				}
 			}
-			let psp = mo.player.FindPSprite(PSP_WEAPON);
+			let psp = mo.player.FindPSprite(layer);
 			if (!psp)
 				continue;
 			// ADD, never assign: the weapon has already written this channel this tic
 			// F11: the weapon did not rewrite the channel since our last write -> take that kick back
-			if (psp.x == wroteX[i] && psp.y == wroteY[i]) { psp.x -= addX[i]; psp.y -= addY[i]; }
-			addX[i] = yaw[i] * 4.0;
-			addY[i] = -pitch[i] * 4.0;
-			psp.x += addX[i];
-			psp.y += addY[i];
-			wroteX[i] = psp.x;
-			wroteY[i] = psp.y;
+			if (psp.x == wroteX[k] && psp.y == wroteY[k]) { psp.x -= addX[k]; psp.y -= addY[k]; }
+			addX[k] = yaw[k] * 4.0;
+			addY[k] = -pitch[k] * 4.0;
+			psp.x += addX[k];
+			psp.y += addY[k];
+			wroteX[k] = psp.x;
+			wroteY[k] = psp.y;
 		}
 	}
 }

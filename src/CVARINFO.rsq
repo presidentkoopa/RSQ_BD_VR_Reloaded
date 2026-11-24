@@ -4,7 +4,7 @@ user int rsr_reload = 1;			// Reloading: 1 VR (zscript/rsr, on the guns that hav
 user bool rsq_reload_nonstd = true;	// 1.99x: Reload Non-Standard Guns -- the guns Brutal Doom gives no reload (zscript/rsq/counters.zs GUN[]); off = Brutal Doom's own
 server int rsq_ballistics = 1;	// 1.97 F5: 0 Stock (BD22), 1 Low, 2 Max; 2.0.4j (owner 11-12 03:41: "enhanced ballistics default on"): Low is the default
 server int rsq_ballistics_cfg = 0;	// 2.0.4j: 1 once a config saved under the old default (Stock) has been moved to Low (ballistics.zs WorldLoaded)	// enhanced impacts and projectile trails (server: they use playsim random)
-user int rsq_punch = 0;			// VR punching: a real punch with either fist lands (zscript/rsq/fists.zs)
+user int rsq_punch = 1;			// 2.0.5n (owner 11-24: "do both"): on by default (was 0): with No Trigger Punch on and this off, bare fists could not punch without RSQ Melee. VR punching: a real punch with either fist lands (zscript/rsq/fists.zs)
 // 2026-10-23: a punch that lands on a switch or any usable line works it, at the fist's own reach
 // instead of the engine's 64-unit use range. The LINE'S SPECIAL decides, not its texture.
 user bool rsq_punch_use = true;
@@ -43,14 +43,13 @@ user bool rsq_pistol_whip = true;
 // the melee hit flash (zscript/rsq/bash.zs RSQ_BashFX), drawn on every melee hit
 user bool rsq_bash_flash = true;	// 2.0.3d (owner 21:53): the melee hit flash On / Off
 user int rsq_bash_fx = 0;		// which RS_CombatFX impact
-user int rsq_bash_tint = 0;		// recolours the RSH0 flash only; 0 is the art as drawn
+user int rsq_bash_tint = 0;		// recolours the hit flash, every style; 0 is the art as drawn
 
 // 1.97: the two-handed butt strike. OFF by default: of the three melee moves this
 // is the one most likely to misfire, because two hands on a rifle is the aiming
 // posture, so it is the player's choice to turn on.
 user int rsq_butt = 0;
 user float rsvr_butt_fwd = 0.5;		// of the butt's speed that must point forward
-user float rsvr_butt_lead = 1.3;	// 2.0.3y: no longer read (a straight shove counts too: melee.zs BUTT_LEAD)
 user float rsq_butt_speed = 2.4;	// 2.0.3y (owner, BUGS_1.0 item 33): m/s at the stock a butt strike needs (was 3.6, fixed)
 
 // 1.97 F5: per-gun recoil. Its own row, not the ballistics dial -- this costs one
@@ -71,10 +70,6 @@ user float rsq_casing_size = 1.0;
 // 2.0.2a (owner 2026-10-28 19:47): Instant Weapon Switch (zscript/rsq/switch.zs). Off = BD22's raise / lower.
 user bool rsq_instant_switch = true;
 user int rsq_switch_log = 0;
-// 2.0.3n: UNUSED. "Two-Hand Aim" (2.0.3k-2.0.3m, a script gun turn at tic rate) is removed: the owner's headset found it lagged
-// behind the hands. Two-handing is the engine's own Two-Hand Grip (vr_two_handed_weapons). The cvar stays declared only so a
-// saved ini line for it causes no error; nothing reads it.
-user bool rsq_twohand_rifle = false;
 server int rsq_hud_vrrow_ver = 0;   // 2.0.5n: Brutal Doom's HUD Type moved once from 1 (ZDoom) to 6, the VR Row (bottomhud.zs)
 user bool rsq_hud_nohp = false;   // the HUD draws no health or armour (owner 2026-11-12 15:36; the row is in RSQ Gun Cards' options)
 user bool rsq_hud_noammo = false; // the HUD draws no ammo counts or ammo icons (owner 2026-11-13; the row is in RSQ Gun Cards' options: the cards show them)

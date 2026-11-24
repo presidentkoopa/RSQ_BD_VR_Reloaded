@@ -23,8 +23,10 @@ menu/infoclose				dsempty
 // 2.0.4n (owner 2026-11-12 14:11: "find out if bd or ld is making the on game exit sound, and disable the sound"): it is
 // LegenDoom's (its SNDINFO:717-718, menu/quit1 and quit2 -> LDQUIT1 / LDQUIT2; Brutal Doom defines neither). The engine
 // plays them itself on quitting. Silent here, with LegenDoom or without (without it this is Doom's own quit sound).
-menu/quit1				dsempty
-menu/quit2				dsempty
+// 2.0.5n (owner 2026-11-24: "i just want the normal doom or BD sounds, not the goofy LD ones"): Doom's own quit sounds
+// again (the engine's lists for Doom), in place of silence. Brutal Doom's versions of these sounds play where it has them
+$random menu/quit1 { player/male/death1 demon/pain grunt/pain misc/gibbed misc/teleport grunt/sight1 grunt/sight3 demon/melee }
+$random menu/quit2 { vile/active misc/p_pkup brain/cube misc/gibbed skeleton/swing knight/death baby/active demon/melee }
 
 // LegenDoom's own lumps (LegenDoom 3.0 SNDINFO:286-306), played by the LD mode
 rsld/ld/newlegendarypickup1		LDLEGEN1

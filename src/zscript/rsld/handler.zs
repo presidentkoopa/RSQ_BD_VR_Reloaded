@@ -33,6 +33,7 @@ class RSLD_Handler : EventHandler
 	// ---- shots (index pn * 2 + hand)
 	RSLD_Shot cur[MAXPLAYERS * 2];
 	RSLD_Shot none[MAXPLAYERS];
+	Array<Actor> noFxA;	// 2.0.5n: the player's own strikes and missiles that no legendary fired (NoFx / IsNoFx)
 	int lastPullTic[MAXPLAYERS * 2];
 	int heldSince[MAXPLAYERS * 2];
 	Weapon heldW[MAXPLAYERS * 2];
@@ -51,6 +52,7 @@ class RSLD_Handler : EventHandler
 	RSLD_Shot deliv;
 	RSLD_PelletRec delivRec;
 	int delivTic;
+	int delivNoneTic;	// 2.0.5n: the tic a True Bullets round with no legendary last delivered its hitscan
 	bool refiring;
 	RSLD_Pellet pel, pelX;		// pelX: FirePellet / FireRail's own (NEEDS_C 3: never the pellet OnPellet holds)
 	RSLD_PelletRec railRec;
@@ -364,6 +366,22 @@ class RSLD_Handler : EventHandler
 		if (tagA.Size() > 512) { tagA.Delete(0, 128); tagS.Delete(0, 128); tagR.Delete(0, 128); }
 	}
 
+	// 2.0.5n (owner 11-24: "Fix it"): a kick, a grenade, or a shot from a hand whose gun has no legendary is marked
+	// here when it spawns, so its damage is not handed the main hand's legendary later (FindShot's no-pull context)
+	void NoFx(Actor a)
+	{
+		if (!a) return;
+		noFxA.Push(a);
+		if (noFxA.Size() > 256) noFxA.Delete(0, 64);
+	}
+
+	bool IsNoFx(Actor a)
+	{
+		if (!a) return false;
+		for (int i = noFxA.Size() - 1; i >= 0; i--) if (noFxA[i] == a) return true;
+		return false;
+	}
+
 	RSLD_PelletRec TagRec(Actor a)
 	{
 		if (!a) return null;
@@ -438,6 +456,7 @@ class RSLD_Handler : EventHandler
 		{	// a True Bullets round delivering its hitscan (playerrounds.zs Arrive): its damage belongs to its pull
 			let ts = TagOf(th);
 			if (ts) { deliv = ts; delivRec = TagRec(th); delivTic = level.maptime; }
+			else if (th is "RSQ_PlayerRound") { deliv = null; delivRec = null; delivNoneTic = level.maptime; }	// 2.0.5n: a round from a gun with no legendary
 			return false;
 		}
 		int hand = (e.AttackLineFlags & LAF_ISOFFHAND) ? RSLD.OFF : RSLD.MAIN;
@@ -656,9 +675,9 @@ class RSLD_Handler : EventHandler
 			hand = StrikeHand(mo, a);
 			w = HandWeapon(mo, hand, true);
 			int sl = SlotOf(w);
-			if (sl != 0 && sl != 1) return;	// a kick / gun bash is not a LegenDoom attack (it gets the held effect, no pull)
+			if (sl != 0 && sl != 1) { NoFx(a); return; }	// a kick / gun bash is not a LegenDoom attack (2.0.5n: and no longer gets the held effect)
 			let s = PullOf(mo, hand, w, true);
-			if (!s) return;
+			if (!s) { NoFx(a); return; }
 			Tag(a, s);
 			s.fx.OnMelee(s, a);
 			return;
@@ -675,7 +694,7 @@ class RSLD_Handler : EventHandler
 			return;
 		}
 		let s = PullOf(mo, hand, w, false);
-		if (!s) return;
+		if (!s) { NoFx(a); return; }	// 2.0.5n: fired by a gun with no legendary
 		s.missiles++;
 		if (RSLD.DebugLevel() > 1) s.Log(String.Format("missile %s (dmg %d) %.0f from the player", cn, a.GetMissileDamage(0, 1), a.Distance3D(mo)));
 		Tag(a, s);
@@ -709,12 +728,20 @@ class RSLD_Handler : EventHandler
 						return s;
 					}
 				}
+				if (strike || !Helper(inflictor)) return null;	// 2.0.5n: its own gun (or the kick) has no legendary
 			}
+			if (IsNoFx(inflictor)) return null;	// 2.0.5n: marked at its spawn: not a legendary gun's
+			string bcn = inflictor.GetClassName();
+			bcn = bcn.MakeLower();
+			if (bcn.IndexOf("barrel") >= 0) return null;	// 2.0.5n: a barrel the player set off
 		}
 		if (deliv && delivTic == level.maptime) return deliv;
 		int k = pn * 2;
 		if (cur[k] && lastPullTic[k] == level.maptime) return cur[k];
 		if (cur[k + 1] && lastPullTic[k + 1] == level.maptime) return cur[k + 1];
+		// 2.0.5n: the off hand fired this tic with no legendary and the main hand did not fire: that damage is the off gun's
+		if (lastPullTic[k + 1] == level.maptime && lastPullTic[k] != level.maptime) return null;
+		if (delivNoneTic == level.maptime) return null;	// 2.0.5n: a round with no legendary is landing this tic
 		let w = mo.player.ReadyWeapon;
 		int slot;
 		let e = FxFor(pn, RSLD.MAIN, w, slot);

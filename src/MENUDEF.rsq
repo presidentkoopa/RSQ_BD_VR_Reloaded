@@ -111,6 +111,10 @@ OptionMenu "RSR_Debug"
 	Slider "Reload Assist", "rsr_assist", 0.5, 3.0, 0.1
 	// tip: The Shotvolver and revolver reload with a speedloader or one round at a time.
 	Option "Revolver Reload", "rsb_revolver_feed", "RSB_RevFeed"
+	// tip: With both barrels empty, the Super Shotgun takes two shells at once.
+	Option "SSG Two Shells", "rsr_ssg_pair", "OnOff"
+	// tip: The pump shotgun also takes shells through its ejection port.
+	Option "Shotgun Side Port", "rsr_sideport", "OnOff"
 	// tip: With a gun in each hand, a reload gesture reloads that gun.
 	Option "Dual Reload Gesture", "rsq_flick", "OnOff"
 	// tip: How far below your view a gun must point to count as off-screen (degrees).
@@ -141,6 +145,8 @@ OptionMenu "RSR_Debug"
 	Option "Railgun Scope", "rsq_scope2_railgun", "RSQ_ScopeMode"
 	// tip: The pump shotgun's pellet spread: Brutal Doom's own or tighter.
 	Option "Pump Spread", "rsq_pump_spread", "RSQ_PumpSpread"
+	// tip: Firing kicks the gun in your hand.
+	Option "Recoil", "rsq_recoil", "OnOff"
 	// tip: Cheats also give the extra weapons (MP40, MG42, Devastator and more).
 	Option "Cheat Extra Weapons", "rsq_extra_weapons", "OnOff"
 	StaticText " "
@@ -155,8 +161,6 @@ OptionMenu "RSR_Debug"
 	Option "Two-Hand Grip", "vr_two_handed_weapons", "OnOff"
 	StaticText " "
 	StaticText "Grenades", 1
-	// tip: This pack's grenade stands down so the RSQ Grenade mod's grenade is used.
-	Option "Use RSQ Grenade", "rsg_rsq_nade", "OnOff"
 	// tip: Hold a grenade at your mouth with the trigger to pull the pin with your teeth.
 	Option "Pin With Teeth", "rsg_face", "OnOff"
 	// tip: How close to your mouth the grenade must be to pull the pin (metres).
@@ -237,11 +241,11 @@ OptionValue "RSB_RevFeed"
 
 OptionValue "RSQ_BashFXOpt"
 {
-	0, "RSS3"
-	1, "RSU1"
-	2, "RSU4"
-	3, "RSU5"
-	4, "RSH0"
+	0, "Style 1"
+	1, "Style 2"
+	2, "Style 3"
+	3, "Style 4"
+	4, "Style 5"
 }
 
 OptionValue "RSQ_BashTintOpt"

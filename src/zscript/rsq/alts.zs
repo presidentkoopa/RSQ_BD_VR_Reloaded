@@ -1,7 +1,6 @@
 // 1.37 (owner): secondary fire on BD22's dead (zoom) buttons. Always (1.39): SMG full-auto / 3-round
-// burst toggle. Behind their own options, default off (BD22 as it was): revolver slug shot, pump shotgun slug shot. The guns' states (Rifle-style RSA_ states in the .dec files) read
+// burst toggle. Behind their own options: the Shotvolver's and the Assault Shotgun's slug (on by default), the pump shotgun's slug (off). The guns' states (Rifle-style RSA_ states in the .dec files) read
 // the tokens below; this hands the options to them. Server options: they change what is fired.
-class RSA_Opt_SMG : RSVR_Token {}
 class RSA_Opt_Rev : RSVR_Token {}
 class RSA_Opt_Slug : RSVR_Token {}
 class RSA_Opt_Semi : RSVR_Token {}		// 1.41: the pistol is semi auto

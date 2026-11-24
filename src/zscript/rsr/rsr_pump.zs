@@ -567,6 +567,16 @@ class RSP_State play
 
 	bool CanTakeShell(PlayerPawn mo, bool quiet = false)
 	{
+		// 2.0.5n (owner 11-24: "Refuse the shell"): a full gun takes no shell. It used to take one, sound and buzz as if it
+		// loaded, and change nothing. Shells already credited and waiting (RSP_ShellIn) count
+		let fw = mo.player ? mo.player.ReadyWeapon : null;
+		if (fw && fw.Ammo2 && fw.Ammo2 != fw.Ammo1 && fw.Ammo2.MaxAmount > 0
+			&& fw.Ammo2.Amount + mo.CountInv('RSP_ShellIn') >= fw.Ammo2.MaxAmount)
+		{
+			if (!quiet)
+				Log(mo, "the gun is full: no shell taken");
+			return false;
+		}
 		class<Inventory> rc = RSP_Guns.Reserve(gun);
 		if (rc && mo.CountInv(rc) <= 0)
 		{
@@ -587,7 +597,7 @@ class RSP_State play
 		if (RSR.PlayerInt(mo.player, 'rsr_pouch', 0) == 1)
 		{
 			Vector3 op = RSVR_VRHand.OffPos(mo);
-			double below = (mo.player.viewz - op.z) * geo.ps * 100.0 / geo.vu;
+			double below = (RSVR_VRHand.EyeZ(mo, geo.vu, geo.ps) - op.z) * geo.ps * 100.0 / geo.vu;	// 2.0.5n: from the headset
 			if (below < RSP.POUCH_LOW)
 				return false;
 		}

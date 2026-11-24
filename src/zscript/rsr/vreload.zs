@@ -223,6 +223,7 @@ class RSR_State play
 	// the grab (RSR.GripCanGrab; synchronised: rsr_grip network events from
 	// RSR_ReloadHandler.InputProcess, and usercmd buttons)
 	bool netGrip;			// the off grip's key is down
+	bool doorGrip;			// 2.0.5n: the off grip's key is down, whatever Grab Ammo With says (rsvr/door.zs: Lift Doors)
 	bool netUse;			// 1.17 (rsr_use_grab): the Use key, taken over while a reload has the hand, grabs
 	bool gripFree;			// ...and its press could not start steadying (latched at the press)
 	int netPresses;			// grip presses that grab
@@ -380,7 +381,7 @@ class RSR_State play
 		if (RSR.PlayerInt(mo.player, 'rsr_pouch', 0) == 1)
 		{
 			Vector3 op = RSVR_VRHand.OffPos(mo);
-			double below = (mo.player.viewz - op.z) * ps * 100.0 / vu;
+			double below = (RSVR_VRHand.EyeZ(mo, vu, ps) - op.z) * ps * 100.0 / vu;	// 2.0.5n: from the headset
 			if (below < RSR.POUCH_LOW)
 				return false;
 		}
@@ -1320,6 +1321,14 @@ class RSR_ReloadHandler : EventHandler
 		}
 		if (e.Name != "rsr_grip")
 			return;
+		// 2.0.5n (owner 11-24: "do both"): Lift Doors takes the off grip whatever Grab Ammo With is set to. The door read
+		// netGrip, which is only kept with Grab Ammo With on the grip, so on the default (trigger) the grip never took a door
+		if (e.Player >= 0 && e.Player < MAXPLAYERS && playeringame[e.Player])
+		{
+			if (!st[e.Player])
+				st[e.Player] = new('RSR_State');
+			st[e.Player].doorGrip = e.Args[0] != 0;
+		}
 		// 1.15 (owner): the grip kept starting the engine's two-hand steadying when reaching for a
 		// shell near the gun, so it grabs only when "Grab ammo with" is set to the grip (1.17).
 		if (e.Player < 0 || e.Player >= MAXPLAYERS || RSR.GrabWith(players[e.Player]) != 1)

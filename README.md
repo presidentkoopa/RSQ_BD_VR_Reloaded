@@ -18,7 +18,7 @@ rate of fire. Now you hold them.
 
 - **It stands alone.** Hands on every gun, 23 guns reloaded by hand, live scopes, real bullets, a gun in each hand.
 - **LegenDoom works out of the box.** Load LegenDoom 3.0 and legendary monsters drop legendary Brutal Doom VR guns,
-  with 179 of its 180 effects. No patch.
+  with 178 of its 180 effects. No patch.
 - **It plays well with the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries).** The Tactical Rig's
   ammo pouch, RSQ Grenade's grenades in the rifle's launcher, RSQ Melee's fists, RSQ Miniboss's kiosk of legendary guns.
 
@@ -31,7 +31,7 @@ rate of fire. Now you hold them.
 Everything is in the [pk3/](pk3/) folder. Load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  02_BD22_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5m.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  02_BD22_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5n.pk3
 ```
 
 - **Doom 2, not Freedoom.** The voxel pack names Doom 2's own sprites.
@@ -40,7 +40,7 @@ doom2.wad  ->  brutal22test6.pk3  ->  02_BD22_VoxelPack.pk3  ->  03_BD22_VR-Relo
 - **XMVE** (files 04 to 07) is the optional monster expansion, loaded after the weapons in number order.
 - **RSQ_BDXMTiers** (twelve files, one a colour) is the painted colour art for RSQ Monsters' tiers on Brutal Doom's
   and XMVE's monsters. Only for the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries).
-- **Build it yourself:** `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`. The source on `main` can be a build ahead of the pk3 folder; the [changelog](CHANGELOG.md) says which.
+- **Build it yourself:** `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
 ## What you get
 
@@ -85,7 +85,8 @@ belt, bring it to the gun and push it home.
 **Load LegenDoom 3.0 and legendary monsters drop legendary Brutal Doom VR guns.** No patch and no other mod. The pack
 finds LegenDoom by itself and switches its LegenDoom mode on.
 
-- **179 of LegenDoom's 180 effects** work on these guns.
+- **178 of LegenDoom's 180 effects** work on these guns. The two left out are Favoured and DualWield, which has no
+  point when you already hold a gun in each hand.
 - **22 guns over LegenDoom's nine slots** can be legendary: fists, chainsaw, pistols and the Silvergun, both shotguns,
   the Minigun and Rifle, the Rocket Launcher, the Plasma Gun and the BFG.
 - **A legendary covers its whole family.** A Chaingun legendary powers the Rifle too, and a Pistol one the Silvergun.
@@ -132,7 +133,7 @@ turns the scope off and on, which saves the Quest a second view of the world.
   ten.
 - **The Dragonslayer** needs a real swing, and two hands double its damage.
 - **The chainsaw** cuts whatever it touches while you hold the trigger.
-- **Pistol whip** with any pistol or revolver.
+- **Real punches** with either fist, and a **pistol whip** with any pistol or revolver.
 - **Lift doors by hand:** take hold of a door and raise it. Past 40% it opens the rest of the way.
 
 ### With the RSQ UBQ Series
@@ -157,17 +158,18 @@ and Hellish Missile Launcher (Rocket Launcher), Flame Cannon (Flamethrower), Inc
 ## Options
 
 **Options → BD22 VR Weapons** (also in Brutal Doom's own menu). The main page is short: hands and skin tone,
-reloading, True Bullets, Ballistics, throwing, punching and Instant Switch. Under it are **Dual Wield**, **Voxels**
+reloading, the HUD (Brutal Doom's status bar or the **VR Row**: each hand's ammo on its side, the face between health
+and armour), True Bullets, Ballistics, throwing, punching and Instant Switch. Under it are **Dual Wield**, **Voxels**
 and **Test and Debug**, where everything else lives. With LegenDoom loaded there is a **LEGENDOOM x BD22 VR** page too.
 
 **Off until you turn them on:**
 
-- **VR Punching** and **Butt Strike**
+- **Butt Strike**
 - **Pistol Semi Auto** and **Shotgun Slug**
 - **Silvergun For Pistol**, **Two Silverguns**, **Machinegun For MG42**
 - **Dual Wield:** Shotgun, Super Shotgun, Assault Shotgun and Railgun
 - **Two-Hand Shotguns**
-- **Use RSQ Grenade**, **Slow Motion Only**, **Slow Motion Boost**
+- **Slow Motion Only**, **Slow Motion Boost**
 - **Cheat Extra Weapons**
 - On the LegenDoom page: **Legendary Name**, and **Champions Drop** under its Test and Debug
 
@@ -179,10 +181,8 @@ Everything else described on this page is on. The pack binds no keys.
 - **The under-barrel launcher only unlatches while you two-hand the gun,** and the latch is always the off trigger.
 - **Scopes and Hand Skin Tone are single player only.**
 - **Voxel "Spent casings" overrides Real Casing Models.**
-- **Bare fists do not punch out of the box:** the trigger punch is off and the swing punch (VR Punching) ships off.
-  Turn VR Punching on, or load RSQ Melee.
-- **With LegenDoom loaded,** Brutal Doom's own Dual Pistols weapon is put away unless your pistol's legendary is
-  DualWield. You can still hold a pistol in each hand.
+- **Your fists punch when you swing them.** The trigger does not throw a canned punch in VR.
+- **With LegenDoom loaded,** Brutal Doom's own Dual Pistols weapon is put away. Hold a pistol in each hand instead.
 
 ## Changelog
 

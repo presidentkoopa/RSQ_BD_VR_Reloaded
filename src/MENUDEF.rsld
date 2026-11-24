@@ -28,8 +28,6 @@ OptionMenu "RSLD_Debug"
 {
 	Title "TEST AND DEBUG"
 	StaticText "Drops", 1
-	// tip: A legendary drop with an effect not carried yet is re-rolled.
-	Option "Re-roll Missing", "rsld_reroll", "OnOff"
 	// tip: Legendary guns drop only from miniboss fights.
 	Option "Minibosses Only", "rsld_bossfight_only", "OnOff"
 	// tip: A legendary champion outside a miniboss fight drops its legendary gun too.

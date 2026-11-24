@@ -166,7 +166,7 @@ class RSVR_Door : EventHandler
 			Vector3 hp = h == 0 ? RSVR_VRHand.HandPos(pmo) : RSVR_VRHand.OffPos(pmo);
 			// a hand with a gun in it never takes a door
 			if (!FreeHand(p, h) && held[h] < 0) { onFace[h] = false; pressWas[h] = false; continue; }
-			bool grip = h == 1 && rs && Flag(p, 'rsq_door_grip', true) && rs.netGrip;
+			bool grip = h == 1 && rs && Flag(p, 'rsq_door_grip', true) && rs.doorGrip;	// 2.0.5n: was netGrip
 			bool use = Flag(p, 'rsq_door_use', true) && useDown;
 			bool palm = Flag(p, 'rsq_door_palm', true) && PalmOut(pmo, h);
 			bool pressing = grip || use || palm;

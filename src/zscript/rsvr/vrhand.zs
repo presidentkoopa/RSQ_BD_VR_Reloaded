@@ -25,6 +25,23 @@ class RSVR_VRHand play
 	// getDoomPlayerHeightWithoutCrouch: player->DefaultViewHeight(), the pawn's ViewHeight at its first frame). RSQ SlowMo's
 	// DOWN scales the pawn's ViewHeight to 40% while you are down, so mo.ViewHeight is not that number then; the class's
 	// default is, crouched or not. A crouch still reaches the eye through viewz. Code only, not shown.
+	// 2.0.5n (owner 11-24: "Fix both"): the height of your real eyes in map units, as rsg/grenade.zs Eyes works it out:
+	// viewz is the pawn's fixed eye, and the headset's own height is added on top. For "this far below the eyes" tests
+	// (New magazine from: Low), which measured from the pawn's eye and so asked a tall player to reach lower
+	static double EyeZ(PlayerPawn mo, double vu, double ps)
+	{
+		if (!mo || !mo.player)
+			return 0;
+		double z = mo.player.viewz;
+		let cb = CVar.FindCVar('vr_crouch_use_button');
+		if (mo.HmdPosition.y > 0.3 && ps > 0 && (!cb || cb.GetBool()))
+		{
+			let ha = CVar.FindCVar('vr_height_adjust');
+			z += (mo.HmdPosition.y + (ha ? ha.GetFloat() : 0.0)) * vu / ps - StandEyeHeight(mo);
+		}
+		return z;
+	}
+
 	static clearscope double StandEyeHeight(PlayerPawn mo)
 	{
 		return mo ? mo.Default.ViewHeight : 41.0;

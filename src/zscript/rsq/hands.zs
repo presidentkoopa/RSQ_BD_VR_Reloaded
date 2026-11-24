@@ -899,14 +899,7 @@ class RSQ_Hands : Weapon
 			// 2.0.3y (owner 11-06: "in bd my hands animate a punch, which isn't good... i just don't need the
 			// swinging fist automatically, when i swing it myself"): the off TRIGGER no longer throws the animated
 			// jab. The off fist still punches when you swing it (rsq_punch, fists.zs RSQ_FistHand, and RSQ Melee).
-			if (true)
-				return;
-			if (!press || !freeFist || RSQ.PlayerInt(mo, 'rsq_punch', 0) == 0)
-				return;
-			if (RSVR_VRHand.SteadyGap(mo) < 30.0)	// cm: at the gun, so that press is the reload's
-				return;
-			offPunchTic = 0;
-			mo.A_StartSound("Melee/Swing", CHAN_AUTO, CHANF_OVERLAP);
+			return;	// 2.0.5n: the old trigger jab that followed here could never run and is gone
 		}
 		offMesh = seq[offPunchTic];
 		if (offPunchTic == 2)

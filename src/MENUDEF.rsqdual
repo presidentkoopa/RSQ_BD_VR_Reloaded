@@ -1,8 +1,6 @@
 OptionMenu "RSQ_DualOptions"
 {
 	Title "DUAL WIELD"
-	// tip: A pistol start gives you a pistol in each hand.
-	Option "Start Dual Pistols", "rsq_dual_start", "OnOff"
 	// tip: The pistol can be held in each hand.
 	Option "Pistol", "rsq_dual_pistol", "OnOff"
 	// tip: The Silvergun can be held in each hand.

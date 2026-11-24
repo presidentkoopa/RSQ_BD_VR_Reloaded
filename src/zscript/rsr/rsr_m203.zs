@@ -260,6 +260,18 @@ class RSM_State play
 		return ((0, p.y, p.z) - (0, RSM_Geo.AxisL(gun), RSM_Geo.AxisU(gun))).Length();
 	}
 
+	// 2.0.5n (owner 11-24: "Give it back"): a round home in the open tube was paid for when it went in (INSERT, below).
+	// When the reload is cut short (a weapon switch, death, a new map) it goes back to the player before Reset forgets it
+	void Refund(PlayerPawn mo)
+	{
+		if (!mo || !roundIn)
+			return;
+		let ac = roundNade > 0 ? RSM.NadeAmmo() : RSM.AmmoClass();
+		if (ac)
+			mo.GiveInventory(ac, 1);
+		Log(mo, "round given back");
+	}
+
 	void Reset()
 	{
 		pull = pullPrev = 0;
@@ -476,6 +488,14 @@ class RSM_State play
 				break;
 			if (rp < 0 && (palm - breech).Length() < RSM.POUCH_MIN)
 				break;
+			// 2.0.5n (owner 11-24: "Fix both"): New magazine from: Low (rsr_pouch 1) holds for the launcher's round too:
+			// 40 cm below your eyes, as the magazine, the shells and the break-open rounds
+			if (rp < 0 && RSR.PlayerInt(mo.player, 'rsr_pouch', 0) == 1 && geo.vu > 0)
+			{
+				Vector3 lop = RSVR_VRHand.OffPos(mo);
+				if ((RSVR_VRHand.EyeZ(mo, geo.vu, geo.ps) - lop.z) * geo.ps * 100.0 / geo.vu < 40.0)
+					break;
+			}
 			roundNade = 0;				// the pouch: the launcher's plain round
 			hand = RSM.CARRY;
 			geo.Buzz(mo);
@@ -849,6 +869,7 @@ class RSK_M203Handler : EventHandler
 		{
 			if (!playeringame[n] || !players[n].mo || !st[n])
 				continue;
+			st[n].Refund(PlayerPawn(players[n].mo));	// 2.0.5n
 			st[n].Reset();
 		}
 	}
@@ -910,10 +931,14 @@ class RSK_M203Handler : EventHandler
 			Sync(mo, 'RSM_VR', vr);
 			Sync(mo, 'RSM_Dual', dual);
 			if (mo.health <= 0)
+			{
+				s.Refund(mo);	// 2.0.5n
 				s.Reset();
+			}
 			int gn = RSM.GunOf(p.ReadyWeapon);	// 1.97
 			if (gn != s.gun)
 			{
+				s.Refund(mo);	// 2.0.5n
 				s.Reset();
 				s.gun = gn;
 				s.noTubeFrom.Clear(); s.noTubeTo.Clear();

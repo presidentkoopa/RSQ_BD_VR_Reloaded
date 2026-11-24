@@ -3,8 +3,8 @@
 // How hard a swing has to be before the blade cuts. 1.0 is the shipped feel; higher asks for a
 // harder swing, lower cuts on less. Multiplies the per-weapon threshold.
 user float rsvr_melee_swing = 1.0;
-// How much of the blade's motion must point DOWN for a swing to cut: 0.25 is about 15 degrees
-// below level (owner, 2026-10-16: only a meaningful downward swing cuts; never level, never up).
+// How much of the pistol whip's motion must point DOWN: 0.25 is about 15 degrees below level. 2.0.5n: the axe and the
+// sword use their own fixed value (rsvr/melee.zs), whatever this is set to.
 user float rsvr_melee_down = 0.25;
 user int rsvr_melee_log = 0;	// 2.0.4u: 1 logs who does the butt strike / pistol whip / VR punch (this pack or RSQ Melee: rsvr/yield.zs)
 

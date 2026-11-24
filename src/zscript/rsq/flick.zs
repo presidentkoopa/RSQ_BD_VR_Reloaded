@@ -142,21 +142,24 @@ class RSQ_Flick : EventHandler
 			let p = mo.player;
 			bool alive = p.playerstate == PST_LIVE && mo.health > 0;
 			Button(mo, n, alive);
-			bool live = RSVR_VRHand.InVR(mo) && alive
-				&& RSQ.PlayerInt(mo, 'rsq_flick', 1) != 0 && mo.CountInv('IsPlayingAsPurist') == 0;
-			bool hotd = live && Style(mo) == 0;
+			// 2.0.5n (owner 11-24: "Only switch off dual"): Dual Reload Gesture (rsq_flick) switches off the gesture for a gun
+			// in each hand only. A lone SSG, a lone rifle's launcher and a main gun beside a series item keep theirs
+			bool base = RSVR_VRHand.InVR(mo) && alive && mo.CountInv('IsPlayingAsPurist') == 0;
+			bool live = base && RSQ.PlayerInt(mo, 'rsq_flick', 1) != 0;
+			bool offGun = IsGun(p.OffhandWeapon);
+			bool hotd = (live || (base && !offGun)) && Style(mo) == 0;
 			GateLayer(mo, hotd);
-			bool on = live && IsGun(p.OffhandWeapon);	// 1.21: a gun in the off hand gestures, whatever the main hand holds
+			bool on = live && offGun;	// 1.21: a gun in the off hand gestures, whatever the main hand holds
 			// 2026-10-23: with ONE rifle the whole flick was off, so "flick down to reload both
 			// barrels" (1.30) only ever worked while dual wielding -- and a lone rifle is the
 			// common case. A single rifle now flicks for its LAUNCHER ONLY: the magazine stays
 			// the hand reload's, exactly as the header says, and the flick gets the M203.
-			bool loneM203 = live && !on && RSM.IsAnyRifle(p.ReadyWeapon);
+			bool loneM203 = base && !offGun && RSM.IsAnyRifle(p.ReadyWeapon);
 			// 2.0.2a (owner 20:09): "ssg should always flick down to reload even if we allow for our vr
 			// reload". A lone SSG flicks too (SSG.dec RSQ_FlickReload); the hand reload is still there.
-			bool loneSSG = live && !on && p.ReadyWeapon is 'SSG';
+			bool loneSSG = base && !offGun && p.ReadyWeapon is 'SSG';
 			// 2.0.3x: a series off-hand item (saber, Zippo, shield...) in the off hand: the main gun flicks
-			bool offItem = live && !on && IsSeriesOffItem(p.OffhandWeapon) && IsGun(p.ReadyWeapon);
+			bool offItem = base && !offGun && IsSeriesOffItem(p.OffhandWeapon) && IsGun(p.ReadyWeapon);
 			double ps = mo.Level.pixelstretch;
 			if (ps <= 0)
 				ps = 1.2;

@@ -76,7 +76,14 @@ class RSQ_NoSniper : EventHandler
 		}
 	//	if (n == 'SniperAmmo')				e.Replacement = Find('Clip2');			// 1.93: sniper ammo is itself again
 		if (n == 'MP40Spawner')				e.Replacement = Find('BrutalSMG');		// MP40 (1.93: chain head now)
-		else if (n == 'MG42Spawner')		e.Replacement = Find('Minigun');		// MG42
+		else if (n == 'MG42Spawner')		// MG42
+		{
+			// 2.0.5n (owner 11-24: "Make it work"): Machinegun replaces MG42 (rsq_mg_replaces_mg42) never showed, because the
+			// map's MG42 spot is this spawner and it always became the Minigun. With the row on it is the Machinegun
+			let mgc = CVar.FindCVar('rsq_mg_replaces_mg42');
+			Name mgn = (mgc && mgc.GetInt() != 0) ? 'Machinegun' : 'Minigun';
+			e.Replacement = Find(mgn);
+		}
 		else if (n == 'DevastatorSpawner')	e.Replacement = Find('Rocket_Launcher');	// Devastator
 		else if (n == 'HMLSpawner')			e.Replacement = Find('Rocket_Launcher');	// Hellish
 		else if (n == 'FlameCannonSpawner')	e.Replacement = Find('Flamethrower2');	// flame cannon

@@ -14,6 +14,82 @@ built pk3 is in [pk3/](pk3/); [VERSION](VERSION) is the source's number.
 Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5l.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5n** (11-24; *code only, not load-checked, not run*; in [pk3/](pk3/) as
+  `03_BD22_VR-Reloaded_2.0.5n.pk3`). **The VR Row HUD** (commit `1d0fb12`): Gun Bonsai VR's bottom row in this pack, as
+  HUD Type 6 (`zscript/rsq/bottomhud.zs`), with each hand's ammo on its side and the face between health and armour. Twenty-one changes the owner picked from the code
+  read (`BUGS_FROM_CODE_READ_2026-11-24.md`: LD1 to LD3, LD5, LD7, SH2 to SH6, RL1, RL3, RL6); nothing else changed:
+  - **A legendary acts on its own gun's shots only** (owner: "Fix it"). Damage with no trigger pull of its own was handed
+    the main hand's legendary: a kick or gun bash, a grenade, a barrel you set off, and shots from a gun with no
+    legendary in the off hand. Now a strike or projectile fired with no legendary is marked when it spawns
+    (`NoFx`), a True Bullets round with no legendary says so when it lands (`delivNoneTic`), a barrel is
+    known by its class name, and an off-hand-only pull this tic is the off gun's (`FindShot`, `zscript/rsld/handler.zs`).
+    This reverses the earlier rule in the code ("a kick / gun bash ... gets the held effect, no pull"). Delayed damage
+    from a legendary gun's own untagged child actors still takes the held effect, as before.
+  - **Slug Legendary: Primary Fire Only, off: a Slug legendary is re-rolled** (owner: "Re-roll it"), as the setting's
+    comment always said. It used to drop as a legendary that did nothing (`Carried`, `zscript/rsld/pickup.zs`).
+  - **The row "Re-roll Missing" (was "Re-roll Effects Not Carried Yet") is removed.** It changed nothing either way. An effect that is not
+    applied (Favoured; Slug with its row off) is always re-rolled. `rsld_reroll` stays declared so a saved config loads.
+  - **Each gun kicks in its own hand** (owner: "Fix it"). Recoil kept one state a player and always moved the main gun:
+    firing only the off gun kicked the main one, and the off gun never moved. Now one state a hand
+    (`zscript/rsq/recoil.zs`), the off gun's layer is `PSP_OFFHANDWEAPON`, the hand comes from the shot as the muzzle
+    flash's does, and an off-hand copy uses the profile of the gun it copies (`FindFor`).
+  - **A round left in the open under-barrel tube comes back** (owner: "Give it back"). It was paid for when it went in
+    and thrown away if you switched weapons, died or changed map before pulling the tube shut. Now it returns to your
+    ammo (`Refund`, `zscript/rsr/rsr_m203.zs`), the plain round or RSQ Grenade's.
+
+  - **A full pump shotgun takes no shell** (owner: "Refuse the shell"). It used to take one, sound and buzz as if it
+    loaded, and change nothing (`CanTakeShell`, `zscript/rsr/rsr_pump.zs`).
+  - **Dual Reload Gesture off only switches off a gun in each hand** (owner: "Only switch off dual"). A lone Super
+    Shotgun, a lone rifle's launcher, and a main gun beside a saber, Zippo or other series item keep their gesture
+    (`zscript/rsq/flick.zs`).
+  - **True Bullets impacts know their gun** (owner: "Fix it"). The round that lands is not a player, so every gun threw
+    the same chips with no ricochet and no light. The impact now reads the round's shooter and hand
+    (`WorldHitscanFired`, `zscript/rsq/ballistics.zs`).
+
+  - **Patient is spent by the main hand only** (owner: "Fix it"). Its charge builds in the main hand, and an off-hand
+    shot used to spend it (`RSLD_Fx_Patient.OnPull`, `zscript/rsld/fx_g0.zs`).
+  - **Doom's quit sounds are back** (owner: "i just want the normal doom or BD sounds, not the goofy LD ones"). 2.0.4n
+    made quitting silent for everyone; now `menu/quit1` and `menu/quit2` are the engine's own Doom lists again, with
+    LegenDoom or without (`SNDINFO.rsld`).
+  - **Machinegun replaces MG42 works on maps** (owner: "Make it work"). A map's MG42 spot is `MG42Spawner`, which always
+    became the Minigun, so the row never showed. With the row on it is the Machinegun (`zscript/nosniper/nosniper.zs`).
+  - **Recoil for the Silvergun, Ruger, Nuke Launcher, Devastator and Incendiary Launcher** (owner: "Add them"). They had
+    no profile and never kicked. Each borrows a neighbour's for now: the Shotvolver's, the Rifle's, the Rocket
+    Launcher's (two) and the Grenade Launcher's (`Alias`, `zscript/rsq/recoil.zs`). The numbers are the owner's to tune.
+
+  - **The row "Start Dual Pistols" is removed** (owner: "this option should go if it does nothing"). The off-hand pistol
+    is given whenever you own a pistol, row on or off, and was never put in the hand (`MENUDEF.rsqdual`;
+    `rsq_dual_start` stays declared).
+
+  - **Three new rows on Test and Debug** (owner: "recoil, ssg, and shotgun side load, not the flick"): **Recoil**
+    (`rsq_recoil`, on), **SSG Two Shells** (`rsr_ssg_pair`, on) and **Shotgun Side Port** (`rsr_sideport`, on). They
+    worked before and had no row.
+  - **Hit Flash Style's choices are Style 1 to Style 5** (owner: "Name them plainly"); they were raw sprite codes.
+
+  - **"Magazine From: Low" is measured from your headset, and the launcher obeys it** (owner: "Fix both"). The 40 cm
+    was taken from the pawn's fixed eye, so a tall player had to reach lower; it now uses the headset's height
+    (`RSVR_VRHand.EyeZ`, as the grenade's teeth pull does) for magazines, break-open rounds and shells. The under-barrel
+    launcher's round ignored the row; it now needs the same reach.
+  - **The row "Use RSQ Grenade" is removed** (owner: "Remove this row"). RSQ Grenade's own "Replace Brutal Doom's
+    Grenade" is the switch. `rsg_rsq_nade` stays declared and is still read, at its default (off).
+  - **DualWield never rolls** (owner: "dualweild seems like a pointless legendary in a vr game"). It is re-rolled, as
+    Favoured is, so the mode carries 178 of LegenDoom's 180 effects (`IsDropped`, `zscript/rsld/pickup.zs`). With
+    LegenDoom loaded, Brutal Doom's own Dual Pistols weapon is therefore always put away.
+
+  - **Dead weight removed** (owner: "Clean it all"), only where nothing else in the pack or the series reads it: the
+    settings `rsq_twohand_rifle` and `rsvr_butt_lead`, the class `RSA_Opt_SMG`, and the off trigger's old jab that sat
+    behind `if (true) return` (`zscript/rsq/hands.zs`). Three comments corrected (`alts.zs`, `rsq_bash_tint`,
+    `rsvr_melee_down`). Left in place, because taking them out without a compile check is not worth the risk: the old
+    counter branch (`counters.zs`), the reload that finishes by itself (`vreload.zs` AutoStep), the "ScopeRing" pose and
+    the "Find a second ..." guard (`dual.zs`).
+
+  - **VR Punching is on by default** (owner: "do both"; the series stays separate, so this pack must punch alone).
+    With No Trigger Punch on and VR Punching off, bare fists could not punch at all without RSQ Melee
+    (`rsq_punch`, `CVARINFO.rsq`). A saved Off stays Off.
+  - **Lift Doors takes the off grip whatever Grab Ammo With says** (owner: "do both"). The door read a grip state
+    that is only kept with Grab Ammo With on the grip, so on the default the grip never took a door
+    (`doorGrip`, `zscript/rsr/vreload.zs`; `zscript/rsvr/door.zs`).
+
 - **What's new in 2.0.5m** (11-24): **the options menus in Brutal Doom 22's style**: about 14 short On/Off rows on the main page, everything else on Test and Debug; no setting or default changed.
 - **What's new in 2.0.5l** (11-23; *code only, not run in the headset*): **a painted axe throws on any release**, as the saber's painted release does (the owner's pick, "Marked = flick throws"): it flies straight at the mark. Unpainted, the swing still decides.
 - **What's new in 2.0.5k** (11-23; *code only, not run in the headset*): **the axe and the hand grenade throw from 1.5 m/s**, the series' one throw since 11-22 (RSQ Grenade, ShieldSaw and FnF already moved off 2.5). The same hand sampler; only the threshold changed.

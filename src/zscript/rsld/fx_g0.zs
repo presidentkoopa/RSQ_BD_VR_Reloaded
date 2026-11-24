@@ -509,6 +509,7 @@ class RSLD_Fx_Patient : RSLD_ReadyBeat
 	}
 	override void OnPull(RSLD_Shot s)
 	{
+		if (s.hand != RSLD.MAIN) { s.d1 = 1; return; }	// 2.0.5n (owner 11-24: "Fix it"): the charge builds in the main hand only (Beat), so only a main-hand shot spends it
 		double d = Num("div");
 		int n = RSLD.Has(s.mo, "LDPatientCounter");
 		s.d1 = d > 0 ? (n + d) / d : 1;
