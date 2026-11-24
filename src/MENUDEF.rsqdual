@@ -1,18 +1,32 @@
 OptionMenu "RSQ_DualOptions"
 {
-	Title "DUAL OPTIONS"
-	Option "Pistol Start: Start with Dual Pistols", "rsq_dual_start", "OnOff"
+	Title "DUAL WIELD"
+	// tip: A pistol start gives you a pistol in each hand.
+	Option "Start Dual Pistols", "rsq_dual_start", "OnOff"
+	// tip: The pistol can be held in each hand.
 	Option "Pistol", "rsq_dual_pistol", "OnOff"
+	// tip: The Silvergun can be held in each hand.
 	Option "Silvergun", "rsq_dual_moonlight", "OnOff"
+	// tip: The Shotvolver can be held in each hand.
 	Option "Shotvolver", "rsq_dual_revolver", "OnOff"
+	// tip: The SMG can be held in each hand.
 	Option "SMG", "rsq_dual_smg", "OnOff"
+	// tip: The MP40 can be held in each hand.
 	Option "MP40", "rsq_dual_mp40", "OnOff"
+	// tip: The rifle can be held in each hand.
 	Option "Rifle", "rsq_dual_rifle", "OnOff"
-	Option "Plasma rifle", "rsq_dual_plasma", "OnOff"
+	// tip: The plasma rifle can be held in each hand.
+	Option "Plasma Rifle", "rsq_dual_plasma", "OnOff"
+	// tip: The pump shotgun can be held in each hand.
 	Option "Shotgun", "rsq_dual_shotgun", "OnOff"
-	Option "Super shotgun", "rsq_dual_ssg", "OnOff"
-	Option "Assault shotgun", "rsq_dual_asg", "OnOff"
+	// tip: The super shotgun can be held in each hand.
+	Option "Super Shotgun", "rsq_dual_ssg", "OnOff"
+	// tip: The assault shotgun can be held in each hand.
+	Option "Assault Shotgun", "rsq_dual_asg", "OnOff"
+	// tip: The railgun can be held in each hand.
 	Option "Railgun", "rsq_dual_railgun", "OnOff"
-	Option "Minigun", "rsq_dual_minigun", "OnOff"	// 2.0.5e
-	Option "Axe", "rsq_dual_axe", "OnOff"	// 2.0.2: dual axes (RSQ_Off_BrutalAxe)
+	// tip: The minigun can be held in each hand.
+	Option "Minigun", "rsq_dual_minigun", "OnOff"
+	// tip: The axe can be held in each hand; one axe picked up gives both.
+	Option "Axe", "rsq_dual_axe", "OnOff"
 }

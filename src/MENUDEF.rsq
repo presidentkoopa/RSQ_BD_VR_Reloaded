@@ -1,9 +1,7 @@
-// RS VR hands / reload / ballistics (zscript/rsq, zscript/rsr). v9.
-// Nothing here changes the engine's two-hand grip (vr_two_handed_weapons): its row only names it.
-//
-// NO StaticText help in here, deliberately and by owner's instruction (asked twice). An
-// options menu is a list of options. How the reload works is documented in the repo:
-// LOAD_ORDER.md and docs/RELOAD_ON_QUEST.md in presidentkoopa/RS_Quest.
+// BD22 VR Weapons options (zscript/rsq, zscript/rsr, zscript/rsg, zscript/rsvr).
+// Menu standard (owner 2026-11-24): BD22's own style. Short labels, On / Off, no prose on the page.
+// The main page holds the choices a player makes; every other row is on "Test and Debug" (RSR_Debug).
+// Each row has one "// tip:" line above it (for a later tooltip pass).
 AddOptionMenu "OptionsMenu"
 {
 	Submenu "BD22 VR Weapons", "RSQ_Options"
@@ -15,43 +13,37 @@ AddOptionMenu "BrutalMenu"
 	Submenu "BD22 VR Weapons", "RSQ_Options"
 }
 
-OptionValue "RSR_ReloadMode"
-{
-	1, "VR"
-	0, "Stock (BD22)"
-}
-
 OptionValue "RSQ_ReloadGesture"
 {
-	0, "Point Off-Screen + Trigger"
-	1, "Flick (old)"
+	0, "Point"
+	1, "Flick"
 }
 
 OptionValue "RSR_GrabWith"
 {
-	0, "Off-hand trigger"
-	1, "Off-hand grip"
-	2, "Use key"
+	0, "Trigger"
+	1, "Grip"
+	2, "Use Key"
 }
 
 OptionValue "RSQ_Ballistics"
 {
-	0, "Stock (BD22)"
+	0, "Stock"
 	1, "Low"
 	2, "Max"
 }
 
 OptionValue "RSR_Pouch"
 {
-	0, "Anywhere, 20 cm from the gun"
-	1, "Low, 40 cm below the eyes"
+	0, "Anywhere"
+	1, "Low"
 }
 
-// 2026-10-23: the VR scopes (zscript/rsq/scope.zs), per gun
+// the VR scopes (zscript/rsq/scope.zs), per gun
 OptionValue "RSQ_ScopeMode"
 {
-	0, "Dot (1x)"
-	1, "Real (3x)"
+	0, "Dot"
+	1, "3x"
 }
 
 OptionValue "RSR_ShellCredit"
@@ -65,95 +57,174 @@ OptionValue "RSR_ShellCredit"
 OptionMenu "RSQ_Options"
 {
 	Title "BD22 VR WEAPONS"
+	// tip: Shows your VR hands on the controllers.
 	Option "VR Hands", "rsq_hands", "OnOff"
-	Option "Hand Skin Tone", "rsq_hand_tone", "RSQ_HandTone"	// BD 2.0: zscript/rsq/handtone.zs
-	Option "Reloading", "rsr_reload", "RSR_ReloadMode"
-	Option "Reload Non-Standard Guns", "rsq_reload_nonstd", "OnOff"
-	Option "Grab ammo with", "rsr_grab_with", "RSR_GrabWith"
-	Option "New magazine from", "rsr_pouch", "RSR_Pouch"
-	Option "Ammo From the Rig's Pouch Only", "rsr_rig_pouch", "OnOff"
-	Option "Shotgun Shells Per Insert", "rsr_shell_credit", "RSR_ShellCredit"
-	Slider "Reload assist", "rsr_assist", 0.5, 3.0, 0.1
-	Option "Pistol Semi Auto", "rsa_pistol_semi", "OnOff"
-	Option "Shotgun Slugshot Alt Fire", "rsa_sg_slug", "OnOff"
-	Option "Assault Shotgun Slugshot Alt Fire", "rsa_asg_slug", "OnOff"
-	Option "Rocket Launcher Lock-On Alt Fire", "rsa_rl_lock", "OnOff"
-	Option "Shotvolver Slugshot Alt Fire", "rsa_rev_slug", "OnOff"
-	Option "Shot/Revolver Reload", "rsb_revolver_feed", "RSB_RevFeed"
-	Option "Rifle Underbarrel Ammo", "rsm_ammo", "RSM_Ammo"
-	Option "Machinegun replaces MG42", "rsq_mg_replaces_mg42", "OnOff"
-	Option "Silvergun Replaces Pistol", "rsq_moonlight_pistol", "OnOff"
-	Option "Start With Two Silverguns", "rsq_moonlight_two", "OnOff"
+	// tip: Recolours the VR hands.
+	Option "Hand Skin Tone", "rsq_hand_tone", "RSQ_HandTone"
+	StaticText " "
+	StaticText "Reloading", 1
+	// tip: Reload by hand in VR; Off uses Brutal Doom's own reload.
+	Option "VR Reloading", "rsr_reload", "OnOff"
+	// tip: Point the gun off-screen and pull the trigger to reload, or flick it down (the old way).
+	Option "Reload Gesture", "rsq_reload_gesture", "RSQ_ReloadGesture"
+	// tip: Which button the off hand uses to take hold of ammo.
+	Option "Grab Ammo With", "rsr_grab_with", "RSR_GrabWith"
+	// tip: Shows the magazine and the reserve on the HUD, or the reserve only.
 	Option "HUD Ammo", "rsq_hud_ammo", "RSQ_HudAmmo"
-	Option "Sniper Scope", "rsq_scope2_sniper", "RSQ_ScopeMode"
-	Option "Railgun Scope", "rsq_scope2_railgun", "RSQ_ScopeMode"
+	StaticText " "
+	StaticText "Combat", 1
+	// tip: Shots fly as real rounds; Off uses Brutal Doom's instant hitscan and tracers.
+	Option "True Bullets", "sv_rsq_true_bullets", "OnOff"
+	// tip: How much bullets drop and drift; Stock is Brutal Doom's own.
 	Option "Ballistics", "rsq_ballistics", "RSQ_Ballistics"
-	Option "True Bullets", "sv_rsq_true_bullets", "OnOff"	// 2.0.2 (owner r3 item 39): On = flying rounds with the Dakka look (playerrounds.zs, shotfx.zs); Off = stock BD22 hitscan and tracers
-	Slider "True Bullet Speed", "sv_rsq_round_speed", 20, 900, 10, 0	// 2.0.5 (owner 11-09): map units a tic, 80 = as it was; real rounds are 330-874 (playerrounds.zs)
-	Slider "Two-Hand Spread", "sv_rsq_twohand_spread", 0.0, 1.0, 0.05, 2	// 2.0.5 (owner 11-09): spread x this with the off hand steadying; 1 = BD22's (muzzle.zs Steady)
-	Option "Two-Hand Tightens Shotguns", "sv_rsq_twohand_shotguns", "OnOff"	// 2.0.5: off = pellet patterns stay BD22's
-	Option "Pump Shotgun Spread", "rsq_pump_spread", "RSQ_PumpSpread"	// BD 2.0: actors/Weapons/Shotgun.dec
-	StaticText " "
-	Submenu "Voxel Options", "RSQ_VoxelOptions"
-	StaticText " "
-	Submenu "Dual Options", "RSQ_DualOptions"
-	Option "Dual Reload Gesture", "rsq_flick", "OnOff"	// 2.0.5e: was "Dual Flick to Reload" (the same switch: the gesture on or off)
-	Option "Reload Gesture", "rsq_reload_gesture", "RSQ_ReloadGesture"	// 2.0.5e (owner 2026-11-22, House of the Dead)
-	Slider "Off-Screen Angle", "rsq_offscreen_deg", 40, 85, 1, 0	// 2.0.5e: degrees under your view
-	StaticText " "
+	// tip: Throw grenades with your hand.
 	Option "VR Throwing", "rsg_vr", "OnOff"
-	Option "Use RSQ Grenade Instead", "rsg_rsq_nade", "OnOff"	// 2.0.3y (owner item 21): with RSQ Grenade loaded, this grenade stands down (rsg/grenade.zs)
-	Option "Pin With Your Teeth", "rsg_face", "OnOff"	// 2.0.3p: RSQ Grenade's teeth pull (zscript/rsg/grenade.zs Face); the off-hand ring works either way
-	Slider "Teeth: Mouth Reach (m)", "rsg_mouth_r", 0.05, 0.30, 0.01, 2	// 2.0.3r: round the mouth (lips to under the chin), from the headset
-	Slider "Teeth: Again Beyond (m)", "rsg_face_far", 0.30, 1.50, 0.01, 2
-	Slider "Teeth: Hold (tics)", "rsg_face_hold", 2, 40, 1, 0
-	Option "Shoot Thrown Grenades", "rsg_shoot", "OnOff"	// 2.0.3r: zscript/rsg/grenade.zs RSG_Handler
-	Slider "Shot Grenade Reach (m)", "rsg_shot_r", 0.10, 0.35, 0.01, 2	// 2.0.3t: tightens only
-	Option "Only in Slow Motion", "rsg_shoot_slowmo", "OnOff"
-	Option "Faster Grenades in Slow Motion", "rsg_slowmo_fast", "OnOff"
-	Slider "Grenade Speed in Slow Motion", "rsg_slowmo_speed", 0.0, 1.0, 0.05, 2
-	Option "Two-Hand Grip (engine)", "vr_two_handed_weapons", "OnOff"	// 2.0.2: QuestZDoom's own two-hand cvar, unchanged; the row only says so
-	Option "VR Punching (without RSQ Melee)", "rsq_punch", "OnOff"
-	Option "No Trigger Punch", "rsq_no_trigger_punch", "OnOff"	// 2.0.3y (owner 11-06, on): BD22's fists throw no canned punch on trigger / alt fire in VR; grabs, throws and fatalities unchanged
-	Option "Punch Switches Open (without RSQ Melee)", "rsq_punch_use", "OnOff"
-	Option "Pistol Whip (without RSQ Melee)", "rsq_pistol_whip", "OnOff"	// 2.0.2 (owner r3 item 39): swing a pistol or revolver into something (zscript/rsvr/melee.zs); the kick-key gun bash is gone
-	Slider "Pistol Whip: Swing Needed (without RSQ Melee)", "rsq_whip_speed", 2.0, 10.0, 0.5, 1	// 2.0.3g: higher = whip harder (was 3.2)
-	Option "Instant Weapon Switch", "rsq_instant_switch", "OnOff"	// 2.0.2a (owner 19:47): no raise / lower (zscript/rsq/switch.zs)
-	Option "Lift Doors by Hand", "rsq_door", "OnOff"	// 2.0.3f: from RSQ_DistanceGrab (zscript/rsvr/door.zs)
-	Option "Two-Handed Butt Strike (without RSQ Melee)", "rsq_butt", "OnOff"
-	Slider "Butt Strike: Swing Needed (without RSQ Melee)", "rsq_butt_speed", 1.0, 6.0, 0.1, 1	// 2.0.3y (owner item 33): higher = shove harder (was a fixed 3.6)
-	Option "Real Casing Models", "rsq_casing_models", "OnOff"
-	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
-	Option "Melee Hit Flash", "rsq_bash_flash", "OnOff"
-	Option "Melee Hit Flash Style", "rsq_bash_fx", "RSQ_BashFXOpt"
-	Option "Melee Hit Flash Colour", "rsq_bash_tint", "RSQ_BashTintOpt"
-	Slider "Melee swing strength", "rsvr_melee_swing", 0.2, 3.0, 0.1	// 2.0.4u: with RSQ Melee loaded, the axe and the sword only (the whip and the butt read RSQ Melee's Gun Club Swing Strength)
+	// tip: A real punch with either fist lands a hit.
+	Option "VR Punching", "rsq_punch", "OnOff"
+	// tip: Weapons change at once, with no raise or lower.
+	Option "Instant Switch", "rsq_instant_switch", "OnOff"
 	StaticText " "
-	Option "Extra weapons with cheats", "rsq_extra_weapons", "OnOff"
+	// tip: Which guns you can hold one of in each hand.
+	Submenu "Dual Wield", "RSQ_DualOptions"
+	// tip: Which pickups and objects are drawn as voxels.
+	Submenu "Voxels", "RSQ_VoxelOptions"
 	StaticText " "
-	Submenu "Reload: tuning and debug", "RSR_Debug"
+	// tip: Tuning numbers, extra weapon options and debug switches.
+	Submenu "Test and Debug", "RSR_Debug"
 }
 
 OptionMenu "RSR_Debug"
 {
-	Title "RELOAD: TUNING AND DEBUG"
-	Option "Show the capture zones", "rsr_assist_debug", "OnOff"
-	Option "Print each reload step", "rsr_debug", "OnOff"
-	Option "Log who does the butt strike, whip, VR punch", "rsvr_melee_log", "OnOff"	// 2.0.4u: this pack or RSQ Melee (rsvr/yield.zs)
+	Title "TEST AND DEBUG"
+	StaticText "Reloading", 1
+	// tip: Guns Brutal Doom gives no reload get one; Off keeps Brutal Doom's own.
+	Option "Non-Standard Reloads", "rsq_reload_nonstd", "OnOff"
+	// tip: Where a new magazine is taken from: anywhere near the gun, or low by the belt.
+	Option "Magazine From", "rsr_pouch", "RSR_Pouch"
+	// tip: Every reload takes ammo from the Tactical Rig's pouch only.
+	Option "Rig Pouch Only", "rsr_rig_pouch", "OnOff"
+	// tip: How many shells one insert loads into a shotgun.
+	Option "Shells Per Insert", "rsr_shell_credit", "RSR_ShellCredit"
+	// tip: Scales how close the hand must be for each reload step; higher is easier.
+	Slider "Reload Assist", "rsr_assist", 0.5, 3.0, 0.1
+	// tip: The Shotvolver and revolver reload with a speedloader or one round at a time.
+	Option "Revolver Reload", "rsb_revolver_feed", "RSB_RevFeed"
+	// tip: With a gun in each hand, a reload gesture reloads that gun.
+	Option "Dual Reload Gesture", "rsq_flick", "OnOff"
+	// tip: How far below your view a gun must point to count as off-screen (degrees).
+	Slider "Off-Screen Angle", "rsq_offscreen_deg", 40, 85, 1, 0
+	StaticText " "
+	StaticText "Weapons", 1
+	// tip: The pistol fires one shot per trigger pull.
+	Option "Pistol Semi Auto", "rsa_pistol_semi", "OnOff"
+	// tip: The pump shotgun's alt fire shoots a slug.
+	Option "Shotgun Slug", "rsa_sg_slug", "OnOff"
+	// tip: The assault shotgun's alt fire shoots a slug.
+	Option "Assault Shotgun Slug", "rsa_asg_slug", "OnOff"
+	// tip: The rocket launcher's alt fire locks on to up to three enemies.
+	Option "Rocket Lock-On", "rsa_rl_lock", "OnOff"
+	// tip: The Shotvolver's alt fire shoots a slug.
+	Option "Shotvolver Slug", "rsa_rev_slug", "OnOff"
+	// tip: What a hand-loaded round for the rifle's grenade launcher costs.
+	Option "Rifle Grenade Ammo", "rsm_ammo", "RSM_Ammo"
+	// tip: Every MG42 is replaced by the Machinegun.
+	Option "Machinegun For MG42", "rsq_mg_replaces_mg42", "OnOff"
+	// tip: The Silvergun replaces the pistol.
+	Option "Silvergun For Pistol", "rsq_moonlight_pistol", "OnOff"
+	// tip: You start with a Silvergun in each hand.
+	Option "Two Silverguns", "rsq_moonlight_two", "OnOff"
+	// tip: The sniper rifle's sight: a dot or the 3x scope.
+	Option "Sniper Scope", "rsq_scope2_sniper", "RSQ_ScopeMode"
+	// tip: The railgun's sight: a dot or the 3x scope.
+	Option "Railgun Scope", "rsq_scope2_railgun", "RSQ_ScopeMode"
+	// tip: The pump shotgun's pellet spread: Brutal Doom's own or tighter.
+	Option "Pump Spread", "rsq_pump_spread", "RSQ_PumpSpread"
+	// tip: Cheats also give the extra weapons (MP40, MG42, Devastator and more).
+	Option "Cheat Extra Weapons", "rsq_extra_weapons", "OnOff"
+	StaticText " "
+	StaticText "Bullets", 1
+	// tip: How fast true bullets fly (map units a tic; 80 is the standard).
+	Slider "True Bullet Speed", "sv_rsq_round_speed", 20, 900, 10, 0
+	// tip: Spread is multiplied by this while the off hand steadies the gun; 1 is Brutal Doom's own.
+	Slider "Two-Hand Spread", "sv_rsq_twohand_spread", 0.0, 1.0, 0.05, 2
+	// tip: Two-hand steadying also tightens shotgun pellet patterns.
+	Option "Two-Hand Shotguns", "sv_rsq_twohand_shotguns", "OnOff"
+	// tip: QuestZDoom's own two-handed grip switch (the same one as in VR Options).
+	Option "Two-Hand Grip", "vr_two_handed_weapons", "OnOff"
+	StaticText " "
+	StaticText "Grenades", 1
+	// tip: This pack's grenade stands down so the RSQ Grenade mod's grenade is used.
+	Option "Use RSQ Grenade", "rsg_rsq_nade", "OnOff"
+	// tip: Hold a grenade at your mouth with the trigger to pull the pin with your teeth.
+	Option "Pin With Teeth", "rsg_face", "OnOff"
+	// tip: How close to your mouth the grenade must be to pull the pin (metres).
+	Slider "Mouth Reach (m)", "rsg_mouth_r", 0.05, 0.30, 0.01, 2
+	// tip: How far the grenade must leave your mouth before the teeth can pull again (metres).
+	Slider "Teeth Rearm (m)", "rsg_face_far", 0.30, 1.50, 0.01, 2
+	// tip: How long the grenade must stay at your mouth (tics).
+	Slider "Teeth Hold (tics)", "rsg_face_hold", 2, 40, 1, 0
+	// tip: A shot passing near a thrown grenade sets it off.
+	Option "Shoot Grenades", "rsg_shoot", "OnOff"
+	// tip: How close a shot must pass to set off a thrown grenade (metres).
+	Slider "Shot Reach (m)", "rsg_shot_r", 0.10, 0.35, 0.01, 2
+	// tip: Thrown grenades can be shot only while slow motion is on.
+	Option "Slow Motion Only", "rsg_shoot_slowmo", "OnOff"
+	// tip: In slow motion a thrown grenade moves faster than the world.
+	Option "Slow Motion Boost", "rsg_slowmo_fast", "OnOff"
+	// tip: How far a grenade's speed in slow motion goes towards real speed.
+	Slider "Slow Motion Speed", "rsg_slowmo_speed", 0.0, 1.0, 0.05, 2
+	StaticText " "
+	StaticText "Melee", 1
+	// tip: In VR, Brutal Doom's fists throw no punch on the trigger; swing to punch.
+	Option "No Trigger Punch", "rsq_no_trigger_punch", "OnOff"
+	// tip: A punch opens switches.
+	Option "Punch Switches", "rsq_punch_use", "OnOff"
+	// tip: Swing a pistol or revolver into an enemy to hit it.
+	Option "Pistol Whip", "rsq_pistol_whip", "OnOff"
+	// tip: How hard a pistol whip must be swung; higher is harder.
+	Slider "Whip Swing", "rsq_whip_speed", 2.0, 10.0, 0.5, 1
+	// tip: Shove a two-handed gun's stock into an enemy to hit it.
+	Option "Butt Strike", "rsq_butt", "OnOff"
+	// tip: How hard a butt strike must be shoved; higher is harder.
+	Slider "Butt Strike Swing", "rsq_butt_speed", 1.0, 6.0, 0.1, 1
+	// tip: Scales how hard the axe and the sword must be swung.
+	Slider "Melee Swing", "rsvr_melee_swing", 0.2, 3.0, 0.1
+	// tip: Take hold of a door and lift it by hand.
+	Option "Lift Doors", "rsq_door", "OnOff"
+	// tip: A flash shows where a melee hit lands.
+	Option "Hit Flash", "rsq_bash_flash", "OnOff"
+	// tip: Which impact effect the melee hit flash uses.
+	Option "Hit Flash Style", "rsq_bash_fx", "RSQ_BashFXOpt"
+	// tip: The colour of the melee hit flash.
+	Option "Hit Flash Colour", "rsq_bash_tint", "RSQ_BashTintOpt"
+	StaticText " "
+	StaticText "Casings", 1
+	// tip: Spent casings are drawn as 3D models.
+	Option "Casing Models", "rsq_casing_models", "OnOff"
+	// tip: The size of the spent casing models.
+	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
+	StaticText " "
+	StaticText "Debug", 1
+	// tip: Shows the zones the hand must reach during a reload.
+	Option "Show Capture Zones", "rsr_assist_debug", "OnOff"
+	// tip: Prints each reload step and every key code to the console.
+	Option "Print Reload Steps", "rsr_debug", "OnOff"
+	// tip: Logs which mod handles each butt strike, pistol whip and VR punch.
+	Option "Log Melee Source", "rsvr_melee_log", "OnOff"
 }
 
-// owner 2026-10-27 20:47: what the HUD shows of the held gun's ammo (zscript/rsq/counters.zs RSQ_Counters.Hud)
+// what the HUD shows of the held gun's ammo (zscript/rsq/counters.zs RSQ_Counters.Hud)
 OptionValue "RSQ_HudAmmo"
 {
-	0, "Magazine + Reserve"
-	1, "Reserve Only"
+	0, "Both"
+	1, "Reserve"
 }
 
-// 1.30 the rifle's M203: what a hand-loaded round costs
+// the rifle's M203: what a hand-loaded round costs
 OptionValue "RSM_Ammo"
 {
 	0, "Rockets"
-	1, "Hand grenades"
+	1, "Grenades"
 }
 
 OptionValue "RSB_RevFeed"

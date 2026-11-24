@@ -22,15 +22,15 @@ and does its own damage, and with the options off it plays exactly as Brutal Doo
 
 ## Install
 
-Download `03_BD22_VR-Reloaded_2.0.5l.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
+Download `03_BD22_VR-Reloaded_2.0.5m.pk3` from the [pk3/](pk3/) folder (the Releases page stops at 2.0.3x) and
 load, in this order:
 
 ```
-doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5l.pk3
+doom2.wad  ->  brutal22test6.pk3  ->  BD_VoxelPack.pk3  ->  03_BD22_VR-Reloaded_2.0.5m.pk3
 ```
 
 With LegenDoom 3.0 (the LD mode, 2.0.4), LegenDoom goes right after doom2:
-`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5l.pk3`.
+`doom2.wad -> LegenDoom_3.0.pk3 -> brutal22test6.pk3 -> BD_VoxelPack.pk3 -> 03_BD22_VR-Reloaded_2.0.5m.pk3`.
 Do not also load the old LD_BD22VR_Patch.pk3: the LD mode replaces it.
 
 Use Doom 2, not Freedoom: the voxel pack names Doom 2's own sprites.
@@ -39,9 +39,10 @@ To build it yourself: `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERS
 
 ## Changelog: 2.0.2a to 2.0.5j
 
-Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5l.pk3`. Builds marked
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5m.pk3`. Builds marked
 *rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
 
+- **What's new in 2.0.5m** (11-24): **the options menus in Brutal Doom 22's style**: about 14 short On/Off rows on the main page, everything else on Test and Debug; no setting or default changed.
 - **What's new in 2.0.5l** (11-23; *code only, not run in the headset*): **a painted axe throws on any release**, as the saber's painted release does (the owner's pick, "Marked = flick throws"): it flies straight at the mark. Unpainted, the swing still decides.
 - **What's new in 2.0.5k** (11-23; *code only, not run in the headset*): **the axe and the hand grenade throw from 1.5 m/s**, the series' one throw since 11-22 (RSQ Grenade, ShieldSaw and FnF already moved off 2.5). The same hand sampler; only the threshold changed.
 - **What's new in 2.0.5j** (11-23; *code only, not shown*: the card needs the watch check in a headset): **the off-hand

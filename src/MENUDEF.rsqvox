@@ -1,12 +1,20 @@
 OptionMenu "RSQ_VoxelOptions"
 {
-	Title "VOXEL OPTIONS"
+	Title "VOXELS"
+	// tip: Weapon pickups are drawn as voxels.
 	Option "Weapons", "rsq_vox_weapons", "OnOff"
+	// tip: Ammo pickups are drawn as voxels.
 	Option "Ammo", "rsq_vox_ammo", "OnOff"
+	// tip: Health pickups are drawn as voxels.
 	Option "Health", "rsq_vox_health", "OnOff"
+	// tip: Armor pickups are drawn as voxels.
 	Option "Armor", "rsq_vox_armor", "OnOff"
+	// tip: Keys are drawn as voxels.
 	Option "Keys", "rsq_vox_keys", "OnOff"
+	// tip: Powerups are drawn as voxels.
 	Option "Powerups", "rsq_vox_powerups", "OnOff"
+	// tip: Decorations are drawn as voxels.
 	Option "Decorations", "rsq_vox_decorations", "OnOff"
-	Option "Spent casings", "rsq_vox_casings", "OnOff"
+	// tip: Spent casings are drawn as voxels.
+	Option "Casings", "rsq_vox_casings", "OnOff"
 }

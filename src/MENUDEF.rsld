@@ -6,20 +6,42 @@
 OptionMenu "RSLD_Options"
 {
 	Title "LEGENDOOM x BD22 VR"
-	Command "Legendary Info Screen", "pukename LDMenuToggle", 0, 1
-	Command "Drop Held Gun's Legendary", "netevent rsld_drop", 0, 1
+	// tip: Opens LegenDoom's legendary info screen.
+	Command "Legendary Info", "pukename LDMenuToggle", 0, 1
+	// tip: Drops the legendary effect of the gun you hold.
+	Command "Drop Legendary", "netevent rsld_drop", 0, 1
 	StaticText " "
-	Option "Legendary Name on Screen", "rsld_screen_name", "OnOff"
-	Option "Re-roll Effects Not Carried Yet", "rsld_reroll", "OnOff"
-	Option "Legendary Guns Only From Minibosses", "rsld_bossfight_only", "OnOff"
-	Option "Legendary Champions Drop Too", "rsld_champion_drops", "OnOff"
-	Option "Miniboss Drop Rarity By Tier", "rsld_tier_rarity", "OnOff"
-	Option "Off-hand Copy Carries the Legendary", "rsld_offhand_legendary", "OnOff"
-	Option "Slug Legendary: Primary Fire Only", "rsld_slug_primary", "OnOff"
-	Option "Mute LegenDoom Pickup & Aura Sounds", "rsld_mute_ld_sounds", "OnOff"
-	Option "Debug Log", "rsld_debug", "OnOff"
+	// tip: Shows the held gun's legendary name at the top of the view.
+	Option "Legendary Name", "rsld_screen_name", "OnOff"
+	// tip: The off-hand copy of a legendary gun carries the legendary too.
+	Option "Off-Hand Legendary", "rsld_offhand_legendary", "OnOff"
+	// tip: Mutes LegenDoom's pickup jingles and aura sounds.
+	Option "Mute LD Sounds", "rsld_mute_ld_sounds", "OnOff"
 	StaticText " "
+	// tip: LegenDoom's own options.
 	Submenu "LegenDoom Options", "LegenDoom"
+	// tip: Drop rules, tuning and the debug log.
+	Submenu "Test and Debug", "RSLD_Debug"
+}
+
+OptionMenu "RSLD_Debug"
+{
+	Title "TEST AND DEBUG"
+	StaticText "Drops", 1
+	// tip: A legendary drop with an effect not carried yet is re-rolled.
+	Option "Re-roll Missing", "rsld_reroll", "OnOff"
+	// tip: Legendary guns drop only from miniboss fights.
+	Option "Minibosses Only", "rsld_bossfight_only", "OnOff"
+	// tip: A legendary champion outside a miniboss fight drops its legendary gun too.
+	Option "Champions Drop", "rsld_champion_drops", "OnOff"
+	// tip: A miniboss fight's tier sets how rare its legendary drop is.
+	Option "Rarity By Tier", "rsld_tier_rarity", "OnOff"
+	// tip: LegenDoom's Slug replaces the shotguns' primary fire only.
+	Option "Slug Primary Only", "rsld_slug_primary", "OnOff"
+	StaticText " "
+	StaticText "Debug", 1
+	// tip: Logs what each legendary effect did.
+	Option "Debug Log", "rsld_debug", "OnOff"
 }
 
 // Brutal Doom v22's own main menu (brutal22test6 MENUDEF.TXT, ListMenu "MainMenu"), plus the LegenDoom Options button
