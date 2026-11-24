@@ -2,13 +2,7 @@
 
 # BD22 VR Weapons 2.0
 
-**Brutal Doom v22 in VR. Your hands. Every gun.**
-
-Grab the rifle by its handguard and the trigger is under your finger. Rip the magazine out, reach
-to your belt, slam a fresh one home, and rack it. Break the Super Shotgun, thumb in two shells, flick
-it shut. Hold the Ruger to your eye and the scope is a real 3x window, not a sticker. Pull the pin
-with your other hand and throw. Choke up on the chainsaw by its top handle. Swing the Dragonslayer
-two-handed. Every gun in Brutal Doom, held, aimed, fired and reloaded with your own two hands.
+**Brutal Doom v22 in VR.**
 
 Project conceptualized, directed and coordinated by **PresidentKoopa**. All coding done by
 agentic **Claude**.
@@ -16,12 +10,6 @@ agentic **Claude**.
 A VR weapon pack for **Brutal Doom v22** (`brutal22test6.pk3`) on **QuestZDoom 17.3**, built for **standalone
 Quest**. Stock engine, no engine changes, all script. Brutal Doom's guns stay Brutal Doom's guns: same damage, same
 rate of fire. Now you hold them.
-
-- **It stands alone.** Hands on every gun, 23 guns reloaded by hand, live scopes, real bullets, a gun in each hand.
-- **LegenDoom works out of the box.** Load LegenDoom 3.0 and legendary monsters drop legendary Brutal Doom VR guns,
-  with 178 of its 180 effects. No patch.
-- **It comes with four companions** from the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries):
-  RSQ Melee, Tactical Rig, Gun Cards and Laser Sight, released alongside it. The rest of the Series plays well with it too.
 
 ![Every weapon in hand, 2.0](renders/2.0_every_weapon_in_hand.png)
 
