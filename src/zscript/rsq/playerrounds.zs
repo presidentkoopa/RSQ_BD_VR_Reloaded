@@ -95,6 +95,7 @@ class RSQ_PlayerRound : Actor
 		dmgType = dtype;
 		puffType = puff;
 		offHand = (flags & LAF_ISOFFHAND) != 0;
+		special2 = offHand ? 1 : 0;	// 2.0.5n: the hand, for ballistics.zs, which compiles before this lump (ZSCRIPT.rsvr) and cannot name this class
 		laf = flags & ~(LAF_ABSPOSITION | LAF_ABSOFFSET | LAF_ISOFFHAND | LAF_OVERRIDEZ | LAF_TARGETISSOURCE);
 		flySpeed = spd;
 		maxLife = max(MAX_LIFE, int(dist / max(spd, 1.0)) + 35);

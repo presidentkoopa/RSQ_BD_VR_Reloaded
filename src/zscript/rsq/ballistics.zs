@@ -132,12 +132,14 @@ class RSQ_Ballistics : EventHandler
 		bool off = (e.AttackLineFlags & LAF_ISOFFHAND) != 0;	// 2.0.5c: the hand that fired it (a True Bullets round's delivery has neither)
 		// 2.0.5n (owner 11-24: "Fix it"): a True Bullets round delivering its hitscan is not a player, so its impact had no
 		// gun: every gun threw the same chips, with no ricochet and no light. The round knows its shooter and its hand
+		// (load check 2.0.5n: RSQ_PlayerRound lives in ZSCRIPT.rsx, compiled after this lump, so it is found by name and its
+		// hand read from special2, which the round sets beside offHand)
 		Actor who = e.Thing;
-		let rnd = RSQ_PlayerRound(e.Thing);
+		bool rnd = IsRound(e.Thing);
 		if (rnd)
 		{
-			who = rnd.target;
-			off = rnd.offHand;
+			who = e.Thing.target;
+			off = e.Thing.special2 != 0;
 		}
 		if (!On() || !who || MeleeHand(who, off))
 			return;
@@ -154,6 +156,13 @@ class RSQ_Ballistics : EventHandler
 		if (hg != 'None' && !rnd)	// 2.0.5n: a True Bullets round is its own round in flight; only the impact is new
 			RSQ_Bullet.Fire(who, e.AttackPos, e.DamagePosition, hg);
 		Impact(who, e.DamagePosition - d * min(12, len), d, 24, off);
+	}
+
+	static bool IsRound(Actor a)
+	{
+		if (!a) return false;
+		for (class<Object> c = a.GetClass(); c; c = c.GetParentClass()) if (c.GetClassName() == 'RSQ_PlayerRound') return true;
+		return false;
 	}
 
 	void Impact(Actor tracer, Vector3 from, Vector3 dir, double dist, bool off = false)
