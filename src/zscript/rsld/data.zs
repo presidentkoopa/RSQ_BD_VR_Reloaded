@@ -23,7 +23,20 @@ class RSLD_Data
 		"5|MiniGun", "5|PuristMiniGun", "5|Rifle", "5|DualRifles", "5|PuristRifle",
 		"6|Rocket_Launcher", "6|PuristRocket_Launcher",
 		"7|Plasma_Gun", "7|DualPlasmaRifles", "7|PuristPlasma_Gun",
-		"8|BIG_FUCKING_GUN", "8|PuristBIG_FUCKING_GUN"
+		"8|BIG_FUCKING_GUN", "8|PuristBIG_FUCKING_GUN",
+		// 2.0.5o EVERY GUN CAN BE LEGENDARY (owner 2026-11-24: "the bd22 set isn't fully covered by legendoom"; 18:15 "get this
+		// done"): LegenDoom has nine slots, so the rest of BD22's guns join the slot whose job they share and carry its
+		// legendary while held. Drops still hand over the slot's own gun (Give); owning one of these does not count as
+		// owning it (Same is unchanged). Hand grenades stay out: they are thrown, not held.
+		"0|BrutalAxe", "0|DSweap",
+		"1|Flamethrower2", "1|PuristFlamethrower2", "1|FlameCannon", "1|DualFlameCannon", "1|PuristFlameCannon",
+		"2|BrutalSMG", "2|DualSMG", "2|PuristSMG", "2|MP40", "2|DualMP40", "2|PuristMP40",
+		"3|AssaultShotgun", "3|PuristAssaultShotgun", "3|Revolver", "3|PuristRevolver",
+		"5|Machinegun", "5|MG42", "5|PuristMG42", "5|Sniper", "5|PuristSniper",
+		"6|GrenadeLauncher", "6|PuristGrenadeLauncher", "6|IncendiaryLauncher", "6|PuristIncendiaryLauncher", "6|Devastator", "6|PuristDevastator",
+		"7|RailGun", "7|PuristRailGun",
+		"8|BFG10k", "8|PuristBFG10k", "8|NukeLauncher", "8|PuristNukeLauncher", "8|Unmaker", "8|PuristUnmaker",
+		"8|HellishMissileLauncher", "8|PuristHellishMissileLauncher"
 	};
 	// Same: the guns that count as already owning the gun a legendary pickup SHOWS (Give, or the Silvergun): the given
 	// gun and its own Purist/Dual copies. The Family's stand-ins are left out (the Rifle stands in for the Chaingun
