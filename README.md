@@ -26,7 +26,9 @@ rate of fire. Now you hold them.
 
 **[Install](#install)** · **[What you get](#what-you-get)** · **[LegenDoom](#legendoom-built-in)** · **[Alongside](#released-alongside-it)** · **[Options](#options)** · **[Good to know](#good-to-know)** · **[Changelog](CHANGELOG.md)** · **[Credits](#credits)**
 
-## Install
+<p align="center"><img src="renders/readme/divider.png" alt=""></p>
+
+<a name="install"></a><img src="renders/readme/h2_install.gif" alt="Install">
 
 Everything is in the [pk3/](pk3/) folder. Load, in this order:
 
@@ -44,9 +46,11 @@ doom2.wad  ->  brutal22test6.pk3  ->  02_BD22_VoxelPack.pk3  ->  03_BD22_VR-Relo
   and XMVE's monsters. Only for the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries).
 - **Build it yourself:** `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
 
-## What you get
+<p align="center"><img src="renders/readme/divider.png" alt=""></p>
 
-### Every gun reloads by hand
+<a name="what-you-get"></a><img src="renders/readme/h2_what-you-get.gif" alt="What you get">
+
+<a name="every-gun-reloads-by-hand"></a><img src="renders/readme/h3_every-gun-reloads-by-hand.gif" alt="Every gun reloads by hand">
 
 ![Hands on every reload](renders/2.0_reload_hands.png)
 
@@ -72,7 +76,7 @@ belt, bring it to the gun and push it home.
 - **Brutal Doom never reloads its heavy guns.** Here nine of them have real magazines, cut out of each gun's own model.
 - **Don't want it?** Turn **VR Reloading** off and every gun reloads as Brutal Doom made it.
 
-### Hands on every gun
+<a name="hands-on-every-gun"></a><img src="renders/readme/h3_hands-on-every-gun.gif" alt="Hands on every gun">
 
 ![Hands on the guns](renders/hands_on_guns_1.png)
 
@@ -82,7 +86,7 @@ belt, bring it to the gun and push it home.
 - **Shots leave the muzzle you see** and go down the barrel you see, on 26 guns.
 - **18 skin tones,** from porcelain to a black glove.
 
-### LegenDoom, built in
+<a name="legendoom-built-in"></a><img src="renders/readme/h3_legendoom-built-in.gif" alt="LegenDoom, built in">
 
 **Load LegenDoom 3.0 and legendary monsters drop legendary Brutal Doom VR guns.** No patch and no other mod. The pack
 finds LegenDoom by itself and switches its LegenDoom mode on.
@@ -100,7 +104,7 @@ finds LegenDoom by itself and switches its LegenDoom mode on.
 - **With RSQ Miniboss loaded as well** (Champions is built into it), legendary guns come only from a miniboss
   fight, rarer ones from higher tiers, and its kiosk sells them.
 
-### Shooting
+<a name="shooting"></a><img src="renders/readme/h3_shooting.gif" alt="Shooting">
 
 - **True Bullets** (on): every bullet is a real round that flies from the muzzle, with a tracer, and lands with Brutal
   Doom's own damage. Off is Brutal Doom's hitscan.
@@ -112,21 +116,21 @@ finds LegenDoom by itself and switches its LegenDoom mode on.
 - **The Rocket Launcher locks on:** hold alt fire, mark up to three monsters, let go, and three rockets home.
 - **Slugs** for the Assault Shotgun and the Shotvolver; burst or full auto on the SMG.
 
-### Live scopes
+<a name="live-scopes"></a><img src="renders/readme/h3_live-scopes.gif" alt="Live scopes">
 
 ![Live 3x scope, toggled on alt fire](renders/2.0_scope_3x.png)
 
 The **Ruger** and the **Railgun** have a real 3x picture in the lens, and both are zeroed at 30 metres. Alt fire
 turns the scope off and on, which saves the Quest a second view of the world.
 
-### A gun in each hand
+<a name="a-gun-in-each-hand"></a><img src="renders/readme/h3_a-gun-in-each-hand.gif" alt="A gun in each hand">
 
 - **13 guns have an off-hand twin:** Pistol, Silvergun, Shotvolver, SMG, MP40, Rifle, Plasma Gun, Shotgun, Super
   Shotgun, Assault Shotgun, Railgun, Minigun and the Axe.
 - **Pick a gun up and you already own its twin,** loaded. Brutal Doom's Dual key draws it.
 - **Reload by pointing the gun at the floor and pulling its trigger,** or press Reload and both hands reload.
 
-### Grenades, blades and doors
+<a name="grenades-blades-and-doors"></a><img src="renders/readme/h3_grenades-blades-and-doors.gif" alt="Grenades, blades and doors">
 
 - **The grenade:** pull the pin with your other hand, or with your teeth. Swing and let go to throw; let go while
   still and it cooks.
@@ -138,7 +142,7 @@ turns the scope off and on, which saves the Quest a second view of the world.
 - **Real punches** with either fist, and a **pistol whip** with any pistol or revolver.
 - **Lift doors by hand:** take hold of a door and raise it. Past 40% it opens the rest of the way.
 
-### Released alongside it
+<a name="released-alongside-it"></a><img src="renders/readme/h3_released-alongside-it.gif" alt="Released alongside it">
 
 Four mods from the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries) are released with this pack. Each is its own pk3, loaded after the weapons,
 and each works without the others. Get them from the Series' [pk3 folder](https://github.com/presidentkoopa/RSQ_UBQSeries/tree/main/pk3).
@@ -154,7 +158,7 @@ and each works without the others. Get them from the Series' [pk3 folder](https:
 - **[RSQ Laser Sight](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/LaserSight/README.md)** (`RSQ_LaserSight.pk3`): a laser out of every gun's own
   barrel, both hands, with a dot where the shot will land.
 
-### With the rest of the RSQ UBQ Series
+<a name="with-the-rest-of-the-series"></a><img src="renders/readme/h3_with-the-rest-of-the-series.gif" alt="With the rest of the Series">
 
 The Series is a game mode of its own, built with Brutal Doom in mind and not dependent on it. Each of these is found
 by name, and the pack needs none of them.
@@ -166,13 +170,15 @@ by name, and the pack needs none of them.
 - **RSQ Miniboss:** its kiosk sells this pack's legendary guns.
 - **A saber, ShieldSaw, flare, flashlight or whip in the off hand:** the main gun reloads by the gesture.
 
-### Guns you won't find
+<a name="guns-you-wont-find"></a><img src="renders/readme/h3_guns-you-wont-find.gif" alt="Guns you won't find">
 
 Six guns are switched off, each with a stand-in wherever a map would place it: MP40 (SMG), MG42 (Minigun), Devastator
 and Hellish Missile Launcher (Rocket Launcher), Flame Cannon (Flamethrower), Incendiary Launcher (Grenade Launcher).
 **Cheat Extra Weapons** lets cheats give the real six.
 
-## Options
+<p align="center"><img src="renders/readme/divider.png" alt=""></p>
+
+<a name="options"></a><img src="renders/readme/h2_options.gif" alt="Options">
 
 **Options → BD22 VR Weapons** (also in Brutal Doom's own menu). The main page is short: hands and skin tone,
 reloading, the HUD (Brutal Doom's status bar or the **VR Row**: each hand's ammo on its side, the face between health
@@ -192,7 +198,9 @@ and **Test and Debug**, where everything else lives. With LegenDoom loaded there
 
 Everything else described on this page is on. The pack binds no keys.
 
-## Good to know
+<p align="center"><img src="renders/readme/divider.png" alt=""></p>
+
+<a name="good-to-know"></a><img src="renders/readme/h2_good-to-know.gif" alt="Good to know">
 
 - **With a gun in your off hand there is no hand reloading.** Each gun reloads by the gesture or the Reload button.
 - **The under-barrel launcher only unlatches while you two-hand the gun,** and the latch is always the off trigger.
@@ -201,11 +209,15 @@ Everything else described on this page is on. The pack binds no keys.
 - **Your fists punch when you swing them.** The trigger does not throw a canned punch in VR.
 - **With LegenDoom loaded,** Brutal Doom's own Dual Pistols weapon is put away. Hold a pistol in each hand instead.
 
-## Changelog
+<p align="center"><img src="renders/readme/divider.png" alt=""></p>
+
+<a name="changelog"></a><img src="renders/readme/h2_changelog.gif" alt="Changelog">
 
 Every build since 2.0.2a, and the release notes for 2.0 and 1.99, are in **[CHANGELOG.md](CHANGELOG.md)**.
 
-## Credits
+<p align="center"><img src="renders/readme/divider.png" alt=""></p>
+
+<a name="credits"></a><img src="renders/readme/h2_credits.gif" alt="Credits">
 **BD22 VR Weapons Q**: project conceptualized, directed and coordinated by **PresidentKoopa** (Radiant Silvergun). All coding done by agentic **Claude** (Anthropic), working under his direction.
 
 Weapon models: **br_vr** by ajantaju (Brutal Doom VR Weapons, BD v21), made from:
@@ -231,7 +243,9 @@ Weapon models: **br_vr** by ajantaju (Brutal Doom VR Weapons, BD v21), made from
   (https://github.com/0dot0repeating/dakka, WTFPL), ported to ZScript
 - Player Ballistics (Bullet mode): ported from PresidentKoopa's RS_Ballistics `enemyfire.zs`
 
-## More pictures
+<p align="center"><img src="renders/readme/divider.png" alt=""></p>
+
+<a name="more-pictures"></a><img src="renders/readme/h2_more-pictures.gif" alt="More pictures">
 
 ![Kitbash M4 + M203](renders/m4_m203.png)
 
