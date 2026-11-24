@@ -1,8 +1,8 @@
-![BD22 VR Weapons](renders/hero.gif)
+<p align="center"><img src="renders/hero.gif" alt="BD22 VR Weapons"></p>
 
-# BD22 VR Weapons 2.0
+<h1 align="center"><img src="renders/readme/title.gif" alt="BD22 VR Weapons 2.0"></h1>
 
-**Brutal Doom v22 in VR.**
+<p align="center"><b>Brutal Doom v22 in VR.</b></p>
 
 Project conceptualized, directed and coordinated by **PresidentKoopa**. All coding done by
 agentic **Claude**.
