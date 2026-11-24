@@ -1,0 +1,687 @@
+# BD22 VR Weapons: changelog
+
+[&larr; back to the README](README.md)
+
+Every build since 2.0.2a, newest first, then the release notes for 2.0 and 1.99 as they were written. The newest
+built pk3 is in [pk3/](pk3/); [VERSION](VERSION) is the source's number.
+
+- [Builds, 2.0.2a to now](#builds-202a-to-now)
+- [What was new in 2.0](#whats-new-in-20)
+- [What was new in 1.99](#what-was-new-in-199)
+
+## Builds, 2.0.2a to now
+
+Newest first. The current build is in [pk3/](pk3/) as `03_BD22_VR-Reloaded_2.0.5l.pk3`. Builds marked
+*rig only* were tested on the development rig. Nothing in this changelog has been confirmed in the owner's headset yet.
+
+- **What's new in 2.0.5m** (11-24): **the options menus in Brutal Doom 22's style**: about 14 short On/Off rows on the main page, everything else on Test and Debug; no setting or default changed.
+- **What's new in 2.0.5l** (11-23; *code only, not run in the headset*): **a painted axe throws on any release**, as the saber's painted release does (the owner's pick, "Marked = flick throws"): it flies straight at the mark. Unpainted, the swing still decides.
+- **What's new in 2.0.5k** (11-23; *code only, not run in the headset*): **the axe and the hand grenade throw from 1.5 m/s**, the series' one throw since 11-22 (RSQ Grenade, ShieldSaw and FnF already moved off 2.5). The same hand sampler; only the threshold changed.
+- **What's new in 2.0.5j** (11-23; *code only, not shown*: the card needs the watch check in a headset): **the off-hand
+  chaingun has its Gun Card** (owner 09:25: "offhand chaingun" had none). RSQ Gun Cards draws a card on each off-hand gun
+  from a model block per gun class, generated into this pack (MODELDEF.rsqgc, RSQGCOFF.rsq) by its tools/gen_modelcard.py;
+  2.0.5e's RSQ_Off_Minigun was never added to that list. Added and regenerated (only its blocks are new). Gate on the
+  owner's order: only BD_VoxelPack's 4 voxeldef errors.
+- **What's new in 2.0.5i** (11-23; *rig only, not headset-confirmed*): **the chaingun drops a NO AMMO box** (owner 09:11:
+  "it needs to say NO AMMO ... dark red is fine"; 09:16: "take the existing ammobox voxel, dye it red, make it say NO AMMO").
+  The spent box is the same voxel ammo box, full size, dyed dark red, with NO AMMO on its top in two lines once it lands.
+  Found on the rig: 2.0.5e's dropped box never showed (its offsets, copied from the Minigun magazine piece, put it out of
+  sight), so the chaingun looked like it dropped nothing. Rig mag5: the red box and its label on the floor beside a rifle
+  mag. Gate on the owner's order: only BD_VoxelPack's 4 voxeldef errors.
+- **What's new in 2.0.5h** (11-23; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.5h.pk3`):
+  - **The Reload button leaves a lone gun to VR reloading** (owner 11-23: "if it was one gun every time... it would
+    defeat the fucking point of a vr reloading mod"). Since 2.0.5e one press reloaded every gun in your hands, which
+    with a single gun finished its hand reload for you. Now the button reloads the off hand's gun always and the main
+    gun only while the off hand holds a gun too. A gun alone in the main hand is yours to reload by hand, as before
+    2.0.5e (the button does not touch it, finish its hand reload or load its launcher). *Rig `rl1` (the owner's order):
+    a lone Rifle, Reload pressed: "left to the hand reload", nothing reloaded. `rl2`: dual Rifles (a second Rifle and
+    the Dual key), one press: the off-hand copy and the main Rifle both reloaded.*
+- **What's new in 2.0.5g** (11-23; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.5g.pk3`):
+  - **The plasma rifle's beep while moving** (owner 11-23: "when i had the plasma rifles out and dualed the 'charge beep'
+    was constantly firing when i moved, always"). Moving in VR is BD22's sprint, and once you are out of stamina the
+    sprint drops back through the gun's Ready every few tics; Ready plays BD22's low-magazine beep (Plasma/BeepQuiet)
+    whenever 10 or fewer cells are loaded, so it beeped nonstop. Ready now goes straight back to the sprint while you are
+    running and beeps once you stop. Plasma rifle, its off-hand copy and BD22's own dual plasma. *Rig `dp2` / `dp4` (two
+    plasma rifles, 8 cells each, out of stamina, running): before, the beep on every pass for the whole run; after, once
+    when the tiredness wore off and once on stopping. With a full magazine it never beeped, before or after.*
+- **What's new in 2.0.5f** (11-22; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.5f.pk3`). Two changes to the kiosk service RSQ Miniboss's Boss kiosk asks (`RSLD_KioskService`,
+  `zscript/rsld/kiosk.zs`); nothing else changed:
+  - **The kiosk counts the gun's family** (owner 11-22: "Yes, count the family"). `"yours"`'s third field (owns the gun)
+    now counts the whole family LegenDoom's legendary of that slot rides on: the starting Rifle for a Chaingun offer, the
+    Silvergun for a Pistol offer, the Purist and Dual copies (`RSLD_Handler.OwnsGun` or `OwnsFamily`). RSQ Miniboss's
+    kiosk only offers guns you carry, so with only the starting guns it used to roll nothing; now the Rifle brings
+    Chaingun offers. *Rig `kstrip2_frame`: a player with the starting Rifle gets owns 1 for a Chaingun offer, 0 for a
+    Pistol offer (no pistol or Silvergun carried) and 0 for a Shotgun offer.*
+  - **The effects' numbers** (owner 11-22: "Yes, add numbers"). `"stats"` (an offer), `"yours.stats"` and `"yours.desc"`
+    (the effect you hold on that offer's gun) give an effect's numbers, worked out exactly as this mod's own effect class
+    applies them from LegenDoom 3.0's numbers: damage (Pristine, Raging, Rampaging, Serious, Pro-Strat, Steady Shot, CQC,
+    Machine x2 to x3; Lucky x5 on its lucky pulls, 23% of them; Berserker up to x3; Hunting x3; Advanced x1.95;
+    Six Shooter x10; Entrenched x2), fire rate (Rapid x2, Machine x7, Advanced x2.8, Wind-Up up to x4, Trailblazing up to
+    x1.27, Hunting x0.78, Six Shooter x0.5), damage against the effect's monster group (x3, Demon Slayer x4), a free shot
+    (Unlikely 33%, Improbable 66%, Impossible 50%), the health and armour bonus chance (Nano-Circuit 68%), ammo used
+    (Efficient x0.5), spread (CQC x3) and damage taken (Entrenched x0.5). Every other effect is a behaviour with no number
+    and answers "": its description says what it does. Many numbers apply only at a moment (Pristine at full health,
+    Raging with Berserk), which the description says. *Rig `kstrip2_frame`: every effect's `"stats"` logged (30 of
+    LegenDoom's 182 effects have numbers), and the Boss kiosk's strip showing Pro-Strat x2.0 against Raging x3.0.*
+- **What's new in 2.0.5e** (11-22; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5e.pk3`):
+  - **House of the Dead reload** (owner 11-22: the wrist flick hurts). Wherever the flick reloaded (a gun in each hand; a
+    lone rifle's launcher; a lone Super Shotgun; the main gun with a saber, Zippo, ShieldSaw or other RSQ item in the off
+    hand), now **point the gun off-screen and pull that hand's trigger**: it reloads instead of firing. Off-screen is at
+    least **Off-Screen Angle** (60 degrees by default, slider 40 to 85) below where your headset looks, or 120 degrees
+    off it (behind you). It is measured against your view, so a low shot at a crawling enemy you are looking at is on
+    screen and fires as always. No flick, no wrist speed. **Reload Gesture**: *Point Off-Screen + Trigger* (default) or
+    *Flick (old)*; **Dual Reload Gesture** (was "Dual Flick to Reload") still switches the gesture off. How the shot is
+    stopped with no engine change: a layer of our own ticks before the guns' layers and sends a gun pointed off-screen
+    into its Reload before the gun's own tick sees the trigger; a second one after them catches a gun that comes back
+    to its ready loop with the trigger still held (`zscript/rsq/flick.zs`). A lone rifle's off-screen press loads its
+    launcher and fires nothing while held; with nothing to load, it fires.
+  - **The Reload button reloads every hand, every time.** QuestZDoom's Reload (any of its reload buttons) reloads both
+    guns when you dual-wield, or the one gun you hold, in one press. A gun busy firing takes it as soon as it is ready
+    (the press waits up to 3 seconds). A one-gun hand reload (VR reloading) runs by itself from the press to the end:
+    the magazine falls, the new one goes home, the handle racks, at the gun's own sounds (`RSR_State.autoDone`). A
+    rifle's launcher that needs a round gets one. The pump shotgun and the break-open guns held alone keep their own VR
+    loading on the button (a shell goes in on it).
+  - **The rifle's launcher on the gesture and the button.** The flick, the off-screen trigger and the Reload button load
+    the launcher with hand-loading's ammo: a rocket in Rockets mode, a hand grenade in Hand grenades mode, and with RSQ
+    Grenade's grenades the one you carry, of your current kind. The empty shut launcher of either hand, and a lone
+    rifle's **open** tube: a round goes home (the one in your hand, if there is one) and the tube shuts. The off-hand
+    rifle's round now keeps its kind too (`RSM_KindRoundOff`, `RSM_KindLoadedOff`).
+  - **The under-barrel grenade's kind on the off trigger.** Holding the small grenade from the rig's grenade spot, the off
+    hand's **trigger** cycles its kind (its alt trigger still does). With the trigger as the grab (Grab Ammo With: off
+    trigger, the default) it is a tap: let go and squeeze again within a quarter second and the grenade stays in your
+    hand. The press fires nothing and drops nothing.
+  - **The kind's name on the grenade.** When you take the small grenade and whenever its kind changes, its name pops on it
+    as a small SOTN world word: IMPACT, STUN, FREEZE, FRAG... It rides the grenade and a new one replaces the last. RSQ
+    Grenade names the kind and RSQ VisualRewards draws it, both asked by name (`RSQGN_Service` "kind.word"); without
+    them, nothing.
+  - **Dual Minigun.** BD22's chaingun (the Minigun) can be held in both hands: `RSQ_Off_Minigun`, made the way every
+    off-hand copy is, generated from `Minigun.dec` (`tools/dual_minigun/gen_off_minigun.py`: `DECORATE.rsqdualmg`,
+    `MODELDEF.rsqdualmg`). The same shots, spread, damage and rate; each hand spins up on its own; its own 200-round
+    magazine, the reserve shared; it reloads on the gesture or the Reload button from the pouch, at BD22's belt sounds.
+    **Dual Options > Minigun** (on). The main Minigun, when the hand reload cannot take it (a gun or an RSQ item in the
+    off hand), tops its magazine up by itself instead of sitting empty.
+  - **The Minigun's magazine is the voxel ammo box**, as in GNRC Reloaded: Brutal Doom's voxel ammo box as an MD3 (the RSQ
+    UBQ Series' own, copied with GNRC's three placements), at the gun, in the off hand, and dropped. The dropped one is
+    smaller (three quarters) and dark grey, so it reads as empty (`tools/ammobox/empty_skin.py`); it falls, fades and is
+    cleaned up as every dropped magazine.
+  - **Both hands' projectile impacts** (owner: in slow motion, firing both hands showed our ballistic effects only on the
+    main hand). A projectile's landing (its sound, ricochet, light and chips) is now the gun of the hand that fired it
+    (`ballistics.zs` RSQ_Tracer, through `RSQ_Muzzle.MissileOff`); an off-hand gun's brass takes its own gun's casing
+    mesh and size (`casings.zs`).
+- **What's new in 2.0.5d** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5d.pk3`): **RSQ Grenade's grenades in the under-barrel launchers, each round keeping its
+  kind** (owner 11-17: "we grab grenade, alt fire cycle to the one we want ... and we load it into the launcher. So, we
+  could load a charm grenade into the rifle, but still switch to a different kind of throwable grenade later"). With RSQ
+  Grenade's grenade the one you carry (it replaces Brutal Doom's, as 2.0.5b) and RSQ Tactical Rig on, the Rifle's and the
+  Machinegun's launcher, open for loading, take a round from the rig's **grenade spot** as well as from the ammo pouch.
+  **Grab**: the off hand at the grenade spot, "Grab ammo with" as for any round: a small grenade (RSQ Grenade's own mesh,
+  scaled to the 40 mm round) of your current kind, in that kind's skin. The rig keeps no kind of its own: "the type stored"
+  is the kind you last picked, RSQ Grenade's. **Cycle**: the off hand's alt trigger while you hold it cycles the kind with
+  RSQ Grenade's own rules (Alt Fire Cycles Grenade Types, the kinds you own) and that is your kind from then on, for the
+  hand grenade too. **Load**: push it home as a round; it costs one of RSQ Grenade's grenades, and the loaded round keeps
+  its kind whatever you pick afterwards. **Fire**: it flies as the launcher's own round (Brutal Doom's ShortGrenade:
+  speed, drop, trail, sprite) and bursts as that kind's grenade, through RSQ Grenade's own blast and art (asked by name:
+  `RSQGN_Service` "burst"), Brutal Doom's 40 mm explosion not played. The round's direct hit keeps its damage, except for
+  the kinds that do no blast damage (freeze, smoke, flash, charm, infight), whose direct hit does none. The ammo pouch's
+  round is the launcher's plain round as before (Rifle Underbarrel Ammo: rockets or hand grenades). While the launcher is
+  open the rig leaves the grenade spot to it (no hand grenade comes out there). Needs RSQ Grenade and RSQ Tactical Rig
+  from the same day (their "burst", "kind.next", "kind.share" and "nade.at"); without them nothing changes. New:
+  `DECORATE.rsm` (`RSM_KindRound`: ShortGrenade with only its explosion changed, fired by `Rifle.dec` FireGrenade /
+  FireGrenade2 and `Machinegun.dec` RSM_Fire while a grenade is loaded), `MODELDEF.rsmnade`, the grenade meshes and kind
+  skins made by `tools/rsm_nades/gen_rsm_nades.py`. No defaults changed.
+- **What's new in 2.0.5c** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5c.pk3`): **both guns show their shots when you fire two at once** (owner 11-17: "when i fire
+  two weapons at once i only see bullets and shit from one gun even though technically both fire"). Both guns always
+  fired and dealt damage; some of the look was kept per player or per tic, or read from the main hand, instead of per
+  hand. **Muzzle glow**: Brutal Doom spawns it from the body, not the gun, and `muzzle.zs` put every glow on the MAIN
+  gun's muzzle, the off-hand gun's too. The off-hand copies now tag their glow (`DECORATE.rsqdual`, `SXF_SETTRACER`) and
+  it goes on the off gun's muzzle. **Muzzle flash light** (`flash.zs`): one a tic for everybody, at the main hand, with
+  the main gun's light; now one per hand a tic, at that hand, with that hand's gun's light (the sound tail stays one a
+  tic). **The hand's own gun, not the main one**: Hitscan mode's round and impact look (`ballistics.zs`), the Ruger
+  check of the Dakka tracer (`shotfx.zs`: a gun beside a main-hand Ruger lost its tracer), and the melee check (a gun
+  in the off hand while the main hand holds fists or an axe lost its tracers, trails and flash). **Missiles**
+  (`muzzle.zs`): when both controllers fit a new missile, the one its line runs nearer to wins (the main hand used to be
+  tried first). Damage, aim and spread are unchanged. No defaults changed. An earlier rig run of 2.0.5a, made before the
+  owner stopped rig checks (dual rifles fired together on one tic, MAP01), logged one round and one Dakka/BD22 tracer per
+  hand, each from its own muzzle, but both muzzle glows on the main gun and one flash light at the main hand: those
+  two are what this changes. 2.0.5c itself has not been run.
+- **What's new in 2.0.5b** (11-17; *code only, not run (owner's call), not headset-confirmed*; source only: `python build.py`
+  makes `BD22_VR-Reloaded_2.0.5b.pk3`): **the under-barrel 40 mm loads with RSQ Grenade's grenades** (owner 11-17: "i
+  cannot load bd22 overunder with the RSQ grenade"). With Rifle Underbarrel Ammo set to Hand grenades, the launcher took
+  Brutal Doom's `GrenadeAmmo`. When RSQ Grenade replaces Brutal Doom's grenade (its Replace Brutal Doom's Grenade, on by
+  default, or our Use RSQ Grenade Instead), the grenades you carry are RSQ Grenade's (`RSQGN_Ammo`), so no round was ever
+  taken. Now `rsr_m203.zs` `RSM.AmmoClass` takes RSQ Grenade's grenades whenever Brutal Doom's grenade stands down for it
+  (`RSG_Handler.StandDown`, by name at run time). Without RSQ Grenade, or with it standing down, it uses `GrenadeAmmo` as
+  before. Rockets (the default) are unchanged. **The Machinegun's launcher** (`Machinegun.dec`): a round loaded by hand
+  in VR now fires without a rocket in reserve. Its AltFire checked for a rocket before it checked for the hand-loaded
+  round, and its RSM_Fire shot used ammo, which took a second rocket or fired nothing without one. Now it works like
+  the Rifle's: the round is paid for when it goes in. Out of VR, or with Real reload off, BD21's own launcher is
+  unchanged. No defaults changed.
+- **What's new in 2.0.5a** (11-16; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.5a.pk3`): **the RSQ UBQ Series' Gun Cards small card on the off-hand guns is built in**, so the
+  bridge pk3 `RSQ_GunCards_BD22VR.pk3` is gone (owner 11-16: no extra pk3s; delete it if you have it). A layer drawn on the
+  off hand belongs to the off-hand gun, and QuestZDoom 17.3 finds its model by that gun's class, so the blocks live with
+  the guns: `src/MODELDEF.rsqgc` (the 65 classes: the `RSQ_Off_*` copies and every Brutal Doom 22 gun with ammo that can
+  go in the off hand, Purist versions too), our own copy of the card's models (`src/models/rsq/gcmc/`, byte-for-byte Gun
+  Cards'), `src/zscript/rsq/gcsprites.zs` (states that only name the card's sprites, so the blocks parse without Gun
+  Cards) and `src/RSQGCOFF.rsq` (the list Gun Cards reads). All four are GENERATED by the RSQ UBQ Series'
+  `GunCards/tools/gen_modelcard.py --bd22vr <this repo>`; do not edit them by hand. Without Gun Cards they draw nothing:
+  doom2, brutal22test6, BD_VoxelPack and this pack load and play with the same log as 2.0.4z (BD_VoxelPack's own four
+  script errors, nothing new). With Gun Cards, on the owner's full order, the off-hand shotgun's card is the same layers
+  and picture as with the bridge (RSQ UBQ Series GunCards/docs/modelcard/20261116_*).
+- **What's new in 2.0.4z** (11-16; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.4z.pk3`): **worn guns shoot wider** with the RSQ UBQ Series' Weapon Condition (RSQ Gun Cards, off by
+  default; its design/WEAPON_CONDITION.md). `muzzle.zs` asks Gun Cards by name (`RSQGC_Service` `"cnd.spread"`) and widens
+  BD22's own spread by the answer, beside the two-hand grip's tightening: main-hand hitscans and either hand's missiles
+  (an off-hand hitscan is the engine's own and keeps its spread). 1.0 without Gun Cards or with Weapon Condition off. Rig
+  (the Rifle, trigger held): 0.74 deg at condition 100, 0.87 at 55, 1.03 at 25; off: 0.73 / 0.69 / 0.71. Damage, rate,
+  backfire and misfire are Gun Cards' own (on hit, for every gun); the wild flip's extra pellets are not asked yet.
+- **What's new in 2.0.4y** (11-16; *rig only, not headset-confirmed*; source only: `python build.py` makes
+  `BD22_VR-Reloaded_2.0.4y.pk3`, the pk3 is not in [pk3/](pk3/)): **the RSQ UBQ Series' Boss kiosk** (RSQ Miniboss,
+  design/KIOSK.md). A new service other mods ask by name, `RSLD_KioskService` (`src/zscript/rsld/kiosk.zs`): it rolls a
+  Boss's kiosk offers (three legendary weapons on three different guns, each rarity rolled at the Boss's tier the way the
+  Boss's own legendary drop is, with an effect LegenDoom rolls at that rarity on that gun), raises one a rarity step
+  (LUCKY), names them for the kiosk's card (gun, rarity, effect, its description, and what you hold on that gun), and
+  makes a bought one as the real legendary pickup and hands it to you. When RSQ Miniboss drops a kiosk it tells this mod
+  so (`kiosk.take`), and that Boss's own legendary drop is not made; without the kiosk every drop is exactly as in 2.0.4x.
+  Loads on the owner's full order with no script error from this pack (rig runs kq_e2e3, kq_in7: offers rolled, the
+  Boss's drop suppressed, bought legendaries taken).
+- **What's new in 2.0.4x** (11-13; *loads only until the rig run below says otherwise*): **legendary weapons drop only
+  from a miniboss** (owner: "i am getting legendary drops literally all the time"). A boosted legendary dormant champion
+  outside a miniboss fight (and so a DOWN target, or one killed by a revive) drops nothing now; **Legendary Champions Drop
+  Too** (`rsld_champion_drops`, off) on the LegenDoom page brings their drop back. **Remove HUD Ammo** (`rsq_hud_noammo`,
+  off; the row is on RSQ Gun Cards' page, beside Remove HUD Health and Armor): the HUD draws no ammo counts or ammo icons,
+  in every status bar style.
+- **What's new in 2.0.4w** (11-13): **the hand poses are 2.0.4u's again.** 2.0.4v's re-posed hands were wrong in the engine
+  (hands slid off the triggers and sat in the guns) and are withdrawn. The 25 hand files in `models/rsq/fbx` are byte-for-byte
+  2.0.4u's; nothing else changed. Use this build instead of 2.0.4v.
+- **2.0.4v (withdrawn)** (11-13; *pictures only, not run in the engine, not headset-confirmed*): **the FBX hand is fitted
+  to every gun's grip.** On 26 of the 28 held weapons, the right hand's "finger on the trigger" and "squeezed" frames are
+  re-posed: the pack's own FBX hand, at the pack's own size, closed on that gun's grip by Quake VR's grasp solve (each
+  finger curls until it meets the gun; the thumb and palm are kept out of it), the index finger on the trigger, and on the
+  trigger pulled for "squeezed". The hand stays where each gun's hold put it; only the fingers, thumb and palm settle on
+  the grip. Every other frame, every UV and skin, and every other file are as in 2.0.4u. **Not changed:** Sniper and
+  HellishMissileLauncher (their holds need a re-fit of the hand's place, not only its fingers), and the left / support
+  hands. Made and checked with UZDXREMA `tools/avatar/qvrgrasp` (`bake_fbx.py`, `check_bake.py`: each baked .md3 read back
+  as the game reads it, beside its gun). Known weak spots in the pictures: BrutalSMG and BFG10k thumb short of the gun;
+  RailGun, Unmaker, Chain_saw and SSG a finger 2-5 mm into the grip; Flamethrower and Machinegun pinky past the grip's end.
+- **What's new in 2.0.4u** (11-13; *rig only, not headset-confirmed*, runs club1 / club0): **RSQ Melee is the melee mod**
+  (owner 11-13 01:32: "GET THE MELEE INTO RSQ MELEE"). The **butt strike**, the **pistol whip** (both hands) and the fists'
+  **VR Punching** moved into RSQ Melee, ported line for line with every number kept: the swing needed (2.4 m/s at the
+  stock, 5.0 at the muzzle), the forward / downward shares, the 90-unit reach ahead of the stock, the striking points on
+  each gun's model, Brutal Doom's own KickAttack / MeleeStrikeNormal blows, the swing sound and the buzz. **With RSQ Melee
+  loaded** (2026-11-13 or later) this pack asks it by name and its own three stand down; their rows here now read
+  "(without RSQ Melee)" and RSQ Melee's options have them. The first time both load, your values for these rows are copied
+  into RSQ Melee's once. **Without RSQ Melee** they are this pack's own, exactly as in 2.0.4t. The axe, the Dragonslayer
+  and the chainsaw stay here (each weapon's own attack), and so do the Melee Hit Flash (it draws on RSQ Melee's hits too)
+  and No Trigger Punch. New: **Log who does the butt strike, whip, VR punch** (`rsvr_melee_log`, on the reload debug page).
+  On the rig, with RSQ Melee loaded (the owner's full order, run club1): a Rifle shove and both pistol whips hit through
+  RSQ Melee, and this pack logged its butt strike and its pistol whip (main and off hand) standing down. The VR punch
+  landed once, through RSQ Melee. Without RSQ Melee (run club0, the same order minus RSQ_Melee.pk3): this pack's own VR
+  punch hit, but **its own butt strike and pistol whip were not shown**: no strike came in that run. The rig drew a frame
+  only every 3 to 9 tics in that run, against 1 to 2 in club1, and both pose readers (this pack's and RSQ Melee's copy)
+  need a fresh hand pose at least every 3 tics. That is the likely cause, and it is not proved. This pack's own path
+  changed only by the stand-down check, which logged nothing in club0, so it did not stand down. A short BD-alone run is
+  still owed. Only the 4 voxeldef.txt errors from 02_BD22_VoxelPack.pk3, which were there before.
+- **What's new in 2.0.4t** (11-12; *rig only, not headset-confirmed*, runs trio1 / trio2): two small changes the owner picked. **Miniboss, not Bossfight**, in what you see: the LegenDoom page's rows now read **Legendary Guns Only From Minibosses** (`rsld_bossfight_only`) and **Miniboss Drop Rarity By Tier** (`rsld_tier_rarity`), and the debug line says "came with a miniboss fight"; the cvar names, and the RSQ Miniboss requests this pack asks by name, are unchanged, so your settings stay. **RSQ Accessibility's Rumble Backup covers this pack's buzzes** (the axe, the hand reload, the break-action guns): with RSQ Accessibility loaded and its Rumble Backup on, each buzz asks it by name first, and when it sends its buzz this pack does not send its own (one buzz, not two). Without RSQ Accessibility, or with Rumble Backup off, the buzz is this pack's own as before. On the rig (no controller, the log is the evidence): with Rumble Backup off the main- and off-hand buzz each spawned this pack's own; with it on, RSQ Accessibility logged "RSQA_BACKUP RSVR right controller (main hand)" and "... left controller (off hand)" and this pack's own was not sent; the probe listed both renamed rows; no script error from our packs on the owner's full order.
+- **What's new in 2.0.4s** (11-12; *rig only, not headset-confirmed*, runs axs1 / axs2): two axe fixes from the owner's
+  headset (11-12 21:36). **The axe count is the axes you have, the ones in your hands included.** In 2.0.4r both hands
+  could hold an axe on a count of 1: a throw handed "the next axe" to the throwing hand while the other hand still held
+  the last one, and the Wheel, a slot key or a holster could put the axe in the second hand. The next throw then left the
+  count at 0 with an axe still in the other hand until its switch-away played out (longer if that hand was winding up a
+  throw, and that throw then came from nothing). Now no more hands hold an axe than the count, and at 0 none does. A
+  throw takes the next axe only if one is left that the other hand is not holding; otherwise the hand is empty at once,
+  on the tic of the throw. Picking the axe for one hand while the other holds the last one moves it: the other hand is
+  empty at once. A throw at 0 is never made. Also: an axe from a saved game older than 2.0.4r gets its count back on
+  every display, a count raised with no axe weapon left gives the axe back, and with the main hand empty the HUD shows the
+  off hand's axe count (it showed 0). Every display reads the same number: RSQ Gun Cards, Gun Bonsai VR's screens, the
+  Wheel and this HUD. **Distance Grab always equips the axe**: an axe caught by RSQ Distance Grab (a pull or the walk-up
+  grip) goes into the grabbing hand, and that hand switches to it even with `neverswitchonpickup` on. A gun in that hand
+  goes back to the Wheel or its holster as any switch does (2.0.4r kept a main-hand gun and sent the axe to the Wheel).
+  Walking over an axe stays Doom's own pickup: with `neverswitchonpickup` on you don't switch and the count goes up by
+  1; with it off you switch to an axe you didn't have, as Doom does. RSQ Tactical Rig's axe holster now follows the same
+  count: it gives an axe only while one is left that the other hand isn't holding (code only: it loaded on the rig, but
+  no run drew from it) (`src/zscript/rsvr/axegrab.zs`, `melee.zs`, `rsq/counters.zs`, `Axe.dec`).
+- **What's new in 2.0.4r** (11-12; *rig only, not headset-confirmed*, runs axp1 / axp2): **the axe pool** (owner 11-12
+  20:42-20:5x), replacing 2.0.4q's two separate axes. Axes are a count, up to 10, shared by both hands (the axe's own
+  ammo, `RSVR_Axes`). One axe in the Wheel; either hand or both can hold one at once, and holding costs nothing. Each
+  throw from either hand spends one and the next axe comes to that hand; at 0 the hand that threw goes to its fist, and
+  so does the other hand if it held one. Any axe picked up is +1 (walked over, or grabbed with RSQ Distance Grab), and
+  at 10 it is AMMO FULL. **Your thrown axe** lies on the ground for 5 s: from 2 s it blinks red, faster and faster (a flip
+  every 10 tics down to every 2), and at 5 s it is gone. With RSQ Accessibility's Photosensitive Mode it turns red and
+  stays red instead of blinking. Grab it back with Distance Grab before then: +2 if that throw hit something (a monster
+  or anything shootable), +1 if it missed, never above 10. With MK Crits loaded, a hit and a grab-back also make your
+  **next throw a guaranteed critical**. MK Crits has no switch for that, so this pack does it MK Crits' way: its damage
+  factor, its stun, its own effect and its own sound, all looked up by name, so nothing breaks without it. The hand that
+  holds the next axe can Distance Grab (RSQ Distance Grab of 11-12 or later: it now asks this pack before the pickup,
+  `pickup.first`). The off-hand axe is now just "Axe" (one axe). Also in RSQ Tactical Rig: while you have axes, the
+  axe's holster refills, and at 0 it is unassigned. Gun Bonsai VR keeps one record for the axe in either hand
+  (`src/zscript/rsvr/axegrab.zs`, `melee.zs`, `rsq/dual.zs`, `Axe.dec`).
+- **What's new in 2.0.4q** (11-12; *rig only, not headset-confirmed*, runs ax1 / ax3 / ax4): one axe per hand, and the
+  throw -> Distance Grab it back -> throw rhythm works for the off-hand axe too. Throwing the off-hand axe while you still
+  carried the main one (in the hand, a Tactical Rig holster or the Wheel) and grabbing it back said AMMO FULL: the game
+  refuses a floor axe to anyone who carries the axe, and since RSQ Distance Grab's 11-10 AMMO FULL rule that refusal ended
+  the grab. Distance Grab now asks first (`pickup.claim`) and this pack takes it by its own rule: the off-hand axe again,
+  held in the off hand if the off hand grabbed it; grabbed by the main hand, the main hand holds its axe and the other is
+  the off hand's. Carrying both axes already, a third still says AMMO FULL (`src/zscript/rsvr/axegrab.zs`). Needs RSQ
+  Distance Grab of 11-12 or later.
+- **What's new in 2.0.4p** (11-12; *rig only, not headset-confirmed*): the floor candle has its flame again. The voxel
+  pack's candle flame draws a sprite called WICK that nothing in the load order ships (RSQ Monsters' Wicked Archvile used
+  that name, so candles wore a piece of it until RSQ Monsters renamed its sprite RVWK on 11-12); this pack now ships a small three-frame flame under it.
+- **What's new in 2.0.4o** (11-12; *rig only, not headset-confirmed*): the HUD can leave out health and armour
+  (`rsq_hud_nohp`, the row "Remove HUD Health and Armor" in RSQ Gun Cards' options), on every status bar style.
+- **What's new in 2.0.4n** (11-12; *loads; not run*): the sound on quitting the game is gone. It was LegenDoom's
+  (`menu/quit1`, `menu/quit2`); Brutal Doom sets none. Silent with LegenDoom or without.
+- **What's new in 2.0.4m** (11-12; *rig only, not headset-confirmed*): legendary weapons drop only from a miniboss and from
+  boosted legendary dormant champions (a LegenDoom legendary that is also a Champion, outside a miniboss encounter). Thralls
+  drop nothing. A legendary champion rolls 85 / 12 / 2 / 1; when it is also the DOWN target, 75 / 20 / 3 / 2 or
+  65 / 35 / 6 / 4 for the middle and top of the DOWN bar. On the rig (run `thralls`): two thralls' drops and one
+  other monster's were removed, and a legendary champion's drop was kept and rolled (Common). A drop the pack cannot tie
+  to any monster's death is still kept, as before.
+- **What's new in 2.0.4l** (11-12; *loads; the roll with these numbers not run*): the owner's drop weights (Common /
+  Uncommon / Rare / Epic). A boosted legendary thrall: 85 / 12 / 2 / 1 at the first tier, 75 / 20 / 3 / 2 at the second,
+  65 / 35 / 6 / 4 at the third (2.0.4m moved these to legendary champions: thralls now drop nothing). The miniboss:
+  50 / 30 / 15 / 5 to start, rarer rarities gaining with each tier.
+- **What's new in 2.0.4k** (11-12; *rig only, not headset-confirmed*): with LegenDoom, Champions and RSQ Miniboss, a
+  miniboss fight's legendary weapon drop has its rarity rolled by the fight's tier: 55 / 28 / 12 / 5 % weights at tier 1,
+  rarer rarities gaining with each tier. Option **Miniboss Drop Rarity By Tier** (`rsld_tier_rarity`, On; called Bossfight Drop Rarity By Tier before 2.0.4t). On the rig
+  (run `fightcard`): three drops from a first-tier miniboss fight rolled Common, Uncommon and Common.
+- **What's new in 2.0.4j** (11-12; *rig only, not headset-confirmed*): Ballistics defaults to **Low** (it was Stock). A
+  config saved under the old default is moved from Stock to Low once (`rsq_ballistics_cfg`); after that the
+  Ballistics row stays as you set it, Stock included.
+- **What's new in 2.0.4i** (11-11; *rig only, not headset-confirmed*: the hands coming back and the revolver's empties
+  shown in the rig's logs; the glow's new place shown in the log, but the rig's low-resolution frames could not show the
+  glow itself): the hands come back to the off hand when you switch the main hand
+  to a gun while RSQ Melee's off glove (`RSQ_GloveOff`) holds it (Start With Melee Hands, a Wheel pick of the gloves).
+  Before, the glove stayed and the gun had no hands, no pump and no rifle grenade load (`RSQ_Hands.Upkeep`). A glove
+  picked into the off hand while a gun is already held stays.
+  Also: BD22's muzzle glow (PlayerMuzzle1-3, a bright sprite with a light) is put on the drawn muzzle. BD22 places it
+  from the pawn (30 forward, 5 right, 30-45 up), so it stayed at standing chest height to the front right wherever the
+  gun was, about 0.8 m above a gun held while RSQ SlowMo's DOWN has you low (owner: "the shots seem to come from far to
+  my right while DOWN").
+  Also: BD22's Revolver (Real reload, speedloader) throws one casing per empty chamber when it opens, all on that tic;
+  it threw one casing per open, counted from the live rounds (owner: "empties one at a time instead of all at once").
+- **What's new in 2.0.4h** (11-11; *rig only, not headset-confirmed*: in the log the buzzes gave no muzzle flash and the
+  real shots did; the recoil-kick half was not shown): the RSQ series' haptic buzz no longer counts as a shot. With RSQ
+  Accessibility's Rumble Backup on and Quake Haptics at 0, every buzz is a 0.1-unit hitscan that touches nothing; the
+  muzzle flash, the gun's sound tail and the recoil kick took it for a shot (`rsq/flash.zs`, `rsq/recoil.zs`). Both now
+  skip a trace under one unit long with LAF_NOINTERACT (`RSQ_Ballistics.IsBuzzTrace`).
+- **What's new in 2.0.4g** (11-11; *code only, not shown: not run, not load-checked, by the owner's order*): the live
+  scope's eye and the grenade throw's mouth use the engine's fixed standing eye height (the player class's ViewHeight,
+  `RSVR_VRHand.StandEyeHeight`), not the pawn's ViewHeight. RSQ SlowMo's DOWN scales the pawn's ViewHeight to 40%, which
+  put both about 0.9 m too high while you were down. Standing and crouching are unchanged.
+- **What's new in 2.0.4f** (11-10; *load-checked, not run on the rig*): **one throw**, the RSQ series' (owner: "one throw
+  for everything"). The axe throw and the grenade throw read your hand the same way as RSQ Grenade, RSQ Saber and RSQ
+  ShieldSaw: hold the trigger, swing, let go. The fastest two-tic stretch of the hand over the last 7 tics, in the body's
+  frame, in real m/s, against 2.5 m/s. The axe is now thrown by the hand's speed, not its edge's, so a wrist flick no
+  longer throws it; it flies as hard as before.
+- **What's new in 2.0.4e** (11-09): fixes 2.0.4d's start-up crash ("Attempt to redefine 'Speed'", playerrounds.zs:
+  ZScript names ignore case, so the constant SPEED and the new Speed() clashed; the constant is now ROUND_SPEED). Loads with
+  zero script errors on doom2 > brutal22test6 > BD_VoxelPack > this > LoB > Champions > Gun Bonsai > the RSQ series (rig
+  load check); not run in play.
+- **What's new in 2.0.4d** (11-09; *not yet run on the rig*):
+  - **Two-Hand Spread** (slider, default 0.5): with the off hand steadying the gun (Two-Hand Grip), every shot's
+    spread is multiplied by this. Bullets, pellets and projectiles. Dual-wielded guns are not affected.
+  - **Two-Hand Tightens Shotguns** (default Off): off keeps the pump, SSG, AA-12 and Shotvolver patterns as BD22's.
+  - **True Bullet Speed** (slider, 20-900 map units a tic, default 80 = as before).
+- **What's new in 2.0.4c** (since 2.0.3y; all *rig only*, not headset-confirmed; details and logs in
+  [ldl_patch/README.md](ldl_patch/README.md)):
+  - **LegenDoom mode merged** (2.0.3z to 2.0.4a, 11-06): with LegenDoom 3.0 loaded, BD22 VR switches on its LD mode
+    (found by name; without LegenDoom nothing changes). Legendary monsters drop legendary BD22 VR guns, and 179 of
+    LegenDoom's 180 effects (all but Favoured, dropped) work on our guns. The separate LD_BD22VR_Patch.pk3 is gone. Not
+    yet shown on the rig: Energizing's heal, Hyper / Spamtastic on the plasma rifle, Perfect on dual guns.
+  - **Chainsaw effects in VR** (2.0.4b, 11-07): each bar cut counts as a chainsaw attack, so Lacerating, RazorEdge,
+    Extended and Imaginary work; Extended and Imaginary give the blade a longer reach.
+  - **Quickdraw / Burst fixes** (2.0.4b, 2.0.4c, 11-07): Quickdraw on the BFG no longer fires a second ball from one
+    press; the shot counter sees projectiles, so Burst fires its three shots on the rocket launcher and the BFG, and
+    Quickdraw fires one shot per press.
+
+- **2.0.3y** (11-06, *rig only*, not headset-confirmed: loads on the full order with no script error from the pack; the
+  off-hand versions, the off-hand pistol whip on a door, the pump, the Silvergun, No Trigger Punch and the grenade
+  stand-down shown on Brutal Doom's own guns):
+  - **One gun, either hand.** Picking up a gun that has an off-hand version gives you both (the off-hand one loaded). Whatever puts it in your off hand (a holster, the wheel, Distance Grab, switch hand) it is the
+    off-hand version there, and back in the main hand it is the main gun, rounds and all. With its Dual Options row off,
+    a gun is in one hand at a time. The off-hand versions now pass between hands, and stay in the off hand until you
+    move them. An axe pulled with Distance Grab into the off hand is always the off-hand axe, equipped.
+  - The pistol whip works in the off hand. The pistol whip and the butt strike work a switch or door they hit (like
+    Use; the line's action counts, not its texture), with "Punch Switches Open".
+  - Butt strike: reaches half as far again, a straight shove counts as well as the pivot, and **Butt Strike: Swing
+    Needed** (2.4 m/s, was a fixed 3.6).
+  - A Silvergun you pick up arrives loaded, and you start with 18 pistol rounds more (the Silvergun's ammo).
+  - The off trigger no longer throws an automatic animated jab from the free off fist, and **No Trigger Punch** (On):
+    in VR, BD22's fists throw no canned jab or cross on trigger / alt fire (throwing a grabbed enemy or barrel,
+    the shield and fatalities still work). Punches are the ones you swing yourself.
+  - The pump shotgun ejects no shell on the pump after you load it from empty.
+  - **Use RSQ Grenade Instead** (Off): with RSQ Grenade loaded, Brutal Doom's grenade stands down.
+- **2.0.3x** (11-05, *rig only*): with an RSQ series item in the off hand (the saber or Force hand, the Zippo or
+  cigarette, the ShieldSaw, the flare or flashlight, the whip, a grenade or a glove), flicking the main gun down reloads
+  it with BD22's own reload; the hand reload still needs the free off hand, as before.
+- **2.0.3w** (11-04, *rig only*): on PCVR (SteamVR), walking and strafing with the hands still no longer swing the axe
+  or any melee. 2.0.3s fixed this for the way Quest places the hands; PCVR places them off the eye, which trails the
+  body by up to a step between frames.
+- **2.0.3v** (11-04, *rig only*): Shoot Thrown Grenades tests only the ray of the hand that fired (a hand that was just
+  pointing no longer sets a grenade off), and the kill goes to whoever shot the grenade.
+- **2.0.3u** (11-03, *rig only*): **Ammo From the Rig's Pouch Only** (On). With RSQ Tactical Rig's ammo pouch (just
+  left of the belt-buckle grenade), every belt reload takes from the pouch only: magazines, drums, boxes, shotgun
+  shells, break-open and cylinder rounds, the underbarrel 40 mm. A press at a holster, the buckle or the flare holster
+  never hands you ammo. Without the rig, reloads work exactly as before.
+- **2.0.3t** (11-03, *rig only*): **Shot Grenade Reach** slider (0.10 to 0.35 m, default 0.35; it only tightens).
+  Shooting a thrown grenade is more reliable: a projectile's whole path over the tic is checked, a bullet names the
+  exact grenade it hit, and the railgun counts.
+- **2.0.3s** (11-03, *rig only*): walking, strafing, stairs and snap turns no longer swing the axe, the pistol whip or
+  any melee while your hands are still. The hands are now measured against the frame they were drawn in.
+- **2.0.3r** (11-03, *rig only*):
+  - **Shoot Thrown Grenades** (On, with "Only in Slow Motion", Off): your bullet or damaging projectile sets off your
+    thrown grenade where it is. The kill is yours, and RSQ Score pays a skeet in the air.
+  - **Faster Grenades in Slow Motion** (Off) with a speed slider.
+  - The teeth pin pull now works: it reads your real mouth from the headset (lips to under the chin, "Teeth: Mouth
+    Reach" 0.15 m), and grip plus trigger counts as the squeeze.
+- **2.0.3q** (11-03): the off-hand axe cuts and throws like the main-hand axe (its blade was read upside down). The
+  pump shotgun waits for your hand on the pump right after a reload from empty, without a dead trigger pull.
+- **2.0.3p** (11-03): pull the grenade's pin with your teeth (RSQ Grenade's face pull, ported). The off-hand ring
+  pull is unchanged.
+- **2.0.3o** (11-03): the Incendiary Launcher is switched off unless "Extra weapons with cheats" is on; the Grenade
+  Launcher takes its place.
+- **2.0.3n** (11-02): Two-Hand Aim removed after the headset test showed the scripted gun turn lagging behind the
+  hands. Two-handing is the engine's own Two-Hand Grip again, and shots go down the gun's own barrel.
+- **2.0.3k to 2.0.3m** (11-02): Two-Hand Aim test builds (the Rifle first, then all 21 two-handed guns). Superseded
+  by 2.0.3n.
+- **2.0.3j** (11-01): the axe as a throwing weapon with RSQ Distance Grab. A pulled axe goes to the hand that pulled
+  it, or is stored if that hand holds a gun. The berserk wall axe follows the one-axe-per-hand rule, and the door lift
+  steps aside for Distance Grab's.
+- **2.0.3i**: the off-hand axe is its own off-hand weapon. No free second axe (one per hand, from pickups),
+  a thrown axe is gone until you pick one up, and axe cuts reach 33% further.
+- **2.0.3h**: the Unmaker's firing loop stops when the skull empties mid-fire, and its reload sounds only the
+  out and in clicks.
+- **2.0.3g** (10-29; *loads; not run*): the pistol whip needs a harder swing (5.0 m/s, was 3.2), with a slider,
+  **Pistol Whip: Swing Needed** (2 to 10).
+- **2.0.3f** (10-29; *loads; not run*): **Lift Doors by Hand** (On), ported from RSQ Distance Grab. Put an empty hand on
+  the door (the off hand without a gun, or a bare main hand), take hold with the off grip, Use, or the palm turned out,
+  and lift. Let go past 40% open and the door finishes opening; earlier, it drops shut.
+- **2.0.3e** (10-28; *loads; not run*): the axe **tags** a monster and keeps it while you wind up to throw (raising
+  your arm used to lose the lock). The tag goes when the monster dies, leaves range, or is out of sight for 2 seconds,
+  and is kept 3 seconds (was 1) after a let-go that was not a throw.
+- **2.0.3d** (10-28; *loads; not run*): **Melee Hit Flash** On / Off (On); the old picker is now Melee Hit Flash Style.
+- **2.0.3c** (10-28; *loads; the lock-on itself not shown*): the Rocket Launcher's lock-on salvo is always three
+  rockets, shared round the locks (three locks: one each; two: A, B, A; one: all three).
+- **2.0.2a** (10-28; *rig only* where marked):
+  - **Instant Weapon Switch** (On): a new gun is ready the moment you switch to it; Off is Brutal Doom's raise and
+    lower. *Shown in the rig's log.*
+  - The Moonlight revolver is renamed the **Silvergun** (pickup, name, menus); saved options carry over. *Shown.*
+  - The pump shotgun's slug alt fire now takes a shell and needs the pump (it fired for free). *Shown in the log.*
+  - **Assault Shotgun Slugshot Alt Fire** (On): one slug per pull, taking a shell from the gun. *Shown in the log.*
+  - Super Shotgun flick reload: flick an empty SSG and it reloads, from ready or while it waits open for the hand
+    reload. *Shown with one SSG; two SSGs use the same path, not shown.*
+  - **Rocket Launcher Lock-On Alt Fire** (On): hold alt fire to lock up to three different monsters near the barrel's
+    line, let go and the rockets home on them. *Not shown: the rig could not put a monster in front of the gun.*
+  - Built, not shown: the grenade's pin comes out with the off-hand trigger only; the axe lock is tighter (picked
+    within 8 degrees of your hand's line, was 16; the mark sits above the monster's head) and a locked axe throw homes
+    on its monster; the Unmaker plays a click when the skull comes out.
+
+## What's new in 2.0
+Everything here was checked on the test rig on the load order above, with no script errors from
+the pack. It has not yet been confirmed in a headset.
+
+### Hands on every gun
+- **New hands on every weapon**, both hands: the hand that holds the gun, with the finger on the
+  trigger, and a support hand that wraps the gun's forend, pump, handguard or foregrip. The gun is
+  moved to fit your hand, and everything on it (muzzle, ejection port, reload points, scope) moves
+  with it. Each grip started from the 1.92 hold on that gun.
+- **Melee:** chainsaw (index on the real trigger, other hand on the top handle), sword (two hands
+  on the hilt), axe (on the haft). Their hit points moved with them.
+- **The FlameCannon** is worn: your hand goes in through the slit at the back, and the flame now
+  starts at the nozzle (it used to start 27 cm away). Open palm under the barrel.
+- **Fists, the free off hand, the grenade hand and all 25 reload holds** (every magazine, shell,
+  rocket, the Unmaker skull, the Silvergun round) use the same hands.
+- **Hand Skin Tone:** 18 steps, from porcelain to ebony, plus grey, green, blue, purple, red, gold
+  and a black glove.
+
+### Scopes
+- **Ruger and Railgun: a live 3x view through the lens**, on by default. Alt fire turns the scope
+  on and off, to save performance. On the Ruger this replaces Brutal Doom's zoom.
+
+### Shooting
+- **True Bullets: On / Off** (default On). On fires real rounds from the muzzle at 80 units a tic,
+  with the same damage as Brutal Doom's hitscan, drawn with Dakka's bright tracers and impact sparks.
+  Off is stock Brutal Doom: hitscan, its own tracers and puffs (and the Ruger's rail trail), no
+  Dakka effects. (This one switch replaces "Player Ballistics" and "Shot Tracers".)
+- **Pump Shotgun Spread: Stock / Enhanced:** Enhanced spreads up and down too. Same pellets and
+  damage.
+- **Ruger** (True Bullets On) fires a sniper round that pierces like Brutal Doom's rail, with the
+  same damage. The beam is gone.
+- **Dual wield:** off-hand shots now leave the off-hand gun's muzzle.
+
+### Revolvers and ammo
+- Two revolvers: the **Shotvolver** (its slug alt fire is now on by default) and the **Silvergun** (called the
+  Moonlight until it was renamed). The Silvergun takes the Brutal Pistol's ammo (2.0.1): each shot costs 3 pistol rounds, so a full
+  six-shot cylinder is 18. A reload moves 3 pistol rounds per chamber from your pistol reserve; two
+  Silverguns share that reserve. Its HUD reads shots in the cylinder (0-6) | pistol rounds in reserve.
+- Options: **Silvergun Replaces Pistol** (start, pickups, drops) and **Start With Two Silverguns**.
+  Both are off by default.
+- **HUD Ammo:** the magazine and the reserve (e.g. 24 | 120), or Reserve Only.
+- **Ammo on top:** a loaded magazine never counts against what you can carry.
+- **The Minigun has its own ammo:** 400 in reserve (800 with a backpack), plus its 200-round
+  magazine.
+
+### Fixes
+- Giant shell casings when firing shotguns. Fixed.
+- The dual Shotvolver stopped the main gun firing after one off-hand shot. Fixed.
+- The Shotvolver's slug alt fire also fired a free pellet blast. Fixed.
+- The Purist Sniper showed an empty hand. Fixed. The Purist Rifle shows its grenade tube, and its
+  alt fire does nothing.
+- Butt-strike and pistol-whip hits now land at the gun you see.
+- The grenade was drawn 1.45 cm off. Fixed, and the throw now leaves from the grenade in your hand.
+
+### Options and melee (2.0.2, rig only, not headset-confirmed)
+- **Pistol Whip** (on by default): swing a pistol or revolver (Shotvolver or Silvergun) into something. It has its own
+  option row. The kick-key "Gun Bash" is gone; the kick key is Brutal Doom's boot again.
+- **Melee hit flash** is a small spark where the blow lands (about 38 cm across; it was 2.3 to
+  2.8 m).
+- **Two axes, never two hands.** The axe no longer goes two-handed. Get the axe and a second one
+  comes with it; press the Dual key to hold one in each hand. Each axe swings, cuts and throws from
+  its own hand (VR throwing: hold that hand's trigger, swing, let go). A thrown off-hand axe comes
+  back when you pick an axe up. Dual Options > Axe turns it off. (Since 2.0.3i there is no free second axe: one
+  per hand, from pickups.)
+- **Sword:** a blow needs a deliberate swing: the blade's point must travel about a metre at
+  speed, and after a swing there is a third of a second before the next one, so one swing is one
+  attack. In VR the sword's trigger does nothing (no Brutal Doom combo, lunge or view turn); flat
+  screen keeps the combo. On the rig: hand jitter, sliding and wrist turns gave 0 attacks; one swing gave exactly 1.
+- **"Check the Chamber by Hand" is removed** (it was off by default and only let the off hand pull
+  a loaded gun's handle back to look).
+- **Two-Hand Grip (engine)** (was "Two-Handed Steadying"): QuestZDoom's own two-hand setting,
+  unchanged. On: grip with your off hand near the gun to steady it with both hands.
+
+### Two-handing is the engine's Two-Hand Grip (2.0.3n; rig only, not headset-confirmed)
+- Hold a gun in two hands with QuestZDoom's own **Two-Hand Grip (engine)**: off hand near the gun, press the off
+  grip. The engine points the gun from your gun hand through your off hand, the support hand shows on the gun, and
+  the shots go down the gun's own barrel from its muzzle, exactly as in 2.0.3j. Let go of the grip to release.
+- While the grip holds, the engine hides whatever the off hand itself holds and switches off an off-hand weapon (it
+  doesn't fire). The support hand drawn on the gun is not affected.
+- **Fix:** a magazine or break-open reload that started while you held the grip (the Rifle running dry, the SSG
+  opening after both barrels) hid the support hand, and the engine hid the empty off hand: no off hand at all. Now the
+  support hand stays on the gun until your off hand takes something.
+- On the rig (QuestZDoom 17.3, the owner's load order) the support hand showed and released correctly on the Rifle,
+  Shot_Gun, SSG, Minigun, Rocket Launcher, Railgun, pistol, sword, chainsaw and axe; the Shot_Gun's hand pump worked
+  while held. Frames and log: `renders/2.0.3n/`.
+
+### Switched-off guns (2.0.3o)
+- Switched off in this pack, each replaced by a stand-in wherever it would appear: MP40 (SMG), MG42 (Minigun),
+  Devastator and Hellish Missile Launcher (Rocket Launcher), Flame Cannon (Flamethrower), and now the **Incendiary
+  Launcher** (Grenade Launcher, its neighbour in slot 5).
+- **Extra weapons with cheats** (Options → BD22 VR Weapons) brings all six back, through cheats only (give all, idkfa,
+  give). Maps always place the stand-ins. On the rig: `give IncendiaryLauncher` gave the Grenade Launcher; with the
+  option on it gave the real launcher. Log: `renders/2.0.3o/`.
+
+### Pin the grenade with your teeth (2.0.3p; rig only, not headset-confirmed)
+- The grenade's pin pull now matches RSQ Grenade's. As well as the off-hand ring, you can **pull the pin with your teeth**:
+  squeeze the grenade's trigger and hold the grenade at your face (within 0.47 m of your eyes) for 12 tics. The squeeze
+  alone never cooks or throws. Once the pin is out, the trigger is your grip on the spoon, as always: let go while swinging
+  to throw, or while still to cook. The teeth pull another pin only after your hand has been more than 0.71 m from your
+  face, or after you let go of the trigger.
+- The off-hand ring works exactly as before, and it can put a pin back in however it came out.
+- Options → BD22 VR Weapons, next to VR Throwing: **Pin With Your Teeth** (On by default), **Teeth: At**, **Teeth: Again
+  Beyond**, **Teeth: Hold**. These have RSQ Grenade's defaults.
+- On the rig, on the owner's full load order: pin out on the 12th tic at the face; no pin with the option off; no second
+  pin without leaving the face; the ring still pulls and re-pins. Log: `renders/2.0.3p/`.
+
+### Off-hand axe and shotgun pump fixes (2.0.3q; rig only, not headset-confirmed)
+- **The off-hand axe cuts like the main-hand axe.** The engine draws the left-hand weapon mirrored, and the swing code
+  had the off axe's blade upside down: the edge and head were worked out below your wrist, so the edge-first rule threw
+  out every real chop. Now the off hand cuts on the same swings as the main hand (chop, drop, wrist snap, lunging chop,
+  edge-first side slash) at the same speed (about 4.5 m/s at the blade), and refuses the same spine-first ones. The off
+  axe's throw now leaves from the drawn axe head, as the main hand's does (it used to leave from below the wrist).
+- **The pump shotgun pumps straight after a reload from empty.** With Auto Reload off, an empty shotgun loaded with
+  shells pushed into the port used to sit there until you pulled the trigger once (nothing happened), and only then
+  could you pump. Now the last shell in puts the gun straight into the pump wait: rack it and fire. A gun that still
+  has a round chambered loads exactly as before. The reload-button and auto-reload paths already waited for the pump.
+- On the rig, on the owner's full load order. Logs: `renders/2.0.3q/`.
+
+### Ammo From the Rig's Pouch Only (2.0.3u; rig only, not headset-confirmed)
+- Options → BD22 VR Weapons, under New magazine from: **Ammo From the Rig's Pouch Only**, On. With RSQ Tactical Rig loaded
+  and its Ammo Pouch on, every reload that fetches from the belt takes ONLY from the rig's pouch, the one just left of
+  its belt buckle (the right for a left-hander): magazines, drums and boxes, shotgun shells, break-open and cylinder rounds,
+  the 40 mm under the Rifle and the Machinegun. A press anywhere else, the buckle and every other rig holster included,
+  gives nothing. Without the rig (or with the rig's pouch off, or this row off) every reload keeps its own rule exactly.
+  Found by name (the rig's "pouch.at" service): BD22 VR needs nothing loaded.
+- On the rig, the Brutal Doom order with RSQ Tactical Rig and RSQ FnF (TacticalRig `tools/rigtest/holsterprobe/evidence`,
+  `trh_POUCH*`): a Rifle emptied, its magazine out; off-hand presses at the buckle, the off hip, the off chest holster and
+  the flare holster each refused ("the rig's pouch only"), at the pouch a magazine taken (EMPTY -> CARRY); a Shot_Gun:
+  the buckle refused, the pouch gave a shell. Left-handed the same. BD22 alone: every one of those presses took one, as
+  2.0.3t did.
+
+### Shot Grenade Reach (2.0.3t; rig only, not headset-confirmed)
+- Options → BD22 VR Weapons, under Shoot Thrown Grenades: **Shot Grenade Reach (m)**, 0.35 by default (12 map units,
+  as 2.0.3r), down to 0.10. It only tightens: a shot must pass this close to a thrown grenade to set it off. (BD22 VR's
+  menu has no Reset All; the default is 0.35.)
+- Two fixes to shooting thrown grenades: a fast shot or projectile is now caught along its whole path through the tic
+  (it could pass between two tic-end positions unseen), and a shot names the grenade itself, not where it was (a fast
+  grenade had moved on by the time the shot was handled). The railgun now sets grenades off too (it has its own hook).
+- On the rig (`renders/2.0.3t/`): reach 0.10: a pistol shot 5 units (0.15 m) off the grenade's centre set nothing off,
+  one dead on (0.7 units) did; the default 0.35: 8.5 units off set it off, 15.3 units off did not. A rocket at 20 a tic
+  and one at 100 a tic crossing a grenade in flight both set it off (the fast one's tic-end positions were 50 units
+  either side of it); the railgun set off a grenade held in the air.
+
+### The teeth pin pull at your mouth; shoot thrown grenades (2.0.3r; rig only, not headset-confirmed)
+- The owner never saw the teeth pull fire in his headset. It looked for the grenade within 0.47 m of `player.viewz`,
+  the pawn's fixed eye (1.55 m for BD's player), not your headset; and it counted only the trigger. QuestZDoom's
+  default button layout (`vr_secondary_button_mappings` on) makes the main grip a shift key, so squeezing grip and
+  trigger together (a fist round the grenade) sends alt fire and never fire: that squeeze could never pull the pin.
+  The ball round the pawn's eye also missed a seated player's mouth and caught a grenade held at the chest.
+- Now: bring the grenade to your **mouth** (lips to just under the chin, measured from your headset, as RSQ Tactical
+  Rig's cigarette does) and squeeze, with the trigger or with grip and trigger, for 12 tics. The controller, the drawn
+  grenade or its ring may be the part at your mouth. A small wobble out of the zone no longer restarts the count.
+- Options → BD22 VR Weapons: **Teeth: At** is now **Teeth: Mouth Reach** (0.15 m round the lips-to-chin line). Pin
+  With Your Teeth, Teeth: Again Beyond and Teeth: Hold are unchanged. The off-hand ring is unchanged.
+- **Shoot thrown grenades** (Options → BD22 VR Weapons, **Shoot Thrown Grenades**, On): a bullet or a projectile of
+  yours (a rocket, plasma) passing within 0.35 m of a thrown grenade sets it off where it is, credited to you (in co-op
+  anyone can shoot anyone's thrown grenade, and the shooter gets the kill); only the hand that fired counts; shot in
+  the air it counts as a skeet for RSQ Score's Trap Shot. It must be 6 tics (0.17 s) out of your hand first. Punches
+  never set one off; a grenade in your hand cannot be hit. **Only in Slow Motion** (Off): only while RSQ SlowMo has the
+  world slowed.
+- **Faster Grenades in Slow Motion** (Off) and **Grenade Speed in Slow Motion** (0.50): RSQ SlowMo slows a thrown
+  grenade with the world; with this on it moves that much of the way from the world's speed up to real speed (at the
+  world's 0.25: 0.625), still visibly slow, so you can throw and then shoot it. Its fuse stays slowed with the world.
+- The grenade works in the main hand only, as before (BD22's VR grenade reads the main hand's weapon).
+- On the rig (`renders/2.0.3r/`), each pose in its own run on brutal22test6 + voxels + this pk3 + XMVE, headset
+  1.65-1.75 m, the controller 12 cm under and 10 cm in front of the eyes. 2.0.3q: the pin came out with the trigger
+  alone standing, but not with grip and trigger together (the command carried alt fire only), not seated (headset
+  1.20 m: 0.48 m from the pawn's eye), and it did come out with the grenade at the chest. 2.0.3r: out on the 12th tic
+  at the mouth in all six poses (standing, chin, upright hold, grip and trigger, 1.75 m with `vr_height_adjust` 0.3,
+  seated), never at the chest. A grenade put in the off hand (the engine's switch-hand) does nothing in BD22 VR, ring
+  and throw included, as before. Shooting (`renders/2.0.3r/shoot_bd.log`, with RSQ SlowMo): a rocket through a
+  grenade held in the air 3 tics after the throw set nothing off, one at 19 tics set it off (a skeet); a pistol shot
+  set one off; Shoot Thrown Grenades off: a rocket set nothing off; slow motion at 0.25 took a thrown grenade from 20.8
+  to 5.2 units a tic, Faster Grenades on to 12.8 (x0.63).
+
+## What was new in 1.99
+
+### Every gun reloads by hand
+Every gun that isn't a melee weapon reloads with your hands: **23 guns**. The BFG and BFG10k stay
+as Brutal Doom made them.
+
+| How it reloads | Guns |
+|---|---|
+| Magazine | Rifle, Pistol, SMG, MP40, Assault Shotgun, Railgun, Plasma Gun, Ruger, Rocket Launcher, Machinegun (100-round box) |
+| Drum, canister or box | MG42 belt drum, Flamethrower canister, Unmaker skull, Minigun ammo box, Hellish launcher's rear drum |
+| Cylinder | Incendiary Launcher (six shots) |
+| Bay or block | Devastator loading bay, Nuker warhead block |
+| Pump | Shotgun |
+| Break-open | Super Shotgun, Grenade Launcher, Shotvolver, Revolver (Silvergun), and the 40 mm under the Rifle and the Machinegun |
+
+Pull the part out with your off hand, reach to your belt for a fresh one, and push it home.
+
+Brutal Doom never reloads most of the heavy guns at all. On those, the part you swap was cut out
+of the gun's own model, and it counts down Brutal Doom's own ammo. The ammo you carry and the
+damage you do are still exactly Brutal Doom's.
+
+### Throwing the axe
+- Hold the throw and a **lock-on ring** goes on the monster your hand points at. It's the same
+  mark as the ShieldSaw and the QuestSaber.
+- If you let go without throwing, the ring **stays on for a second**. Pick the hold back up and
+  you're still locked.
+- The throw **blends your arm's swing with where your hand points**, as the ShieldSaw does.
+
+### New guns from Brutal Doom 21
+- **BD21 Machinegun** (M249 with an underbarrel 40 mm). Off by default:
+  "Machinegun replaces MG42".
+
+### Melee
+- **Gun bash** (removed in 2.0.2): your kick key bashed with the gun you were holding.
+- **Pistol whip**: swing a pistol or revolver into something.
+- **Butt strike**: drive the stock forward with both hands. Works on all eight guns with a stock.
+  Off by default.
+- **Real punching** with either fist. Punching a switch or a door works it. Off by default.
+- With **RSQ Melee** loaded (2.0.4u), the pistol whip, the butt strike and real punching are RSQ Melee's, with the
+  same numbers; their rows are in its options.
+
+### Every gun shoots like itself
+These are behind the **Ballistics** switch. Stock is Brutal Doom's own.
+- **Recoil** for 22 guns, each worked out from its own cartridge and weight. In VR it moves the
+  gun in your hands, never your view.
+- **Muzzle flash** light for 18 guns, and an echo for 14 that sounds different indoors and
+  outdoors.
+- **Visible rounds in flight** for 11 guns, at their real speed.
+- **Impact sounds** per surface, **ricochets** off shallow angles, and **brass** from each gun's
+  real ejection port, as 3D casings.
+
+### Fixes
+- **Guns no longer spin round your shoulder.** Recoil kept adding to itself during reloads and
+  turned the gun. It now kicks and settles.
+- **No muzzle flash or gunshot echo without a shot.** Footsteps, kicks and the reload buzz were being
+  taken for gunshots.
+- **Brutal Doom's own ricochet, glass, sparks and magazine-drop sounds are back.** Some of the
+  pack's sound files had the same short names and were playing in their place.
+- **Fire rates:** QuestZDoom 17.3 lets a held trigger re-fire some guns faster than Brutal Doom
+  does on PC: the pistol, the pump shotgun, the Incendiary Launcher and the dual pistols. They're
+  held to PC's rate now. The Ruger is one shot per pull.
+- **Rounds you pull out stay yours:** pull a part-full magazine with no reserve left, and its
+  rounds go back in when you seat it again.
+- **Incendiary Launcher:** pressing reload did nothing. Fixed.
+- **Flamethrower:** it returned to the wrong frame after firing. Fixed.
+- **Dot scope:** it could stop the game's scripts running, on the Railgun and the Ruger. Fixed.
+- **Ruger:** it drew 2D sprites while firing. Fixed.
+- **Purist Rifle:** it fired the M203. Fixed.
+- **Grip-mode charging handle:** a racked handle could not be grabbed. Fixed.
+- **Axe alt-fire hold:** it did nothing for players upgrading from older builds. Fixed.
+- The pk3 is about **30 MB**: models are LZMA-compressed, as 1.96b's were.
+
+### Fixes from the owner's 1.99 headset pass
+- **Recoil is gone.** It turned the gun model, so the gun spun around the shoulder and pulled
+  away from the hands. Hold poses at rest match 1.92 again.
+- **The Nuker uses the BFG's hands.** It is the same model, so it gets the same grip and trigger
+  finger, fitted to its size.
+- **Chainsaw** grip hand moved 2 cm left. **Incendiary Launcher** grip hand moved 2 cm forward.
+- **Real magazines** on the Flamethrower (100), Machinegun (100), Unmaker (200) and Minigun (200):
+  every shot comes out of the magazine, the reserve is what is left in your pouch, and a reload
+  moves rounds from the pouch into the gun.
+- **Machinegun:** the 40 mm round, its latch and the hands sat 5 cm high. Fixed.
+- **MG42, Flamethrower, Unmaker:** the gun no longer jumps 5 cm when a reload starts.
+- **Axe and sword** cut only on a down or side swing, never an upswing, and need a harder swing.
+  Turn off "Two-Hand Grip (engine)" (then called "Two-Handed Steadying") to hold them with one controller: grip with your off hand near
+  the blade and you get the two-handed pose. Guns lose steadying too while it is off.
+- **Spent casings with the voxel pack** are normal size again (a shell was drawn at four times
+  Brutal Doom's size).
