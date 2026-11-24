@@ -19,12 +19,12 @@ rate of fire. Now you hold them.
 - **It stands alone.** Hands on every gun, 23 guns reloaded by hand, live scopes, real bullets, a gun in each hand.
 - **LegenDoom works out of the box.** Load LegenDoom 3.0 and legendary monsters drop legendary Brutal Doom VR guns,
   with 178 of its 180 effects. No patch.
-- **It plays well with the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries).** The Tactical Rig's
-  ammo pouch, RSQ Grenade's grenades in the rifle's launcher, RSQ Melee's fists, RSQ Miniboss's kiosk of legendary guns.
+- **It comes with four companions** from the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries):
+  RSQ Melee, Tactical Rig, Gun Cards and Laser Sight, released alongside it. The rest of the Series plays well with it too.
 
 ![Every weapon in hand, 2.0](renders/2.0_every_weapon_in_hand.png)
 
-**[Install](#install)** · **[What you get](#what-you-get)** · **[LegenDoom](#legendoom-built-in)** · **[Options](#options)** · **[Good to know](#good-to-know)** · **[Changelog](CHANGELOG.md)** · **[Credits](#credits)**
+**[Install](#install)** · **[What you get](#what-you-get)** · **[LegenDoom](#legendoom-built-in)** · **[Alongside](#released-alongside-it)** · **[Options](#options)** · **[Good to know](#good-to-know)** · **[Changelog](CHANGELOG.md)** · **[Credits](#credits)**
 
 ## Install
 
@@ -38,6 +38,8 @@ doom2.wad  ->  brutal22test6.pk3  ->  02_BD22_VoxelPack.pk3  ->  03_BD22_VR-Relo
 - **LegenDoom 3.0** goes right after doom2. Nothing else is needed for it, and the old `LD_BD22VR_Patch.pk3` must not
   be loaded.
 - **XMVE** (files 04 to 07) is the optional monster expansion, loaded after the weapons in number order.
+- **Released alongside:** `RSQ_Melee.pk3`, `RSQ_TacticalRig.pk3`, `RSQ_GunCards.pk3` and `RSQ_LaserSight.pk3`, after the
+  weapons. See [Released alongside it](#released-alongside-it).
 - **RSQ_BDXMTiers** (twelve files, one a colour) is the painted colour art for RSQ Monsters' tiers on Brutal Doom's
   and XMVE's monsters. Only for the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries).
 - **Build it yourself:** `python build.py` zips `src/` into `BD22_VR-Reloaded_<VERSION>.pk3`.
@@ -136,17 +138,32 @@ turns the scope off and on, which saves the Quest a second view of the world.
 - **Real punches** with either fist, and a **pistol whip** with any pistol or revolver.
 - **Lift doors by hand:** take hold of a door and raise it. Past 40% it opens the rest of the way.
 
-### With the RSQ UBQ Series
+### Released alongside it
 
-Each is found by name. The pack needs none of them.
+Four mods from the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries) are released with this pack. Each is its own pk3, loaded after the weapons,
+and each works without the others. Get them from the Series' [pk3 folder](https://github.com/presidentkoopa/RSQ_UBQSeries/tree/main/pk3).
 
-- **RSQ Tactical Rig:** reloads take their ammo from the rig's pouch.
+- **[RSQ Melee](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/Melee/README.md)** (`RSQ_Melee.pk3`): fighting with your body. Jabs, hooks and
+  uppercuts read from your hand, open-palm slaps for fireballs, the gun-butt shove. It takes over this pack's punch,
+  pistol whip and butt strike.
+- **[RSQ Tactical Rig](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/TacticalRig/README.md)** (`RSQ_TacticalRig.pk3`): your guns on your body. Six
+  holsters, a grenade spot, and an ammo pouch that every reload in this pack takes its ammo from.
+- **[RSQ Gun Cards](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/GunCards/README.md)** (`RSQ_GunCards.pk3`): ammo cards on your guns and a status
+  card on your wrist when you check your watch. It can take health, armour and ammo off the HUD, and a worn gun
+  spreads wider.
+- **[RSQ Laser Sight](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/LaserSight/README.md)** (`RSQ_LaserSight.pk3`): a laser out of every gun's own
+  barrel, both hands, with a dot where the shot will land.
+
+### With the rest of the RSQ UBQ Series
+
+The Series is a game mode of its own, built with Brutal Doom in mind and not dependent on it. Each of these is found
+by name, and the pack needs none of them.
+
 - **RSQ Grenade:** with its "Replace Brutal Doom's Grenade" on, Brutal Doom's grenade stands down, and the launcher
   under the Rifle fires RSQ Grenade's kinds.
-- **RSQ Melee:** takes over the punch, the pistol whip and the butt strike.
 - **RSQ Distance Grab:** pull a thrown axe back to your hand.
-- **RSQ Gun Cards:** a worn gun spreads wider.
 - **RSQ SlowMo:** a thrown grenade can keep some speed in slow motion, so you can throw it and then shoot it.
+- **RSQ Miniboss:** its kiosk sells this pack's legendary guns.
 - **A saber, ShieldSaw, flare, flashlight or whip in the off hand:** the main gun reloads by the gesture.
 
 ### Guns you won't find
