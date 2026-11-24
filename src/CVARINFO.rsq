@@ -75,5 +75,6 @@ user int rsq_switch_log = 0;
 // behind the hands. Two-handing is the engine's own Two-Hand Grip (vr_two_handed_weapons). The cvar stays declared only so a
 // saved ini line for it causes no error; nothing reads it.
 user bool rsq_twohand_rifle = false;
+server int rsq_hud_vrrow_ver = 0;   // 2.0.5n: Brutal Doom's HUD Type moved once from 1 (ZDoom) to 6, the VR Row (bottomhud.zs)
 user bool rsq_hud_nohp = false;   // the HUD draws no health or armour (owner 2026-11-12 15:36; the row is in RSQ Gun Cards' options)
 user bool rsq_hud_noammo = false; // the HUD draws no ammo counts or ammo icons (owner 2026-11-13; the row is in RSQ Gun Cards' options: the cards show them)

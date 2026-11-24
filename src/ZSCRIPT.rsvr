@@ -45,6 +45,7 @@ version "4.14"	// 1.97 F5: WorldHitscanPreFired is 4.13+; qzd17.3 is 4.14.3
 #include "zscript/rsr/rsr_guns.bd.zs"
 #include "zscript/rsq/semiauto.zs"
 #include "zscript/rsq/counters.zs"
+#include "zscript/rsq/bottomhud.zs"   // 2.0.5n: the VR Row HUD (Gun Bonsai VR's bottom row), HUD Type 6
 #include "zscript/rsq/roster.zs"
 #include "zscript/rsq/bash.zs"
 #include "zscript/rsq/recoil.zs"

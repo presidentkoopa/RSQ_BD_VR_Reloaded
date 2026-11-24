@@ -69,6 +69,8 @@ OptionMenu "RSQ_Options"
 	Option "Reload Gesture", "rsq_reload_gesture", "RSQ_ReloadGesture"
 	// tip: Which button the off hand uses to take hold of ammo.
 	Option "Grab Ammo With", "rsr_grab_with", "RSR_GrabWith"
+	// tip: Brutal Doom's status bar, or the VR Row: each hand's ammo on its side, the face between health and armour.
+	Option "HUD Type", "bd_sbartype", "HUDType"
 	// tip: Shows the magazine and the reserve on the HUD, or the reserve only.
 	Option "HUD Ammo", "rsq_hud_ammo", "RSQ_HudAmmo"
 	StaticText " "
@@ -249,4 +251,14 @@ OptionValue "RSQ_BashTintOpt"
 	2, "Green"
 	3, "Amber"
 	4, "White"
+}
+
+// Brutal Doom's HUD Type with this pack's VR Row (2.0.5n, bottomhud.zs); 5 is left out: RSQ Gun Bonsai VR uses it to hide the bar while its own row draws
+OptionValue "HUDType"
+{
+	6, "VR Row"
+	1, "ZDoom"
+	2, "Brutal Simple"
+	3, "Minimal"
+	4, "Full Helmet"
 }
