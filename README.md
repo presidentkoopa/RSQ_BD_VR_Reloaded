@@ -11,6 +11,7 @@ with your other hand and throw. Choke up on the chainsaw by its top handle. Swin
 two-handed. Every gun in Brutal Doom, held, aimed, fired and reloaded with your own two hands.
 
 Project conceptualized, directed and coordinated by **PresidentKoopa**. All coding done by
+agentic **Claude**.
 
 A VR weapon pack for **Brutal Doom v22** (`brutal22test6.pk3`) on **QuestZDoom 17.3**, built for **standalone
 Quest**. Stock engine, no engine changes, all script. Brutal Doom's guns stay Brutal Doom's guns: same damage, same
@@ -205,7 +206,7 @@ Everything else described on this page is on. The pack binds no keys.
 - **With a gun in your off hand there is no hand reloading.** Each gun reloads by the gesture or the Reload button.
 - **The under-barrel launcher only unlatches while you two-hand the gun,** and the latch is always the off trigger.
 - **Scopes and Hand Skin Tone are single player only.**
-- **Voxel "Spent casings" overrides Real Casing Models.**
+- **The Voxels page's Casings row overrides Casing Models.**
 - **Your fists punch when you swing them.** The trigger does not throw a canned punch in VR.
 - **With LegenDoom loaded,** Brutal Doom's own Dual Pistols weapon is put away. Hold a pistol in each hand instead.
 
@@ -218,6 +219,7 @@ Every build since 2.0.2a, and the release notes for 2.0 and 1.99, are in **[CHAN
 <p align="center"><img src="renders/readme/divider.png" alt=""></p>
 
 <a name="credits"></a><img src="renders/readme/h2_credits.gif" alt="Credits">
+
 **BD22 VR Weapons Q**: project conceptualized, directed and coordinated by **PresidentKoopa** (Radiant Silvergun). All coding done by agentic **Claude** (Anthropic), working under his direction.
 
 Weapon models: **br_vr** by ajantaju (Brutal Doom VR Weapons, BD v21), made from:
