@@ -90,7 +90,7 @@ class RSLD_Converter : Thinker
 		{
 			p.vel = v; p.angle = src.angle;
 			p.Setup(slot, rarity, eff);
-			if (RSLD.Debug()) Console.Printf("RSLD drop: %s -> RSLD_LegendaryPickup slot %s rarity %s effect %s", src.GetClassName(), s, rarity >= 0 ? RSLD_Data.Rarities[rarity] : "none", p.effect);
+			if (RSLD.Debug()) Console.Printf("RSLD drop: %s -> RSLD_LegendaryPickup slot %s rarity %s effect %s, the gun %s", src.GetClassName(), s, rarity >= 0 ? RSLD_Data.Rarities[rarity] : "none", p.effect, p.gun);
 		}
 		src.Destroy();
 		Destroy();
@@ -102,6 +102,7 @@ class RSLD_LegendaryPickup : Inventory
 	int slot, rarity, glow, pickupDelay;
 	string effect;
 	class<Weapon> look;
+	Name gun;	// 2.0.5p: the gun this legendary is (RSLD_Data.PickDropGun), its power bound to it once taken
 	bool landed;
 
 	Default
@@ -117,15 +118,19 @@ class RSLD_LegendaryPickup : Inventory
 	}
 
 	// effect "" = keep what the source carried; the tokens go into this pickup's own inventory, as LegenDoom's do
-	void Setup(int s, int r, string eff, bool keep = false)
+	void Setup(int s, int r, string eff, bool keep = false, Name g = 'None')
 	{
 		slot = s; rarity = r;
+		gun = g != 'None' ? g : RSLD_Data.PickDropGun(s);
+		// the Silvergun stands in for the pistol with "Silvergun Replaces Pistol" (GiveClassFor)
+		if (gun == 'BrutalPistol') { class<Weapon> m = RSLD_Handler.GiveClassFor(2, null); if (m) gun = m.GetClassName(); }
 		effect = keep ? eff : RSLD_Reroll.Reroll(s, r, eff);
 		string sn = RSLD_Data.Slots[s];
 		GiveTok("LD" .. sn .. "EffectActive");
 		if (r >= 0) GiveTok("LD" .. sn .. "Legendary" .. RSLD_Data.Rarities[r]);
 		if (effect != "") GiveTok("LD" .. sn .. "Effect_" .. effect);
-		look = RSLD_Handler.GiveClassFor(s, null);
+		look = (class<Weapon>)(RSLD.AC(gun));
+		if (!look) look = RSLD_Handler.GiveClassFor(s, null);
 		if (look)
 		{
 			let d = GetDefaultByType(look);
@@ -136,10 +141,10 @@ class RSLD_LegendaryPickup : Inventory
 	}
 
 	// a legendary the player dropped: kept as it was, and not picked straight back up
-	void SetupKeep(int s, int r, string eff)
+	void SetupKeep(int s, int r, string eff, Name g = 'None')
 	{
 		pickupDelay = 35;
-		Setup(s, r, eff, true);
+		Setup(s, r, eff, true, g);
 	}
 
 	void GiveTok(string n)
@@ -188,8 +193,12 @@ class RSLD_LegendaryPickup : Inventory
 		}
 		// the gun it shows, unless the player has that gun already (or its Purist/Dual copy); the power then works on
 		// every gun of the slot's family. Owning only a stand-in (the Rifle for the Minigun) no longer withholds it.
-		class<Weapon> give = RSLD_Handler.GiveClassFor(slot, toucher);
-		if (give && !RSLD_Handler.OwnsGun(toucher, slot, give)) toucher.GiveInventory(give, 1);
+		// 2.0.5p: the gun it is, unless the player has it or one of its copies; its power is bound to that gun
+		class<Weapon> give = look;
+		bool owns = false;
+		if (give) for (let it = toucher.Inv; it; it = it.Inv) if (Weapon(it) && RSLD_Data.SameGun(it.GetClassName(), gun)) { owns = true; break; }
+		if (give && !owns) toucher.GiveInventory(give, 1);
+		RSLD_GunBind.Set(toucher, slot, gun);
 		for (let i = Inv; i; i = i.Inv) toucher.GiveInventory(i.GetClass(), 1);
 		class<Inventory> unlock = "LD" .. sn .. "_Unlock";
 		if (unlock) toucher.GiveInventory(unlock, 1);
@@ -199,7 +208,7 @@ class RSLD_LegendaryPickup : Inventory
 		toucher.ACS_NamedExecuteAlways("LDWeaponPickupEffectActivation", 0);
 		RSLD_LDSounds.Jingle(toucher, effect, rarity);	// round 3: LegenDoom's jingle, behind rsld_mute_ld_sounds (ldsounds.zs)
 		toucher.A_StartSound("misc/w_pkup", CHAN_ITEM);
-		if (RSLD.Debug()) Console.Printf("RSLD pickup: %s took legendary %s %s (%s)", toucher.GetClassName(), sn, effect, rarity >= 0 ? RSLD_Data.Rarities[rarity] : "none");
+		if (RSLD.Debug()) Console.Printf("RSLD pickup: %s took legendary %s %s (%s): the gun %s%s, its power bound to it", toucher.GetClassName(), sn, effect, rarity >= 0 ? RSLD_Data.Rarities[rarity] : "none", gun, owns ? " (already owned)" : " (given)");
 		let hh = RSLD.H();
 		if (hh && toucher.player) hh.RefreshSlots(toucher.PlayerNumber(), toucher);
 		GoAwayAndDie();
@@ -306,5 +315,33 @@ class RSLD_Reroll play
 		string pick = pool[random(0, pool.Size() - 1)];
 		if (RSLD.Debug()) Console.Printf("RSLD reroll: %s %s %s -> %s", RSLD_Data.Slots[s], RSLD_Data.Rarities[r], e, pick);
 		return pick;
+	}
+}
+
+// 2.0.5p: which gun each slot's legendary is bound to, per player ('None': the whole group, as before 2.0.5p). Kept in
+// the player's inventory, so a save keeps it and it goes from map to map.
+class RSLD_GunBind : Inventory
+{
+	Name gun[9];
+	Default { Inventory.MaxAmount 1; +INVENTORY.UNDROPPABLE; +INVENTORY.UNTOSSABLE; +INVENTORY.QUIET; +INVENTORY.PERSISTENTPOWER }
+	static void Set(Actor who, int s, Name g)
+	{
+		if (!who || s < 0 || s > 8) return;
+		let b = RSLD_GunBind(who.FindInventory("RSLD_GunBind"));
+		if (!b) { who.GiveInventory("RSLD_GunBind", 1); b = RSLD_GunBind(who.FindInventory("RSLD_GunBind")); }
+		if (b) b.gun[s] = g;
+	}
+	clearscope static Name Of(Actor who, int s)
+	{
+		if (!who || s < 0 || s > 8) return 'None';
+		let b = RSLD_GunBind(who.FindInventory("RSLD_GunBind"));
+		return b ? b.gun[s] : 'None';
+	}
+	// may this weapon carry slot s's legendary? (no binding: any gun of the group)
+	clearscope static bool Carries(Weapon w, int s)
+	{
+		if (!w || s < 0) return s >= 0;
+		Name g = Of(w.Owner, s);
+		return g == 'None' || RSLD_Data.SameGun(w.GetClassName(), g);
 	}
 }

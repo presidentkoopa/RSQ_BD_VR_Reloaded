@@ -178,7 +178,7 @@ class RSLD_Handler : EventHandler
 		class<Actor> c = w.GetClass();
 		string cn = c.GetClassName();
 		if (cn.Left(8) == "RSQ_Off_") c = (class<Actor>)(c.GetParentClass());	// an off-hand copy is a subclass of its gun (DECORATE.rsqdual)
-		for (int i = 0; i < famCls.Size(); i++) if (famCls[i] == c) return famSlot[i];
+		for (int i = 0; i < famCls.Size(); i++) if (famCls[i] == c) return RSLD_GunBind.Carries(w, famSlot[i]) ? famSlot[i] : -1;	// 2.0.5p: bound to its own gun
 		return -1;
 	}
 
@@ -1173,6 +1173,7 @@ class RSLD_Handler : EventHandler
 	// ================================================================ menu actions and the rig probe
 	void SetSlotLegendary(PlayerPawn p, int s, string eff, int rar)
 	{
+		if (eff == "") RSLD_GunBind.Set(p, s, 'None');	// 2.0.5p: the slot's legendary gone, its binding with it
 		string sn = RSLD_Data.Slots[s];
 		for (let i = p.Inv; i; )
 		{
@@ -1218,6 +1219,14 @@ class RSLD_Handler : EventHandler
 		if (!p) return;
 		string n = e.Name;
 		if (n == "rsld_drop" || n == "rsldp_drop") { DropHeld(pn, p); return; }
+		// a rig probe (2.0.5p): a legendary of slot Args[0] handed straight to this player, as a pickup touched
+		if (n == "rsld_testlegend")
+		{
+			int ts = clamp(e.Args[0], 0, 8);
+			let tp = RSLD_LegendaryPickup(Actor.Spawn("RSLD_LegendaryPickup", p.pos));
+			if (tp) { tp.Setup(ts, 0, ""); bool ok; Actor dummy; [ok, dummy] = tp.CallTryPickup(p); if (!ok && tp) tp.Destroy(); }
+			return;
+		}
 		if (n.Left(7) == "rsld_fx")
 		{
 			int s = SlotOf(p.player.ReadyWeapon);
@@ -1427,7 +1436,7 @@ class RSLD_Handler : EventHandler
 		let lp = RSLD_LegendaryPickup(Actor.Spawn("RSLD_LegendaryPickup", p.Vec3Angle(24, p.angle, p.height * 0.5)));
 		if (!lp) return;
 		RefreshSlots(pn, p);
-		lp.SetupKeep(s, slotRar[pn * 9 + s], slotEff[pn * 9 + s]);
+		lp.SetupKeep(s, slotRar[pn * 9 + s], slotEff[pn * 9 + s], RSLD_GunBind.Of(p, s) != 'None' ? RSLD_GunBind.Of(p, s) : p.player.ReadyWeapon.GetClassName());
 		lp.vel = p.Vec3Angle(6, p.angle, 3) - p.pos;
 		SetSlotLegendary(p, s, "", 0);
 		if (RSLD.Debug()) Console.Printf("RSLD drop: player %d dropped the %s legendary %s", pn, sn, lp.effect);
@@ -1460,7 +1469,7 @@ class RSLD_Handler : EventHandler
 		class<Actor> c = w.GetClass();
 		string cn = c.GetClassName();
 		if (cn.Left(8) == "RSQ_Off_") c = (class<Actor>)(c.GetParentClass());
-		for (int i = 0; i < famCls.Size(); i++) if (famCls[i] == c) return famSlot[i];
+		for (int i = 0; i < famCls.Size(); i++) if (famCls[i] == c) return RSLD_GunBind.Carries(w, famSlot[i]) ? famSlot[i] : -1;
 		return -1;
 	}
 }

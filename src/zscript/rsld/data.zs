@@ -49,6 +49,60 @@ class RSLD_Data
 		"MiniGun|PuristMiniGun", "Rocket_Launcher|PuristRocket_Launcher", "Plasma_Gun|DualPlasmaRifles|PuristPlasma_Gun",
 		"BIG_FUCKING_GUN|PuristBIG_FUCKING_GUN"
 	};
+	// 2.0.5p EACH GUN ITS OWN LEGENDARY (owner 2026-11-24 18:26: a legendary drop should be "a Legendary MG42 pickup",
+	// each gun dropping as its own legendary). A legendary drop is one of LegenDoom's nine slots; it now SHOWS and GIVES a
+	// random gun of that slot's group (DropGuns, the guns' own classes; the Purist and Dual copies are its variants), and
+	// its power is BOUND to that gun (RSLD_GunBind): held, that gun and its Purist / Dual / off-hand copies carry it; the
+	// rest of the group do not. A legendary from before 2.0.5p (no binding) still powers the whole group, as it did.
+	static const string DropGuns[] =
+	{
+		"Melee_Attacks|BrutalAxe|DSweap",
+		"Chain_Saw|Flamethrower2|FlameCannon",
+		"BrutalPistol|BrutalSMG|MP40",
+		"Shot_Gun|AssaultShotgun|Revolver",
+		"SSG",
+		"MiniGun|Rifle|MG42|Sniper",
+		"Rocket_Launcher|GrenadeLauncher|IncendiaryLauncher|Devastator",
+		"Plasma_Gun|RailGun",
+		"BIG_FUCKING_GUN|BFG10k|NukeLauncher|Unmaker|HellishMissileLauncher"
+	};
+	// a gun and the copies that are the same gun (the first is the gun a binding names)
+	static const string Variants[] =
+	{
+		"BrutalPistol|DualPistols|PuristPistol", "BrutalSMG|DualSMG|PuristSMG", "MP40|DualMP40|PuristMP40",
+		"Shot_Gun|PuristShot_Gun", "AssaultShotgun|PuristAssaultShotgun", "Revolver|PuristRevolver", "SSG|PuristSSG",
+		"MiniGun|PuristMiniGun", "Rifle|DualRifles|PuristRifle", "MG42|PuristMG42|Machinegun", "Sniper|PuristSniper",
+		"Rocket_Launcher|PuristRocket_Launcher", "GrenadeLauncher|PuristGrenadeLauncher",
+		"IncendiaryLauncher|PuristIncendiaryLauncher", "Devastator|PuristDevastator",
+		"Plasma_Gun|DualPlasmaRifles|PuristPlasma_Gun", "RailGun|PuristRailGun",
+		"BIG_FUCKING_GUN|PuristBIG_FUCKING_GUN", "BFG10k|PuristBFG10k", "NukeLauncher|PuristNukeLauncher",
+		"Unmaker|PuristUnmaker", "HellishMissileLauncher|PuristHellishMissileLauncher",
+		"Flamethrower2|PuristFlamethrower2", "FlameCannon|DualFlameCannon|PuristFlameCannon"
+	};
+	// is class name cn (an off-hand copy's RSQ_Off_ taken off) the gun g or one of its copies?
+	clearscope static bool SameGun(string cn, Name g)
+	{
+		if (cn.Left(8) == "RSQ_Off_") cn = cn.Mid(8);
+		string gs = g;
+		if (cn ~== gs) return true;
+		for (int i = 0; i < RSLD_Data.Variants.Size(); i++)
+		{
+			Array<string> v; RSLD_Data.Variants[i].Split(v, "|");
+			if (!(v[0] ~== gs)) continue;
+			for (int k = 1; k < v.Size(); k++) if (cn ~== v[k]) return true;
+			return false;
+		}
+		return false;
+	}
+	// a random gun of slot s's group that exists in this load order (the slot's own gun when none other does)
+	static Name PickDropGun(int s)
+	{
+		Array<string> l; RSLD_Data.DropGuns[s].Split(l, "|");
+		Array<string> ok;
+		for (int i = 0; i < l.Size(); i++) { class<Actor> c = l[i]; if (c) ok.Push(l[i]); }
+		if (ok.Size() == 0) return RSLD_Data.Give[s];
+		return ok[random[rsldgun](0, ok.Size() - 1)];
+	}
 	static const string Rarities[] = { "Common", "Uncommon", "Rare", "Epic" };
 	// LegenDoom's rarityColors[] (LEGENDINF.acs): CR_GREEN, CR_BLUE, CR_PURPLE, CR_ORANGE
 	static const int RarityColor[] = { Font.CR_GREEN, Font.CR_BLUE, Font.CR_PURPLE, Font.CR_ORANGE };
