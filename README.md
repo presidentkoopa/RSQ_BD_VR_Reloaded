@@ -131,21 +131,7 @@ turns the scope off and on, which saves the Quest a second view of the world.
 - **Real punches** with either fist, and a **pistol whip** with any pistol or revolver.
 - **Lift doors by hand:** take hold of a door and raise it. Past 40% it opens the rest of the way.
 
-<a name="released-alongside-it"></a><img src="renders/readme/h3_released-alongside-it.gif" alt="Released alongside it">
 
-Four mods from the [RSQ UBQ Series](https://github.com/presidentkoopa/RSQ_UBQSeries) are released with this pack. Each is its own pk3, loaded after the weapons,
-and each works without the others. Get them from the Series' [pk3 folder](https://github.com/presidentkoopa/RSQ_UBQSeries/tree/main/pk3).
-
-- **[RSQ Melee](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/Melee/README.md)** (`RSQ_Melee.pk3`): fighting with your body. Jabs, hooks and
-  uppercuts read from your hand, open-palm slaps for fireballs, the gun-butt shove. It takes over this pack's punch,
-  pistol whip and butt strike.
-- **[RSQ Tactical Rig](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/TacticalRig/README.md)** (`RSQ_TacticalRig.pk3`): your guns on your body. Six
-  holsters, a grenade spot, and an ammo pouch that every reload in this pack takes its ammo from.
-- **[RSQ Gun Cards](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/GunCards/README.md)** (`RSQ_GunCards.pk3`): ammo cards on your guns and a status
-  card on your wrist when you check your watch. It can take health, armour and ammo off the HUD, and a worn gun
-  spreads wider.
-- **[RSQ Laser Sight](https://github.com/presidentkoopa/RSQ_UBQSeries/blob/main/LaserSight/README.md)** (`RSQ_LaserSight.pk3`): a laser out of every gun's own
-  barrel, both hands, with a dot where the shot will land.
 
 <a name="with-the-rest-of-the-series"></a><img src="renders/readme/h3_with-the-rest-of-the-series.gif" alt="With the rest of the Series">
 
