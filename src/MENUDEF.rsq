@@ -63,6 +63,10 @@ OptionMenu "RSQ_Options"
 	Option "VR Hands", "rsq_hands", "OnOff"
 	// tip: Recolours the VR hands.
 	Option "Hand Skin Tone", "rsq_hand_tone", "RSQ_HandTone"
+	// tip: Brutal Doom's status bar, or the VR Row: each hand's ammo on its side, the face between health and armour.
+	Option "HUD Type", "bd_sbartype", "HUDType"
+	// tip: Shows the magazine and the reserve on the HUD, or the reserve only.
+	Option "HUD Ammo", "rsq_hud_ammo", "RSQ_HudAmmo"
 	StaticText " "
 	StaticText "Reloading", 1
 	// tip: Reload by hand in VR; Off uses Brutal Doom's own reload.
@@ -71,36 +75,6 @@ OptionMenu "RSQ_Options"
 	Option "Reload Gesture", "rsq_reload_gesture", "RSQ_ReloadGesture"
 	// tip: Which button the off hand uses to take hold of ammo.
 	Option "Grab Ammo With", "rsr_grab_with", "RSR_GrabWith"
-	// tip: Brutal Doom's status bar, or the VR Row: each hand's ammo on its side, the face between health and armour.
-	Option "HUD Type", "bd_sbartype", "HUDType"
-	// tip: Shows the magazine and the reserve on the HUD, or the reserve only.
-	Option "HUD Ammo", "rsq_hud_ammo", "RSQ_HudAmmo"
-	StaticText " "
-	StaticText "Combat", 1
-	// tip: Shots fly as real rounds; Off uses Brutal Doom's instant hitscan and tracers.
-	Option "True Bullets", "sv_rsq_true_bullets", "OnOff"
-	// tip: How much bullets drop and drift; Stock is Brutal Doom's own.
-	Option "Ballistics", "rsq_ballistics", "RSQ_Ballistics"
-	// tip: Throw grenades with your hand.
-	Option "VR Throwing", "rsg_vr", "OnOff"
-	// tip: A real punch with either fist lands a hit.
-	Option "VR Punching", "rsq_punch", "OnOff"
-	// tip: Weapons change at once, with no raise or lower.
-	Option "Instant Switch", "rsq_instant_switch", "OnOff"
-	StaticText " "
-	// tip: Which guns you can hold one of in each hand.
-	Submenu "Dual Wield", "RSQ_DualOptions"
-	// tip: Which pickups and objects are drawn as voxels.
-	Submenu "Voxels", "RSQ_VoxelOptions"
-	StaticText " "
-	// tip: Tuning numbers, extra weapon options and debug switches.
-	Submenu "Test and Debug", "RSR_Debug"
-}
-
-OptionMenu "RSR_Debug"
-{
-	Title "TEST AND DEBUG"
-	StaticText "Reloading", 1
 	// tip: Guns Brutal Doom gives no reload get one; Off keeps Brutal Doom's own.
 	Option "Non-Standard Reloads", "rsq_reload_nonstd", "OnOff"
 	// tip: Where a new magazine is taken from: anywhere near the gun, or low by the belt.
@@ -121,6 +95,18 @@ OptionMenu "RSR_Debug"
 	Option "Dual Reload Gesture", "rsq_flick", "OnOff"
 	// tip: How far below your view a gun must point to count as off-screen (degrees).
 	Slider "Off-Screen Angle", "rsq_offscreen_deg", 40, 85, 1, 0
+	StaticText " "
+	StaticText "Combat", 1
+	// tip: Shots fly as real rounds; Off uses Brutal Doom's instant hitscan and tracers.
+	Option "True Bullets", "sv_rsq_true_bullets", "OnOff"
+	// tip: How much bullets drop and drift; Stock is Brutal Doom's own.
+	Option "Ballistics", "rsq_ballistics", "RSQ_Ballistics"
+	// tip: Throw grenades with your hand.
+	Option "VR Throwing", "rsg_vr", "OnOff"
+	// tip: A real punch with either fist lands a hit.
+	Option "VR Punching", "rsq_punch", "OnOff"
+	// tip: Weapons change at once, with no raise or lower.
+	Option "Instant Switch", "rsq_instant_switch", "OnOff"
 	StaticText " "
 	StaticText "Weapons", 1
 	// tip: The pistol fires one shot per trigger pull.
@@ -149,8 +135,6 @@ OptionMenu "RSR_Debug"
 	Option "Pump Spread", "rsq_pump_spread", "RSQ_PumpSpread"
 	// tip: Firing kicks the gun in your hand.
 	Option "Recoil", "rsq_recoil", "OnOff"
-	// tip: Cheats also give the extra weapons (MP40, MG42, Devastator and more).
-	Option "Cheat Extra Weapons", "rsq_extra_weapons", "OnOff"
 	StaticText " "
 	StaticText "Bullets", 1
 	// tip: How fast true bullets fly (map units a tic; 80 is the standard).
@@ -212,7 +196,20 @@ OptionMenu "RSR_Debug"
 	// tip: The size of the spent casing models.
 	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
 	StaticText " "
-	StaticText "Debug", 1
+	// tip: Which guns you can hold one of in each hand.
+	Submenu "Dual Wield", "RSQ_DualOptions"
+	// tip: Which pickups and objects are drawn as voxels.
+	Submenu "Voxels", "RSQ_VoxelOptions"
+	StaticText " "
+	// tip: Debug switches.
+	Submenu "Test and Debug", "RSR_Debug"
+}
+
+OptionMenu "RSR_Debug"
+{
+	Title "TEST AND DEBUG"
+	// tip: Cheats also give the extra weapons (MP40, MG42, Devastator and more).
+	Option "Cheat Extra Weapons", "rsq_extra_weapons", "OnOff"
 	// tip: Shows the zones the hand must reach during a reload.
 	Option "Show Capture Zones", "rsr_assist_debug", "OnOff"
 	// tip: Prints each reload step and every key code to the console.
@@ -220,6 +217,7 @@ OptionMenu "RSR_Debug"
 	// tip: Logs which mod handles each butt strike, pistol whip and VR punch.
 	Option "Log Melee Source", "rsvr_melee_log", "OnOff"
 }
+
 
 // what the HUD shows of the held gun's ammo (zscript/rsq/counters.zs RSQ_Counters.Hud)
 OptionValue "RSQ_HudAmmo"

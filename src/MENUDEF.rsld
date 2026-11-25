@@ -18,6 +18,16 @@ OptionMenu "RSLD_Options"
 	// tip: Mutes LegenDoom's pickup jingles and aura sounds.
 	Option "Mute LD Sounds", "rsld_mute_ld_sounds", "OnOff"
 	StaticText " "
+	StaticText "Drops", 1
+	// tip: Legendary guns drop only from miniboss fights.
+	Option "Boss Fights Only", "rsld_bossfight_only", "OnOff"
+	// tip: A legendary champion outside a miniboss fight drops its legendary gun too.
+	Option "Champions Drop", "rsld_champion_drops", "OnOff"
+	// tip: A miniboss fight's tier sets how rare its legendary drop is.
+	Option "Rarity By Tier", "rsld_tier_rarity", "OnOff"
+	// tip: LegenDoom's Slug replaces the shotguns' primary fire only.
+	Option "Slug Primary Only", "rsld_slug_primary", "OnOff"
+	StaticText " "
 	// tip: LegenDoom's own options.
 	Submenu "LegenDoom Options", "LegenDoom"
 	// tip: Drop rules, tuning and the debug log.
@@ -27,16 +37,6 @@ OptionMenu "RSLD_Options"
 OptionMenu "RSLD_Debug"
 {
 	Title "TEST AND DEBUG"
-	StaticText "Drops", 1
-	// tip: Legendary guns drop only from miniboss fights.
-	Option "Minibosses Only", "rsld_bossfight_only", "OnOff"
-	// tip: A legendary champion outside a miniboss fight drops its legendary gun too.
-	Option "Champions Drop", "rsld_champion_drops", "OnOff"
-	// tip: A miniboss fight's tier sets how rare its legendary drop is.
-	Option "Rarity By Tier", "rsld_tier_rarity", "OnOff"
-	// tip: LegenDoom's Slug replaces the shotguns' primary fire only.
-	Option "Slug Primary Only", "rsld_slug_primary", "OnOff"
-	StaticText " "
 	StaticText "Debug", 1
 	// tip: Logs what each legendary effect did.
 	Option "Debug Log", "rsld_debug", "OnOff"
