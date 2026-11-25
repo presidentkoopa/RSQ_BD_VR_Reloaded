@@ -1008,7 +1008,7 @@ class RSR_DroppedMag : Actor
 		"####" "#" 1;
 		Loop;
 	Death:
-		"####" "#" 0 { pitch = 0; roll = 90; Label(); }
+		"####" "#" 0 { pitch = 0; roll = 90; }   // 2.0.5r: NO AMMO is part of the box's model now (MODELDEF.rsr), no Label()
 		"####" "#" 350;
 		"####" "#" 1 A_FadeOut(0.05);
 		Wait;

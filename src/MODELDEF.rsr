@@ -1987,7 +1987,13 @@ Model RSR_DroppedMag
 	Path "models/rsq/ammobox"
 	Model 0 "ammobox.md3"
 	Skin 0 "ammoa_noammo.png"
-	Scale 0.3468 0.3468 0.3468	// 2.0.5i (owner 2026-11-23 09:11): full size (GNRC's dropped box), dark red, NO AMMO on it (vreload.zs RSR_MagLabel)
+	// 2.0.5r (owner 2026-11-24: "why is your dropped chaingun ammobox super tiny and why do the words no ammo float above
+	// it and not part of the voxel itself?"): the size of a box of bullets on the floor (1.6, was 0.3468), and NO AMMO is a second
+	// piece of this model -- a plate lying flush on both big faces (noammo_label.md3, tools/gen_label_md3.py) -- so it
+	// tumbles, lands and fades with the box. The floating RSR_MagLabel is gone.
+	Model 1 "noammo_label.md3"
+	Skin 1 "rsrnoammo.png"
+	Scale 1.6 1.6 1.6
 	// 2.0.5i: no Offset / ZOffset: the box's middle is the md3's origin already (ammobox_md3.py), and 2.0.5e's offsets
 	// (copied from the Minigun magazine piece) put it out of sight: it was never seen dropped (rig mag3, 11-23)
 	Offset 0.0 0.0 0.0
@@ -1995,6 +2001,7 @@ Model RSR_DroppedMag
 	USEACTORPITCH
 	USEACTORROLL
 	FrameIndex RQCW A 0 0
+	FrameIndex RQCW A 1 0
 }
 
 // ---- F10: Machinegun (tools/bd22_plus.py late)
