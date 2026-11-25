@@ -1985,23 +1985,19 @@ Model RSQ_Hands
 Model RSR_DroppedMag
 {
 	Path "models/rsq/ammobox"
-	Model 0 "ammobox.md3"
-	Skin 0 "ammoa_noammo.png"
+	Model 0 "noammo_box.md3"	// 2.0.5s: the flare box made again with NO AMMO in its voxels (tools/gen_noammo_box.py)
+	Skin 0 "noammo_box.png"
 	// 2.0.5r (owner 2026-11-24: "why is your dropped chaingun ammobox super tiny and why do the words no ammo float above
-	// it and not part of the voxel itself?"): the size of a box of bullets on the floor (1.6, was 0.3468), and NO AMMO is a second
-	// piece of this model -- a plate lying flush on both big faces (noammo_label.md3, tools/gen_label_md3.py) -- so it
-	// tumbles, lands and fades with the box. The floating RSR_MagLabel is gone.
-	Model 1 "noammo_label.md3"
-	Skin 1 "rsrnoammo.png"
-	Scale 1.6 1.6 1.6
-	// 2.0.5i: no Offset / ZOffset: the box's middle is the md3's origin already (ammobox_md3.py), and 2.0.5e's offsets
-	// (copied from the Minigun magazine piece) put it out of sight: it was never seen dropped (rig mag3, 11-23)
+	// it and not part of the voxel itself?"): Brutal Doom's own ammo box size, and NO AMMO
+	// in the box's own voxels, as RSQ FnF's flare box says FLARE (owner 2026-11-24 21:54). No floating label, no plate.
+	Scale 2.0 2.0 2.0	// 2.0.5s: BD_VoxelPack's own ammo box size (its body: 78 voxels x 0.35 = 27 units)
+	// 2.0.5s: the md3's origin is the box's middle; ZOffset lifts it by half its height (3.85 md3 units) so it stands on
+	// the floor when it lands upright
 	Offset 0.0 0.0 0.0
-	ZOffset 0.0
+	ZOffset 3.85
 	USEACTORPITCH
 	USEACTORROLL
 	FrameIndex RQCW A 0 0
-	FrameIndex RQCW A 1 0
 }
 
 // ---- F10: Machinegun (tools/bd22_plus.py late)
