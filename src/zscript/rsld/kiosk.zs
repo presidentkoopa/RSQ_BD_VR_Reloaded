@@ -41,6 +41,8 @@
 // rsld_debug 1 logs every roll, raise, give and suppressed drop ("RSLD kiosk: ...").
 class RSLD_KioskService : Service
 {
+	// LEGENDARY ECONOMY (2.0.5w, CVARINFO.rsld rsq_ld_economy): on unless switched off
+	clearscope static bool Economy() { let c = CVar.FindCVar("rsq_ld_economy"); return !c || c.GetBool(); }
 	static play int SlotOf(string offer, out int r, out string e)
 	{
 		Array<string> f; offer.Split(f, "|");
@@ -179,7 +181,7 @@ class RSLD_KioskService : Service
 
 	override int GetInt(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{
-		if (request ~== "ready") return RSLD.On() ? 1 : 0;
+		if (request ~== "ready") return RSLD.On() && Economy() ? 1 : 0;	// 2.0.5w: no kiosks with Legendary Economy off
 		if (request ~== "give") return Give(stringArg, Actor(objectArg));
 		if (request ~== "kiosk.take")
 		{

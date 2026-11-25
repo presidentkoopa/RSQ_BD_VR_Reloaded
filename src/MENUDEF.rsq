@@ -57,6 +57,8 @@ OptionValue "RSR_ShellCredit"
 OptionMenu "RSQ_Options"
 {
 	Title "BD22 VR WEAPONS"
+	// tip: Gold, Boss kiosks and Boss-only legendary drops; off gives LegenDoom's own drops and no gold or kiosks.
+	Option "Legendary Economy", "rsq_ld_economy", "OnOff"
 	// tip: Shows your VR hands on the controllers.
 	Option "VR Hands", "rsq_hands", "OnOff"
 	// tip: Recolours the VR hands.

@@ -1,4 +1,9 @@
 // LD mode (LegenDoom 3.0 x BD22 VR): zscript/rsld. Only read when LegenDoom 3.0 is loaded.
+// LEGENDARY ECONOMY (2.0.5w, owner 2026-11-25: "an option in bd22 near the top that says Legendary Economy: On / Off, which
+// would control the appearance of gold, kiosks and just allow for normal legendoom behavior"). On: gold bits (RSQ
+// VisualRewards), the Boss and Big Boss kiosks (RSQ Miniboss), legendary weapons only from Bosses. Off: no gold, no kiosk,
+// LegenDoom drops its legendary weapons as it ships. The other mods read it by name (absent: on).
+server bool rsq_ld_economy = true;
 server bool rsld_reroll = true;			// 2.0.5n: no longer read and no menu row (kept so a saved config still loads): an effect that is not applied is always re-rolled
 user bool rsld_screen_name = false;		// the held gun's legendary name at the top of the view (owner 11-05: off; RSQ Wheel's card names it)
 server bool rsld_tier_rarity = true;		// 2.0.4k: a Bossfight's legendary drop has its rarity rolled by the fight's tier (rarer = less likely, a higher tier eases it)

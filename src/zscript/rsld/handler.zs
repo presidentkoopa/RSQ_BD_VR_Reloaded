@@ -880,6 +880,7 @@ class RSLD_Handler : EventHandler
 	{
 		cvar c = cvar.FindCvar("rsld_bossfight_only");
 		if (c && !c.GetBool()) return false;
+		if (!RSLD_KioskService.Economy()) return false;	// 2.0.5w Legendary Economy off: LegenDoom's own drops
 		if (!RSLD.AC("champion_Token")) return false;
 		let mb = ServiceIterator.Find("RSQMB_Service").Next();
 		return mb && mb.GetInt("bossfights", "", 0, 0, null) == 1;
