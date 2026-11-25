@@ -94,6 +94,17 @@ class RSLD_Data
 		}
 		return false;
 	}
+	// the gun a class is: its off-hand copy's RSQ_Off_ taken off, a Purist / Dual copy read as its gun (Variants)
+	clearscope static Name BaseGun(string cn)
+	{
+		if (cn.Left(8) == "RSQ_Off_") cn = cn.Mid(8);
+		for (int i = 0; i < RSLD_Data.Variants.Size(); i++)
+		{
+			Array<string> v; RSLD_Data.Variants[i].Split(v, "|");
+			for (int k = 0; k < v.Size(); k++) if (cn ~== v[k]) return v[0];
+		}
+		return cn;
+	}
 	// a random gun of slot s's group that exists in this load order (the slot's own gun when none other does)
 	static Name PickDropGun(int s)
 	{

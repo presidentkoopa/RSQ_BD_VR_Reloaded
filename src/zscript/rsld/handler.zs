@@ -908,6 +908,8 @@ class RSLD_Handler : EventHandler
 	override void WorldTick()
 	{
 		if (!ldOn) return;
+		for (int sp = 0; sp < MAXPLAYERS; sp++)	// 2.0.5q: each gun its own legendary, the one in hand in LegenDoom's place
+			if (playeringame[sp] && players[sp].mo && players[sp].mo.health > 0) SyncLegends(sp, players[sp].mo);
 		// the pulls of the last tic: ammo taken is known now
 		for (int i = 0; i < pend.Size(); i++)
 		{
@@ -1171,6 +1173,45 @@ class RSLD_Handler : EventHandler
 	}
 
 	// ================================================================ menu actions and the rig probe
+	// a slot's LegenDoom tokens taken off (its legendary out of LegenDoom's place; 2.0.5q keeps it in RSLD_GunBind)
+	void ClearSlotTokens(PlayerPawn p, int s)
+	{
+		if (!p) return;
+		string sn = RSLD_Data.Slots[s];
+		for (let i = p.Inv; i; )
+		{
+			let nx = i.Inv;
+			string cn = i.GetClassName();
+			string pa = "LD" .. sn .. "EffectActive", pl = "LD" .. sn .. "Legendary", pe = "LD" .. sn .. "Effect_";
+			if (cn ~== pa || cn.Left(pl.Length()) ~== pl || cn.Left(pe.Length()) ~== pe) { p.RemoveInventory(i); i.Destroy(); }
+			i = nx;
+		}
+	}
+
+	// 2.0.5q: the gun in hand's own legendary into LegenDoom's slot (main hand first, then the off hand if it may carry one)
+	void SyncLegends(int pn, PlayerPawn p)
+	{
+		let b = RSLD_GunBind.Get(p);
+		if (!b || b.lgGun.Size() == 0) return;
+		int done = -1;
+		for (int h = 0; h < 2; h++)
+		{
+			Weapon w = h == 0 ? p.player.ReadyWeapon : HandWeapon(p, RSLD.OFF);
+			if (!w) continue;
+			if (h == 1) { cvar oc = cvar.FindCvar("rsld_offhand_legendary"); if (oc && !oc.GetBool()) continue; }
+			int i = b.Find(w.GetClassName());
+			if (i < 0) continue;
+			int s = b.lgSlot[i];
+			if (s == done) continue;
+			done = s;
+			if (b.gun[s] == b.lgGun[i]) continue;
+			ClearSlotTokens(p, s);
+			b.gun[s] = b.lgGun[i];
+			SetSlotLegendary(p, s, b.lgEff[i], b.lgRar[i]);
+			if (RSLD.Debug()) Console.Printf("RSLD swap: slot %s now holds %s's legendary %s", RSLD_Data.Slots[s], b.lgGun[i], b.lgEff[i]);
+		}
+	}
+
 	void SetSlotLegendary(PlayerPawn p, int s, string eff, int rar)
 	{
 		if (eff == "") RSLD_GunBind.Set(p, s, 'None');	// 2.0.5p: the slot's legendary gone, its binding with it
@@ -1436,8 +1477,11 @@ class RSLD_Handler : EventHandler
 		let lp = RSLD_LegendaryPickup(Actor.Spawn("RSLD_LegendaryPickup", p.Vec3Angle(24, p.angle, p.height * 0.5)));
 		if (!lp) return;
 		RefreshSlots(pn, p);
-		lp.SetupKeep(s, slotRar[pn * 9 + s], slotEff[pn * 9 + s], RSLD_GunBind.Of(p, s) != 'None' ? RSLD_GunBind.Of(p, s) : p.player.ReadyWeapon.GetClassName());
+		Name dg = RSLD_GunBind.Of(p, s) != 'None' ? RSLD_GunBind.Of(p, s) : RSLD_Data.BaseGun(p.player.ReadyWeapon.GetClassName());
+		lp.SetupKeep(s, slotRar[pn * 9 + s], slotEff[pn * 9 + s], dg);
 		lp.vel = p.Vec3Angle(6, p.angle, 3) - p.pos;
+		let gb = RSLD_GunBind.Get(p);
+		if (gb) gb.Remove(dg);	// 2.0.5q: that gun's legendary leaves the store too
 		SetSlotLegendary(p, s, "", 0);
 		if (RSLD.Debug()) Console.Printf("RSLD drop: player %d dropped the %s legendary %s", pn, sn, lp.effect);
 	}

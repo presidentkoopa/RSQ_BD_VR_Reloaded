@@ -180,7 +180,15 @@ class RSLD_LegendaryPickup : Inventory
 		if (!toucher || !toucher.player) return false;
 		string sn = RSLD_Data.Slots[slot];
 		class<Inventory> active = "LD" .. sn .. "EffectActive";
-		if (active && toucher.CountInv(active) > 0)
+		// 2.0.5q: one legendary per GUN, not per LegenDoom slot. A legendary from before 2.0.5p in this slot is kept first,
+		// under the slot's own gun, so this one does not wipe it.
+		let bind = RSLD_GunBind.Get(toucher, true);
+		if (bind && active && toucher.CountInv(active) > 0 && RSLD_GunBind.Of(toucher, slot) == 'None')
+		{
+			let hh0 = RSLD.H();
+			if (hh0) { hh0.RefreshSlots(toucher.PlayerNumber(), toucher); bind.Add(RSLD_Data.Give[slot], slot, hh0.slotRar[toucher.PlayerNumber() * 9 + slot], hh0.slotEff[toucher.PlayerNumber() * 9 + slot]); bind.gun[slot] = RSLD_Data.BaseGun(RSLD_Data.Give[slot]); }
+		}
+		if (bind && bind.Find(gun) >= 0)
 		{
 			// LegenDoom: one legendary per weapon; it shows the name and leaves the pickup ($LD_WEP_PICKUP_NAME_FAIL_<slot>)
 			class<Inventory> cd = (class<Inventory>)(RSLD.AC("LDWeaponDisplayCooldown"));
@@ -198,7 +206,11 @@ class RSLD_LegendaryPickup : Inventory
 		bool owns = false;
 		if (give) for (let it = toucher.Inv; it; it = it.Inv) if (Weapon(it) && RSLD_Data.SameGun(it.GetClassName(), gun)) { owns = true; break; }
 		if (give && !owns) toucher.GiveInventory(give, 1);
-		RSLD_GunBind.Set(toucher, slot, gun);
+		// kept as this gun's own legendary, and put in LegenDoom's slot now (the slot's old tokens out first)
+		if (bind) bind.Add(gun, slot, rarity, effect);
+		let hk = RSLD.H();
+		if (hk) hk.ClearSlotTokens(PlayerPawn(toucher), slot);
+		RSLD_GunBind.Set(toucher, slot, RSLD_Data.BaseGun(gun));
 		for (let i = Inv; i; i = i.Inv) toucher.GiveInventory(i.GetClass(), 1);
 		class<Inventory> unlock = "LD" .. sn .. "_Unlock";
 		if (unlock) toucher.GiveInventory(unlock, 1);
@@ -318,17 +330,30 @@ class RSLD_Reroll play
 	}
 }
 
-// 2.0.5p: which gun each slot's legendary is bound to, per player ('None': the whole group, as before 2.0.5p). Kept in
-// the player's inventory, so a save keeps it and it goes from map to map.
+// 2.0.5q EVERY GUN ITS OWN LEGENDARY, AS MANY AS YOU HAVE GUNS (owner 2026-11-24 19:04: hold a Legendary MG42 and a
+// Legendary Minigun at once). LegenDoom keeps a legendary's power in tokens under one of its nine weapons, one at a time.
+// So every legendary you own is kept HERE, one per gun (lg*: the gun, its slot, rarity and effect), and LegenDoom's nine
+// places hold the one of the gun in your hand (RSLD_Handler.SyncLegends swaps them as you change guns; a slot keeps the
+// last one put there while no gun of its group is in hand). gun[s]: whose legendary slot s holds now ('None': a
+// legendary from before 2.0.5p, which powers the whole group).
 class RSLD_GunBind : Inventory
 {
 	Name gun[9];
+	Array<Name> lgGun;
+	Array<int> lgSlot, lgRar;
+	Array<String> lgEff;
 	Default { Inventory.MaxAmount 1; +INVENTORY.UNDROPPABLE; +INVENTORY.UNTOSSABLE; +INVENTORY.QUIET; +INVENTORY.PERSISTENTPOWER }
+	static RSLD_GunBind Get(Actor who, bool make = false)
+	{
+		if (!who) return null;
+		let b = RSLD_GunBind(who.FindInventory("RSLD_GunBind"));
+		if (!b && make) { who.GiveInventory("RSLD_GunBind", 1); b = RSLD_GunBind(who.FindInventory("RSLD_GunBind")); }
+		return b;
+	}
 	static void Set(Actor who, int s, Name g)
 	{
 		if (!who || s < 0 || s > 8) return;
-		let b = RSLD_GunBind(who.FindInventory("RSLD_GunBind"));
-		if (!b) { who.GiveInventory("RSLD_GunBind", 1); b = RSLD_GunBind(who.FindInventory("RSLD_GunBind")); }
+		let b = Get(who, g != 'None');
 		if (b) b.gun[s] = g;
 	}
 	clearscope static Name Of(Actor who, int s)
@@ -336,6 +361,26 @@ class RSLD_GunBind : Inventory
 		if (!who || s < 0 || s > 8) return 'None';
 		let b = RSLD_GunBind(who.FindInventory("RSLD_GunBind"));
 		return b ? b.gun[s] : 'None';
+	}
+	// the stored legendary of this gun (any copy of it), or -1
+	clearscope int Find(Name g)
+	{
+		Name base = RSLD_Data.BaseGun(g);
+		for (int i = 0; i < lgGun.Size(); i++) if (lgGun[i] == base) return i;
+		return -1;
+	}
+	void Add(Name g, int s, int r, String e)
+	{
+		Name base = RSLD_Data.BaseGun(g);
+		int i = Find(base);
+		if (i < 0) { lgGun.Push(base); lgSlot.Push(s); lgRar.Push(r); lgEff.Push(e); return; }
+		lgSlot[i] = s; lgRar[i] = r; lgEff[i] = e;
+	}
+	void Remove(Name g)
+	{
+		int i = Find(g);
+		if (i < 0) return;
+		lgGun.Delete(i); lgSlot.Delete(i); lgRar.Delete(i); lgEff.Delete(i);
 	}
 	// may this weapon carry slot s's legendary? (no binding: any gun of the group)
 	clearscope static bool Carries(Weapon w, int s)
