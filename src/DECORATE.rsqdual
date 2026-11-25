@@ -4233,6 +4233,11 @@ ACTOR RSQ_Off_Plasma_Gun : Plasma_Gun
 	}
 }
 
+// 2.0.5u BY HAND (owner 2026-11-25, dual Shotguns fired together: only one shot): the off copy's own chamber token. It
+// shared BD22's ShotgunWasEmpty, so the gun that fired first left it set and the other one, firing the same tic, pumped
+// instead of firing. Each hand has its own now; dual.zs SwapMags moves it with the rounds.
+ACTOR RSQ_ShotgunWasEmptyOff : bd_Token {}
+
 ACTOR ShotgunAmmoOff : Ammo
 {
 	Inventory.Amount 0
@@ -4308,7 +4313,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		SHTN A 0 A_TakeInventory("RSP_Go", 1)
 		SHTN A 0 A_GiveInventory("Pumping", 1)
 		SHTN A 0 A_JumpIfInventory("ShotgunAmmoOff", 1, "RSP_Next")
-		SHTN A 0 A_GiveInventory("ShotgunWasEmpty", 1)	// nothing chambered
+		SHTN A 0 A_GiveInventory("RSQ_ShotgunWasEmptyOff", 1)	// nothing chambered
 		Goto RSP_Next
 	RSP_LoadGo:
 		SHTN A 0 A_TakeInventory("RSP_Go", 1)
@@ -4321,7 +4326,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		SHTN A 0 A_JumpIfInventory("ShotgunAmmoOff", 8, "RSP_Next8")
 		Goto RSP_LoadWait
 	RSP_Next8:		// an empty gun stops at 8 (its pump chambers one); a chambered round takes a 9th
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "RSP_LoadEnd")
+		SHTN A 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "RSP_LoadEnd")
 		Goto RSP_LoadWait
 	RSP_LoadWait:	// the hand loads shells (rsr_pump.zs); fire ends the reload, as in BD22's insert frames
 		SHTN A 1 A_WeaponReady(WRF_NOBOB|WRF_ALLOWZOOM)
@@ -4345,7 +4350,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 	RSP_LoadEnd:	// FinishedInsertingShells, without its lowering frames (the gun never tilted)
 		SHTN A 0 A_TakeInventory("RSP_ShellIn", 999)	// 2026-10-16: credits past a full tube are dropped, never saved for later
 		SHTN A 0 A_Takeinventory("Reloading", 1)
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump2")
+		SHTN A 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "Pump2")
 		Goto ReadyToFireAgain
 	RSP_Kick:		// DoKickReloading, the gun held (the hand keeps what it has)
 		SHTN A 0 A_GunFlash("ReloadingKickFlash")
@@ -4353,7 +4358,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		Goto RSP_LoadWait
 	RSP_LBack:		// the hand has the pump back while loading: a spent shell comes out as in Pump2
 		SHTN A 0 A_TakeInventory("RSP_Back", 1)
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "RSP_LBack1")
+		SHTN A 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "RSP_LBack1")
 		Goto RSP_LoadWait			// a live round in: BD22's inspect pump, nothing comes out
 	RSP_LBack1:
 		SHTN A 0 A_JumpIfInventory("HasUnloadedShotgun", 1, "RSP_LoadWait")
@@ -4362,7 +4367,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 	RSP_LFwd:		// forward again: the reload ends, chambered (Pump2 N)
 		SHTN A 0 A_TakeInventory("RSP_Fwd", 1)
 		SHTN A 0 A_Takeinventory("Reloading", 1)
-		SHTN A 0 A_Takeinventory("ShotgunWasEmpty", 1)
+		SHTN A 0 A_Takeinventory("RSQ_ShotgunWasEmptyOff", 1)
 		SHTN A 0 A_Takeinventory("HasUnloadedShotgun", 1)
 		Goto ReadyToFireAgain
 	RSP_P1:		// Pump1, after a shot, after BD22's own checks
@@ -4394,13 +4399,13 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		Goto RSP_P1Wait
 	RSP_P1Back:	// all the way back: BD22's own Pump1 G..J: the spent shell out
 		"####" "#" 0 A_TakeInventory("RSP_Back", 1)
-		"####" "#" 0 A_Takeinventory("ShotgunWasEmpty", 1)
+		"####" "#" 0 A_Takeinventory("RSQ_ShotgunWasEmptyOff", 1)
 		"####" "#" 0 A_GiveInventory("RSP_CaseOut", 1)	// 2026-10-16: out of the ejection port (rsr_pump.zs CaseOut)
-		"####" "#" 0 A_Giveinventory("ShotgunWasEmpty", 1)	// (BD22: until the pump is forward again)
+		"####" "#" 0 A_Giveinventory("RSQ_ShotgunWasEmptyOff", 1)	// (BD22: until the pump is forward again)
 		Goto RSP_P1Wait
 	RSP_P1Fwd:	// forward again: BD22's own Pump1 N
 		"####" "#" 0 A_TakeInventory("RSP_Fwd", 1)
-		"####" "#" 0 A_Takeinventory("ShotgunWasEmpty", 1)
+		"####" "#" 0 A_Takeinventory("RSQ_ShotgunWasEmptyOff", 1)
 		"####" "#" 0 A_JumpIfInventory("RSP_Ready", 1, "RSP_P1Ready")
 		Goto RSP_P1Wait	// ready once BD22's own refire time is up (RSP_Ready)
 	RSP_P1Ready:
@@ -4452,7 +4457,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		Goto RSP_P2Wait
 	RSP_P2Fwd:	// forward again: BD22's own Pump2 N
 		"####" "#" 0 A_TakeInventory("RSP_Fwd", 1)
-		"####" "#" 0 A_Takeinventory("ShotgunWasEmpty", 1)
+		"####" "#" 0 A_Takeinventory("RSQ_ShotgunWasEmptyOff", 1)
 		"####" "#" 0 A_Takeinventory("HasUnloadedShotgun", 1)
 		"####" "#" 0 A_JumpIfInventory("RSP_Ready", 1, "RSP_P2Ready")
 		Goto RSP_P2Wait	// ready once BD22's own refire time is up (RSP_Ready)
@@ -4494,7 +4499,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		Goto RSP_P3Wait
 	RSP_P3Back:	// all the way back: BD22's own Pump3 J
 		"####" "#" 0 A_TakeInventory("RSP_Back", 1)
-		"####" "#" 0 A_TakeInventory("ShotgunWasEmpty", 1)
+		"####" "#" 0 A_TakeInventory("RSQ_ShotgunWasEmptyOff", 1)
 		"####" "#" 0 A_GiveInventory("RSP_CaseOut", 1)	// 2026-10-16: out of the ejection port (rsr_pump.zs CaseOut)
 		Goto RSP_P3Wait
 	RSP_P3Fwd:	// forward again: BD22's own Pump3 (its frames back)
@@ -4603,11 +4608,11 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		SHTN A 0 A_JumpIfInventory("IsRunning",1,"StartSprint")
 		SHTN A 0 A_TakeInventory("NeverSelectedShotgun", 1)	// posefix: was SHTN A 0 A_JumpIfInventory("NeverSelectedShotgun", 1, "FirstSelectAnimation")
 	SelectAnimation:
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty",1,2)
+		SHTN A 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff",1,2)
 		SHTN A 0 A_PlaySound("Shotgun/Pump2", 1)
 		2HTN A 0 A_JumpIfInventory("IsPlayingAsPurist", 1,"SelectPurist")
 		SHTA MLKJ 1 A_WeaponReady(WRF_NOFIRE)
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty",1,"Pump1")
+		SHTN A 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff",1,"Pump1")
 		SHTN A 0 A_GunFlash
 		TNT1 A 0 A_TakeInventory("RELOADING",1)
 	Ready3:
@@ -4645,7 +4650,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 
 	Ready2:
 		SHT8 C 0 A_JumpIfInventory("ExecuteDownedEnemy", 1, "DoExecution")
-		SHT8 C 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump3")
+		SHT8 C 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "Pump3")
 		SHT8 C 0 A_JumpIfInventory("Kicking",1,"DoKick")
 		SHT8 C 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		SHT8 C 0 A_JumpIf(OverlayID() != 1000000 && CountInv("Reloading") > 0, "Reload")
@@ -4687,7 +4692,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		2HTN A 0 A_JumpIfInventory("IsPlayingAsPurist", 1,2)
 		SHTN A 0
 		"####" "#" 0 A_JumpIfInventory("IsPlayingAsPurist", 1,"NoReload")
-		"####" "#" 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump2")
+		"####" "#" 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "Pump2")
 		"####" "#" 0 A_JumpIfInventory("NoReloading",1,"NoReload")
 		"####" "#" 0 A_JumpIfInventory("ShotgunAmmoOff",1,1)
 		Goto NoAmmo
@@ -4713,7 +4718,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		"####" A 0 A_AlertMonsters
 		"####" A 0 A_PlaySound("Shotgun/Fire", 1)
 		"####" A 0 A_FireCustomMissile("DistantFireSoundShotgun", random(-1,1), 0, 0, -12, 0, random(-1,1))
-		"####" A 0 A_GiveInventory("ShotgunWasEmpty",1)
+		"####" A 0 A_GiveInventory("RSQ_ShotgunWasEmptyOff",1)
 		"####" A 0 A_ZoomFactor(0.97)
 		"####" A 0 A_SpawnItemEx("PlayerMuzzle1",30,5,30,0,0,0,0,SXF_SETTRACER)
 		"####" AAAAAAAAAAAAAAAA 0 BRIGHT A_FireCustomMissile("ShotgunParticles", random(-12,12), 0, -1, 0, 0, random(-9,9))
@@ -4747,15 +4752,15 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		"####" A 0 A_JumpIfInventory("NoAutoReload", 1, "Ready")
 		Goto ReloadNormally
 		"####" ABCDEFG 1
-		"####" A 0 A_Takeinventory("ShotgunWasEmpty",1)
+		"####" A 0 A_Takeinventory("RSQ_ShotgunWasEmptyOff",1)
 		"####" A 0 A_FireCustomMissile("ShotCaseSpawn",40,0,-8,-26)
 		"####" A 0 A_WeaponReady(WRF_NOFIRE| WRF_NOBOB)//Allows quick switch
 		"####" H 1 A_PlaySound("Shotgun/Pump1", 5)
 		"####" IJ 1
-		"####" A 0 A_Giveinventory("ShotgunWasEmpty",1)
+		"####" A 0 A_Giveinventory("RSQ_ShotgunWasEmptyOff",1)
 		"####" AA 0
 		"####" KLMN 1
-		"####" A 0 A_Takeinventory("ShotgunWasEmpty",1)
+		"####" A 0 A_Takeinventory("RSQ_ShotgunWasEmptyOff",1)
 		"####" H 0 A_PlaySound("Shotgun/Pump2", 5)
 		"####" A 0 A_JumpIfInventory("NoReloading",1,13)
 		"####" A 0 A_JumpIfInventory("ShotgunAmmoOff",0,12)
@@ -4802,7 +4807,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		SHTN A 0 A_JumpIfInventory("HasUnloadedShotgun",1,2)
 		SHTN A 0 A_FireCustomMissile("ShotCaseSpawn",40,0,-8,-26)
 		SHTN KLMN 1
-		SHTN A 0 A_Takeinventory("ShotgunWasEmpty",1)
+		SHTN A 0 A_Takeinventory("RSQ_ShotgunWasEmptyOff",1)
 		SHTN A 0 A_Takeinventory("HasUnloadedShotgun",1)		
 		SHTN H 0 A_PlaySound("Shotgun/Pump2", 5)
 		SHTN A 0 A_JumpIfInventory("ShotgunAmmoOff",0,18)
@@ -4834,18 +4839,18 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		Goto Fire2+21
 		"####" "###" 0
 		"####" "#" 0 A_TakeInventory("Reloading", 1)
-		//"####" "#" 0 A_TakeInventory("ShotgunWasEmpty", 1)
+		//"####" "#" 0 A_TakeInventory("RSQ_ShotgunWasEmptyOff", 1)
 		"####" "#" 0 A_JumpIfInventory("ShotgunAmmoOff",0,3)
 		Goto Reload+6//NoAim
 		"####" "###" 0
 		"####" "#" 0 A_TakeInventory("Reloading", 1)
-		//"####" "#" 0 A_TakeInventory("ShotgunWasEmpty", 1)
+		//"####" "#" 0 A_TakeInventory("RSQ_ShotgunWasEmptyOff", 1)
 		Goto HoldAim
 
 	Fire2:
 		SHTN A 0
 		SHTN A 0 A_Takeinventory("Reloading",1)
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump3")
+		SHTN A 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "Pump3")
 		SHTN A 0 A_AlertMonsters
 		SHTN A 0 A_PlaySound("Shotgun/Fire", 1)
 		SHTN A 0 A_SpawnItemEx("PlayerMuzzle1",30,0,45,0,0,0,0,SXF_SETTRACER)
@@ -4876,8 +4881,8 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		SHT8 C 0 A_GiveInventory ("Pumping", 1)
 		SHT8 C 0 A_PlaySound("Shotgun/Pump1", 5)
 		SHT8 GHIIJJ 1
-		SHTN A 0 A_JumpIfInventory("ShotgunWasEmpty", 1, 1)
-		SHTN A 0 A_TakeInventory("ShotgunWasEmpty", 1)
+		SHTN A 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, 1)
+		SHTN A 0 A_TakeInventory("RSQ_ShotgunWasEmptyOff", 1)
 		SHTN A 0 A_FireCustomMissile("ShotCaseSpawn",40,0,14,0)
 		SHTN A 0 A_PlaySound("Shotgun/Pump2", 5)
 		SHT8 IHHGG 1
@@ -4962,7 +4967,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 	HoldAim:
 		SHT8 CC 0
 		SHT8 C 0 A_GiveInventory("ZoomHold",1)
-		SHT8 C 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump3")
+		SHT8 C 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "Pump3")
 		SHT8 C 0 A_JumpIfInventory("Kicking",1,"DoKick")
 		SHT8 C 0 A_JumpIfInventory("Taunting",1,"Taunt")
 		SHT8 C 0 A_JumpIfInventory("Salute1", 1, "Salute")
@@ -5080,7 +5085,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		SHTN A 0 A_ZoomFactor(1.0)
 		TNT1 A 0 A_SetCrosshair( CallACS("GetCrosshair", 5) )
 		SHTN A 0 A_JumpIfInventory("ShotgunAmmoOff", 1, "ReloadNormally")//Check if there is a shell in the chamber
-		SHTN A 0 A_GiveInventory("ShotgunWasEmpty", 1)//This means there is no shell in the chamber
+		SHTN A 0 A_GiveInventory("RSQ_ShotgunWasEmptyOff", 1)//This means there is no shell in the chamber
 	ReloadNormally:
 		SHTN A 0 A_JumpIfInventory("AmmoShell",1,2)//If there is no reserve ammo, don't reload, go back to Ready
 		Goto Ready
@@ -5122,7 +5127,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 
 	CheckIfFinishReload:
 		//SSHR A 1
-		SHTN AA 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "FinishedInsertingShells")//If shotgun was empty,
+		SHTN AA 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "FinishedInsertingShells")//If shotgun was empty,
 		//Play the insert shell animation again, and insert the 9th shell
 		SHTN A 0 A_JumpIfInventory("AmmoShell",1,1)//if there are no more reserve shells, finish reload.
 		Goto Pump2
@@ -5132,7 +5137,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 
 	FinishedInsertingShells:
 		SHTN AA 0 A_Takeinventory("Reloading",1)
-		SHTN AA 0 A_JumpIfInventory("ShotgunWasEmpty", 1, "Pump2")
+		SHTN AA 0 A_JumpIfInventory("RSQ_ShotgunWasEmptyOff", 1, "Pump2")
 		SHTN TS 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
 		SHTN FEDCB 1 A_WEAPONREADY(WRF_NOBOB|WRF_NOFIRE|WRF_ALLOWZOOM)
 		SHTN AA 0 A_Takeinventory("Reloading",1)
@@ -5180,7 +5185,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 		2HTN A 0 A_Takeinventory("Zoomed",1)
 		"####" "#" 0 A_JumpIfInventory("IsPlayingAsPurist", 1,"PuristWarning")
 		SHTN AA 0 A_JumpIfInventory("NoReloading",1,"OkToFire")
-		SHTN A 0 A_GiveInventory("ShotgunWasEmpty", 1)
+		SHTN A 0 A_GiveInventory("RSQ_ShotgunWasEmptyOff", 1)
 		SHTN A 0 A_GiveInventory("HasUnloadedShotgun",1)
 		SHTN A 0 A_JumpIfInventory("ShotgunAmmoOff",1,3)
 		Goto OkToFire
@@ -5192,7 +5197,7 @@ ACTOR RSQ_Off_Shot_Gun : Shot_Gun
 	RemoveBullets:
 		TNT1 AAAA 0
 		SHTN A 0 A_JumpIfInventory("ShotgunAmmoOff",1,3)
-		SHTN A 0 A_Giveinventory("ShotgunWasEmpty",1)
+		SHTN A 0 A_Giveinventory("RSQ_ShotgunWasEmptyOff",1)
 		Goto FinishUnload
 		TNT1 AAAAAA 0
 		SHTN A 0 A_Takeinventory("ShotgunAmmoOff",1)
@@ -5332,6 +5337,34 @@ ACTOR RSQ_Off_SSG : SSG
 		Goto RSB_Wait
 	RSB_Done:		// shut (weapons/sshotc, SSG/Lever1): BD22's own end of a reload
 		SHTZ A 0 A_TakeInventory("RSB_Done", 1)
+		Goto Ready
+	// 2.0.5u BY HAND (owner 2026-11-25: "offhand ssg does not button-reload"): the off copy's own flick reload. It inherited
+	// SSG.dec's, which reads and fills the MAIN gun's magazine (SSGAmmo): with the main SSG full it loaded nothing.
+	RSQ_FlickReload:
+		SHTZ A 0 A_TakeInventory("Reloading", 1)
+		SHTZ A 0 A_JumpIfInventory("SSGAmmoOff", 2, "Ready")
+		SHTZ A 0 A_JumpIfInventory("AmmoShell", 1, 1)
+		Goto Ready
+		SHTZ A 0 A_GiveInventory("Pumping", 1)
+		SHTZ A 0 A_PlaySound("weapons/sshoto", 5)
+	RSQ_FlickLoadOne:
+		SHTZ A 0 A_JumpIfInventory("SSGAmmoOff", 2, "RSQ_FlickShut")
+		SHTZ A 0 A_JumpIfInventory("AmmoShell", 1, 1)
+		Goto RSQ_FlickShut
+		SHTZ A 0 A_JumpIfInventory("HasUnloadedSSG", 1, 2)
+		SHTZ A 0 A_FireCustomMissile("SSGCaseSpawner", 0, 0, -10, -20)
+		SHTZ A 0 A_GiveInventory("SSGAmmoOff", 1)
+		SHTZ A 0 A_JumpIfInventory("NoReloading", 1, 2)
+		SHTZ A 0 A_TakeInventory("AmmoShell", 1, TIF_NOTAKEINFINITE)
+		SHTZ A 0 A_PlaySound("weapons/sshotl", 5)
+		SHTZ A 4
+		Goto RSQ_FlickLoadOne
+	RSQ_FlickShut:
+		SHTZ A 0 A_TakeInventory("HasUnloadedSSG", 1)
+		SHTZ A 0 A_TakeInventory("SSGAlt", 1)
+		SHTZ A 0 A_GiveInventory("SSGLoaded", 1)
+		SHTZ A 0 A_PlaySound("weapons/sshotc", 5)
+		SHTZ A 4 A_PlaySound("SSG/Lever1")
 		Goto Ready
 	Inspect:
 		VSSG A 0 A_JumpIfInventory("IsPlayingAsPurist", 1,"PuristWarningManual")

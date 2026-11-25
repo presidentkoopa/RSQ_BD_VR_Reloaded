@@ -328,7 +328,7 @@ class RSLD_Fx_Burst : RSLD_G5Effect
 		if (!w) return;
 		string cn = w.GetClassName();
 		if (cn.IndexOf("Shot_Gun") < 0) return;
-		class<Inventory> we = RSLD.IC("ShotgunWasEmpty");
+		class<Inventory> we = RSLD.IC(cn.IndexOf("RSQ_Off_") == 0 ? "RSQ_ShotgunWasEmptyOff" : "ShotgunWasEmpty");	// 2.0.5u: each hand's own
 		if (we) mo.TakeInventory(we, 999);
 	}
 

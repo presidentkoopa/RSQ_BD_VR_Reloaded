@@ -161,6 +161,17 @@ class RSQ_Dual : EventHandler
 		int x = a.Ammo2.Amount, y = b.Ammo2.Amount;
 		a.Ammo2.Amount = min(y, a.Ammo2.MaxAmount);
 		b.Ammo2.Amount = min(x, b.Ammo2.MaxAmount);
+		// 2.0.5u: a pump Shotgun's spent shell in the chamber goes with its rounds (each hand has its own token)
+		if (a.Owner && (a is 'Shot_Gun') && (b is 'Shot_Gun'))
+		{
+			class<Inventory> m = 'ShotgunWasEmpty', o = 'RSQ_ShotgunWasEmptyOff';
+			if (m && o)
+			{
+				int cm = a.Owner.CountInv(m), co = a.Owner.CountInv(o);
+				a.Owner.SetInventory(m, co);
+				a.Owner.SetInventory(o, cm);
+			}
+		}
 	}
 
 	static Weapon EmptyHandOf(PlayerPawn mo, bool off)
