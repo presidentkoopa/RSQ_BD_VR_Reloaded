@@ -450,7 +450,9 @@ class RSVR_Hand play
 	const BUTT_PAD = 16.0;
 	const BUTT_LEAD = 1.25;		// 2.0.3y: the muzzle may not outrun the butt by more than this (it is leading, not the butt)
 	const WHIP_USE = 30.0;		// 2.0.3y: a whip's reach for a switch past the gun (RSQ_Fists.USE_REACH, a fist's)
-	const THROW_MIN = 1.5;		// 2.0.5k: the series' one throw since 2026-11-22 (SSQ_Fling / RSQGN_Fling MIN_MPS 1.5); was 2.5
+	const THROW_MIN = 2.2;		// 2.0.5v: the series' one throw (MIN_MPS 2.2 since 2026-11-25, "a middleground"); 1.5 from 2.0.5k, 2.5 before
+	const MARK_MPS = 1.0;		// 2.0.5v: a marked release's push toward the mark (ONE THROW MARK_MPS / MARK_COS)
+	const MARK_COS = 0.5;
 	const SAW_EVERY = 2;		// r6: tics between cuts on one body (BD22's held saw: A_CustomPunch(7) a tic)
 	const SAW_PAD = 4.0;		// r6: the bar's half-height, Chain_saw.md3 surface Cube.002_Cube z -11.3..1.0,
 							// x 1.5 (Scale) x 0.34 (34 units per metre / 100) = 3.1 map units, padded to 4
@@ -946,7 +948,7 @@ class RSVR_Hand play
 	// ONE THROW (RSQ series, owner 11-10: "one throw for everything"): WHETHER the axe is thrown is read off the HAND, the
 	// series' one sampler (RSQ Grenade hand.zs Sample / Peak, RSQ Saber, RSQ ShieldSaw, this pack's grenade): the hand
 	// relative to the pawn, turned by the pawn's yaw, the fastest 2-tic window over the last 7 tics in real m/s (the
-	// vertical squash taken out), a collapsed pose and over a metre in two tics no motion, against THROW_MIN (1.5 m/s since 2.0.5k, 2.5 before). It
+	// vertical squash taken out), a collapsed pose and over a metre in two tics no motion, against THROW_MIN (2.2 m/s since 2.0.5v, 1.5 from 2.0.5k, 2.5 before). It
 	// was the axe's EDGE, single tics, the pawn's travel taken out but not its turn. How hard it flies still comes from
 	// the edge (Throw below), so a thrown axe flies as before.
 	const TWIN = 7;
@@ -1757,6 +1759,15 @@ class RSVR_Hand play
 		// saber's painted release does. It flies straight at the mark below (RSVR_AxeSeek, at least 30). Unpainted, the
 		// hand still decides.
 		bool marked = lockTarget && lockTarget.health > 0;
+		// 2.0.5v (owner 2026-11-25: "everything is a gun now ... a middleground"): a marked release throws only when the arm
+		// moves toward the mark, MARK_MPS or more within 60 degrees (the series' ONE THROW, tools/core/fling_template.zs
+		// TowardMark); a still or turned-away hand is no throw. It was any release.
+		if (marked)
+		{
+			Vector3 tm = lockTarget.pos + (0, 0, lockTarget.height * 0.5) - fH;
+			marked = ThrowMs() >= MARK_MPS && vel.Length() > 0 && tm.Length() > 0 && (vel.Unit() dot tm.Unit()) >= MARK_COS;
+			if (!marked) return false;
+		}
 		if (!marked && (ThrowMs() < THROW_MIN || vel.Length() <= 0))     // ONE THROW: the hand decides (ThrowSample)
 			return false;
 		if (vel.Length() <= 0)
@@ -1776,12 +1787,15 @@ class RSVR_Hand play
 		Actor seek = null;
 		if (lockTarget && lockTarget.health > 0)
 		{
-			// 2.0.2a: a locked throw flies straight and is steered onto the monster (RSVR_AxeSeek):
-			// no drop to guess, and a monster that moves is still hit
+			// 2.0.2a: a locked throw is steered onto the monster (RSVR_AxeSeek, 12 degrees a tic): no drop to guess, and a
+			// monster that moves is still hit. 2.0.5v: it leaves halfway between the arm's line and the mark and curves in,
+			// at the arm's own speed (it went straight at the mark at 30 or more: a shot)
 			Vector3 to = lockTarget.pos + (0, 0, lockTarget.height * 0.5) - from;
 			if (to.Length() > 0)
-				dir = to.Unit();
-			spd = max(spd, 30);
+			{
+				Vector3 half = dir + to.Unit();
+				if (half.Length() > 0.001) dir = half.Unit();
+			}
 			seek = lockTarget;
 		}
 		else
