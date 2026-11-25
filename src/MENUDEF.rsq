@@ -15,8 +15,8 @@ AddOptionMenu "BrutalMenu"
 
 OptionValue "RSQ_ReloadGesture"
 {
-	0, "Point"
-	1, "Flick"
+	0, "Point Off-Screen"
+	1, "Flick Down"
 }
 
 OptionValue "RSR_GrabWith"
@@ -83,8 +83,6 @@ OptionMenu "RSQ_Options"
 	Option "Rig Pouch Only", "rsr_rig_pouch", "OnOff"
 	// tip: How many shells one insert loads into a shotgun.
 	Option "Shells Per Insert", "rsr_shell_credit", "RSR_ShellCredit"
-	// tip: Scales how close the hand must be for each reload step; higher is easier.
-	Slider "Reload Assist", "rsr_assist", 0.5, 3.0, 0.1
 	// tip: The Shotvolver and revolver reload with a speedloader or one round at a time.
 	Option "Revolver Reload", "rsb_revolver_feed", "RSB_RevFeed"
 	// tip: With both barrels empty, the Super Shotgun takes two shells at once.
@@ -93,8 +91,6 @@ OptionMenu "RSQ_Options"
 	Option "Shotgun Side Port", "rsr_sideport", "OnOff"
 	// tip: With a gun in each hand, a reload gesture reloads that gun.
 	Option "Dual Reload Gesture", "rsq_flick", "OnOff"
-	// tip: How far below your view a gun must point to count as off-screen (degrees).
-	Slider "Off-Screen Angle", "rsq_offscreen_deg", 40, 85, 1, 0
 	StaticText " "
 	StaticText "Combat", 1
 	// tip: Shots fly as real rounds; Off uses Brutal Doom's instant hitscan and tracers.
@@ -137,10 +133,6 @@ OptionMenu "RSQ_Options"
 	Option "Recoil", "rsq_recoil", "OnOff"
 	StaticText " "
 	StaticText "Bullets", 1
-	// tip: How fast true bullets fly (map units a tic; 80 is the standard).
-	Slider "True Bullet Speed", "sv_rsq_round_speed", 20, 900, 10, 0
-	// tip: Spread is multiplied by this while the off hand steadies the gun; 1 is Brutal Doom's own.
-	Slider "Two-Hand Spread", "sv_rsq_twohand_spread", 0.0, 1.0, 0.05, 2
 	// tip: Two-hand steadying also tightens shotgun pellet patterns.
 	Option "Two-Hand Shotguns", "sv_rsq_twohand_shotguns", "OnOff"
 	// tip: QuestZDoom's own two-handed grip switch (the same one as in VR Options).
@@ -149,74 +141,66 @@ OptionMenu "RSQ_Options"
 	StaticText "Grenades", 1
 	// tip: Hold a grenade at your mouth with the trigger to pull the pin with your teeth.
 	Option "Pin With Teeth", "rsg_face", "OnOff"
-	// tip: How close to your mouth the grenade must be to pull the pin (metres).
-	Slider "Mouth Reach (m)", "rsg_mouth_r", 0.05, 0.30, 0.01, 2
-	// tip: How far the grenade must leave your mouth before the teeth can pull again (metres).
-	Slider "Teeth Rearm (m)", "rsg_face_far", 0.30, 1.50, 0.01, 2
-	// tip: How long the grenade must stay at your mouth (tics).
-	Slider "Teeth Hold (tics)", "rsg_face_hold", 2, 40, 1, 0
 	// tip: A shot passing near a thrown grenade sets it off.
 	Option "Shoot Grenades", "rsg_shoot", "OnOff"
-	// tip: How close a shot must pass to set off a thrown grenade (metres).
-	Slider "Shot Reach (m)", "rsg_shot_r", 0.10, 0.35, 0.01, 2
 	// tip: Thrown grenades can be shot only while slow motion is on.
 	Option "Slow Motion Only", "rsg_shoot_slowmo", "OnOff"
 	// tip: In slow motion a thrown grenade moves faster than the world.
 	Option "Slow Motion Boost", "rsg_slowmo_fast", "OnOff"
-	// tip: How far a grenade's speed in slow motion goes towards real speed.
-	Slider "Slow Motion Speed", "rsg_slowmo_speed", 0.0, 1.0, 0.05, 2
-	StaticText " "
-	StaticText "Melee", 1
-	// tip: In VR, Brutal Doom's fists throw no punch on the trigger; swing to punch.
-	Option "No Trigger Punch", "rsq_no_trigger_punch", "OnOff"
-	// tip: A punch opens switches.
-	Option "Punch Switches", "rsq_punch_use", "OnOff"
-	// tip: Swing a pistol or revolver into an enemy to hit it.
-	Option "Pistol Whip", "rsq_pistol_whip", "OnOff"
-	// tip: How hard a pistol whip must be swung; higher is harder.
-	Slider "Whip Swing", "rsq_whip_speed", 2.0, 10.0, 0.5, 1
-	// tip: Shove a two-handed gun's stock into an enemy to hit it.
-	Option "Butt Strike", "rsq_butt", "OnOff"
-	// tip: How hard a butt strike must be shoved; higher is harder.
-	Slider "Butt Strike Swing", "rsq_butt_speed", 1.0, 6.0, 0.1, 1
-	// tip: Scales how hard the axe and the sword must be swung.
-	Slider "Melee Swing", "rsvr_melee_swing", 0.2, 3.0, 0.1
-	// tip: Take hold of a door and lift it by hand.
-	Option "Lift Doors", "rsq_door", "OnOff"
-	// tip: A flash shows where a melee hit lands.
-	Option "Hit Flash", "rsq_bash_flash", "OnOff"
-	// tip: Which impact effect the melee hit flash uses.
-	Option "Hit Flash Style", "rsq_bash_fx", "RSQ_BashFXOpt"
-	// tip: The colour of the melee hit flash.
-	Option "Hit Flash Colour", "rsq_bash_tint", "RSQ_BashTintOpt"
 	StaticText " "
 	StaticText "Casings", 1
 	// tip: Spent casings are drawn as 3D models.
 	Option "Casing Models", "rsq_casing_models", "OnOff"
-	// tip: The size of the spent casing models.
-	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
 	StaticText " "
 	// tip: Which guns you can hold one of in each hand.
 	Submenu "Dual Wield", "RSQ_DualOptions"
 	// tip: Which pickups and objects are drawn as voxels.
 	Submenu "Voxels", "RSQ_VoxelOptions"
 	StaticText " "
-	// tip: Debug switches.
+	// tip: The fine-tuning sliders and the debug switches.
 	Submenu "Test and Debug", "RSR_Debug"
 }
 
 OptionMenu "RSR_Debug"
 {
 	Title "TEST AND DEBUG"
+	StaticText "Reloading", 1
+	// tip: Scales how close the hand must be for each reload step; higher is easier.
+	Slider "Reload Assist", "rsr_assist", 0.5, 3.0, 0.1
+	// tip: How far below your view a gun must point to count as off-screen (degrees).
+	Slider "Off-Screen Angle", "rsq_offscreen_deg", 40, 85, 1, 0
+	StaticText " "
+	StaticText "Bullets", 1
+	// tip: How fast true bullets fly (map units a tic; 80 is the standard).
+	Slider "True Bullet Speed", "sv_rsq_round_speed", 20, 900, 10, 0
+	// tip: Spread is multiplied by this while the off hand steadies the gun; 1 is Brutal Doom's own.
+	Slider "Two-Hand Spread", "sv_rsq_twohand_spread", 0.0, 1.0, 0.05, 2
+	StaticText " "
+	StaticText "Grenades", 1
+	// tip: How close to your mouth the grenade must be to pull the pin (metres).
+	Slider "Mouth Reach (m)", "rsg_mouth_r", 0.05, 0.30, 0.01, 2
+	// tip: How far the grenade must leave your mouth before the teeth can pull again (metres).
+	Slider "Teeth Rearm (m)", "rsg_face_far", 0.30, 1.50, 0.01, 2
+	// tip: How long the grenade must stay at your mouth (tics).
+	Slider "Teeth Hold (tics)", "rsg_face_hold", 2, 40, 1, 0
+	// tip: How close a shot must pass to set off a thrown grenade (metres).
+	Slider "Shot Reach (m)", "rsg_shot_r", 0.10, 0.35, 0.01, 2
+	// tip: How far a grenade's speed in slow motion goes towards real speed.
+	Slider "Slow Motion Speed", "rsg_slowmo_speed", 0.0, 1.0, 0.05, 2
+	StaticText " "
+	StaticText "Casings", 1
+	// tip: The size of the spent casing models.
+	Slider "Casing Size", "rsq_casing_size", 0.5, 2.5, 0.1, 1
+	StaticText " "
+	StaticText "Debug", 1
 	// tip: Cheats also give the extra weapons (MP40, MG42, Devastator and more).
 	Option "Cheat Extra Weapons", "rsq_extra_weapons", "OnOff"
 	// tip: Shows the zones the hand must reach during a reload.
 	Option "Show Capture Zones", "rsr_assist_debug", "OnOff"
 	// tip: Prints each reload step and every key code to the console.
 	Option "Print Reload Steps", "rsr_debug", "OnOff"
-	// tip: Logs which mod handles each butt strike, pistol whip and VR punch.
-	Option "Log Melee Source", "rsvr_melee_log", "OnOff"
 }
+
 
 
 // what the HUD shows of the held gun's ammo (zscript/rsq/counters.zs RSQ_Counters.Hud)
@@ -261,6 +245,7 @@ OptionValue "RSQ_BashTintOpt"
 OptionValue "HUDType"
 {
 	6, "VR Row"
+	5, "Gun Bonsai VR"
 	1, "ZDoom"
 	2, "Brutal Simple"
 	3, "Minimal"
