@@ -10,6 +10,7 @@
 //                                            counts it: RSQ Miniboss's tier + 1), on n different slots (melee left out):
 //                                            "slot|rarity|effect;slot|rarity|effect;..." ("" none). rarity 0 Common ..
 //                                            3 Epic (RSLD_Data.Rarities), effect a LegenDoom effect name
+//   GetString("roll.kiosk", "", n, tier)     2.0.5w: the same for a Boss kiosk: Common .. Rare only, odds climbing with the tier
 //   GetString("raise", "<offer>")            the offer one rarity step up, with an effect LegenDoom rolls at the new
 //                                            rarity on that slot (the same one when it rolls there too); "" at Epic or none
 //   GetString("gun", "<offer>")              the gun's name (LegenDoom's LD_WEP_NAME_<Slot>), upper case
@@ -55,7 +56,20 @@ class RSLD_KioskService : Service
 		return s;
 	}
 
-	static play string Roll(int n, int tier)
+	// A BOSS KIOSK'S RARITY (2.0.5w; owner 2026-11-25: "kiosk odds climb with color", and orange only from the Big Boss): Common
+	// .. Rare, never Epic, the odds moving evenly from 60 / 30 / 10 at the first colour to 5 / 25 / 70 at Red (tier 10, the
+	// world's top) and staying there. tier as RSLD_Handler counts it (RSQ Miniboss's tier + 1).
+	static int KioskRarity(int tier)
+	{
+		double k = clamp((tier - 2) / 9.0, 0.0, 1.0);
+		double w0 = 60 + (5 - 60) * k, w1 = 30 + (25 - 30) * k, w2 = 10 + (70 - 10) * k;
+		double x = frandom(0, w0 + w1 + w2);
+		if (x < w0) return 0;
+		if (x < w0 + w1) return 1;
+		return 2;
+	}
+
+	static play string Roll(int n, int tier, bool kiosk = false)
 	{
 		if (!RSLD.On()) return "";
 		n = clamp(n, 1, 6);
@@ -68,13 +82,13 @@ class RSLD_KioskService : Service
 			int k = random(0, slots.Size() - 1);
 			int s = slots[k];
 			slots.Delete(k);
-			int r = RSLD_Reroll.TierRarity(tier, true);
+			int r = kiosk ? KioskRarity(tier) : RSLD_Reroll.TierRarity(tier, true);
 			string e = RSLD_Reroll.PickAt(s, r);
 			// nothing the LD mode carries at that rarity on that slot: the nearest rarity below, then above, that has one
 			for (int d = 1; e == "" && d < 4; d++)
 			{
 				if (r - d >= 0) { e = RSLD_Reroll.PickAt(s, r - d); if (e != "") { r -= d; break; } }
-				if (r + d <= 3) { e = RSLD_Reroll.PickAt(s, r + d); if (e != "") { r += d; break; } }
+				if (r + d <= (kiosk ? 2 : 3)) { e = RSLD_Reroll.PickAt(s, r + d); if (e != "") { r += d; break; } }
 			}
 			if (e == "") continue;
 			res = res .. (made ? ";" : "") .. String.Format("%d|%d|%s", s, r, e);
@@ -297,6 +311,7 @@ class RSLD_KioskService : Service
 	override String GetString(String request, String stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
 	{
 		if (request ~== "roll") return Roll(intArg, int(doubleArg));
+		if (request ~== "roll.kiosk") return Roll(intArg, int(doubleArg), true);	// 2.0.5w: a Boss kiosk's, up to Rare
 		if (request ~== "yours") return Yours(stringArg, Actor(objectArg));
 		if (request ~== "stats") { int r; string e; return SlotOf(stringArg, r, e) >= 0 ? Stats(e) : ""; }
 		if (request ~== "yours.stats") return Stats(YourEffect(stringArg, Actor(objectArg)));
