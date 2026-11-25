@@ -46,9 +46,11 @@ class RSLD_Converter : Thinker
 			cvar cdc = cvar.FindCvar("rsld_champion_drops");
 			bool down = hb && hb.dropDown > 0 && from >= 0 && cdc && cdc.GetBool();
 			bool boss = from == 1 && hb.dropBoss != 0;
-			if (from == 0 && !down || from == 1 && !boss && !down)
+			// 2.0.6b (owner 2026-11-25: "LITERALLY JUST STARTED WHY THE FUCK IS A LEGENDARY JUST SITTING THERE"): one no death
+			// matched (a map's weapon, a start item, anything not a monster's drop) is not kept either: Boss fights only
+			if (from < 0 || from == 0 && !down || from == 1 && !boss && !down)
 			{
-				if (RSLD.Debug()) Console.Printf("RSLD drop: %s suppressed (%s)", src.GetClassName(), from == 1 ? "a thrall's" : "not the miniboss's nor a legendary champion's");
+				if (RSLD.Debug()) Console.Printf("RSLD drop: %s suppressed (%s)", src.GetClassName(), from == 1 ? "a thrall's" : from < 0 ? "no monster dropped it" : "not the miniboss's nor a legendary champion's");
 				src.Destroy();
 				Destroy();
 				return;

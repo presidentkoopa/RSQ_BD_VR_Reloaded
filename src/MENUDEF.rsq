@@ -15,7 +15,7 @@ AddOptionMenu "BrutalMenu"
 
 OptionValue "RSQ_ReloadGesture"
 {
-	0, "Point Off-Screen"
+	0, "Point Down, Shoot"
 	1, "Flick Down"
 }
 
@@ -71,7 +71,7 @@ OptionMenu "RSQ_Options"
 	StaticText "Reloading", 1
 	// tip: Reload by hand in VR; Off uses Brutal Doom's own reload.
 	Option "VR Reloading", "rsr_reload", "OnOff"
-	// tip: Point the gun off-screen and pull the trigger to reload, or flick it down (the old way).
+	// tip: Point the gun down and pull its trigger to reload, or flick it down (the old way).
 	Option "Reload Gesture", "rsq_reload_gesture", "RSQ_ReloadGesture"
 	// tip: Which button the off hand uses to take hold of ammo.
 	Option "Grab Ammo With", "rsr_grab_with", "RSR_GrabWith"
@@ -168,7 +168,7 @@ OptionMenu "RSR_Debug"
 	// tip: Scales how close the hand must be for each reload step; higher is easier.
 	Slider "Reload Assist", "rsr_assist", 0.5, 3.0, 0.1
 	// tip: How far below your view a gun must point to count as off-screen (degrees).
-	Slider "Off-Screen Angle", "rsq_offscreen_deg", 40, 85, 1, 0
+	Slider "Point Down Angle", "rsq_offscreen_deg", 40, 85, 1, 0
 	StaticText " "
 	StaticText "Bullets", 1
 	// tip: How fast true bullets fly (map units a tic; 80 is the standard).
