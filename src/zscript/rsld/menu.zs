@@ -21,9 +21,9 @@ class RSLD_Interface : StaticEventHandler
 		if (done) return;
 		done = true;
 		if (!RSLD.On()) return;
-		int a = MainMenu(), b = Options(), c = Brutal();
-		if (RSLD.Debug()) Console.Printf("RSLD interface: main menu %s, options menu %s (%d rows kept from later mods), Brutal menu row %s",
-			a ? "BD22's" : "unchanged", b >= 0 ? "QuestZDoom's" : "unchanged", max(b, 0), c ? "added" : "not added");
+		int a = MainMenu(), b = Options(), c = Brutal(), d = Trim();
+		if (RSLD.Debug()) Console.Printf("RSLD interface: main menu %s, options menu %s (%d rows kept from later mods), Brutal menu row %s, %d dead LegenDoom rows hidden",
+			a ? "BD22's" : "unchanged", b >= 0 ? "QuestZDoom's" : "unchanged", max(b, 0), c ? "added" : "not added", d);
 	}
 
 	ui static bool MainMenu()
@@ -82,5 +82,29 @@ class RSLD_Interface : StaticEventHandler
 		d.mItems.Push(new("OptionMenuItemSubmenu").Init("LegenDoom x BD22 VR", 'RSLD_Options'));
 		d.mItems.Push(new("OptionMenuItemSubmenu").Init("LegenDoom Options", 'LegenDoom'));
 		return true;
+	}
+
+	// LEGENDOOM'S ROWS THAT DO NOTHING HERE (owner 2026-11-25: "do any of the LegenDoom options not make sense for us"). LD
+	// mode takes LegenDoom's own guns, fists and items away and does every effect on BD22 VR's guns (handler.zs 1-3), so
+	// the options that act only on those are gone from its page; LegenDoom is not edited. Read in its decorate: Bullet
+	// Puffs, Gun Smoke, Gun Casings and their fade, Weapon Recoil, Weapon Switch Speed, Berserk Weapon Switching (its guns'
+	// own states); Lock Current Weapons (its gun pickups); Kenshiro Mode (its fists), Kegan Mode (its berserk pack), Kegan
+	// Blast (its own effect actors); Quake Toggle (LD mode keeps it off for VR, handler.zs NoQuakes); Legendary Debug Mode.
+	// Start Options and Special Game Modes stay: they give effect tokens, which LD mode puts on BD22 VR's guns.
+	static const Name LDDead[] = { 'LD_bulletpuffs', 'LD_gunsmoke', 'LD_guncasings', 'LD_guncasingstimer', 'LD_recoil',
+		'LD_weaponswitch', 'LD_berserkswitch', 'LD_weaponlock', 'LD_kenshiromode', 'LD_keganmode', 'LD_keganblast',
+		'LD_quakes', 'LD_legendarydebug' };
+	ui static int Trim()
+	{
+		let d = OptionMenuDescriptor(MenuDescriptor.GetDescriptor('LegenDoom'));
+		if (!d) return 0;
+		int gone = 0;
+		for (int i = d.mItems.Size() - 1; i >= 0; i--)
+		{
+			Name n; int p;
+			[n, p] = d.mItems[i].GetAction();
+			for (int k = 0; k < RSLD_Interface.LDDead.Size(); k++) if (RSLD_Interface.LDDead[k] == n) { d.mItems.Delete(i); gone++; break; }
+		}
+		return gone;
 	}
 }
