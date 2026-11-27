@@ -23,8 +23,30 @@ class RSQ_Counters : EventHandler
 	int lastRes[MAXPLAYERS][9];
 	bool inited[MAXPLAYERS][9];
 
+	// Each gun's item classes, looked up by name once instead of nine string joins and class-by-name casts per gun per
+	// player per tic (performance, 2026-11-27). The same lookups the casts made, so a missing class is null here too;
+	// the class list never changes after startup. Transient: a loaded save looks them up again.
+	transient Array<class<Inventory> > cMag, cRes, cEmpty, cFill, cNoMag, cLent, cPouch;
+	void Classes()
+	{
+		if (cMag.Size() == GUN.Size())
+			return;
+		cMag.Clear(); cRes.Clear(); cEmpty.Clear(); cFill.Clear(); cNoMag.Clear(); cLent.Clear(); cPouch.Clear();
+		for (int g = 0; g < GUN.Size(); g++)
+		{
+			class<Inventory> cm = MAG[g]; cMag.Push(cm);
+			class<Inventory> cr = RES[g]; cRes.Push(cr);
+			class<Inventory> ce = "RSQ_Empty_" .. GUN[g]; cEmpty.Push(ce);
+			class<Inventory> cf = "RSQ_Fill_" .. GUN[g]; cFill.Push(cf);
+			class<Inventory> cn = "RSQ_NoMag_" .. GUN[g]; cNoMag.Push(cn);
+			class<Inventory> cl = "RSQ_Lent_" .. GUN[g]; cLent.Push(cl);
+			class<Inventory> cp = "RSQ_Pouch_" .. GUN[g]; cPouch.Push(cp);
+		}
+	}
+
 	override void WorldTick()
 	{
+		Classes();
 		for (int pn = 0; pn < MAXPLAYERS; pn++)
 		{
 			if (!playeringame[pn]) continue;
@@ -35,9 +57,9 @@ class RSQ_Counters : EventHandler
 			let w = players[pn].ReadyWeapon;
 			for (int g = 0; g < GUN.Size(); g++)
 			{
-				class<Inventory> mag = MAG[g]; class<Inventory> res = RES[g];
-				class<Inventory> empty = "RSQ_Empty_" .. GUN[g]; class<Inventory> fill = "RSQ_Fill_" .. GUN[g];
-				class<Inventory> nomag = "RSQ_NoMag_" .. GUN[g];
+				class<Inventory> mag = cMag[g]; class<Inventory> res = cRes[g];
+				class<Inventory> empty = cEmpty[g]; class<Inventory> fill = cFill[g];
+				class<Inventory> nomag = cNoMag[g];
 				if (!mag || !res || !empty || !fill || !nomag) continue;
 				bool held = w && w.GetClassName() == GUN[g];
 				if (REAL[g] != 0)
@@ -222,8 +244,8 @@ class RSQ_Counters : EventHandler
 	void RealTick(PlayerPawn mo, int pn, int g, class<Inventory> mag, class<Inventory> res, class<Inventory> empty,
 		class<Inventory> fill, class<Inventory> nomag, bool held)
 	{
-		class<Inventory> lent = "RSQ_Lent_" .. GUN[g];
-		class<Inventory> pouchTok = "RSQ_Pouch_" .. GUN[g];	// the gun's Reload starts only with rounds in the pouch
+		class<Inventory> lent = cLent[g];
+		class<Inventory> pouchTok = cPouch[g];	// the gun's Reload starts only with rounds in the pouch
 		if (!lent || !pouchTok)
 			return;
 		int L = mo.CountInv(lent);

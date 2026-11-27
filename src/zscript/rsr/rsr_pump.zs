@@ -917,15 +917,31 @@ class RSP_State play
 
 	// ---- drawing (after the psprites tick) ------------------------------------------------------
 
+	// InWait's wait states, found once per gun class (performance, 2026-11-27): Draw asks every tic the gun waits for
+	// the hand (after each shot until the pump is worked), and each ask split the label list and looked up every label
+	// by string. A label's state depends only on the class (p_states.cpp: GetClass()->FindStateByString) and the class
+	// table never changes after loading, so the same states compare the same way. Transient: rebuilt, never saved.
+	transient class<Object> waitCls;
+	transient int waitGun;
+	transient Array<State> waitStates;
+
 	bool InWait(PSprite psp, Weapon w, int i)
 	{
 		if (!psp.CurState)
 			return false;
-		Array<String> list;
-		RSP_Guns.WaitLabels(i).Split(list, " ", TOK_SKIPEMPTY);
-		for (int k = 0; k < list.Size(); k++)
+		if (w.GetClass() != waitCls || i != waitGun)
 		{
-			if (psp.CurState == w.FindStateByString(list[k], true))
+			waitCls = w.GetClass();
+			waitGun = i;
+			waitStates.Clear();
+			Array<String> list;
+			RSP_Guns.WaitLabels(i).Split(list, " ", TOK_SKIPEMPTY);
+			for (int k = 0; k < list.Size(); k++)
+				waitStates.Push(w.FindStateByString(list[k], true));
+		}
+		for (int k = 0; k < waitStates.Size(); k++)
+		{
+			if (psp.CurState == waitStates[k])
 				return true;
 		}
 		return false;
@@ -943,7 +959,7 @@ class RSP_State play
 		{
 			if (shown)
 			{
-				psp.Sprite = Actor.GetSpriteIndex(RSP_Guns.SprGun(i));	// the gun without its pump
+				psp.Sprite = RSR.Spr(RSP_Guns.SprGun(i));	// the gun without its pump
 				psp.Frame = 0;
 			}
 			else

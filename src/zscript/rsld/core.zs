@@ -90,7 +90,7 @@ class RSLD play
 		{
 			int s = k == 0 ? s0 : s1;
 			if (s < 0 || (k == 1 && s == s0)) continue;
-			class<Inventory> c = "LD" .. RSLD_Data.Slots[s] .. "Effect_" .. eff;
+			class<Inventory> c = RSLD_Data.EffectPrefix[s] .. eff;	// "LD" .. Slots[s] .. "Effect_" .. eff
 			if (c && mo.CountInv(c) > 0) n++;
 			else { let h = H(); if (h && h.EffName(p.PlayerNumber(), s) ~== eff) n++; }	// a rig-probe-forced effect
 		}
@@ -110,9 +110,9 @@ class RSLD play
 	static int CountOwned(Actor mo, string eff)
 	{
 		int n = 0;
-		for (int s = 0; s < 9 && mo; s++)
+		for (int s = 0; s < 9 && mo; s++)	// Thematic: every hit
 		{
-			class<Inventory> c = "LD" .. RSLD_Data.Slots[s] .. "Effect_" .. eff;
+			class<Inventory> c = RSLD_Data.EffectPrefix[s] .. eff;	// "LD" .. Slots[s] .. "Effect_" .. eff (performance, 2026-11-27)
 			if (c && mo.CountInv(c) > 0) n++;
 		}
 		return n;
@@ -258,7 +258,7 @@ class RSLD_Shot play
 		else if (mag) toMag = n;
 		if (toMag) RSLD.AddAmmo(mag, toMag);
 		if (toRes) RSLD.AddAmmo(res, toRes);
-		Log(String.Format("refund %d -> %s", n, toMag ? mag.GetClassName() : (res ? res.GetClassName() : 'none')));
+		if (RSLD.Debug()) Log(String.Format("refund %d -> %s", n, toMag ? mag.GetClassName() : (res ? res.GetClassName() : 'none')));	// the text only when it prints (performance, 2026-11-27)
 	}
 
 	// take n from the same pool (magazine first), never below 0
@@ -271,7 +271,7 @@ class RSLD_Shot play
 		if (!pool) return;
 		int k = min(n, pool.Amount);
 		pool.Amount -= k;
-		Log(String.Format("take %d <- %s", k, pool.GetClassName()));
+		if (RSLD.Debug()) Log(String.Format("take %d <- %s", k, pool.GetClassName()));
 	}
 
 	// an extra hitscan pellet of this pull, same hand (marked as ours: no new pull, no OnPellet; it gets its

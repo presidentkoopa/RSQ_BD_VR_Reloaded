@@ -93,7 +93,8 @@ class RSLD_Fx_Hunting : RSLD_G5Speed
 		extra = clamp(extra, 0.0, 10.0);
 		if (extra <= 0) return;
 		t.Thrust(extra, s.mo.AngleTo(t));
-		s.Log(String.Format("knockback +%.2f (ProjectileKickBack %d) on %s", extra, int(Num("kick")), t.GetClassName()));
+		// built only when it prints (performance, 2026-11-27: every hit)
+		if (RSLD.Debug()) s.Log(String.Format("knockback +%.2f (ProjectileKickBack %d) on %s", extra, int(Num("kick")), t.GetClassName()));
 	}
 }
 
@@ -317,7 +318,7 @@ class RSLD_Fx_Burst : RSLD_G5Effect
 		// round 4 (rig, round-4 batched run R3B_Burst_RL): the rocket launcher's rocket comes out after the frames run here
 		// (its pull starts with the rocket's first tic): the shot is counted then (OnPull: injTic), not ended as "no shot"
 		// (which restarted a burst on every rocket: 24 from one press)
-		if (!RSLD_G5.StepToShot(c.mo, c.hand, c.weapon, before, 64))
+		if (!RSLD_G5.StepToShot(c.mo, c.hand, c.weapon, before, 64, h))	// h: InStop's label cache (performance, 2026-11-27)
 			RSLD.Log(String.Format("Burst: %s: shot %d of %d under way (its projectile comes next tic)", c.weapon.GetClassName(), Shots() - h.n1, Shots()));
 	}
 
@@ -406,12 +407,12 @@ class RSLD_Fx_Doubletap : RSLD_G5Effect
 		let psp = RSLD_G5.Psp(c.mo, c.hand);
 		if (!psp || psp.Caller != c.weapon) { h.f3 = false; return; }
 		if (level.maptime - h.tic1 < 2) return;
-		if (RSLD_G5.InReady(c.weapon, psp.CurState)) { h.f3 = false; return; }	// pumped: the next shot is the second tap
+		if (RSLD_G5.InReady(c.weapon, psp.CurState, h)) { h.f3 = false; return; }	// pumped: the next shot is the second tap (h: the label cache, performance 2026-11-27)
 		if (!edge || RSLD_G5.Loading(c.mo) || !RSLD_G5.CanShoot(c.weapon, c.mo)) return;
 		h.f3 = false;
 		RSLD_Fx_Burst.Chamber(c.mo, c.weapon);
 		RSLD.Log(String.Format("Doubletap: %s hand: the second tap before the pump", RSLD.HandName(c.hand)));
-		RSLD_G5.ShootNow(c.mo, c.hand, c.weapon);
+		RSLD_G5.ShootNow(c.mo, c.hand, c.weapon, 64, h);
 	}
 }
 
@@ -675,7 +676,7 @@ class RSLD_Fx_Quickdraw : RSLD_G5Effect
 		// 2.0.4c: RSLD_G5.ShotCount finds the hand's fresh projectiles in the sector lists for every user; the stepping
 		// stops at the shot: one press, one shot, the prefire still cut.
 		int before = RSLD_G5.ShotCount(c.mo, c.hand);
-		if (RSLD_G5.StepToShot(c.mo, c.hand, c.weapon, before, 48))
+		if (RSLD_G5.StepToShot(c.mo, c.hand, c.weapon, before, 48, h))	// h: InStop's label cache (performance, 2026-11-27)
 			RSLD.Log(String.Format("Quickdraw: %s: the prefire frames ran in tic %d (no prefire time)", c.weapon.GetClassName(), level.maptime));
 	}
 }

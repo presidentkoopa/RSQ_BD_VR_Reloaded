@@ -119,7 +119,9 @@ class RSLD_Fx_Sniper : RSLD_G2_Effect
 		double k = Num("spread");	// 0
 		double da = Actor.DeltaAngle(s.aimAngle, p.angle), dp = p.pitch - s.aimPitch;
 		p.spreadMul = k;
-		s.Log(String.Format("%s pellet %d: off the aim %.2f / %.2f deg -> x%g", SeqName(s), p.index, da, dp, k));
+		// the proof line's string is built only when it prints (performance, 2026-11-27: every pellet; s.Log prints only
+		// under RSLD.Debug, and these arguments have no side effects)
+		if (RSLD.Debug()) s.Log(String.Format("%s pellet %d: off the aim %.2f / %.2f deg -> x%g", SeqName(s), p.index, da, dp, k));
 		return false;
 	}
 }
@@ -252,7 +254,8 @@ class RSLD_Fx_Gauss : RSLD_G2_Effect
 		if (!p.rail) return;
 		// LegenDoom's LDGaussBulletPuff visual where the rail ended (EpicSpecialEffects.dec: GAUX B-E; our puff did the damage)
 		Actor v = res != RSLD.RES_NONE ? RSLD.LDVisual("LDGaussBulletPuff", at, "Spawn", 0, s.mo) : null;
-		s.Log(String.Format("rail (%d dmg): %s%s, LegenDoom trail (white, %d tic) %s", p.damage, RSLD_G2.ResName(res), thing ? " " .. thing.GetClassName() : "",
+		// built only when it prints (performance, 2026-11-27: every rail; Num("duration") was already read by OnPellet)
+		if (RSLD.Debug()) s.Log(String.Format("rail (%d dmg): %s%s, LegenDoom trail (white, %d tic) %s", p.damage, RSLD_G2.ResName(res), thing ? " " .. thing.GetClassName() : "",
 			int(Num("duration")), v ? String.Format("+ LDGaussBulletPuff at %.0f %.0f %.0f", at.x, at.y, at.z) : "(no end puff)"));
 	}
 }
@@ -277,7 +280,8 @@ class RSLD_Fx_Heavy : RSLD_G2_Effect
 		double now = clamp(h.damage * 0.125 * kick * f / t.Mass, 0., 32.);
 		if (now <= was) return;
 		t.Thrust(now - was, s.mo.AngleTo(t));
-		s.Log(String.Format("%s hit for %d: thrust %.2f -> %.2f (kickback %d -> %g, mass %d)", t.GetClassName(), h.damage, was, now, used, kick, t.Mass));
+		// built only when it prints (performance, 2026-11-27: every hit)
+		if (RSLD.Debug()) s.Log(String.Format("%s hit for %d: thrust %.2f -> %.2f (kickback %d -> %g, mass %d)", t.GetClassName(), h.damage, was, now, used, kick, t.Mass));
 	}
 }
 
@@ -319,7 +323,8 @@ class RSLD_Fx_Explosive : RSLD_G2_Effect
 		// round 2: LegenDoom's own visual (LDExplosiveBulletPuff's particles and MEXP explosion, from its Pahticools state:
 		// past its A_Explode and its sounds; its quake is off)
 		let v = RSLD.LDVisual("LDExplosiveBulletPuff", at, "Pahticools", 0, s.mo);
-		s.Log(String.Format("pellet %d on %s: explosion %d r%d (full %d) at %.0f %.0f %.0f%s", p.index, RSLD_G2.ResName(res), b.dmg, b.rad, b.full, at.x, at.y, at.z,
+		// built only when it prints (performance, 2026-11-27: every pellet)
+		if (RSLD.Debug()) s.Log(String.Format("pellet %d on %s: explosion %d r%d (full %d) at %.0f %.0f %.0f%s", p.index, RSLD_G2.ResName(res), b.dmg, b.rad, b.full, at.x, at.y, at.z,
 			v ? ", LegenDoom visual LDExplosiveBulletPuff" : ""));
 	}
 }
@@ -374,7 +379,8 @@ class RSLD_Fx_Flak : RSLD_G2_Effect
 		f.z = Num("z");
 		f.gaplo = int(Num("gaplo"));
 		f.gaphi = int(Num("gaphi"));
-		s.Log(String.Format("flak on %s: 5 x %d-%d r%d at +%g z, %d-%d tics apart", t.GetClassName(), f.lo, f.hi, f.rad, f.z, f.gaplo, f.gaphi));
+		// built only when it prints (performance, 2026-11-27: every hit on a flyer)
+		if (RSLD.Debug()) s.Log(String.Format("flak on %s: 5 x %d-%d r%d at +%g z, %d-%d tics apart", t.GetClassName(), f.lo, f.hi, f.rad, f.z, f.gaplo, f.gaphi));
 	}
 }
 
@@ -491,7 +497,7 @@ class RSLD_Fx_PointBlank : RSLD_G2_Effect
 
 	override void OnPelletEnd(RSLD_Shot s, RSLD_Pellet p, int res, Vector3 at, Actor thing)
 	{
-		if (res != RSLD.RES_WALL) { s.Log(String.Format("pellet %s: free", RSLD_G2.ResName(res))); return; }
+		if (res != RSLD.RES_WALL) { if (RSLD.Debug()) s.Log(String.Format("pellet %s: free", RSLD_G2.ResName(res))); return; }	// built only when it prints (performance, 2026-11-27: every pellet)
 		s.Take(int(Num("take")));
 		s.Log("miss (wall): one round taken");
 	}
@@ -534,7 +540,8 @@ class RSLD_Fx_Perfect : RSLD_G2_Effect
 		if (res == RSLD.RES_MONSTER || res == RSLD.RES_THING)
 		{
 			RSLD.Give(s.mo, "LDPerfectHit");
-			s.Log(String.Format("hit %s for %d (x%g, on the aim)", thing ? thing.GetClassName() : 'none', p.damage, s.d1));
+			// built only when it prints (performance, 2026-11-27: every pellet that hits)
+			if (RSLD.Debug()) s.Log(String.Format("hit %s for %d (x%g, on the aim)", thing ? thing.GetClassName() : 'none', p.damage, s.d1));
 		}
 		else if (res == RSLD.RES_WALL)
 		{

@@ -192,10 +192,9 @@ class RSLD_Handler : EventHandler
 			if (c.Left(2) != "LD") continue;
 			for (int s = 0; s < 9; s++)
 			{
-				string sl = RSLD_Data.Slots[s];
-				string pe = "LD" .. sl .. "Effect_";
+				string pe = RSLD_Data.EffectPrefix[s];	// "LD" .. Slots[s] .. "Effect_", written out (performance, 2026-11-27)
 				if (c.Left(pe.Length()) ~== pe) { slotEff[pn * 9 + s] = c.Mid(pe.Length()); slotFx[pn * 9 + s] = FindFx(c.Mid(pe.Length())); break; }
-				string pr = "LD" .. sl .. "Legendary";
+				string pr = RSLD_Data.LegendaryPrefix[s];
 				if (c.Left(pr.Length()) ~== pr)
 				{
 					string r = c.Mid(pr.Length());
@@ -286,6 +285,9 @@ class RSLD_Handler : EventHandler
 		if (c) return c;
 		int at = n.IndexOf("@");
 		if (at < 0) return null;
+		// the walk below, done once a session per name (RSLD_ClassMemo; performance, 2026-11-27)
+		let memo = RSLD_ClassMemo(Service.Find("RSLD_ClassMemo"));
+		if (memo) { int k = memo.asked.Find(n); if (k < memo.asked.Size()) return memo.found[k]; }
 		string base = n.Left(at + 1);
 		class<Actor> last;
 		for (int i = 0; i < AllActorClasses.Size(); i++)
@@ -293,6 +295,7 @@ class RSLD_Handler : EventHandler
 			string cn = AllActorClasses[i].GetClassName();
 			if (cn.Left(base.Length()) ~== base) last = AllActorClasses[i];
 		}
+		if (memo) { memo.asked.Push(n); memo.found.Push(last); }
 		return last;
 	}
 
@@ -475,7 +478,7 @@ class RSLD_Handler : EventHandler
 		pel.puff = e.AttackPuffType; pel.damageType = e.DamageType; pel.index = s.pellets; pel.rail = false;
 		s.pellets++;
 		bool drop = s.fx.OnPellet(s, pel);
-		if (drop) { s.Log(String.Format("pellet %d dropped", pel.index)); return true; }
+		if (drop) { if (RSLD.Debug()) s.Log(String.Format("pellet %d dropped", pel.index)); return true; }	// the text only when it prints (performance, 2026-11-27)
 		double na = pel.angle, np = pel.pitch;
 		if (pel.spreadMul != 1)
 		{
@@ -648,9 +651,10 @@ class RSLD_Handler : EventHandler
 			return;
 		}
 		string an = a.GetClassName();
-		if (an.Left(2) == "LD") RSLD_LDSounds.Spawned(a);	// round 3: LegenDoom's aura generators (ldsounds.zs)
+		bool ld = an.Left(2) == "LD";	// asked once a spawn, not three times (performance, 2026-11-27)
+		if (ld) RSLD_LDSounds.Spawned(a);	// round 3: LegenDoom's aura generators (ldsounds.zs)
 		else if (!a.bMISSILE && g3reg && (g3reg.catchS || level.maptime <= g3reg.flashMuteUntil)) g3reg.SpraySpawned(a);	// round 3: rays of ours / muted (g3_core.zs)
-		if (an.Left(2) == "LD" && !a.bMISSILE && RSLD_StartVisuals.Check(a)) return;
+		if (ld && !a.bMISSILE && RSLD_StartVisuals.Check(a)) return;
 		if (a is "RSQ_PlayerRound")	// a True Bullets round: it carries the oldest pellet still waiting for one
 		{
 			let ro = PlayerPawn(a.target);
@@ -665,8 +669,8 @@ class RSLD_Handler : EventHandler
 		if (!a.bMISSILE || !a.target) return;
 		let mo = PlayerPawn(a.target);
 		if (!mo || !mo.player) return;
-		string cn = a.GetClassName();
-		if (cn.Left(2) == "LD") return;	// LegenDoom's own effect actors
+		string cn = an;
+		if (ld) return;	// LegenDoom's own effect actors
 		int hand = HandOf(mo, a);
 		let w = hand == RSLD.OFF ? mo.player.OffhandWeapon : mo.player.ReadyWeapon;
 		if (TagOf(a)) return;	// already met at its first hit (FindShot)
@@ -840,7 +844,7 @@ class RSLD_Handler : EventHandler
 		if (g3reg && g3reg.marked.Size()) g3reg.Died(t);	// round 3: TORGUE's marked enemies explode when they die (g3_core.zs)
 		class<Inventory> tok = RSLD.IC("LDLegendaryMonsterToken");
 		if (!tok || t.CountInv(tok) == 0) return;
-		let mb = ServiceIterator.Find("RSQMB_Service").Next();
+		let mb = RSVR_Lookup.Find("RSQMB_Service").Next();	// the cached lookup (rsvr_lookup.zs; performance, 2026-11-27)
 		int bf = (mb && mb.GetInt("bossfight", "", 0, 0, t) == 1) ? 1 : 0;
 		int tr = mb ? mb.GetInt("tier", "", 0, 0, t) : -1;
 		// RSQ Miniboss counts its tiers from 0 (rig 11-12: "ARRIVING: tier 0"); here 1 is the first. A thrall has no tier of
@@ -849,7 +853,7 @@ class RSLD_Handler : EventHandler
 		else { tr += 1; bfTier = tr; }
 		deathX.Push(t.pos.x); deathY.Push(t.pos.y); deathZ.Push(t.pos.z); deathT.Push(level.maptime); deathBF.Push(bf); deathTier.Push(tr); deathBoss.Push((mb && mb.GetInt("wasboss", "", 0, 0, t) == 1) ? 1 : 0);
 		// 2.0.4m: RSQ SlowMo's DOWN target (its boosted legendary champion), and the step of the bar it died in (1-3)
-		let smi = ServiceIterator.Find("RSQSM_Service"); let sms = smi.Next();
+		let smi = RSVR_Lookup.Find("RSQSM_Service"); let sms = smi.Next();
 		// A BOOSTED LEGENDARY DORMANT CHAMPION (owner 11-12 14:15: "I mean boosted legendary dormant champions. Not down revenge
 		// targets unless they are boosted dormant legendary champions. Not thralls."): what the monster IS, not who made it --
 		// a LegenDoom legendary (boosted by LegenDoom, and here it has just died as one) that is also a Champion (Champions'
@@ -882,7 +886,7 @@ class RSLD_Handler : EventHandler
 		if (c && !c.GetBool()) return false;
 		if (!RSLD_KioskService.Economy()) return false;	// 2.0.5w Legendary Economy off: LegenDoom's own drops
 		if (!RSLD.AC("champion_Token")) return false;
-		let mb = ServiceIterator.Find("RSQMB_Service").Next();
+		let mb = RSVR_Lookup.Find("RSQMB_Service").Next();	// the cached lookup (rsvr_lookup.zs; performance, 2026-11-27)
 		return mb && mb.GetInt("bossfights", "", 0, 0, null) == 1;
 	}
 
@@ -1529,10 +1533,35 @@ class RSLD_Haste : PowerDoubleFiringSpeed
 	Default { Powerup.Duration 0x7FFFFFFD; +INVENTORY.NOSCREENBLINK }
 }
 
+// FindClassLoose's answers for the whole session (performance, 2026-11-27). Without the exact XMVE class name (XMVE not
+// loaded, or its pk3 named otherwise) each of tables.zs's 13 "<Spawner>@<pk3>@<lump>" rows walked every actor class,
+// building a string per class: about 13 walks on every map (the handler, and its rcFrom cache, are new each map), and a
+// hitch whenever a monster type first appears mid-map. AllActorClasses is filled at startup and never changes, so the walk's
+// answer for a name never changes either. A Service because services are the only script objects that live for the whole
+// session in every scope; its class name holds no service name anything asks for.
+class RSLD_ClassMemo : Service
+{
+	Array<String> asked;
+	Array<class<Actor> > found;
+}
+
 // RSQ Wheel's LegenDoom reader asks for "RSLDP_Service" by name (docs/WHEEL_LEGENDARY_PROPOSAL.md): the name stays.
 //   GetString[UI|Data]("ld_prefix", "<weapon class>")  -> "LDShotgun" (the token prefix for that gun), "" if none
 class RSLDP_Service : Service
 {
+	// Prefix's answers by the class name asked (performance, 2026-11-27): GunBonsai's HUD asks for each hand's gun every
+	// frame (GetStringUI) and RSQ Wheel when it reads a gun (GetStringData); with LegenDoom loaded each ask split up to 60
+	// Family rows. The answer depends only on the name, the Family table and whether LegenDoom is loaded, none of which
+	// changes in a session, so it is worked out once per name.
+	private Map<String, String> knownPrefix;
+	clearscope string Known(string weaponClass)
+	{
+		if (knownPrefix.CheckKey(weaponClass)) return knownPrefix.Get(weaponClass);
+		string p = Prefix(weaponClass);
+		knownPrefix.Insert(weaponClass, p);
+		return p;
+	}
+
 	static string Prefix(string weaponClass)
 	{
 		if (!RSLD.On()) return "";
@@ -1546,11 +1575,11 @@ class RSLDP_Service : Service
 		return "";
 	}
 	override String GetString(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
-	{ return request ~== "ld_prefix" ? Prefix(stringArg) : ""; }
+	{ return request ~== "ld_prefix" ? Known(stringArg) : ""; }
 	override String GetStringUI(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
-	{ return request ~== "ld_prefix" ? Prefix(stringArg) : ""; }
+	{ return request ~== "ld_prefix" ? Known(stringArg) : ""; }
 	override String GetStringData(String request, string stringArg, int intArg, double doubleArg, Object objectArg, Name nameArg)
-	{ return request ~== "ld_prefix" ? Prefix(stringArg) : ""; }
+	{ return request ~== "ld_prefix" ? Known(stringArg) : ""; }
 }
 
 // rig probe (round 4): a hostile target that stays put: never walks (speed 0), never attacks (back to its Spawn state

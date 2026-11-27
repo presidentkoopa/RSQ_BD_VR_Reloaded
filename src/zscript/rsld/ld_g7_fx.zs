@@ -95,7 +95,8 @@ class RSLD_G7 play
 		double m = 1.0 + clamp((mps - SWING_MIN) / (SWING_FULL - SWING_MIN), 0.0, 1.0);
 		if (h.setDamage >= 0) h.setDamage = int(h.setDamage * m + 0.5);
 		else h.mult *= m;
-		s.Log(String.Format("swing %.1f m/s (%s fist): x%.2f (RSQ Melee's 2 -> 7 m/s rule)", mps, RSLD.HandName(hand), m));
+		// built only when it prints (performance, 2026-11-27: every punch hit)
+		if (RSLD.Debug()) s.Log(String.Format("swing %.1f m/s (%s fist): x%.2f (RSQ Melee's 2 -> 7 m/s rule)", mps, RSLD.HandName(hand), m));
 	}
 
 	// a test punch for the rig probe (netevent rsld_punch:<hand> <speed x 100>): BD22's own strike from that hand along
@@ -182,7 +183,8 @@ class RSLD_Fx_ColdBlooded : RSLD_G7Effect
 		if (dn <= 0 || db <= 0) return;
 		bool b = Berserk(s.mo);
 		h.mult *= b ? double(dn) / db : double(db) / dn;
-		s.Log(String.Format("cold-blooded: %s: BD22's %s punch level (x%.2f)", b ? "berserk lowers it" : "no berserk", b ? "normal" : "berserk", b ? double(dn) / db : double(db) / dn));
+		// built only when it prints (performance, 2026-11-27: every punch hit)
+		if (RSLD.Debug()) s.Log(String.Format("cold-blooded: %s: BD22's %s punch level (x%.2f)", b ? "berserk lowers it" : "no berserk", b ? "normal" : "berserk", b ? double(dn) / db : double(db) / dn));
 	}
 }
 
@@ -233,7 +235,8 @@ class RSLD_Fx_RazorEdge : RSLD_G7Effect
 	{
 		if (Fist(s)) s.Log("razor edge: the VR punch never turns or moves you (as LegenDoom's CPF_NOTURN)");
 		// 2.0.4b: the VR saw's cut (rsvr/melee.zs) is a missile into the body: it never turns or pulls you
-		if (Saw(s) && s.mo) s.Log(String.Format("razor edge: the VR saw cut neither turns nor pulls you (player at %.0f %.0f angle %.1f)", s.mo.pos.x, s.mo.pos.y, s.mo.angle));
+		// built only when it prints (performance, 2026-11-27: every saw cut)
+		if (Saw(s) && s.mo && RSLD.Debug()) s.Log(String.Format("razor edge: the VR saw cut neither turns nor pulls you (player at %.0f %.0f angle %.1f)", s.mo.pos.x, s.mo.pos.y, s.mo.angle));
 	}
 }
 
@@ -535,7 +538,10 @@ class RSLD_Fx_Lacerating : RSLD_G7Effect
 		if (level.maptime - last[pn] <= Num("timer")) count[pn] = min(count[pn] + 1, int(Num("max")));
 		else count[pn] = 1;
 		last[pn] = level.maptime;
-		s.Log(String.Format("lacerating: count %d, next hit x%.2f", count[pn], (count[pn] + Num("add")) / max(1, Num("div"))));
+		// the numbers read as before (same calls, same order); the string built only when it prints (performance,
+		// 2026-11-27: every saw hit)
+		double add = Num("add"), div = max(1, Num("div"));
+		if (RSLD.Debug()) s.Log(String.Format("lacerating: count %d, next hit x%.2f", count[pn], (count[pn] + add) / div));
 	}
 }
 

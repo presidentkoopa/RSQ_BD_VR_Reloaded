@@ -264,6 +264,16 @@ class RSQ_Hands : Weapon
 	bool offTrigPrev;	// sprites where BD22's own hand model shows (taunts, grabs, carries)
 	Weapon readyWas;	// 2.0.4i: the main hand's weapon last tic (Upkeep: a switch TO a gun takes the off glove back)
 	bool dotClash;		// the scope reticle's layer id clashes with another lane's: said once
+	// (performance, 2026-11-27) Remembered lookups, kept out of saves (transient) so a save loaded after the pack or the
+	// load order changed looks them up again. SprIx: sprite indices by name (Actor.GetSpriteIndex walks the engine's whole
+	// sprite list, thousands of names in BD22, up to ten times a tic in A_RSQ_Layers' trigger-finger tests).
+	// moveKey / moveVal: RSQ_GunMoves.Frame's answers (it walks its whole 494-row table, with string tests and sprite
+	// lookups, on every gun frame change, twice). Both only remember what the engine would answer again: the sprite list
+	// is fixed once the game has started (nothing adds to it after startup), and Frame reads nothing else.
+	transient Array<Name> sprAsked;
+	transient Array<int> sprIds;
+	transient Array<int> moveKey;
+	transient Array<double> moveVal;
 
 	override void BeginPlay()
 	{
@@ -445,9 +455,9 @@ class RSQ_Hands : Weapon
 			{
 				int ff = fgp.Frame;
 				if (i == 4)	// BD22 Pistol.dec ResumeFireFrame / Fire2: "####" A 1 BRIGHT (the shot), then B, C, D 1
-					fsq = (fgp.Sprite == Actor.GetSpriteIndex('PIST') || fgp.Sprite == Actor.GetSpriteIndex('2IST')) && (fgp.CurState.bFullbright || ff == 1 || ff == 2 || ff == 3);
+					fsq = (fgp.Sprite == invoker.SprIx('PIST') || fgp.Sprite == invoker.SprIx('2IST')) && (fgp.CurState.bFullbright || ff == 1 || ff == 2 || ff == 3);
 				else	// BD22 Flamethrower.dec Fire / Hold: D E G H 1 BRIGHT
-					fsq = (fgp.Sprite == Actor.GetSpriteIndex('FLMT') || fgp.Sprite == Actor.GetSpriteIndex('2LMT')) && (fgp.CurState.bFullbright || ff == 3 || ff == 4 || ff == 6 || ff == 7);
+					fsq = (fgp.Sprite == invoker.SprIx('FLMT') || fgp.Sprite == invoker.SprIx('2LMT')) && (fgp.CurState.bFullbright || ff == 3 || ff == 4 || ff == 6 || ff == 7);
 			}
 			gl = (fsq ? "FbxSqz" : "FbxTrg") .. (i == 4 ? "P" : "F");
 		}
@@ -458,7 +468,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('2SAS') && mf >= 1 && mf <= 4) || (mgp.Sprite == Actor.GetSpriteIndex('3SAR') && mf == 8) || (mgp.Sprite == Actor.GetSpriteIndex('USAS') && (mf == 9 || mf == 13 || mf == 14));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('2SAS') && mf >= 1 && mf <= 4) || (mgp.Sprite == invoker.SprIx('3SAR') && mf == 8) || (mgp.Sprite == invoker.SprIx('USAS') && (mf == 9 || mf == 13 || mf == 14));
 			}
 			gl = msq ? "FbxSqzAS" : "FbxTrgAS";
 		}
@@ -469,7 +479,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mf >= 1 && mf <= 6 && (mgp.Sprite == Actor.GetSpriteIndex('REVO') || mgp.Sprite == Actor.GetSpriteIndex('2EVO')));
+				msq = mgp.CurState.bFullbright || (mf >= 1 && mf <= 6 && (mgp.Sprite == invoker.SprIx('REVO') || mgp.Sprite == invoker.SprIx('2EVO')));
 			}
 			gl = msq ? "FbxSqzRev" : "FbxTrgRev";
 		}
@@ -480,7 +490,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mf >= 1 && mf <= 7 && mgp.Sprite == Actor.GetSpriteIndex('RVMA'));
+				msq = mgp.CurState.bFullbright || (mf >= 1 && mf <= 7 && mgp.Sprite == invoker.SprIx('RVMA'));
 			}
 			gl = msq ? "FbxSqzBru" : "FbxTrgBru";
 		}
@@ -491,7 +501,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || ((mgp.Sprite == Actor.GetSpriteIndex('SHTN') || mgp.Sprite == Actor.GetSpriteIndex('2HTN')) && mf >= 1 && mf <= 7);
+				msq = mgp.CurState.bFullbright || ((mgp.Sprite == invoker.SprIx('SHTN') || mgp.Sprite == invoker.SprIx('2HTN')) && mf >= 1 && mf <= 7);
 			}
 			gl = msq ? "FbxSqzSG" : "FbxTrgSG";
 		}
@@ -502,7 +512,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('2RLN') && (mf == 1 || mf == 2 || mf == 3 || mf == 4)) || (mgp.Sprite == Actor.GetSpriteIndex('GRLN') && (mf == 1 || mf == 2 || mf == 3 || mf == 4));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('2RLN') && (mf == 1 || mf == 2 || mf == 3 || mf == 4)) || (mgp.Sprite == invoker.SprIx('GRLN') && (mf == 1 || mf == 2 || mf == 3 || mf == 4));
 			}
 			gl = msq ? "FbxSqzGL" : "FbxTrgGL";
 		}
@@ -513,7 +523,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('2ISF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20)) || (mgp.Sprite == Actor.GetSpriteIndex('MISF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20)) || (mgp.Sprite == Actor.GetSpriteIndex('MISG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 6 || mf == 7 || mf == 9));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('2ISF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20)) || (mgp.Sprite == invoker.SprIx('MISF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20)) || (mgp.Sprite == invoker.SprIx('MISG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 6 || mf == 7 || mf == 9));
 			}
 			gl = msq ? "FbxSqzRL" : "FbxTrgRL";
 		}
@@ -524,7 +534,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('2AIF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6)) || (mgp.Sprite == Actor.GetSpriteIndex('RAIF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('2AIF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6)) || (mgp.Sprite == invoker.SprIx('RAIF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6));
 			}
 			gl = msq ? "FbxSqzRail" : "FbxTrgRail";
 		}
@@ -535,7 +545,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('2RSG') && (mf == 3 || mf == 4)) || (mgp.Sprite == Actor.GetSpriteIndex('PRSA') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8)) || (mgp.Sprite == Actor.GetSpriteIndex('PRSG') && (mf == 3 || mf == 4));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('2RSG') && (mf == 3 || mf == 4)) || (mgp.Sprite == invoker.SprIx('PRSA') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8)) || (mgp.Sprite == invoker.SprIx('PRSG') && (mf == 3 || mf == 4));
 			}
 			gl = msq ? "FbxSqzPlas" : "FbxTrgPlas";
 		}
@@ -546,7 +556,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('CHAE') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5)) || (mgp.Sprite == Actor.GetSpriteIndex('CHAF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 18 || mf == 19)) || (mgp.Sprite == Actor.GetSpriteIndex('CHAG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5)) || (mgp.Sprite == Actor.GetSpriteIndex('CHAV') && (mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('CHAE') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5)) || (mgp.Sprite == invoker.SprIx('CHAF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 18 || mf == 19)) || (mgp.Sprite == invoker.SprIx('CHAG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5)) || (mgp.Sprite == invoker.SprIx('CHAV') && (mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14));
 			}
 			gl = msq ? "FbxSqzMini" : "FbxTrgMini";
 		}
@@ -557,7 +567,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mf <= 2 && (mgp.Sprite == Actor.GetSpriteIndex('X21F') || mgp.Sprite == Actor.GetSpriteIndex('P21F')));
+				msq = mgp.CurState.bFullbright || (mf <= 2 && (mgp.Sprite == invoker.SprIx('X21F') || mgp.Sprite == invoker.SprIx('P21F')));
 			}
 			gl = msq ? "FbxSqzSni" : "FbxTrgSni";
 		}
@@ -568,7 +578,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('HBUS') && (mf == 1 || mf == 2 || mf == 5)) || (mgp.Sprite == Actor.GetSpriteIndex('PBUS') && (mf == 1 || mf == 2 || mf == 5));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('HBUS') && (mf == 1 || mf == 2 || mf == 5)) || (mgp.Sprite == invoker.SprIx('PBUS') && (mf == 1 || mf == 2 || mf == 5));
 			}
 			gl = msq ? "FbxSqzMG42" : "FbxTrgMG42";
 		}
@@ -579,7 +589,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('MGN1') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 10));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('MGN1') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 10));
 			}
 			gl = msq ? "FbxSqzMGun" : "FbxTrgMGun";
 		}
@@ -590,7 +600,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('NKLF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('NKLF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9));
 			}
 			gl = msq ? "FbxSqzNuke" : "FbxTrgNuke";
 		}
@@ -601,7 +611,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('BG2G') && (mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('BG2G') && (mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17));
 			}
 			gl = msq ? "FbxSqzBFGk" : "FbxTrgBFGk";
 		}
@@ -612,7 +622,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('BFGA') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('BFGA') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5));
 			}
 			gl = msq ? "FbxSqzBFG9" : "FbxTrgBFG9";
 		}
@@ -623,7 +633,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('M202') && (mf == 1));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('M202') && (mf == 1));
 			}
 			gl = msq ? "FbxSqzInc" : "FbxTrgInc";
 		}
@@ -634,7 +644,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('DEVA') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('DEVA') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15));
 			}
 			gl = msq ? "FbxSqzDeva" : "FbxTrgDeva";
 		}
@@ -645,7 +655,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('SHT2') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9)) || (mgp.Sprite == Actor.GetSpriteIndex('VSSG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('SHT2') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9)) || (mgp.Sprite == invoker.SprIx('VSSG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9));
 			}
 			gl = msq ? "FbxSqzSSG" : "FbxTrgSSG";
 		}
@@ -656,7 +666,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('2NHF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7)) || (mgp.Sprite == Actor.GetSpriteIndex('UNHF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('2NHF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7)) || (mgp.Sprite == invoker.SprIx('UNHF') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7));
 			}
 			gl = msq ? "FbxSqzUnm" : "FbxTrgUnm";
 		}
@@ -667,7 +677,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('PVCG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11)) || (mgp.Sprite == Actor.GetSpriteIndex('RVCG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('PVCG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11)) || (mgp.Sprite == invoker.SprIx('RVCG') && (mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11));
 			}
 			gl = msq ? "FbxSqzHML" : "FbxTrgHML";
 		}
@@ -678,7 +688,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('1AWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == Actor.GetSpriteIndex('1AWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26)) || (mgp.Sprite == Actor.GetSpriteIndex('2AWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == Actor.GetSpriteIndex('2AWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26)) || (mgp.Sprite == Actor.GetSpriteIndex('3AWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == Actor.GetSpriteIndex('3AWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26)) || (mgp.Sprite == Actor.GetSpriteIndex('PAWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == Actor.GetSpriteIndex('PAWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22)) || (mgp.Sprite == Actor.GetSpriteIndex('SAWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == Actor.GetSpriteIndex('SAWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('1AWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == invoker.SprIx('1AWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26)) || (mgp.Sprite == invoker.SprIx('2AWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == invoker.SprIx('2AWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26)) || (mgp.Sprite == invoker.SprIx('3AWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == invoker.SprIx('3AWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26)) || (mgp.Sprite == invoker.SprIx('PAWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == invoker.SprIx('PAWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22)) || (mgp.Sprite == invoker.SprIx('SAWF') && (mf == 0 || mf == 1 || mf == 2 || mf == 3 || mf == 4 || mf == 5 || mf == 6 || mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 13 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 21 || mf == 22 || mf == 23 || mf == 24 || mf == 25)) || (mgp.Sprite == invoker.SprIx('SAWG') && (mf == 7 || mf == 8 || mf == 9 || mf == 10 || mf == 11 || mf == 12 || mf == 14 || mf == 15 || mf == 16 || mf == 17 || mf == 18 || mf == 19 || mf == 20 || mf == 22 || mf == 23 || mf == 24 || mf == 25 || mf == 26));
 			}
 			gl = msq ? "FbxSqzSaw" : "FbxTrgSaw";
 		}
@@ -711,7 +721,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mf <= 3 && (mgp.Sprite == Actor.GetSpriteIndex('RIFF') || mgp.Sprite == Actor.GetSpriteIndex('RI2F') || mgp.Sprite == Actor.GetSpriteIndex('2IFF') || mgp.Sprite == Actor.GetSpriteIndex('QT09') || mgp.Sprite == Actor.GetSpriteIndex('QT0A') || mgp.Sprite == Actor.GetSpriteIndex('QT08')));
+				msq = mgp.CurState.bFullbright || (mf <= 3 && (mgp.Sprite == invoker.SprIx('RIFF') || mgp.Sprite == invoker.SprIx('RI2F') || mgp.Sprite == invoker.SprIx('2IFF') || mgp.Sprite == invoker.SprIx('QT09') || mgp.Sprite == invoker.SprIx('QT0A') || mgp.Sprite == invoker.SprIx('QT08')));
 			}
 			gl = msq ? "FbxSqzRif" : "FbxTrgRif";
 		}
@@ -722,7 +732,7 @@ class RSQ_Hands : Weapon
 			if (mgp && mgp.CurState)
 			{
 				int mf = mgp.Frame;
-				msq = mgp.CurState.bFullbright || (mgp.Sprite == Actor.GetSpriteIndex('MP40') && (mf == 1 || mf == 3 || mf == 4 || (mf >= 16 && mf <= 18))) || (mgp.Sprite == Actor.GetSpriteIndex('PP40') && (mf == 1 || mf == 3 || mf == 4));
+				msq = mgp.CurState.bFullbright || (mgp.Sprite == invoker.SprIx('MP40') && (mf == 1 || mf == 3 || mf == 4 || (mf >= 16 && mf <= 18))) || (mgp.Sprite == invoker.SprIx('PP40') && (mf == 1 || mf == 3 || mf == 4));
 			}
 			gl = msq ? "FbxSqzM" : "FbxTrgM";
 		}
@@ -733,7 +743,7 @@ class RSQ_Hands : Weapon
 			if (sgp && sgp.CurState)
 			{
 				int sf = sgp.Frame;
-				ssq = sgp.CurState.bFullbright || ((sgp.Sprite == Actor.GetSpriteIndex('SMGF') || sgp.Sprite == Actor.GetSpriteIndex('2MGF')) && sf <= 2) || (sgp.Sprite == Actor.GetSpriteIndex('SMGZ') && sf >= 6 && sf <= 8);
+				ssq = sgp.CurState.bFullbright || ((sgp.Sprite == invoker.SprIx('SMGF') || sgp.Sprite == invoker.SprIx('2MGF')) && sf <= 2) || (sgp.Sprite == invoker.SprIx('SMGZ') && sf >= 6 && sf <= 8);
 			}
 			gl = ssq ? "FbxSqzS" : "FbxTrgS";
 		}
@@ -933,6 +943,42 @@ class RSQ_Hands : Weapon
 		return t0 + (t1 - t0) * ticfrac, m0 + (m1 - m0) * ticfrac;
 	}
 
+	// (performance, 2026-11-27) Actor.GetSpriteIndex(n), looked up once (see sprAsked)
+	int SprIx(Name n)
+	{
+		int k = sprAsked.Find(n);
+		if (k < sprAsked.Size())
+			return sprIds[k];
+		int s = GetSpriteIndex(n);
+		sprAsked.Push(n);
+		sprIds.Push(s);
+		return s;
+	}
+
+	// (performance, 2026-11-27) RSQ_GunMoves.Frame(i, sprite, frame), looked up once per (gun, sprite, frame) (see moveKey).
+	// Anything outside the packed key's range goes straight to Frame, as before.
+	Vector3, Vector3 MoveOf(int i, int sp, int fr)
+	{
+		Vector3 t, m;
+		if (i < 0 || i >= 128 || fr < 0 || fr >= 64 || sp < 0 || sp >= 0x40000)
+		{
+			[t, m] = RSQ_GunMoves.Frame(i, sp, fr);
+			return t, m;
+		}
+		int mk = (sp * 64 + fr) * 128 + i;
+		int k = moveKey.Find(mk);
+		if (k < moveKey.Size())
+		{
+			int b = k * 6;
+			return (moveVal[b], moveVal[b + 1], moveVal[b + 2]), (moveVal[b + 3], moveVal[b + 4], moveVal[b + 5]);
+		}
+		[t, m] = RSQ_GunMoves.Frame(i, sp, fr);
+		moveKey.Push(mk);
+		moveVal.Push(t.x); moveVal.Push(t.y); moveVal.Push(t.z);
+		moveVal.Push(m.x); moveVal.Push(m.y); moveVal.Push(m.z);
+		return t, m;
+	}
+
 	// put a layer on a state only when it changes, so a pose is not
 	// restarted every tic
 	void SetLayer(PlayerInfo p, int id, Actor caller, String label)
@@ -973,7 +1019,7 @@ class RSQ_Hands : Weapon
 		gunSprite = spr;
 		gunFrame = g.Frame;
 		Vector3 t, m;
-		[t, m] = RSQ_GunMoves.Frame(i, spr, g.Frame);
+		[t, m] = MoveOf(i, spr, g.Frame);	// (performance, 2026-11-27: was RSQ_GunMoves.Frame; MoveOf remembers it)
 		gunTurn = nextTurn = t;
 		gunMove = nextMove = m;
 		// The engine blends a model toward the next state's frame, unless that
@@ -982,7 +1028,7 @@ class RSQ_Hands : Weapon
 		let n = gunState.NextState;
 		if (RSQ_GunMoves.Blends(i) && n && n != gunState && n.sprite > 2)
 		{
-			[t, m] = RSQ_GunMoves.Frame(i, n.sprite, n.Frame);
+			[t, m] = MoveOf(i, n.sprite, n.Frame);
 			nextTurn = t;
 			nextMove = m;
 		}

@@ -243,7 +243,7 @@ class RSLD_Reroll play
 	static string EffectOf(Actor a, int s)
 	{
 		if (!a || s < 0) return "";
-		string pre = "LD" .. RSLD_Data.Slots[s] .. "Effect_";
+		string pre = RSLD_Data.EffectPrefix[s];	// "LD" .. Slots[s] .. "Effect_"
 		int n = pre.Length();
 		for (let i = a.Inv; i; i = i.Inv)
 		{

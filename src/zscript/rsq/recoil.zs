@@ -236,8 +236,30 @@ class RSQ_Recoil : EventHandler
 			}
 	}
 
+	// (performance, 2026-11-27) FindFor's answer per weapon class, null included. WorldTick asks for both hands of every
+	// player every tic, and an unmatched class (the off hand's RSQ_Hands, the fists) walked up to Object comparing each
+	// parent's name, as a string, against every profile: about 190 case-blind string compares a tic for the off hand
+	// alone. The answer depends only on the class and on defCls / defs, which only OnRegister fills (Alias runs from it),
+	// so it is remembered per class name. Transient: a loaded save rebuilds it from the profiles it loaded.
+	transient Array<Name> forCls;
+	transient Array<RSQ_RecoilDef> forDef;
+
 	// 2.0.5n: the profile of a gun or of the gun it is a copy of (the off-hand copies are subclasses of their guns)
 	RSQ_RecoilDef FindFor(Weapon w)
+	{
+		if (!w)
+			return null;
+		Name wn = w.GetClassName();
+		int m = forCls.Find(wn);
+		if (m < forCls.Size())
+			return forDef[m];
+		let d = FindForUncached(w);
+		forCls.Push(wn);
+		forDef.Push(d);
+		return d;
+	}
+
+	RSQ_RecoilDef FindForUncached(Weapon w)
 	{
 		if (!w)
 			return null;

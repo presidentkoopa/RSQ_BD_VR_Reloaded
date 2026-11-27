@@ -11,6 +11,12 @@
 class RSLD_Data
 {
 	static const string Slots[] = { "Fists", "Chainsaw", "Pistol", "Shotgun", "SuperShotgun", "Chaingun", "RocketLauncher", "PlasmaRifle", "BFG9000" };
+	// "LD" .. Slots[s] .. "Effect_" and "LD" .. Slots[s] .. "Legendary", written out (performance, 2026-11-27: the handler's
+	// RefreshSlots built both for every slot and every LD item in the player's inventory, every 17 tics)
+	static const string EffectPrefix[] = { "LDFistsEffect_", "LDChainsawEffect_", "LDPistolEffect_", "LDShotgunEffect_", "LDSuperShotgunEffect_",
+		"LDChaingunEffect_", "LDRocketLauncherEffect_", "LDPlasmaRifleEffect_", "LDBFG9000Effect_" };
+	static const string LegendaryPrefix[] = { "LDFistsLegendary", "LDChainsawLegendary", "LDPistolLegendary", "LDShotgunLegendary", "LDSuperShotgunLegendary",
+		"LDChaingunLegendary", "LDRocketLauncherLegendary", "LDPlasmaRifleLegendary", "LDBFG9000Legendary" };
 	static const string LDWeapons[] = { "LDFists", "LDChainsaw", "LDPistol", "LDShotgun", "LDSuperShotgun", "LDChaingun", "LDRocketLauncher", "LDPlasmaRifle", "LDBFG9000" };
 	static const string Give[] = { "Melee_Attacks", "Chain_Saw", "BrutalPistol", "Shot_Gun", "SSG", "MiniGun", "Rocket_Launcher", "Plasma_Gun", "BIG_FUCKING_GUN" };
 	static const string Family[] =
@@ -66,42 +72,68 @@ class RSLD_Data
 		"Plasma_Gun|RailGun",
 		"BIG_FUCKING_GUN|BFG10k|NukeLauncher|Unmaker|HellishMissileLauncher"
 	};
-	// a gun and the copies that are the same gun (the first is the gun a binding names)
-	static const string Variants[] =
+	// a gun and the copies that are the same gun (the first is the gun a binding names). One row per gun, rows ended by "".
+	// (performance, 2026-11-27: this was one "a|b|c" string per row, Split on every call; SameGun and BaseGun run several
+	// times a tic with LD mode on -- SyncLegends, SlotOf for both hands, the HUD name every frame -- and a gun that is in
+	// no row split all 24 rows each time. Same rows, same order, so every answer is the one the split rows gave.)
+	static const string VariantList[] =
 	{
-		"BrutalPistol|DualPistols|PuristPistol", "BrutalSMG|DualSMG|PuristSMG", "MP40|DualMP40|PuristMP40",
-		"Shot_Gun|PuristShot_Gun", "AssaultShotgun|PuristAssaultShotgun", "Revolver|PuristRevolver", "SSG|PuristSSG",
-		"MiniGun|PuristMiniGun", "Rifle|DualRifles|PuristRifle", "MG42|PuristMG42|Machinegun", "Sniper|PuristSniper",
-		"Rocket_Launcher|PuristRocket_Launcher", "GrenadeLauncher|PuristGrenadeLauncher",
-		"IncendiaryLauncher|PuristIncendiaryLauncher", "Devastator|PuristDevastator",
-		"Plasma_Gun|DualPlasmaRifles|PuristPlasma_Gun", "RailGun|PuristRailGun",
-		"BIG_FUCKING_GUN|PuristBIG_FUCKING_GUN", "BFG10k|PuristBFG10k", "NukeLauncher|PuristNukeLauncher",
-		"Unmaker|PuristUnmaker", "HellishMissileLauncher|PuristHellishMissileLauncher",
-		"Flamethrower2|PuristFlamethrower2", "FlameCannon|DualFlameCannon|PuristFlameCannon"
+		"BrutalPistol", "DualPistols", "PuristPistol", "",
+		"BrutalSMG", "DualSMG", "PuristSMG", "",
+		"MP40", "DualMP40", "PuristMP40", "",
+		"Shot_Gun", "PuristShot_Gun", "",
+		"AssaultShotgun", "PuristAssaultShotgun", "",
+		"Revolver", "PuristRevolver", "",
+		"SSG", "PuristSSG", "",
+		"MiniGun", "PuristMiniGun", "",
+		"Rifle", "DualRifles", "PuristRifle", "",
+		"MG42", "PuristMG42", "Machinegun", "",
+		"Sniper", "PuristSniper", "",
+		"Rocket_Launcher", "PuristRocket_Launcher", "",
+		"GrenadeLauncher", "PuristGrenadeLauncher", "",
+		"IncendiaryLauncher", "PuristIncendiaryLauncher", "",
+		"Devastator", "PuristDevastator", "",
+		"Plasma_Gun", "DualPlasmaRifles", "PuristPlasma_Gun", "",
+		"RailGun", "PuristRailGun", "",
+		"BIG_FUCKING_GUN", "PuristBIG_FUCKING_GUN", "",
+		"BFG10k", "PuristBFG10k", "",
+		"NukeLauncher", "PuristNukeLauncher", "",
+		"Unmaker", "PuristUnmaker", "",
+		"HellishMissileLauncher", "PuristHellishMissileLauncher", "",
+		"Flamethrower2", "PuristFlamethrower2", "",
+		"FlameCannon", "DualFlameCannon", "PuristFlameCannon", ""
 	};
-	// is class name cn (an off-hand copy's RSQ_Off_ taken off) the gun g or one of its copies?
+	// is class name cn (an off-hand copy's RSQ_Off_ taken off) the gun g or one of its copies? (the first row whose gun is g)
 	clearscope static bool SameGun(string cn, Name g)
 	{
 		if (cn.Left(8) == "RSQ_Off_") cn = cn.Mid(8);
 		string gs = g;
 		if (cn ~== gs) return true;
-		for (int i = 0; i < RSLD_Data.Variants.Size(); i++)
+		int n = RSLD_Data.VariantList.Size();
+		int i = 0;
+		while (i < n)
 		{
-			Array<string> v; RSLD_Data.Variants[i].Split(v, "|");
-			if (!(v[0] ~== gs)) continue;
-			for (int k = 1; k < v.Size(); k++) if (cn ~== v[k]) return true;
-			return false;
+			bool mine = RSLD_Data.VariantList[i] ~== gs;	// i: a row's gun
+			i++;
+			while (i < n && RSLD_Data.VariantList[i] != "")	// its copies, up to the row's ""
+			{
+				if (mine && cn ~== RSLD_Data.VariantList[i]) return true;
+				i++;
+			}
+			if (mine) return false;
+			i++;	// past the row's ""
 		}
 		return false;
 	}
-	// the gun a class is: its off-hand copy's RSQ_Off_ taken off, a Purist / Dual copy read as its gun (Variants)
+	// the gun a class is: its off-hand copy's RSQ_Off_ taken off, a Purist / Dual copy read as its gun (VariantList)
 	clearscope static Name BaseGun(string cn)
 	{
 		if (cn.Left(8) == "RSQ_Off_") cn = cn.Mid(8);
-		for (int i = 0; i < RSLD_Data.Variants.Size(); i++)
+		int head = 0;	// the first entry of the row i is in
+		for (int i = 0; i < RSLD_Data.VariantList.Size(); i++)
 		{
-			Array<string> v; RSLD_Data.Variants[i].Split(v, "|");
-			for (int k = 0; k < v.Size(); k++) if (cn ~== v[k]) return v[0];
+			if (RSLD_Data.VariantList[i] == "") { head = i + 1; continue; }
+			if (cn ~== RSLD_Data.VariantList[i]) return RSLD_Data.VariantList[head];
 		}
 		return cn;
 	}

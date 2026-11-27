@@ -44,7 +44,86 @@ class RSQ_HandTone : EventHandler
 			ParseLump(Wads.ReadLump(lump));
 	}
 
+	// Comments out, everything else kept. (performance, 2026-11-27) This ran on the first tic of every map and was the
+	// measured 542 ms freeze: the old walk below appended the MODELDEF text one byte at a time (about 4.5 MB in this
+	// pk3 alone, MODELDEF.rsqgc is 3.1 MB), and each AppendCharacter grows the string by a heap realloc. Now the text
+	// between comments is copied a run at a time with the engine's own IndexOf / Mid / AppendFormat; the comments are
+	// found exactly where the byte walk finds them (the first "//" or "/*" at or after i, whichever comes first).
+	// Two cases keep the byte walk: a NUL byte (IndexOf stops at it, the byte walk does not) -- String.Format "%s"
+	// stops at the first NUL, so its length differs. The classes it yields are the same either way for bytes over 127
+	// (the byte walk re-encodes each as two non-ASCII bytes; every pattern searched is ASCII and a class name is ASCII).
 	static String StripComments(String s)
+	{
+		int n = s.Length();
+		if (HasNul(s))
+			return StripCommentsBytes(s);
+		// THE RUNS ARE JOINED PAIRWISE, NOT APPENDED (measured 2026-11-27 on the rig: appending them one by one took 740 ms
+		// on MODELDEF.rsqgc, 3 MB in 2,500 runs, slower than the byte walk): the engine grows a string by only 128 bytes past
+		// what it needs (zstring.cpp FormatHelper / ReallocBuffer), so every append past the end copies the whole string
+		// again. Joined in pairs, then pairs of pairs, each byte is copied about log2(runs) times: the same text.
+		Array<String> runs;
+		int i = 0;
+		int nl = -2, nb = -2;	// the next "//" and "/*" at or after i (-1: none left, -2: not looked yet)
+		while (i < n)
+		{
+			if (nl != -1 && nl < i)
+				nl = s.IndexOf("//", i);
+			if (nb != -1 && nb < i)
+				nb = s.IndexOf("/*", i);
+			int c = nl;
+			if (c < 0 || (nb >= 0 && nb < c))
+				c = nb;
+			if (c < 0)
+			{
+				runs.Push(s.Mid(i));
+				break;
+			}
+			if (c > i)
+				runs.Push(s.Mid(i, c - i));
+			i = c;
+			if (c == nl)
+			{
+				int e = s.IndexOf("\n", i);	// the newline itself stays, as the byte walk keeps it
+				i = e < 0 ? n : e;
+			}
+			else
+			{
+				int e = s.IndexOf("*/", i + 2);
+				i = e < 0 ? n : e + 2;
+			}
+		}
+		if (runs.Size() == 0)
+			return "";
+		while (runs.Size() > 1)
+		{
+			int m = 0;
+			for (int k = 0; k < runs.Size(); k += 2)
+			{
+				runs[m] = k + 1 < runs.Size() ? runs[k] .. runs[k + 1] : runs[k];
+				m++;
+			}
+			runs.Resize(m);
+		}
+		return runs[0];
+	}
+
+	// Is there a NUL byte in s? "%s" stops at one, so a slice formatted comes back shorter. Checked 4 KB at a time
+	// (measured 2026-11-27: formatting the whole 3 MB MODELDEF.rsqgc at once took 265 ms, the engine growing the copy
+	// 128 bytes at a time; Mid copies a slice byte for byte, NULs included, so each slice tells the truth).
+	static bool HasNul(String s)
+	{
+		int n = s.Length();
+		for (int k = 0; k < n; k += 4096)
+		{
+			String c = s.Mid(k, min(4096, n - k));
+			if (String.Format("%s", c).Length() != c.Length())
+				return true;
+		}
+		return false;
+	}
+
+	// The original byte-at-a-time walk, kept for a lump with a NUL byte in it.
+	static String StripCommentsBytes(String s)
 	{
 		String o = "";
 		int i = 0, n = s.Length();

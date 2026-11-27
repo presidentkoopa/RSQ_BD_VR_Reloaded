@@ -142,9 +142,10 @@ class RSQ_DakkaLine : Thinker
 
 	override void Tick()
 	{
+		let h = RSQ_ShotFX.Get();	// once per tic, not once per dot (performance, 2026-11-27)
 		while (step < dist)
 		{
-			RSQ_ShotFX.PutDot(from + dir * step, tic / SPEED);
+			RSQ_ShotFX.PutDotH(h, from + dir * step, tic / SPEED);
 			step += DENSITY;
 			tic += DENSITY;
 			if (tic >= SPEED)
@@ -186,7 +187,13 @@ class RSQ_ShotFX : EventHandler
 
 	static void PutDot(Vector3 at, double a)
 	{
-		let h = Get();
+		PutDotH(Get(), at, a);
+	}
+
+	// PutDot with the handler already found: a tracer lays up to ~170 dots, and each EventHandler.Find walks every
+	// registered handler. It is the same handler for the whole level. (performance, 2026-11-27)
+	static void PutDotH(RSQ_ShotFX h, Vector3 at, double a)
+	{
 		if (!h || h.dots >= MAX_DOTS)
 			return;
 		let d = RSQ_DakkaDot(Actor.Spawn('RSQ_DakkaDot', at));
@@ -207,9 +214,10 @@ class RSQ_ShotFX : EventHandler
 			return;
 		Vector3 u = d / len;
 		double s = carry;
+		let h = Get();	// once per step, not once per dot (performance, 2026-11-27)
 		while (s < len)
 		{
-			PutDot(a + u * s, s / max(speed, 1.0));
+			PutDotH(h, a + u * s, s / max(speed, 1.0));
 			s += RSQ_DakkaLine.DENSITY;
 		}
 		carry = s - len;

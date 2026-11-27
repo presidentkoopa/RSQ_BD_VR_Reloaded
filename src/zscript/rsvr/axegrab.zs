@@ -210,6 +210,10 @@ class RSVR_AxePool : EventHandler
 
 	override void WorldThingSpawned(WorldEvent e)
 	{
+		// no thrown axe of anyone's in the air or on the ground: nothing below can match (the loop is over axes), so
+		// the class test is skipped on the ~66 spawns a tic of a fight (performance, 2026-11-27)
+		if (axes.Size() == 0)
+			return;
 		let a = e.Thing;
 		if (!IsAxeItem(a))
 			return;

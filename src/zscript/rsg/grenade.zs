@@ -58,7 +58,7 @@ class RSG_Handler : EventHandler
 
 	static double WorldScale()
 	{
-		let it = ServiceIterator.Find("RSQSM_Service");
+		let it = RSVR_Lookup.Find("RSQSM_Service");	// remembered: this runs every tic (performance, 2026-11-27)
 		let s = it.Next();
 		return s ? clamp(s.GetInt("scale", "", 0, 0, null) / 1000.0, 0.01, 1.0) : 1.0;
 	}

@@ -1,5 +1,9 @@
 version "4.14"	// 1.97 F5: WorldHitscanPreFired is 4.13+; qzd17.3 is 4.14.3
 
+// RSVR_Lookup: ServiceIterator.Find, remembered (the series' tools/lookup/lookup_template.zs under prefix RSVR; a
+// generated copy, never hand-edit). First so every lump after this one (rsx, rsz) can use it. (performance, 2026-11-27)
+#include "zscript/rsvr_lookup.zs"
+
 // RS VR melee (posefix): real axe / Dragonslayer swings and axe throwing in VR
 #include "zscript/rsvr/vrhand.zs"
 #include "zscript/rsq/pose.zs"

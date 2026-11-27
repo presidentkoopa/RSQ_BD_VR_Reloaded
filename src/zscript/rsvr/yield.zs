@@ -20,7 +20,7 @@ class RSVR_MeleeYield play
 
 	static bool Ask(String what)
 	{
-		let s = ServiceIterator.Find("RSQML_Service").Next();
+		let s = RSVR_Lookup.Find("RSQML_Service").Next();	// the cached lookup, rsvr_lookup.zs (performance, 2026-11-27)
 		return s && s.GetInt("owns", what) == 1;
 	}
 

@@ -100,7 +100,10 @@ class RSR abstract
 	{
 		if (!mo || !mo.player || PlayerInt(mo.player, 'rsr_rig_pouch', 1) == 0)
 			return -1;
-		let it = ServiceIterator.Find("RSQTR_RigService");
+		// the remembered lookup (rsvr_lookup.zs), same matches in the same order: RSP_Handler.WorldTick asks this every
+		// tic a pump gun is up and has room (its feedOK), so the engine's walk of every service was paid each tic
+		// (performance, 2026-11-27)
+		let it = RSVR_Lookup.Find("RSQTR_RigService");
 		Service s;
 		while (s = it.Next())
 			return s.GetInt("pouch.at", "", 1, 0, mo);
@@ -154,6 +157,28 @@ class RSR abstract
 		return ph >= 0 && ph < n.Size() ? n[ph] : "?";
 	}
 
+	// A SPRITE NAME'S INDEX, REMEMBERED (performance, 2026-11-27). Actor.GetSpriteIndex compares the name with every
+	// sprite name loaded, one at a time (src/gamedata/info.cpp GetSpriteIndex), and remembers only the very last name
+	// asked. The reload layers (here, rsr_pump.zs, rsr_m203.zs, rsr_break.zs) ask two or three different names a tic
+	// while a part is drawn or a slide is locked back, so nearly every ask walked the whole list, which BD22 makes
+	// thousands long. Sprite names are only added while the game loads (DECORATE and ZScript states, DeHackEd: every
+	// GetSpriteIndex(..., true) caller in the engine), so a name's index never changes for the session: asked once,
+	// kept. Same index as the engine's own answer, -1 for an unknown name included. The store is RSR_ReloadHandler's,
+	// transient (a savegame may be loaded under another load order, where the indices differ).
+	play static int Spr(Name n)
+	{
+		let h = RSR_ReloadHandler.Get();
+		if (!h)
+			return Actor.GetSpriteIndex(n);
+		int k = h.sprNames.Find(n);
+		if (k < h.sprNames.Size())
+			return h.sprIds[k];
+		int id = Actor.GetSpriteIndex(n);
+		h.sprNames.Push(n);
+		h.sprIds.Push(id);
+		return id;
+	}
+
 	// a layer the reload owns: shown with a sprite and frame of the gun's own model
 	// (MODELDEF.rsr), or gone (st null)
 	play static void SetPart(PlayerInfo p, int id, Actor caller, bool show, Name spr, int frame)
@@ -179,7 +204,7 @@ class RSR abstract
 			psp.y = WEAPONTOP;
 			psp.oldy = WEAPONTOP;
 		}
-		psp.Sprite = Actor.GetSpriteIndex(spr);
+		psp.Sprite = RSR.Spr(spr);
 		psp.Frame = frame;
 	}
 
@@ -190,7 +215,7 @@ class RSR abstract
 		s.Split(w, " ", TOK_SKIPEMPTY);
 		if (w.Size() < 2)
 			return false;
-		spr = Actor.GetSpriteIndex(w[0]);
+		spr = RSR.Spr(w[0]);
 		fr = w[1].ByteAt(0) - 65;
 		return true;
 	}
@@ -201,7 +226,7 @@ class RSR abstract
 		RSR_Guns.ReadySprites(gun).Split(list, " ", TOK_SKIPEMPTY);
 		for (int k = 0; k + 1 < list.Size(); k += 2)
 		{
-			if (psp.Sprite == Actor.GetSpriteIndex(list[k]) && psp.Frame == list[k + 1].ByteAt(0) - 65)
+			if (psp.Sprite == RSR.Spr(list[k]) && psp.Frame == list[k + 1].ByteAt(0) - 65)
 				return true;
 		}
 		return false;
@@ -769,14 +794,14 @@ class RSR_State play
 			{
 				if (phase >= RSR.DROP && phase <= RSR.INSERT)
 				{
-					psp.Sprite = Actor.GetSpriteIndex(gs);		// the gun without its magazine
+					psp.Sprite = RSR.Spr(gs);		// the gun without its magazine
 					psp.Frame = slideLock ? 2 : 0;				// (and without its slide: locked back)
 				}
 				else if (phase == RSR.PULL || phase == RSR.RELEASED)
 				{
 					if (RSR_Guns.HandleLayers(i))
 					{
-						psp.Sprite = Actor.GetSpriteIndex(gs);	// without the handle: it is on its own layers
+						psp.Sprite = RSR.Spr(gs);	// without the handle: it is on its own layers
 						psp.Frame = 1;
 					}
 					else
@@ -784,7 +809,7 @@ class RSR_State play
 						int f = RSR_Guns.HandleFrame(i, pull);	// the gun's own frames with the bolt back
 						if (f > 0)
 						{
-							psp.Sprite = Actor.GetSpriteIndex(gs);
+							psp.Sprite = RSR.Spr(gs);
 							psp.Frame = f;
 						}
 						else
@@ -793,7 +818,7 @@ class RSR_State play
 				}
 				else if (slideLock)
 				{
-					psp.Sprite = Actor.GetSpriteIndex(gs);		// slide locked back: on its own layer
+					psp.Sprite = RSR.Spr(gs);		// slide locked back: on its own layer
 					psp.Frame = 1;
 				}
 				else
@@ -802,7 +827,7 @@ class RSR_State play
 			else if (!active && slideLock && RSR.IsReadyFrame(psp, i))
 			{
 				class<Inventory> nm = RSR_Guns.NoMag(i);
-				psp.Sprite = Actor.GetSpriteIndex(gs);
+				psp.Sprite = RSR.Spr(gs);
 				psp.Frame = nm && mo.CountInv(nm) > 0 ? 2 : 1;	// no slide (and no magazine if it is out)
 			}
 			else if (!active && RSR_Guns.NoMag(i) != "")
@@ -812,7 +837,7 @@ class RSR_State play
 				class<Inventory> nm = RSR_Guns.NoMag(i);
 				if (nm && mo.CountInv(nm) > 0 && RSR.IsReadyFrame(psp, i))
 				{
-					psp.Sprite = Actor.GetSpriteIndex(gs);
+					psp.Sprite = RSR.Spr(gs);
 					psp.Frame = 0;
 				}
 			}
@@ -842,7 +867,7 @@ class RSR_State play
 		RSR_Guns.ReadySprites(i).Split(list, " ", TOK_SKIPEMPTY);
 		if (list.Size() < 2)
 			return;
-		psp.Sprite = Actor.GetSpriteIndex(list[0]);
+		psp.Sprite = RSR.Spr(list[0]);
 		psp.Frame = list[1].ByteAt(0) - 65;
 	}
 }
@@ -1063,6 +1088,8 @@ class RSR_ReloadHandler : EventHandler
 	ui bool eaten[512];
 	ui bool useEaten[512];	// the Use press was SWALLOWED (the door must not get it)
 	ui bool useSent[512];	// ...and, separately, whether rsr_use was sent, so the release always is
+	transient Array<Name> sprNames;	// RSR.Spr: sprite names asked so far (performance, 2026-11-27)
+	transient Array<int> sprIds;	// ...and the engine's index for each
 
 	clearscope static RSR_ReloadHandler Get()
 	{

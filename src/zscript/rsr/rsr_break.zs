@@ -239,7 +239,7 @@ class RSB abstract
 			psp.y = WEAPONTOP;
 			psp.oldy = WEAPONTOP;
 		}
-		psp.Sprite = Actor.GetSpriteIndex(spr);
+		psp.Sprite = RSR.Spr(spr);
 		psp.Frame = frame;
 	}
 }
@@ -1096,7 +1096,7 @@ class RSB_State play
 		if (active && psp && psp.CurState == w.FindState("RSB_Wait"))
 		{
 			// the gun without its hinged part and rounds: they are on their own layers
-			psp.Sprite = Actor.GetSpriteIndex(RSB_Guns.SprGun(gun));
+			psp.Sprite = RSR.Spr(RSB_Guns.SprGun(gun));
 			psp.Frame = 0;
 		}
 		let parts = RSB_GunParts(mo.FindInventory('RSB_GunParts'));

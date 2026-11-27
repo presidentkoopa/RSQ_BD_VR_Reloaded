@@ -119,7 +119,9 @@ class RSM abstract play
 
 	static Service GnSvc()
 	{
-		let it = ServiceIterator.Find("RSQGN_Service");
+		// the remembered lookup (rsvr_lookup.zs), same matches in the same order: asked on every launcher shot of an RSQ
+		// Grenade round (RSM_Nades.Arm / Burst) and on each kind change (performance, 2026-11-27)
+		let it = RSVR_Lookup.Find("RSQGN_Service");
 		Service s;
 		while (s = it.Next())
 			if (s.GetClassName() == 'RSQGN_Service')
@@ -147,7 +149,7 @@ class RSM abstract play
 	// the off hand at the rig's grenade spot: 1 at it, 0 not, -1 no grenade spot (as RSR.RigPouch)
 	static int RigNadeSpot(PlayerPawn mo)
 	{
-		let it = ServiceIterator.Find("RSQTR_RigService");
+		let it = RSVR_Lookup.Find("RSQTR_RigService");	// remembered (rsvr_lookup.zs), as RSR.RigPouch (performance, 2026-11-27)
 		Service s;
 		while (s = it.Next())
 			return s.GetInt("nade.at", "", 1, 0, mo);

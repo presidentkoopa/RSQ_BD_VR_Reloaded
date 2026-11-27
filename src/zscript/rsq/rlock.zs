@@ -165,6 +165,9 @@ class RSQ_RocketLock : EventHandler
 		int seen = 0;
 		double nearAng = 999;
 		String nearWhat = "";
+		// (performance, 2026-11-27) nearWhat is only ever printed by the log below, and building it cost a String.Format and
+		// a CheckSight for every monster nearer the line than the last one; it is built only when that log can print
+		bool logs = Logs(mo.player) && Level.maptime % 10 == 0;
 		let it = BlockThingsIterator.CreateFromPos(from.x, from.y, from.z - RANGE, RANGE * 2.0, RANGE, false);
 		while (it.Next())
 		{
@@ -182,7 +185,8 @@ class RSQ_RocketLock : EventHandler
 			if (ang < nearAng)
 			{
 				nearAng = ang;
-				nearWhat = String.Format("%s %.0f units sight %d", t.GetClassName(), dist, mo.CheckSight(t, SF_IGNOREVISIBILITY));
+				if (logs)
+					nearWhat = String.Format("%s %.0f units sight %d", t.GetClassName(), dist, mo.CheckSight(t, SF_IGNOREVISIBILITY));
 			}
 			if (ang >= bestAng || !mo.CheckSight(t, SF_IGNOREVISIBILITY))
 				continue;
@@ -191,7 +195,7 @@ class RSQ_RocketLock : EventHandler
 		}
 		if (!best)
 		{
-			if (Logs(mo.player) && Level.maptime % 10 == 0)
+			if (logs)
 				Console.Printf("RSQ rlock t%d: holding, nothing within %.0f deg: %d monsters in range, nearest %.0f deg off (%s)", Level.maptime, cone, seen, nearAng, nearWhat);
 			return;
 		}

@@ -174,7 +174,11 @@ class RSVR_Door : EventHandler
 			// never STARTS a hold there (a held door is not dropped by drifting into one).
 			// Asked of the rig by name; no rig, no holsters.
 			bool inRegion = false;
-			onFace[h] = held[h] < 0 && FindDoor(pmo, hp) != null && !inRegion;
+			// the door face is looked up once a tic and kept for the take-hold below (same hand point, nothing moved
+			// between): a palm turned out asked for it twice every tic (performance, 2026-11-27)
+			Line face = null;
+			if (held[h] < 0) face = FindDoor(pmo, hp);
+			onFace[h] = held[h] < 0 && face != null && !inRegion;
 
 			if (!pressing) tried[h] = -1;
 			if (held[h] < 0)
@@ -184,7 +188,7 @@ class RSVR_Door : EventHandler
 				bool palmTouch = !start && palm && !inRegion;
 				if (start || palmTouch)
 				{
-					Line l = FindDoor(pmo, hp);
+					Line l = face;
 					// a door that refused this hand (locked, already moving) is not asked
 					// again every tic while a palm stays on it; a fresh press asks again
 					if (l && palmTouch && l.Index() == tried[h]) l = null;

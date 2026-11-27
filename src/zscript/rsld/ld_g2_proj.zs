@@ -71,6 +71,7 @@ class RSLD_G2_ProjFx : RSLD_G2_Effect
 
 	override void OnHit(RSLD_Shot s, RSLD_Hit h)
 	{
+		if (!RSLD.Debug()) return;	// a proof line only: no class lookup or string on every hit when it cannot print (performance, 2026-11-27)
 		let inf = h.inflictor;
 		if (inf && inf.GetClass() == RSLD.AC(LDClass()))
 			s.Log(String.Format("%s hit %s for %d", inf.GetClassName(), h.target ? h.target.GetClassName() : 'none', h.damage));

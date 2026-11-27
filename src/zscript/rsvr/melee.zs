@@ -222,9 +222,19 @@ class RSVR_MeleeHandler : EventHandler
 		let inf = e.Inflictor;
 		if (!inf || !e.DamageSource || !e.DamageSource.player || !e.Thing || e.Damage <= 0)
 			return;
-		if (!Descends(inf, 'MeleeStrike1') && !Descends(inf, 'KickAttack'))
-			return;
-		if (Descends(inf, 'KickAttackDetectDowned'))
+		// one walk up the inflictor's class line answers all three questions Descends asked in turn (up to three walks on
+		// every player-dealt hit, bullets included): a strike of either family, and not the downed-enemy probe
+		// (performance, 2026-11-27)
+		bool strike = false, probe = false;
+		for (class<Object> c = inf.GetClass(); c; c = c.GetParentClass())
+		{
+			Name cn = c.GetClassName();
+			if (cn == 'MeleeStrike1' || cn == 'KickAttack')
+				strike = true;
+			else if (cn == 'KickAttackDetectDowned')
+				probe = true;
+		}
+		if (!strike || probe)
 			return;
 		let fx = Actor.Spawn('RSQ_BashFX', inf.pos, ALLOW_REPLACE);
 		if (fx)
@@ -1525,7 +1535,9 @@ class RSVR_Hand play
 		let cv = CVar.FindCVar('rsqa_rumble_backup');
 		if (!cv || cv.GetInt() == 0)
 			return false;
-		let s = ServiceIterator.Find("RSQA_Service").Next();
+		// the cached lookup (rsvr_lookup.zs): the same service, without walking the engine's service map on every buzz,
+		// which is every melee hit, lock and throw (performance, 2026-11-27)
+		let s = RSVR_Lookup.Find("RSQA_Service").Next();
 		if (!s)
 			return false;
 		let cs = CVar.FindCVar('vr_control_scheme');

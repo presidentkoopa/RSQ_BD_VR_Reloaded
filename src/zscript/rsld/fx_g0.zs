@@ -39,7 +39,7 @@ class RSLD_KillReward : RSLD_Effect
 		if (!c || !t) return;
 		t.target = s.mo;
 		t.GiveInventory(c, 1);
-		s.Log(String.Format("kill %s: gave %s", t.GetClassName(), c.GetClassName()));
+		if (RSLD.Debug()) s.Log(String.Format("kill %s: gave %s", t.GetClassName(), c.GetClassName()));	// the text only when it prints (performance, 2026-11-27)
 	}
 }
 
@@ -51,8 +51,9 @@ class RSLD_AmmoFx : RSLD_Effect
 	override void AfterPull(RSLD_Shot s)
 	{
 		int taken = s.magTaken > 0 ? s.magTaken : s.resTaken;
-		if (s.b1 && taken > 0) { s.Log(String.Format("free shot (%d)", taken)); s.Refund(taken); }
-		else if (taken > 0) s.Log(String.Format("paid shot (%d)", taken));
+		// (the log texts only when they print: every pull; performance, 2026-11-27)
+		if (s.b1 && taken > 0) { if (RSLD.Debug()) s.Log(String.Format("free shot (%d)", taken)); s.Refund(taken); }
+		else if (taken > 0 && RSLD.Debug()) s.Log(String.Format("paid shot (%d)", taken));
 	}
 }
 
@@ -76,7 +77,7 @@ class RSLD_MonsterDebuff : RSLD_Effect
 		let t = hit.target;
 		if (!t || hit.killed) return;
 		if (!t.target) t.target = s.mo;
-		if (Apply(t, s)) s.Log(String.Format("%s on %s", name, t.GetClassName()));
+		if (Apply(t, s) && RSLD.Debug()) s.Log(String.Format("%s on %s", name, t.GetClassName()));	// every hit: Apply always runs, the text only when it prints (performance, 2026-11-27)
 	}
 }
 
@@ -110,7 +111,7 @@ class RSLD_Fx_Bloody : RSLD_KillReward
 	{
 		int k;
 		double m = Mult(s.mo, k);
-		s.Log(String.Format("%d kills counted: damage x%.2f (+%g%% per %d kills)", k, m, 100.0 / Num("div"), int(Num("every"))));
+		if (RSLD.Debug()) s.Log(String.Format("%d kills counted: damage x%.2f (+%g%% per %d kills)", k, m, 100.0 / Num("div"), int(Num("every"))));	// every pull: the text only when it prints (performance, 2026-11-27)
 	}
 	override void ModifyDamage(RSLD_Shot s, RSLD_Hit hit)
 	{
@@ -140,7 +141,7 @@ class RSLD_Fx_WarmUp : RSLD_Effect
 			p.TakeInventory(RSLD.IC("LDWarmUpCounter"), 999);
 			s.Log("5th kill: berserk");
 		}
-		else { RSLD.Give(p, "LDWarmUpCounter"); s.Log(String.Format("kill %d of %d", n + 1, int(Num("kills")) + 1)); }
+		else { RSLD.Give(p, "LDWarmUpCounter"); if (RSLD.Debug()) s.Log(String.Format("kill %d of %d", n + 1, int(Num("kills")) + 1)); }
 	}
 }
 
@@ -159,7 +160,7 @@ class RSLD_Fx_Violent : RSLD_Effect
 		b.target = s.mo;
 		b.dmg = int(Num("dmg")); b.rad = int(Num("radius")); b.fear = int(Num("fear"));
 		b.corpse = t;
-		s.Log(String.Format("kill %s: blast %d r%d, fear r%d", t.GetClassName(), b.dmg, b.rad, b.fear));
+		if (RSLD.Debug()) s.Log(String.Format("kill %s: blast %d r%d, fear r%d", t.GetClassName(), b.dmg, b.rad, b.fear));
 	}
 }
 
@@ -222,7 +223,7 @@ class RSLD_Fx_Gravitic : RSLD_Fx_Freezing {}
 class RSLD_Fx_Incinerating : RSLD_MonsterDebuff
 {
 	override bool Apply(Actor t, RSLD_Shot s) { if (t.bNOBLOOD) return false; RSLD.Give(t, "LDIncineratingEffect"); return true; }
-	override void OnKill(RSLD_Shot s, RSLD_Hit hit) { if (hit.target && !hit.target.bNOBLOOD) { RSLD.Give(hit.target, "LDIncineratingEffect"); s.Log("corpse " .. hit.target.GetClassName()); } }
+	override void OnKill(RSLD_Shot s, RSLD_Hit hit) { if (hit.target && !hit.target.bNOBLOOD) { RSLD.Give(hit.target, "LDIncineratingEffect"); if (RSLD.Debug()) s.Log("corpse " .. hit.target.GetClassName()); } }
 }
 
 // Persistent: every pellet hit starts LegenDoom's bleed (EpicSpecialEffects.dec LDPersistentBulletPuff ->
@@ -284,7 +285,7 @@ class RSLD_Fx_Vampiric : RSLD_Effect
 	{
 		double f = s.mo.FindInventory("PowerStrength", true) ? Num("stealberserk") : Num("steal");
 		int hp = int(hit.damage * f);
-		if (hp > 0) { s.mo.GiveBody(hp); s.Log(String.Format("+%d health (%d x %.1f)", hp, hit.damage, f)); }
+		if (hp > 0) { s.mo.GiveBody(hp); if (RSLD.Debug()) s.Log(String.Format("+%d health (%d x %.1f)", hp, hit.damage, f)); }	// every hit: the text only when it prints (performance, 2026-11-27)
 	}
 }
 
@@ -298,7 +299,7 @@ class RSLD_Fx_Scavenging : RSLD_Effect
 		int n = min(int(hit.damage * f), 100);
 		class<Inventory> sc = RSLD.IC("LDScavengingEffect");
 		for (int i = 0; sc && i < n; i++) s.mo.GiveInventory(sc, 1);
-		if (n > 0) s.Log(String.Format("+%d armor", n));
+		if (n > 0 && RSLD.Debug()) s.Log(String.Format("+%d armor", n));
 	}
 }
 
@@ -313,7 +314,7 @@ class RSLD_Fx_Painful : RSLD_Effect
 {
 	override void OnHit(RSLD_Shot s, RSLD_Hit hit)
 	{
-		if (!hit.killed && hit.target) { hit.target.TriggerPainChance(hit.damageType, true); s.Log("flinch " .. hit.target.GetClassName()); }
+		if (!hit.killed && hit.target) { hit.target.TriggerPainChance(hit.damageType, true); if (RSLD.Debug()) s.Log("flinch " .. hit.target.GetClassName()); }	// every hit: the text only when it prints (performance, 2026-11-27)
 	}
 }
 
@@ -475,7 +476,7 @@ class RSLD_Fx_Berserker : RSLD_Effect
 // AntiTree: LegenDoom's LDTreesDamageDisplay holds its tree damage percent (LEGENDWRD.acs:17)
 class RSLD_Fx_AntiTree : RSLD_Effect
 {
-	override void OnPull(RSLD_Shot s) { s.Log(String.Format("LegenDoom's tree damage on this map: %d%%", RSLD.Has(s.mo, "LDTreesDamageDisplay"))); }
+	override void OnPull(RSLD_Shot s) { if (RSLD.Debug()) s.Log(String.Format("LegenDoom's tree damage on this map: %d%%", RSLD.Has(s.mo, "LDTreesDamageDisplay"))); }	// every pull: the text only when it prints (performance, 2026-11-27)
 	override void ModifyDamage(RSLD_Shot s, RSLD_Hit hit)
 	{
 		int pc = RSLD.Has(s.mo, "LDTreesDamageDisplay");
@@ -490,7 +491,7 @@ class RSLD_Fx_Annoying : RSLD_AmmoFx
 	override void ModifyDamage(RSLD_Shot s, RSLD_Hit hit) { hit.setDamage = int(Num("dmg")); }
 	override void OnHit(RSLD_Shot s, RSLD_Hit hit)
 	{
-		if (!hit.killed && hit.target) { hit.target.TriggerPainChance(hit.damageType, true); s.Log("flinch " .. hit.target.GetClassName()); }
+		if (!hit.killed && hit.target) { hit.target.TriggerPainChance(hit.damageType, true); if (RSLD.Debug()) s.Log("flinch " .. hit.target.GetClassName()); }
 	}
 }
 
@@ -546,7 +547,7 @@ class RSLD_Fx_Impossible : RSLD_AmmoFx
 		Inventory mag = (w.Ammo2 && w.Ammo2 != w.Ammo1) ? w.Ammo2 : null;
 		if (mag && mag.Amount + g <= mag.MaxAmount) RSLD.AddAmmo(mag, g);
 		else RSLD.AddAmmo(w.Ammo1, g);
-		s.Log(String.Format("+%d generated", g));
+		if (RSLD.Debug()) s.Log(String.Format("+%d generated", g));
 	}
 }
 
@@ -564,7 +565,7 @@ class RSLD_Fx_Efficient : RSLD_Effect
 		carry[k] += int(taken * (use - take));
 		int back = carry[k] / int(use);
 		carry[k] -= back * int(use);
-		if (back > 0) { s.Log(String.Format("half ammo: %d of %d back", back, taken)); s.Refund(back); }
+		if (back > 0) { if (RSLD.Debug()) s.Log(String.Format("half ammo: %d of %d back", back, taken)); s.Refund(back); }
 	}
 }
 

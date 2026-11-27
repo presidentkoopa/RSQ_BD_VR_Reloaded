@@ -45,6 +45,12 @@ class RSLD_G5Hand play
 	bool f1, f2, f3;
 	double v1;
 	Weapon w;
+	// the gun's stop / ready label states (RSLD_G5.InStop / InReady), looked up once per weapon class (performance,
+	// 2026-11-27): InStop asked FindStateByString for 37 labels on every call, several calls a tic while a cadence runs
+	// and on every step of StepToShot. The answer depends on the class only (QZD p_states.cpp: AActor.FindStateByString
+	// is GetClass()->FindStateByString on the class's own label table), so the states are kept here in label order.
+	class<Actor> stopCls, readyCls;
+	Array<State> stopSt, readySt;
 
 	void Note(PSprite psp)
 	{
@@ -115,7 +121,8 @@ class RSLD_G5 play
 	}
 
 	// BD22 / BD22 VR states that are never part of the trigger cycle (each label's own sequence, where the gun has it)
-	static bool InStop(Weapon w, State st)
+	// h: the hand's record, whose label cache is used when given (the same states in the same order: see RSLD_G5Hand)
+	static bool InStop(Weapon w, State st, RSLD_G5Hand h = null)
 	{
 		if (!w || !st) return true;
 		static const string STOPLABELS[] =
@@ -127,6 +134,21 @@ class RSLD_G5 play
 			"Sprinting", "StartSprint", "StopSprint", "RSLD_Jammed",
 			"RSP_Load", "RSP_Load2", "RSP_VRIns", "RSP_LoadWait", "RSP_P1Wait", "RSP_P2Wait", "RSP_P3Wait", "RSP_Feed"
 		};
+		if (h)
+		{
+			if (h.stopCls != w.GetClass())
+			{
+				h.stopCls = w.GetClass();
+				h.stopSt.Clear();
+				for (int i = 0; i < STOPLABELS.Size(); i++) h.stopSt.Push(w.FindStateByString(STOPLABELS[i], true));
+			}
+			for (int i = 0; i < h.stopSt.Size(); i++)
+			{
+				State b = h.stopSt[i];
+				if (b && Actor.InStateSequence(st, b)) return true;
+			}
+			return false;
+		}
 		for (int i = 0; i < STOPLABELS.Size(); i++)
 		{
 			State b = w.FindStateByString(STOPLABELS[i], true);
@@ -135,10 +157,25 @@ class RSLD_G5 play
 		return false;
 	}
 
-	static bool InReady(Weapon w, State st)
+	static bool InReady(Weapon w, State st, RSLD_G5Hand h = null)
 	{
 		if (!w || !st) return false;
 		static const string R[] = { "Ready", "Ready2", "Ready3", "ReadyToFire", "ReadyToFireAgain", "Steady" };
+		if (h)
+		{	// the hand's label cache (performance, 2026-11-27: see RSLD_G5Hand)
+			if (h.readyCls != w.GetClass())
+			{
+				h.readyCls = w.GetClass();
+				h.readySt.Clear();
+				for (int i = 0; i < R.Size(); i++) h.readySt.Push(w.FindStateByString(R[i], true));
+			}
+			for (int i = 0; i < h.readySt.Size(); i++)
+			{
+				State b = h.readySt[i];
+				if (b && Actor.InStateSequence(st, b)) return true;
+			}
+			return false;
+		}
 		for (int i = 0; i < R.Size(); i++)
 		{
 			State b = w.FindStateByString(R[i], true);
@@ -185,7 +222,7 @@ class RSLD_G5 play
 		let hh = RSLD.H();
 		int lp = hh ? hh.LastPull(c.pn, c.hand) : -1000;
 		if (lp != h.cycPull && level.maptime - lp <= 1 && lp > 0) { h.cycOn = true; h.cycPull = lp; h.acc = 0; }
-		if (h.cycOn && (level.maptime - h.cycPull > CYCLE_MAX || HandBusy(c.mo) || InStop(c.weapon, psp.CurState)))
+		if (h.cycOn && (level.maptime - h.cycPull > CYCLE_MAX || HandBusy(c.mo) || InStop(c.weapon, psp.CurState, h)))
 			h.cycOn = false;
 		if (!h.cycOn || speed <= 0 || abs(speed - 1.0) < 0.001)
 		{
@@ -202,13 +239,13 @@ class RSLD_G5 play
 				if (psp.Tics > 1) { psp.Tics--; h.acc -= 1.0; h.saved++; continue; }
 				if (psp.Tics != 1) break;
 				State nx = psp.CurState.NextState;
-				if (!nx || InStop(c.weapon, nx) || HandBusy(c.mo)) break;
+				if (!nx || InStop(c.weapon, nx, h) || HandBusy(c.mo)) break;
 				psp.SetState(nx);
 				h.acc -= 1.0;
 				h.saved++;
 				steps++;
 				psp = Psp(c.mo, c.hand);
-				if (!psp || !psp.CurState || psp.Caller != c.weapon || InStop(c.weapon, psp.CurState)) { h.cycOn = false; break; }
+				if (!psp || !psp.CurState || psp.Caller != c.weapon || InStop(c.weapon, psp.CurState, h)) { h.cycOn = false; break; }
 			}
 		}
 		else
@@ -302,20 +339,21 @@ class RSLD_G5 play
 
 	// ...and run its states on in this same tic until the shot is out (no lead-in: LegenDoom's burst and Quickdraw shots
 	// come without a second charge-up). Every state's own action runs, in order. True: a shot went out.
-	static bool ShootNow(PlayerPawn mo, int hand, Weapon w, int maxSteps = 64)
+	// h (optional): the hand's record, for InStop's label cache
+	static bool ShootNow(PlayerPawn mo, int hand, Weapon w, int maxSteps = 64, RSLD_G5Hand h = null)
 	{
 		int before = ShotCount(mo, hand);
 		if (!Shoot(mo, hand, w)) return false;
-		return StepToShot(mo, hand, w, before, maxSteps);
+		return StepToShot(mo, hand, w, before, maxSteps, h);
 	}
 
-	static bool StepToShot(PlayerPawn mo, int hand, Weapon w, int before, int maxSteps)
+	static bool StepToShot(PlayerPawn mo, int hand, Weapon w, int before, int maxSteps, RSLD_G5Hand h = null)
 	{
 		for (int k = 0; k < maxSteps; k++)
 		{
 			if (ShotCount(mo, hand) > before) return true;
 			let psp = Psp(mo, hand);
-			if (!psp || !psp.CurState || psp.Caller != w || InStop(w, psp.CurState) || psp.Tics < 0) return false;
+			if (!psp || !psp.CurState || psp.Caller != w || InStop(w, psp.CurState, h) || psp.Tics < 0) return false;
 			State nx = psp.CurState.NextState;
 			if (!nx) return false;
 			psp.SetState(nx);
