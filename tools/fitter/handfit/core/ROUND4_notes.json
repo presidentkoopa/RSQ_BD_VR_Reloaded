@@ -1,0 +1,188 @@
+{
+ "round": 4,
+ "status": "done",
+ "tank": {
+  "source": "Flamethrower2.md3 frame 0 surface 0 as 1.92 draws it (gun 1.92 frame = controller frame before the gun move), 0.2 cm surface samples, robust circle fit in L-U with free axis slope, F 22..34",
+  "axis": [
+   1.0,
+   -0.0001,
+   -0.0005
+  ],
+  "centre_LU": [
+   0.02,
+   -10.59
+  ],
+  "radius_cm": 6.45,
+  "inliers_within_0p3cm": "88%",
+  "usable_F": [
+   22,
+   34
+  ],
+  "underside_U": -17.04,
+  "note": "straps bulge to U -17.2..-17.4 at F 23, 29, 34; riser bar (round 2/3 target) is at F 16, in front of the tank"
+ },
+ "solves": {
+  "A": "U1-U5 G, U6 Y (forearm 57 deg), S6 Y",
+  "B": "fore_u 4: U6 Y (48 deg), S6 Y",
+  "C": "fore_u 4, fore_deg 30, s6 2: U1-U6 G, S6 Y (re-aim 15.1 deg, 11.0 cm)"
+ },
+ "chosen": "D",
+ "pack": {
+  "path": "tools/handfit/core/out/BD22Q_192_fbx_headset_r4.pk3",
+  "sha256": "dd537e398f3a3ab106fb311a63c234546cdfd0465b50e3fc1cbbe66f4f637ee2",
+  "differs_from_r3": [
+   "MODELDEF.rsq (one comment line)",
+   "models/rsq/fbx/fbx_r3_L.md3 frame 1 (flamer support)"
+  ],
+  "unchanged_checked": "gun-hand md3 both frames and pistol support frame byte-identical to round 3"
+ },
+ "rules": "G1G G2G G3G G4G G5G G6G G7G G8G G9Y U1G U2G U3G U4G U5G U6G S6Y",
+ "rule_text": {
+  "G1": "no penetration into the gun: deepest vertex 0.20 cm",
+  "G2": "web of thumb/index on the backstrap top: 1.45 cm off",
+  "G3": "palm on the back of the grip: gap -0.15 cm, behind the grip axis",
+  "G4": "grip axis diagonal across the palm: 24 deg to the knuckle line (1.92 pistol 23)",
+  "G5": "middle/ring/little wrap the front strap: worst pad gap 0.10 cm, all in front of the axis",
+  "G6": "thumb on the far side: 1.5 cm past of the grip centre, gap 0.03 cm",
+  "G7": "index pad on the trigger face: 0.21 cm off",
+  "G8": "VR: displayed wrist vs the real hand (controller grip): 6.0 deg, 0.5 cm",
+  "G9": "forearm in line behind the gun: 20 deg yaw off the bore",
+  "U1": "no penetration (exact; gun 0.33, gun hand 0.00 cm)",
+  "U2": "palm on the tank underside: gap -0.24 cm, 20 deg from straight down, 31.4 cm along the tank",
+  "U3": "palm normal up into the tank: 29 deg off the direction to the axis",
+  "U4": "fingers follow the curve: worst pad gap -0.05 cm (I -0.05 M -0.18 R -0.13 P -0.21), loops 0",
+  "U5": "wrap round the tank from the palm: 81 93 89 78 deg (I M R P)",
+  "U6": "forearm under/behind the tank: 37 deg to the tank axis (top view), cuff at F 25.2 U -22.6 (axis U -10.6)",
+  "S6": "support wrist vs the OFF controller (steadied): re-aim 13.9 deg, drawn vs real off hand 10.3 cm; off controller at F 41.0 L 5.1 U -8.8"
+ },
+ "under_metrics": {
+  "pen_gun": 0.3303789179353807,
+  "pen_gunhand": 0.0,
+  "palm_gap": -0.23671746722881573,
+  "palm_ang": 20.28492914191317,
+  "palm_t": 31.44911299850652,
+  "normal_deg": 28.613691914942663,
+  "pads": {
+   "I": -0.045854997236803884,
+   "M": -0.18148157078156632,
+   "R": -0.13431377208911577,
+   "P": -0.2086364060218015,
+   "T": 1.4633712863536623
+  },
+  "wrap": {
+   "I": 80.90595197555318,
+   "M": 92.79431827408912,
+   "R": 89.26543663583647,
+   "P": 78.22395926768182
+  },
+  "loops": {
+   "I": false,
+   "M": false,
+   "R": false,
+   "P": false
+  },
+  "fore_yaw": 37.39635212172454,
+  "cuff_U": -22.604464142857353,
+  "cuff_F": 25.17075974838282,
+  "s6": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    41.04,
+    5.07,
+    -8.83
+   ],
+   "dist_main_cm": 42.28244173838107,
+   "off_rot_vs_main_deg": 92.3855357305021,
+   "reaim_deg": 13.927644423578592,
+   "support_mismatch_deg": 13.927644423578592,
+   "support_mismatch_cm": 10.252866692571523
+  }
+ },
+ "off_controller": {
+  "round3_F_L_U": [
+   25.3,
+   0.73,
+   -7.71
+  ],
+  "round4_F_L_U": [
+   41.04,
+   5.07,
+   -8.83
+  ],
+  "lower_by_cm": 1.1,
+  "forward_by_cm": 15.7,
+  "frame": "main controller frame, cm (F forward, L left, U up)"
+ },
+ "gate": {
+  "r4_flamer": {
+   "rc": 0,
+   "frames": 80,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "r4_pistol": {
+   "rc": 0,
+   "frames": 58,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "CARRY",
+    "INSERT",
+    "SEATED",
+    "CHARGE"
+   ]
+  },
+  "r4_Revolver": {
+   "rc": 0,
+   "frames": 68,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "r4_Devastator": {
+   "rc": 0,
+   "frames": 111,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "r4_BrutalSMG": {
+   "rc": 0,
+   "frames": 87,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "EMPTY",
+    "DROP",
+    "EMPTY"
+   ]
+  }
+ },
+ "gate_offhand": "off controller placed at the implied position F 41.0 L 5.1 U -8.8, grip held",
+ "sha256": "dd537e398f3a3ab106fb311a63c234546cdfd0465b50e3fc1cbbe66f4f637ee2",
+ "sheets": [
+  "sheets/flamethrower_engine_r4.png",
+  "sheets/flamethrower_fbx_r4.png",
+  "sheets/flamethrower_compare.png"
+ ],
+ "dropped": [
+  "vgrip bar-wrap term and S4/S5 loop rules for this gun (replaced by U1-U6)"
+ ],
+ "open": [
+  "S6 yellow by a hair: drawn vs real off hand 10.3 cm (green <= 10.2), re-aim 13.9 deg (green)",
+  "G9 yellow as before",
+  "no headset pass yet"
+ ]
+}

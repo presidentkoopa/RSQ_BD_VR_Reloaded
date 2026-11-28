@@ -1,0 +1,21 @@
+{
+ "pen_max": 0.694928983292303,
+ "pen_p99": 0.48408855074552043,
+ "web_to_backstrap_cm": 4.391403660935899,
+ "palm_gap_cm": -0.19115669728035045,
+ "palm_behind_axis_cm": 1.3689006250000035,
+ "grip_vs_knuckles_deg": 23.332781895797538,
+ "pad_M_gap_cm": -0.1096959107623914,
+ "pad_M_front_cm": 3.6147874999999976,
+ "pad_R_gap_cm": -0.10715991803021478,
+ "pad_R_front_cm": 2.5824518749999976,
+ "pad_P_gap_cm": 0.2638086012602936,
+ "pad_P_front_cm": 1.9377481249999957,
+ "thumb_side_cm": 1.8344634284900343,
+ "pad_T_gap_cm": 0.3182331374716681,
+ "index_to_trigger_cm": 3.9825097599731345,
+ "index_gap_cm": -0.14213358325410108,
+ "wrist_rot_vs_controller_deg": 4.838250150475972,
+ "wrist_move_vs_controller_cm": 6.235862740523738,
+ "forearm_yaw_deg": 24.196773726945118
+}

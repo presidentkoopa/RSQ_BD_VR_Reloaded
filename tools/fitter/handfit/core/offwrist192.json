@@ -1,0 +1,314 @@
+{
+ "rows": {
+  "Rifle": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    43.11,
+    2.27,
+    -11.19
+   ],
+   "dist_main_cm": 44.59479715758605,
+   "off_rot_vs_main_deg": 81.88514057710371,
+   "reaim_deg": 14.834523066670764,
+   "support_mismatch_deg": 14.834523066670764,
+   "support_mismatch_cm": 11.513872890828704
+  },
+  "BrutalPistol": {
+   "kind": "cup",
+   "off_origin_cm": [
+    -1.63,
+    4.22,
+    -7.75
+   ],
+   "dist_main_cm": 8.974787500665151,
+   "off_rot_vs_main_deg": 14.877068952095504,
+   "reaim_deg": 0.0,
+   "support_mismatch_deg": 0.0,
+   "support_mismatch_cm": 0.0
+  },
+  "BrutalSMG": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    30.57,
+    -0.4,
+    -10.22
+   ],
+   "dist_main_cm": 32.239564886237034,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 18.49548008000122,
+   "support_mismatch_deg": 18.49548008000122,
+   "support_mismatch_cm": 10.362030513364784
+  },
+  "MP40": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    45.05,
+    -0.4,
+    -1.27
+   ],
+   "dist_main_cm": 45.07399699603105,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 1.691805304466162,
+   "support_mismatch_deg": 1.691805304466162,
+   "support_mismatch_cm": 1.3308773809946328
+  },
+  "AssaultShotgun": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    44.85,
+    -0.4,
+    -7.25
+   ],
+   "dist_main_cm": 45.43817752372156,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 9.194666411406578,
+   "support_mismatch_deg": 9.194666411406578,
+   "support_mismatch_cm": 7.2839697584213985
+  },
+  "Shot_Gun": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    45.12,
+    -0.4,
+    -7.04
+   ],
+   "dist_main_cm": 45.671889645637584,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 8.880883868674864,
+   "support_mismatch_deg": 8.880883868674864,
+   "support_mismatch_cm": 7.072088740844554
+  },
+  "Revolver": {
+   "kind": "cup",
+   "off_origin_cm": [
+    1.62,
+    4.15,
+    -7.58
+   ],
+   "dist_main_cm": 8.794258486600054,
+   "off_rot_vs_main_deg": 14.87706895209552,
+   "reaim_deg": 0.0,
+   "support_mismatch_deg": 0.0,
+   "support_mismatch_cm": 0.0
+  },
+  "SSG": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    21.49,
+    -0.98,
+    -5.09
+   ],
+   "dist_main_cm": 22.10367840341443,
+   "off_rot_vs_main_deg": 89.13796468509308,
+   "reaim_deg": 13.550217718927492,
+   "support_mismatch_deg": 13.550217718927492,
+   "support_mismatch_cm": 5.2152559728812635
+  },
+  "Rocket_Launcher": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    22.43,
+    1.7,
+    -1.63
+   ],
+   "dist_main_cm": 22.552109651986108,
+   "off_rot_vs_main_deg": 96.30101808989077,
+   "reaim_deg": 6.002042225332763,
+   "support_mismatch_deg": 6.002042225332763,
+   "support_mismatch_cm": 2.361375183244815
+  },
+  "RailGun": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    46.84,
+    -0.4,
+    -12.88
+   ],
+   "dist_main_cm": 48.58431325310721,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 15.3802888008014,
+   "support_mismatch_deg": 15.3802888008014,
+   "support_mismatch_cm": 13.002689890103833
+  },
+  "Plasma_Gun": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    45.54,
+    -0.4,
+    -14.08
+   ],
+   "dist_main_cm": 47.67264588722176,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 17.184948072746703,
+   "support_mismatch_deg": 17.184948072746703,
+   "support_mismatch_cm": 14.245107766652602
+  },
+  "GrenadeLauncher": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    27.48,
+    -0.98,
+    -6.99
+   ],
+   "dist_main_cm": 28.369337502853767,
+   "off_rot_vs_main_deg": 89.13796468509308,
+   "reaim_deg": 14.397087489340757,
+   "support_mismatch_deg": 14.397087489340757,
+   "support_mismatch_cm": 7.109810879967519
+  },
+  "Minigun": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    30.08,
+    15.04,
+    1.2
+   ],
+   "dist_main_cm": 33.65373212807535,
+   "off_rot_vs_main_deg": 90.82043243967087,
+   "reaim_deg": 26.631415239056942,
+   "support_mismatch_deg": 26.631415239056942,
+   "support_mismatch_cm": 15.502021288491765
+  },
+  "BIG_FUCKING_GUN": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    30.61,
+    1.7,
+    -13.15
+   ],
+   "dist_main_cm": 33.35776488693001,
+   "off_rot_vs_main_deg": 96.30101808989079,
+   "reaim_deg": 23.42489976482174,
+   "support_mismatch_deg": 23.42489976482174,
+   "support_mismatch_cm": 13.543257034158495
+  },
+  "BFG10k": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    30.61,
+    1.7,
+    -13.15
+   ],
+   "dist_main_cm": 33.35776488693001,
+   "off_rot_vs_main_deg": 96.30101808989079,
+   "reaim_deg": 23.42489976482174,
+   "support_mismatch_deg": 23.42489976482174,
+   "support_mismatch_cm": 13.543257034158495
+  },
+  "Unmaker": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    29.58,
+    1.7,
+    -9.67
+   ],
+   "dist_main_cm": 31.16606770361072,
+   "off_rot_vs_main_deg": 96.3010180898908,
+   "reaim_deg": 18.366488524608236,
+   "support_mismatch_deg": 18.366488524608236,
+   "support_mismatch_cm": 9.94774131837901
+  },
+  "Flamethrower2": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    51.18,
+    -0.4,
+    -15.05
+   ],
+   "dist_main_cm": 53.3524722599155,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 16.390196426029515,
+   "support_mismatch_deg": 16.390196426029515,
+   "support_mismatch_cm": 15.210176877811925
+  },
+  "HellishMissileLauncher": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    25.98,
+    1.7,
+    -24.48
+   ],
+   "dist_main_cm": 35.736885744201466,
+   "off_rot_vs_main_deg": 96.30101808989079,
+   "reaim_deg": 43.369734496776275,
+   "support_mismatch_deg": 43.369734496776275,
+   "support_mismatch_cm": 26.409654717610675
+  },
+  "IncendiaryLauncher": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    39.0,
+    2.76,
+    -6.68
+   ],
+   "dist_main_cm": 39.66252144029479,
+   "off_rot_vs_main_deg": 23.307663936263218,
+   "reaim_deg": 10.498994345509983,
+   "support_mismatch_deg": 10.498994345509983,
+   "support_mismatch_cm": 7.257676588400576
+  },
+  "MG42": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    34.88,
+    -0.4,
+    -4.17
+   ],
+   "dist_main_cm": 35.13491397841044,
+   "off_rot_vs_main_deg": 92.15910450079122,
+   "reaim_deg": 6.846787872403104,
+   "support_mismatch_deg": 6.846787872403104,
+   "support_mismatch_cm": 4.196089074107116
+  },
+  "NukeLauncher": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    25.71,
+    1.7,
+    -16.07
+   ],
+   "dist_main_cm": 30.366405456113434,
+   "off_rot_vs_main_deg": 96.30101808989077,
+   "reaim_deg": 32.155223357045536,
+   "support_mismatch_deg": 32.155223357045536,
+   "support_mismatch_cm": 16.819296539052903
+  },
+  "Devastator": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    35.5,
+    2.85,
+    -4.6
+   ],
+   "dist_main_cm": 35.90859912465657,
+   "off_rot_vs_main_deg": 23.307663936263218,
+   "reaim_deg": 8.667608570411192,
+   "support_mismatch_deg": 8.667608570411192,
+   "support_mismatch_cm": 5.4270137434763805
+  }
+ },
+ "thresholds": {
+  "stab_reaim_deg": [
+   15.107405933736082,
+   23.42489976482174
+  ],
+  "stab_mismatch_cm": [
+   10.154885915871898,
+   14.438121588884467
+  ],
+  "stab_rot_deg": [
+   92.15910450079122,
+   96.30101808989077
+  ],
+  "cup_dist_cm": [
+   8.884522993632602,
+   8.938681697852132
+  ],
+  "cup_rot_deg": [
+   14.877068952095513,
+   14.877068952095517
+  ],
+  "n_stab": 20,
+  "n_cup": 2
+ }
+}

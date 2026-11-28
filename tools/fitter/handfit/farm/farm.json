@@ -1,0 +1,6 @@
+{
+ "home": "home",
+ "results": "results",
+ "workers": 12,
+ "note": "home = the mirror of the cloud's /home/claude subtree that pack_farm.py ships; results = results/<Class>/ per job"
+}

@@ -1,0 +1,268 @@
+{
+ "round": 6,
+ "status": "r6 delivered",
+ "pistol_known_item": {
+  "owner": "approved; in the headset the trigger is ~halfway through the index finger mesh; minor, do not change",
+  "measured": {
+   "rest PIST A": {
+    "trigger_into_trigger_pose_cm": 0.0,
+    "trigger_area_inside_pct": 0.0,
+    "trigger_into_squeeze_pose_cm": 0.57,
+    "squeeze_area_inside_pct": 18.1
+   },
+   "fire PIST B": {
+    "trigger_into_trigger_pose_cm": 0.35,
+    "trigger_area_inside_pct": 9.1,
+    "trigger_into_squeeze_pose_cm": 0.71,
+    "squeeze_area_inside_pct": 28.8
+   },
+   "fire PIST C": {
+    "trigger_into_trigger_pose_cm": 0.66,
+    "trigger_area_inside_pct": 23.4,
+    "trigger_into_squeeze_pose_cm": 0.5,
+    "squeeze_area_inside_pct": 15.7
+   },
+   "fire PIST D": {
+    "trigger_into_trigger_pose_cm": 0.66,
+    "trigger_area_inside_pct": 23.8,
+    "trigger_into_squeeze_pose_cm": 0.51,
+    "squeeze_area_inside_pct": 15.7
+   },
+   "after fire PIST E": {
+    "trigger_into_trigger_pose_cm": 0.66,
+    "trigger_area_inside_pct": 23.4,
+    "trigger_into_squeeze_pose_cm": 0.51,
+    "squeeze_area_inside_pct": 15.7
+   },
+   "PIST P-S/K/L": {
+    "trigger_into_trigger_pose_cm": 0.66,
+    "trigger_area_inside_pct": 15.6,
+    "trigger_into_squeeze_pose_cm": 0.73,
+    "squeeze_area_inside_pct": 32.2
+   }
+  },
+  "method": "trigger part (surface 5) sampled at 0.05 cm, each sample tested inside the drawn index mesh (generalized winding) with exact depth; model frames 4-6 aligned with the body as gunmoves.zs makes the hand follow them; others drawn as is",
+  "finding": "the trigger blade enters the finger in BD22 fire/after-fire frames, where the trigger swings FORWARD: trigger pose 0.35 cm (PIST B) to 0.66 cm (PIST C/D/E and model 23: PIST K/L/P/Q/R/S), squeeze pose 0.50-0.73 cm; at rest (PIST A) the trigger pose is clear (0.00) but the squeeze pose would be 0.57 (it is not shown at rest). So: fire and after-fire frames, not rest (trigger pose).",
+  "lesson": "rounds 3-5 checked hand vertices inside the gun only; a thin trigger blade passes through the finger without any hand vertex inside it. Round 6 checks both directions.",
+  "changed": "nothing (owner: do not change the pistol)"
+ },
+ "premise_correction": {
+  "owner": "this is not a palm down grip. the real hand holding the controller palm sideways is in line with this photo, which also has palm sideways",
+  "dropped": "options A (gun rolled) and B (drawn forearm rolled) and the palm-down solves (results/Flamethrower2_pump_A,C30,C60,C90,W40,F0,F1,B1-4,S1-6 kept as a record only)",
+  "new_target": "handshake/upright closed hand around the fore-aft handle bar, palm sideways, thumb along the top/side, fingers down and under through the guard onto the lever; wrist pinned (G8), bore on the aim, nozzle upright"
+ },
+ "split_study": {
+  "fist_axis_vs_handle_deg": 57.9,
+  "finding": "with the drawn wrist pinned, the fist closes about the controller-handle axis (77 deg from the aim); the nozzle handle is 17 deg from the bore; 58 deg must be absorbed by wrist deviation or nozzle pitch. Solves: P20 (dev 16, nozzle pitched 63 deg UP), Q20 (dev 4, 40 deg), DP (dev +20, 31 deg), DM (dev -20, 8 deg). NOTE: the remainder pitches the spout UP, not down.",
+  "owner_override": "nozzle pitch 0; wrist deviation <= ~20; best grip possible; flame spawn moved to the drawn spout tip (weapon code may be changed)"
+ },
+ "chosen": "Z3 + depen2 edge projection (pitch 0, owner override)",
+ "rules": {
+  "N1": [
+   "G",
+   "no penetration both ways (exact): hand into gun 0.23 cm, gun/lever into hand 0.28 cm"
+  ],
+  "N2": [
+   "G",
+   "handle in the palm, palm sideways (handshake): gap 0.12 cm, palm 27 deg off the direction to the handle centreline, normal up-component 0.22, palm 0.2 cm below the handle centre, F -9.5"
+  ],
+  "N3": [
+   "G",
+   "thumb over the top/side: 0.1 cm above the handle mid-height"
+  ],
+  "N4": [
+   "Y",
+   "index on the lever where r5 had it: 1.09 cm from that spot, 0.01 cm from the lever"
+  ],
+  "N5": [
+   "G",
+   "middle/ring (little) on the lever, under it: M 0.04 cm @F -2.0, 0.1 cm above the lower edge ok R 0.02 cm @F -3.3, 0.2 cm above the lower edge ok P 1.17 cm @F -4.3, n/a cm above the lower edge OFF"
+  ],
+  "G8": [
+   "G",
+   "wrist vs the controller grip 6.0 deg (forearm direction 13 deg, forearm roll 15 deg), 6.0 cm; bore 3.0 deg off the aim; gun roll 8.4 deg"
+  ],
+  "U1": [
+   "G",
+   "no penetration (exact; gun 0.33, gun hand 0.00 cm)"
+  ],
+  "U2": [
+   "G",
+   "palm on the tank underside: gap -0.24 cm, 20 deg from straight down, 31.4 cm along the tank"
+  ],
+  "U3": [
+   "G",
+   "palm normal up into the tank: 29 deg off the direction to the axis"
+  ],
+  "U4": [
+   "G",
+   "fingers follow the curve: worst pad gap -0.05 cm (I -0.05 M -0.18 R -0.13 P -0.21), loops 0"
+  ],
+  "U5": [
+   "G",
+   "wrap round the tank from the palm: 81 93 89 78 deg (I M R P)"
+  ],
+  "U6": [
+   "G",
+   "forearm under/behind the tank: 37 deg to the tank axis (top view), cuff at F 25.2 U -22.6 (axis U -10.6)"
+  ],
+  "S6": [
+   "G",
+   "support wrist vs the OFF controller (steadied): re-aim 8.4 deg, drawn vs real off hand 5.6 cm; off controller at F 38.0 L 2.2 U -5.1"
+  ]
+ },
+ "rule_sources": {
+  "N1": "owner: <= 0.5 cm",
+  "N2": "definition (owner correction): palm sideways onto the handle, |gap| <= 0.5 cm, <= 35 deg off the centreline direction, |normal up| <= 0.5",
+  "N3": "definition",
+  "N4": "definition",
+  "N5": "owner: at least middle and ring",
+  "G8": "1.92 median wrist 7.5 deg / 7.3 cm; bore: 1.92 80th pct 5.0 deg",
+  "U1": "owner: <= 0.5 cm",
+  "U2": "definition: |gap| <= 0.3 cm, <= 30 deg from the bottom",
+  "U3": "definition: <= 30 deg",
+  "U4": "definition: pads within 0.5 cm, no finger loops the tank",
+  "U5": "owner: at most ~90-120 deg; green 45..120",
+  "U6": "definition: <= 40 deg, cuff below the axis",
+  "S6": "1.92 steadied rows: median 15.1 deg / 10.2 cm green, 80th 23.4 / 14.4 yellow"
+ },
+ "wrist": {
+  "flex_deg": 12.267018529906881,
+  "dev_deg": -17.79283815577519,
+  "note": "deviation -17.8 deg: 2.8 deg past the FBX take (+-15), inside the owner's ~20"
+ },
+ "nozzle": {
+  "pitch_deg": 1.53,
+  "yaw_deg": -2.63,
+  "spout_vs_flame_direction_deg": 3.02,
+  "roll_deg": 8.383586877365463,
+  "measured": "model bore_axis [1,0,-0.006] through the solved gun rotation, in the controller frame (z up)",
+  "note": "spout axis is 1.5 deg nose-UP and 2.6 deg left of the controller aim: not tilted down, but not exactly 0 either. The solve held the bore within 3 deg of aim; pitch was not pinned to exactly 0. Open item for the owner."
+ },
+ "flame_start": {
+  "tip_controller_cm": [
+   88.39332097470438,
+   -5.138627903423439,
+   -1.4219766005602135
+  ],
+  "tip_note": "flame outlet = centre of the front opening of the heat-shield cylinder (surface 0, F 81.5-83, circle fit r 5.54 cm); the earlier bore_c landmark (L 4.06) was the igniter rod",
+  "logged": 24,
+  "start_to_tip_cm_max": 0.0,
+  "bd22_start_from_tip_cm": [
+   51.6,
+   53.5,
+   77.8
+  ],
+  "how": "zscript/rsq/flamespout.zs RSA_FlameSpout: moves each FlamethrowerProjectileNew/2/3 of a VR player holding Flamethrower2 to the drawn spout tip the tic after spawn (pos = tip + vel*age); timing, damage, speed, direction untouched; left alone if the tip is blocked. BD22 actor files are in brutal22test6 (not ours), so the start point is changed by our handler, not by editing its fire states."
+ },
+ "squeeze": {
+  "note": "index, middle, ring follow the lever turn (15 deg, fire frame 3)",
+  "pad_err_cm": {
+   "I": 9.802166049911893e-05,
+   "M": 0.6372930262487787,
+   "R": 1.8933018657612
+  },
+  "pad_moved_cm": {
+   "I": 1.7658901756081815,
+   "M": 2.144881953475542,
+   "R": 2.5369915372443783
+  }
+ },
+ "penetration": {
+  "trigger_hand_in_gun_ready": 0.23478775163698487,
+  "squeeze_hand_in_gun_fire": 0.19879176541429794,
+  "trigger_gun_in_hand_ready": 0.2698450011346302,
+  "squeeze_gun_in_hand_fire": 0.26194477794142546
+ },
+ "support": "round-4 hand unchanged in the gun frame; re-measured with the new gun move: U1-U6 G, S6 G (re-aim 8.4 deg, 5.6 cm)",
+ "gate": {
+  "flamer": {
+   "rc": 0,
+   "frames": 97,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [],
+   "fbx_sprite_tics": 521
+  },
+  "pistol": {
+   "rc": 0,
+   "frames": 131,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "CARRY",
+    "INSERT",
+    "SEATED",
+    "CHARGE"
+   ],
+   "fbx_sprite_tics": 665
+  },
+  "Revolver": {
+   "rc": 0,
+   "frames": 116,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [],
+   "fbx_sprite_tics": 0
+  },
+  "Devastator": {
+   "rc": 0,
+   "frames": 113,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [],
+   "fbx_sprite_tics": 0
+  },
+  "BrutalSMG": {
+   "rc": 0,
+   "frames": 110,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "EMPTY",
+    "DROP",
+    "EMPTY"
+   ],
+   "fbx_sprite_tics": 0
+  }
+ },
+ "sheet": "sheets/flamethrower_engine_r6.png",
+ "pack": {
+  "path": "tools/handfit/core/out/BD22Q_192_fbx_headset_r6.pk3",
+  "sha256": "62b8e4edeacec1fa9700d07d1ca8bc89ff6cbbe63636ee592dfad43e239c631f",
+  "differs_from_r5": [
+   "MAPINFO.rsvr",
+   "MODELDEF.bd.txt",
+   "MODELDEF.purist",
+   "ZSCRIPT.rsvr",
+   "models/rsq/fbx/fbx_r3_L.md3 (frame 1: support re-baked with the new gun move, same pose in the gun frame)",
+   "models/rsq/fbx/fbx_r3_R.md3 (frames 1, 3)",
+   "zscript/rsq/flamespout.zs",
+   "zscript/rsq/gunmoves.zs"
+  ]
+ },
+ "gun_modeldef": {
+  "Offset": [
+   1.104,
+   -5.282
+  ],
+  "ZOffset": -2.851,
+  "note": "all five are ABSOLUTE MODELDEF values (1.92: Offset 0 0, ZOffset -5, no angle offsets)",
+  "AngleOffset": -2.677,
+  "PitchOffset": 1.868,
+  "RollOffset": 8.412,
+  "fit_max_cm": 2.864289338439558e-14,
+  "chain_check_cm": 7.632783294297951e-15
+ }
+}

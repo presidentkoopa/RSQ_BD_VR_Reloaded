@@ -1,0 +1,444 @@
+{
+ "gun": "Flamethrower2",
+ "arrangements": {
+  "FBX solve": {
+   "gun": {
+    "pen_max": 0.5276733718765485,
+    "pen_p99": 0.4213974635683406,
+    "web_to_backstrap_cm": 1.2470225972276707,
+    "palm_gap_cm": -0.5069989567989223,
+    "palm_behind_axis_cm": 1.2152539358379517,
+    "grip_vs_knuckles_deg": 23.269331556964794,
+    "pad_M_gap_cm": -0.12779718979595778,
+    "pad_M_front_cm": 1.8165274450734261,
+    "pad_R_gap_cm": -0.2195961133209681,
+    "pad_R_front_cm": 2.6320704160673816,
+    "pad_P_gap_cm": 0.02068421967407025,
+    "pad_P_front_cm": 3.914241462868352,
+    "thumb_side_cm": 2.101943645627274,
+    "pad_T_gap_cm": 0.11348472985151786,
+    "index_to_trigger_cm": 0.2078841027395075,
+    "index_gap_cm": -0.2302161849961111,
+    "wrist_rot_vs_controller_deg": 13.518760219066156,
+    "wrist_move_vs_controller_cm": 8.779124389287153,
+    "forearm_yaw_deg": 16.96705203364778
+   },
+   "support": {
+    "pen_into_gunhand_cm": 0.0,
+    "pen_max_cm": 0.5092450024104052,
+    "pads_gap": {
+     "I": -0.5025298383364208,
+     "M": -0.5023128927562291,
+     "R": -0.21134476628987298,
+     "P": -0.4116389589725078,
+     "T": 0.45170026957754134
+    },
+    "palm_gap": 0.34514845168728714,
+    "axis_through_fist": 0.3862326597385387,
+    "grip_vs_knuckles_deg": 15.960809125309305,
+    "on_bar": 2.0440656225101836
+   },
+   "rules": [
+    [
+     "G1",
+     "no penetration into the gun: deepest vertex 0.53 cm",
+     "G"
+    ],
+    [
+     "G2",
+     "web of thumb/index on the backstrap top: 1.25 cm off",
+     "G"
+    ],
+    [
+     "G3",
+     "palm on the back of the grip: gap -0.51 cm, behind the grip axis",
+     "G"
+    ],
+    [
+     "G4",
+     "grip axis diagonal across the palm: 23 deg to the knuckle line (1.92 pistol 23)",
+     "G"
+    ],
+    [
+     "G5",
+     "middle/ring/little wrap the front strap: worst pad gap 0.02 cm, all in front of the axis",
+     "G"
+    ],
+    [
+     "G6",
+     "thumb on the far side: 2.1 cm past of the grip centre, gap 0.11 cm",
+     "G"
+    ],
+    [
+     "G7",
+     "index pad on the trigger face: 0.21 cm off",
+     "G"
+    ],
+    [
+     "G8",
+     "VR: displayed wrist vs the real hand (controller grip): 13.5 deg, 8.8 cm",
+     "R"
+    ],
+    [
+     "G9",
+     "forearm in line behind the gun: 17 deg yaw off the bore",
+     "Y"
+    ],
+    [
+     "S1",
+     "no penetration (gun and gun hand): deepest 0.51 cm",
+     "G"
+    ],
+    [
+     "S2",
+     "finger pads touch (no air gaps): mean gap -0.41 cm, worst -0.21",
+     "G"
+    ],
+    [
+     "S3",
+     "palm touches: gap 0.35 cm",
+     "G"
+    ],
+    [
+     "S4",
+     "the bar runs THROUGH the fist: 0.39 (1 = palm and pads on opposite sides)",
+     "Y"
+    ],
+    [
+     "S5",
+     "knuckle line along the bar: 16 deg",
+     "G"
+    ]
+   ],
+   "rule_sources": {
+    "G1": "1.92 pen_max median 1.43 / max 2.27 (22 guns)",
+    "G2": "definition: green <=1.5 cm, yellow <=3 (Ermac landmark transfer error 2.3 cm, so 1.92 cannot be measured finer)",
+    "G3": "1.92 |palm gap| median 1.37 / 80th pct 1.73",
+    "G4": "1.92 BrutalPistol, same landmarks: green within 10 deg, yellow 20",
+    "G5": "1.92 mean M/R/P pad gap median -0.09 / 80th 0.38",
+    "G6": "1.92 |thumb pad gap| median 1.07 / 80th 1.51",
+    "G7": "definition: green <=1 cm, yellow <=2 (1.92 RQGT frames were fitted onto each trigger)",
+    "G8": "1.92 median 7.5 deg / 7.3 cm, 80th 24.8 / 8.2",
+    "G9": "1.92 forearm yaw median 12 / max 31 deg",
+    "S1": "1.92 support pen_max median 0.95 / max 2.34",
+    "S2": "1.92 support mean pad gap median -0.08 / 80th 2.32",
+    "S3": "1.92 |support palm gap| median 0.41 / 80th 1.13",
+    "S4": "definition (handlebar rule, HAND_FITTING.md): green >=0.5, yellow >=0",
+    "S5": "definition: green <=25 deg, yellow <=40"
+   },
+   "modeB": {
+    "cost": 13.185136930788545,
+    "gun_corr_deg": 29.237183051685243,
+    "gun_corr_cm": 9.29009777167093,
+    "bore_off_deg": 9.24778171538831,
+    "rules": [
+     [
+      "G1",
+      "no penetration into the gun: deepest vertex 0.52 cm",
+      "G"
+     ],
+     [
+      "G2",
+      "web of thumb/index on the backstrap top: 1.49 cm off",
+      "G"
+     ],
+     [
+      "G3",
+      "palm on the back of the grip: gap 0.17 cm, behind the grip axis",
+      "G"
+     ],
+     [
+      "G4",
+      "grip axis diagonal across the palm: 28 deg to the knuckle line (1.92 pistol 23)",
+      "G"
+     ],
+     [
+      "G5",
+      "middle/ring/little wrap the front strap: worst pad gap 1.65 cm, all in front of the axis",
+      "R"
+     ],
+     [
+      "G6",
+      "thumb on the far side: 2.0 cm past of the grip centre, gap 0.28 cm",
+      "G"
+     ],
+     [
+      "G7",
+      "index pad on the trigger face: 2.37 cm off",
+      "R"
+     ],
+     [
+      "G8",
+      "VR: displayed wrist vs the real hand (controller grip): 0.1 deg, 0.0 cm",
+      "G"
+     ],
+     [
+      "G9",
+      "forearm in line behind the gun: 24 deg yaw off the bore",
+      "Y"
+     ]
+    ]
+   }
+  },
+  "1.92": {
+   "gun": {
+    "pen_max": 2.2708414486479573,
+    "pen_p99": 2.0715565786756063,
+    "web_to_backstrap_cm": 8.377482683089758,
+    "palm_gap_cm": -0.2544966068039038,
+    "palm_behind_axis_cm": -2.2216813125000012,
+    "grip_vs_knuckles_deg": 75.98140656182001,
+    "pad_M_gap_cm": -2.2708414486479573,
+    "pad_M_front_cm": 5.078557875000001,
+    "pad_R_gap_cm": 0.2751957219682313,
+    "pad_R_front_cm": 7.456608187499999,
+    "pad_P_gap_cm": 0.3602663546714684,
+    "pad_P_front_cm": 9.4859300625,
+    "thumb_side_cm": 0.398470095948601,
+    "pad_T_gap_cm": -1.1316193821153713,
+    "index_to_trigger_cm": 7.869098245123531,
+    "index_gap_cm": -1.8998560232284396,
+    "wrist_rot_vs_controller_deg": 7.530316092271421,
+    "wrist_move_vs_controller_cm": 5.729325115943382,
+    "forearm_yaw_deg": 12.435054789401978
+   },
+   "support": {
+    "pen_into_gunhand_cm": 0.0,
+    "pen_max_cm": 5.348240831451359,
+    "pads_gap": {
+     "I": -4.089024183554987,
+     "M": -3.9044488216213766,
+     "R": -4.270529358498727,
+     "P": -4.194766559784476,
+     "T": -5.348240831451359
+    },
+    "palm_gap": -4.705999383558062,
+    "axis_through_fist": -0.9903451398806029,
+    "grip_vs_knuckles_deg": 77.71764003953099,
+    "on_bar": 29.170635391149656
+   },
+   "rules": [
+    [
+     "G1",
+     "no penetration into the gun: deepest vertex 2.27 cm",
+     "R"
+    ],
+    [
+     "G2",
+     "web of thumb/index on the backstrap top: 8.38 cm off",
+     "R"
+    ],
+    [
+     "G3",
+     "palm on the back of the grip: gap -0.25 cm, IN FRONT OF the grip axis",
+     "R"
+    ],
+    [
+     "G4",
+     "grip axis diagonal across the palm: 76 deg to the knuckle line (1.92 pistol 23)",
+     "R"
+    ],
+    [
+     "G5",
+     "middle/ring/little wrap the front strap: worst pad gap 0.36 cm, all in front of the axis",
+     "G"
+    ],
+    [
+     "G6",
+     "thumb on the far side: 0.4 cm past of the grip centre, gap -1.13 cm",
+     "Y"
+    ],
+    [
+     "G7",
+     "index pad on the trigger face: 7.87 cm off",
+     "R"
+    ],
+    [
+     "G8",
+     "VR: displayed wrist vs the real hand (controller grip): 7.5 deg, 5.7 cm",
+     "G"
+    ],
+    [
+     "G9",
+     "forearm in line behind the gun: 12 deg yaw off the bore",
+     "Y"
+    ],
+    [
+     "S1",
+     "no penetration (gun and gun hand): deepest 5.35 cm",
+     "R"
+    ],
+    [
+     "S2",
+     "finger pads touch (no air gaps): mean gap -4.11 cm, worst -3.90",
+     "G"
+    ],
+    [
+     "S3",
+     "palm touches: gap -4.71 cm",
+     "R"
+    ],
+    [
+     "S4",
+     "the bar runs THROUGH the fist: -0.99 (1 = palm and pads on opposite sides)",
+     "R"
+    ],
+    [
+     "S5",
+     "knuckle line along the bar: 78 deg",
+     "R"
+    ]
+   ]
+  },
+  "current (ModelSwapper)": {
+   "gun": {
+    "pen_max": 0.0,
+    "pen_p99": 0.0,
+    "web_to_backstrap_cm": 21.665269981044815,
+    "palm_gap_cm": 6.156118350881951,
+    "palm_behind_axis_cm": 16.61161987499993,
+    "grip_vs_knuckles_deg": 75.98140656182002,
+    "pad_M_gap_cm": 2.016378994713888,
+    "pad_M_front_cm": -13.754743312499935,
+    "pad_R_gap_cm": 4.421635665224131,
+    "pad_R_front_cm": -11.376692999999932,
+    "pad_P_gap_cm": 4.1342972974573815,
+    "pad_P_front_cm": -9.347371124999933,
+    "thumb_side_cm": 1.5205089399459604,
+    "pad_T_gap_cm": 5.578638797462194,
+    "index_to_trigger_cm": 26.107398134990486,
+    "index_gap_cm": 2.041160938730188,
+    "wrist_rot_vs_controller_deg": 7.530316092271421,
+    "wrist_move_vs_controller_cm": 18.71371098210294,
+    "forearm_yaw_deg": 12.435054789401978
+   },
+   "support": {
+    "pen_into_gunhand_cm": 0.0,
+    "pen_max_cm": 5.942483489363163,
+    "pads_gap": {
+     "I": 2.4701812882037673,
+     "M": 2.1085842757787367,
+     "R": 1.7130394962841626,
+     "P": 1.8469505841451355,
+     "T": -3.856574546412889
+    },
+    "palm_gap": -0.7162852606775226,
+    "axis_through_fist": -0.9486259262666973,
+    "grip_vs_knuckles_deg": 77.71764003953099,
+    "on_bar": 11.28377524926878
+   },
+   "rules": [
+    [
+     "G1",
+     "no penetration into the gun: deepest vertex 0.00 cm",
+     "G"
+    ],
+    [
+     "G2",
+     "web of thumb/index on the backstrap top: 21.67 cm off",
+     "R"
+    ],
+    [
+     "G3",
+     "palm on the back of the grip: gap 6.16 cm, behind the grip axis",
+     "R"
+    ],
+    [
+     "G4",
+     "grip axis diagonal across the palm: 76 deg to the knuckle line (1.92 pistol 23)",
+     "R"
+    ],
+    [
+     "G5",
+     "middle/ring/little wrap the front strap: worst pad gap 4.42 cm, a pad BEHIND the axis",
+     "R"
+    ],
+    [
+     "G6",
+     "thumb on the far side: 1.5 cm past of the grip centre, gap 5.58 cm",
+     "R"
+    ],
+    [
+     "G7",
+     "index pad on the trigger face: 26.11 cm off",
+     "R"
+    ],
+    [
+     "G8",
+     "VR: displayed wrist vs the real hand (controller grip): 7.5 deg, 18.7 cm",
+     "R"
+    ],
+    [
+     "G9",
+     "forearm in line behind the gun: 12 deg yaw off the bore",
+     "Y"
+    ],
+    [
+     "S1",
+     "no penetration (gun and gun hand): deepest 5.94 cm",
+     "R"
+    ],
+    [
+     "S2",
+     "finger pads touch (no air gaps): mean gap 2.03 cm, worst 2.47",
+     "Y"
+    ],
+    [
+     "S3",
+     "palm touches: gap -0.72 cm",
+     "Y"
+    ],
+    [
+     "S4",
+     "the bar runs THROUGH the fist: -0.95 (1 = palm and pads on opposite sides)",
+     "R"
+    ],
+    [
+     "S5",
+     "knuckle line along the bar: 78 deg",
+     "R"
+    ]
+   ]
+  }
+ },
+ "bake": [
+  {
+   "name": "flamethrower_gun",
+   "side": "R",
+   "frame": 0,
+   "hook": [
+    -3.593,
+    -1.538,
+    7.811
+   ],
+   "rot": [
+    4.158,
+    -6.666,
+    -11.256
+   ],
+   "wrist_rot_deg": 13.518760219066086,
+   "wrist_move_cm": 8.043663164463212,
+   "bake_check_max_cm": 0.009599533086794398,
+   "md3": "flamethrower_fbxhand_R.md3"
+  },
+  {
+   "name": "flamethrower_sup",
+   "side": "L",
+   "frame": 0,
+   "hook": [
+    1.83,
+    -15.454,
+    -16.994
+   ],
+   "rot": [
+    22.436,
+    -1.67,
+    35.715
+   ],
+   "wrist_rot_deg": 42.29041689484305,
+   "wrist_move_cm": 22.26941804892953,
+   "bake_check_max_cm": 0.012180773389891986,
+   "md3": "flamethrower_fbxhand_L.md3"
+  }
+ ]
+}

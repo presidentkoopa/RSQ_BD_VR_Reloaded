@@ -1,0 +1,498 @@
+{
+ "_note": "Melee hands lane (fit3NN). Each weapon in fit_hv.HV's form. it.path under src/models/bd; frame = MODELDEF.bd.txt FrameIndex of the ready sprite (AXEG A 5, SAWG A 11, DSLA A 0; grenade: MODELDEF.rsq RQNP C 2); scale/off = MODELDEF Scale, (Offset x, y, z + ZOffset). holds: the Ermac hand the fit starts from (m192.T_of rule): 192 = 1.92 handtable row (bd22q_192_poses/<Class>.json), 199 = lane-b-1.99x handtable.zs row (hand.md3 md3 frame 4 = RQGS H); grenade = MODELDEF.rsq RQGN (ammo_hand.md3 frame 3, hook 0). tf = the 'trigger' target of the index pad: the grip-surface sample nearest that hold's Ermac pad_I (measured, tools/handfit/melee/probe_melee.py); Chain_saw's is its real trigger under the rear handle. bore = the grip axis toward the business end (haft/hilt PCA, measured); used only by the squeeze frame.",
+ "BrutalAxe": {
+  "row": 24,
+  "it": {
+   "path": "BrutalAxe/BrutalAxe.md3",
+   "frame": 5,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ]
+  },
+  "trig_surf": 1,
+  "bore_surf": 1,
+  "bore": [
+   0.625,
+   0.0,
+   0.78
+  ],
+  "holds": {
+   "192": {
+    "path": "lane_c/bd22q_192/models/rsq/hand.md3",
+    "frame": 4,
+    "hook": [
+     -4.58,
+     0.06,
+     12.78
+    ],
+    "rot": [
+     0.89,
+     16.59,
+     0.93
+    ],
+    "tf": [
+     -5.327,
+     -0.692,
+     -6.135
+    ]
+   },
+   "199": {
+    "path": "lane_c/bd22q_192/models/rsq/hand.md3",
+    "frame": 4,
+    "hook": [
+     -4.58,
+     0.15,
+     12.85
+    ],
+    "rot": [
+     0.89,
+     16.59,
+     0.93
+    ],
+    "tf": [
+     -5.434,
+     -0.758,
+     -6.208
+    ]
+   },
+   "ax192": {
+    "axis": {
+     "from": "192",
+     "w_axis": [
+      0.6253,
+      -0.0004,
+      0.7804
+     ],
+     "w_point": [
+      0.805,
+      0.043,
+      2.776
+     ],
+     "note": "haft = surface 1 Cylinder PCA, toward the head"
+    }
+   }
+  }
+ },
+ "Chain_saw": {
+  "row": 25,
+  "it": {
+   "path": "Chain_saw/Chain_saw.md3",
+   "frame": 11,
+   "scale": [
+    -1.5,
+    1.5,
+    1.5
+   ],
+   "off": [
+    0.0,
+    10.0,
+    -5.0
+   ]
+  },
+  "trig_surf": 3,
+  "bore_surf": 1,
+  "bore": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "holds": {
+   "192": {
+    "path": "lane_c/bd22q_192/models/rsq/hand.md3",
+    "frame": 4,
+    "hook": [
+     -4.39,
+     3.43,
+     -0.63
+    ],
+    "rot": [
+     0.88,
+     -10.2,
+     0.54
+    ],
+    "tf": [
+     7.977,
+     -0.782,
+     -5.727
+    ]
+   },
+   "199": {
+    "path": "lane_c/bd22q_192/models/rsq/hand.md3",
+    "frame": 4,
+    "hook": [
+     -8.91,
+     5.61,
+     1.04
+    ],
+    "rot": [
+     -17.47,
+     -6.32,
+     26.85
+    ],
+    "tf": [
+     7.754,
+     -1.614,
+     -4.676
+    ]
+   }
+  }
+ },
+ "DSweap": {
+  "row": 26,
+  "it": {
+   "path": "DSweap/DSweap.md3",
+   "frame": 0,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ],
+   "crop_box": {
+    "f": [
+     -25.0,
+     25.0
+    ],
+    "u": [
+     -45.0,
+     8.0
+    ]
+   }
+  },
+  "trig_surf": 0,
+  "bore_surf": 0,
+  "bore": [
+   0.343,
+   -0.023,
+   0.939
+  ],
+  "holds": {
+   "199": {
+    "path": "lane_c/bd22q_192/models/rsq/hand.md3",
+    "frame": 4,
+    "hook": [
+     -4.4,
+     0.25,
+     1.27
+    ],
+    "rot": [
+     0.97,
+     31.45,
+     1.16
+    ],
+    "tf": [
+     4.78,
+     -0.61,
+     0.07
+    ]
+   },
+   "ax199": {
+    "axis": {
+     "from": "199",
+     "w_axis": [
+      0.341,
+      0.0011,
+      0.9401
+     ],
+     "w_point": [
+      -3.799,
+      -0.015,
+      -18.282
+     ],
+     "note": "handle = mesh vertices below the guard within 4.5 cm of the blade axis, PCA, toward the blade"
+    }
+   }
+  },
+  "_crop_note": "crop_box: collide with the handle, the guard and the blade root only (U -45..8, F -25..25 cm; the guard starts at handle axial t +2 = U ~1); the sheet and support_melee.py measure on the whole sword"
+ },
+ "HandGrenades": {
+  "row": 0,
+  "it": {
+   "path": "Grenade/nade.md3",
+   "frame": 2,
+   "scale": [
+    -0.92,
+    0.92,
+    0.92
+   ],
+   "off": [
+    -4.01,
+    -2.04,
+    -6.45
+   ]
+  },
+  "trig_surf": 0,
+  "bore_surf": 0,
+  "bore": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "holds": {
+   "199": {
+    "path": "lane_c/bd22q_192/models/rsq/ammo_hand.md3",
+    "frame": 3,
+    "hook": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rot": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "tf": [
+     2.364,
+     4.462,
+     -2.546
+    ]
+   },
+   "ax199": {
+    "axis": {
+     "from": "199",
+     "w_axis": [
+      0.039,
+      0.0039,
+      0.9992
+     ],
+     "w_point": [
+      -1.19,
+      3.994,
+      -2.653
+     ],
+     "note": "body = surface 0 PCA, toward the spoon/fuse (up)"
+    }
+   }
+  }
+ },
+ "Chain_saw_top": {
+  "row": 25,
+  "it": {
+   "path": "Chain_saw/Chain_saw.md3",
+   "frame": 11,
+   "scale": [
+    1.5,
+    1.5,
+    1.5
+   ],
+   "off": [
+    0.0,
+    10.0,
+    -5.0
+   ],
+   "mirror": true,
+   "crop_box": {
+    "f": [
+     10.0,
+     55.0
+    ],
+    "u": [
+     -4.0,
+     30.0
+    ]
+   }
+  },
+  "trig_surf": 3,
+  "bore_surf": 1,
+  "bore": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "holds": {
+   "192s": {
+    "path": "lane_c/bd22q_192/models/rsq/hand2.md3",
+    "frame": 4,
+    "hook": [
+     9.99,
+     -12.13,
+     -7.75
+    ],
+    "rot": [
+     9.83,
+     14.35,
+     89.3
+    ],
+    "mirror": true,
+    "tf": [
+     32.694,
+     -0.119,
+     12.375
+    ]
+   },
+   "199s": {
+    "path": "lane_c/bd22q_192/models/rsq/hand2.md3",
+    "frame": 4,
+    "hook": [
+     12.24,
+     -10.37,
+     -9.45
+    ],
+    "rot": [
+     2.09,
+     14.79,
+     69.91
+    ],
+    "mirror": true,
+    "tf": [
+     34.086,
+     -6.384,
+     13.215
+    ]
+   },
+   "ax192s": {
+    "axis": {
+     "from": "192s",
+     "w_axis": [
+      0.261,
+      -0.914,
+      0.311
+     ],
+     "w_point": [
+      31.19,
+      -0.76,
+      11.79
+     ],
+     "note": "top-handle bar on the MIRRORED saw: PCA of surface-3 samples within 5 cm of the 192s target (radius med 1.67 cm)"
+    }
+   },
+   "ax199s": {
+    "axis": {
+     "from": "199s",
+     "w_axis": [
+      0.173,
+      -0.984,
+      -0.045
+     ],
+     "w_point": [
+      32.48,
+      -6.63,
+      12.53
+     ],
+     "note": "top-handle bar on the MIRRORED saw: PCA of surface-3 samples within 5 cm of the 199s target (radius med 1.63 cm)"
+    }
+   }
+  },
+  "_note": "SUPPORT on the top handle, solved as its mirror image: the saw mirrored L->-L (Scale x +1.5, faces re-wound), the Ermac support hold (hand2.md3 frame 4 = RQSP E; 192 = 1.92 SupportHook/Rot row 25, 199 = lane-b-1.99x row 25) mirrored, tf mirrored. The solved R hand mirrored back IS the FBX L hand (handmodel.FbxHand L = R with M diag(1,-1,1)). Its shift is not used: the saw moves by Chain_saw's gun-hand fit.",
+  "_crop_note": "crop_box: the hand on the top handle reaches F 10..55, U -4..30 cm (hold landmarks F 25-34, U 10-20); collisions are measured on the whole saw afterwards (support_melee.py)"
+ },
+ "Chain_saw_rear": {
+  "row": 25,
+  "it": {
+   "path": "Chain_saw/Chain_saw.md3",
+   "frame": 11,
+   "scale": [
+    -1.5,
+    1.5,
+    1.5
+   ],
+   "off": [
+    0.0,
+    10.0,
+    -5.0
+   ],
+   "crop_box": {
+    "f": [
+     -15.0,
+     22.0
+    ],
+    "u": [
+     -20.0,
+     15.0
+    ]
+   }
+  },
+  "trig_surf": 3,
+  "bore_surf": 1,
+  "bore": [
+   1.0,
+   0.0,
+   0.0
+  ],
+  "holds": {
+   "192": {
+    "path": "lane_c/bd22q_192/models/rsq/hand.md3",
+    "frame": 4,
+    "hook": [
+     -4.39,
+     3.43,
+     -0.63
+    ],
+    "rot": [
+     0.88,
+     -10.2,
+     0.54
+    ],
+    "tf": [
+     7.977,
+     -0.782,
+     -5.727
+    ]
+   },
+   "199": {
+    "path": "lane_c/bd22q_192/models/rsq/hand.md3",
+    "frame": 4,
+    "hook": [
+     -8.91,
+     5.61,
+     1.04
+    ],
+    "rot": [
+     -17.47,
+     -6.32,
+     26.85
+    ],
+    "tf": [
+     7.754,
+     -1.614,
+     -4.676
+    ]
+   },
+   "ax192": {
+    "axis": {
+     "from": "192",
+     "w_axis": [
+      -0.9,
+      -0.004,
+      -0.437
+     ],
+     "w_point": [
+      3.05,
+      0.29,
+      -5.17
+     ],
+     "keep_tf": true
+    }
+   },
+   "ax199": {
+    "axis": {
+     "from": "199",
+     "w_axis": [
+      -0.909,
+      0.011,
+      -0.418
+     ],
+     "w_point": [
+      3.06,
+      0.16,
+      -5.26
+     ],
+     "keep_tf": true
+    }
+   }
+  },
+  "_note": "Chain_saw gun hand on the REAR handle, collisions cropped to the rear of the saw (hand reach F -15..22, U -20..15); the weapon and its points are Chain_saw (same mesh, same placement). Axis holds: the rear-handle bar at the grip = PCA of surface-3 samples within 5 cm of the hold (palm+pad_M)/2 point; index target kept = the real trigger (the hold tf)."
+ }
+}

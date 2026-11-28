@@ -1,0 +1,40 @@
+version "4.10"
+// lane_c TEST ONLY: a minimal probe for BD22Q 1.92 based packs (the depot probe needs classes 1.92 lacks).
+// Dumps the pack's own reload tables once (the B22 GUN line format of the depot probe, so its mags.py can read it),
+// then every 5 tics the gun layer's state and the hand layers' sprites.
+class LaneCProbe : EventHandler
+{
+	bool dumped;
+	ui int frames;
+	override void RenderOverlay(RenderEvent e) { frames++; if (frames % 5 == 0) Console.Printf("LANEC FRAME %d t %d", frames, level.maptime); }
+	override void WorldTick()
+	{
+		let mo = PlayerPawn(players[consoleplayer].mo);
+		if (!mo || level.maptime < 5)
+			return;
+		if (!dumped)
+		{
+			dumped = true;
+			for (int i = 1; i <= RSR_Guns.Count(); i++)
+			{
+				Vector3 w = RSR_Guns.Well(i), a = RSR_Guns.Axis(i), t = RSR_Guns.TopInHand(i), c = RSR_Guns.MagCentre(i);
+				Vector3 g = RSR_Guns.Grab(i), p = RSR_Guns.Pull(i);
+				Console.Printf("B22 GUN %d well %.3f %.3f %.3f axis %.4f %.4f %.4f mouth %.3f top %.3f %.3f %.3f centre %.3f %.3f %.3f handle %d grab %.3f %.3f %.3f pull %.4f %.4f %.4f travel %.3f rule %d reserve %s",
+					i, w.x, w.y, w.z, a.x, a.y, a.z, RSR_Guns.Mouth(i), t.x, t.y, t.z, c.x, c.y, c.z,
+					RSR_Guns.HasHandle(i), g.x, g.y, g.z, p.x, p.y, p.z, RSR_Guns.Travel(i), RSR_Guns.ChargeRule(i), RSR_Guns.Reserve(i));
+			}
+		}
+		if (level.maptime % (CVar.FindCVar('lanec_every') ? 1 : 1) == 0)
+		{
+			let rw = mo.player.ReadyWeapon;
+			let gh = mo.player.FindPSprite(2100);
+			let sp = mo.player.FindPSprite(2101);
+			int fg = Actor.GetSpriteIndex('RQFG'), fs = Actor.GetSpriteIndex('RQFS');
+			String h = !gh || !gh.CurState ? "none" : gh.Sprite == fg ? "RQFG" : gh.Sprite == Actor.GetSpriteIndex('RQGT') ? "RQGT" : gh.Sprite == Actor.GetSpriteIndex('RQGU') ? "RQGU" : gh.Sprite == Actor.GetSpriteIndex('RQGS') ? "RQGS" : gh.Sprite == Actor.GetSpriteIndex('TNT1') ? "TNT1" : "other";
+			String s2 = !sp || !sp.CurState ? "none" : sp.Sprite == fs ? "RQFS" : sp.Sprite == Actor.GetSpriteIndex('RQSP') ? "RQSP" : sp.Sprite == Actor.GetSpriteIndex('TNT1') ? "TNT1" : "other";
+			let wp = mo.player.FindPSprite(PSP_WEAPON);
+			Console.Printf("LANEC T %d gun %s hand %s %d sup %s %d stab %d gf %d gb %d btn %d", level.maptime, rw ? rw.GetClassName() : 'none',
+				h, gh ? gh.Frame : -1, s2, sp ? sp.Frame : -1, (mo.player.WeaponState & WF_TWOHANDSTABILIZED) != 0, wp ? wp.Frame : -1, wp && wp.CurState ? wp.CurState.bFullbright : -1, (mo.player.cmd.buttons & BT_ATTACK) != 0);
+		}
+	}
+}

@@ -1,0 +1,38 @@
+{
+ "rest PIST A": {
+  "trigger_into_trigger_pose_cm": 0.0,
+  "trigger_area_inside_pct": 0.0,
+  "trigger_into_squeeze_pose_cm": 0.57,
+  "squeeze_area_inside_pct": 18.1
+ },
+ "fire PIST B": {
+  "trigger_into_trigger_pose_cm": 0.35,
+  "trigger_area_inside_pct": 9.1,
+  "trigger_into_squeeze_pose_cm": 0.71,
+  "squeeze_area_inside_pct": 28.8
+ },
+ "fire PIST C": {
+  "trigger_into_trigger_pose_cm": 0.66,
+  "trigger_area_inside_pct": 23.4,
+  "trigger_into_squeeze_pose_cm": 0.5,
+  "squeeze_area_inside_pct": 15.7
+ },
+ "fire PIST D": {
+  "trigger_into_trigger_pose_cm": 0.66,
+  "trigger_area_inside_pct": 23.8,
+  "trigger_into_squeeze_pose_cm": 0.51,
+  "squeeze_area_inside_pct": 15.7
+ },
+ "after fire PIST E": {
+  "trigger_into_trigger_pose_cm": 0.66,
+  "trigger_area_inside_pct": 23.4,
+  "trigger_into_squeeze_pose_cm": 0.51,
+  "squeeze_area_inside_pct": 15.7
+ },
+ "PIST P-S/K/L": {
+  "trigger_into_trigger_pose_cm": 0.66,
+  "trigger_area_inside_pct": 15.6,
+  "trigger_into_squeeze_pose_cm": 0.73,
+  "squeeze_area_inside_pct": 32.2
+ }
+}

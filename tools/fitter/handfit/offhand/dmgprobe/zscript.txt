@@ -1,0 +1,43 @@
+version "4.10"
+// TEST ONLY (rig, never ships): logs every damage a player's attack does, so a punch landing is in the log.
+class OHT_DmgLog : EventHandler
+{
+	override void WorldThingDamaged(WorldEvent e)
+	{
+		if (!e.Thing || e.Thing.player)
+			return;
+		Actor src = e.DamageSource;
+		if (!src || !src.player)
+			return;
+		let w = src.player.ReadyWeapon;
+		Console.Printf("OHT DMG t %d target %s dmg %d type %s inflictor %s weapon %s hp %d", level.maptime, e.Thing.GetClassName(), e.Damage,
+			e.DamageType, e.Inflictor ? e.Inflictor.GetClassName() : 'none', w ? w.GetClassName() : 'none', e.Thing.health);
+	}
+}
+
+// TEST ONLY: "netevent oht_spawn <dist>" puts a BD22 PistolZombie that cannot walk (speed 0) <dist> map units in front of the player,
+// at chest height on the floor, with 1000 health, so punches have a target that stays put.
+class OHT_Spawn : EventHandler
+{
+	override void NetworkProcess(ConsoleEvent e)
+	{
+		if (e.Name == "oht_mark")
+		{
+			Console.Printf("OHT MARK t %d", level.maptime);	// the tic a script step ran (e.g. right before quit)
+			return;
+		}
+		if (e.Name != "oht_spawn" || e.Player < 0 || !players[e.Player].mo)
+			return;
+		let mo = players[e.Player].mo;
+		double d = e.Args[0] > 0 ? e.Args[0] : 40;
+		Vector3 p = mo.Vec3Angle(d, mo.angle, 0);
+		class<Actor> c = 'PistolZombie';	// BD22's own zombie class (ZombieMan's replacement is a random spawner)
+		let z = c ? Actor.Spawn(c, p, NO_REPLACE) : null;
+		if (!z)
+			return;
+		z.angle = mo.angle + 180;
+		z.Speed = 0;		// stays put (a dormant actor takes no damage)
+		z.health = 1000;
+		Console.Printf("OHT SPAWN t %d %s at %.1f %.1f %.1f (player %.1f %.1f %.1f)", level.maptime, z.GetClassName(), z.pos.x, z.pos.y, z.pos.z, mo.pos.x, mo.pos.y, mo.pos.z);
+	}
+}

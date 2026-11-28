@@ -1,0 +1,28 @@
+{
+ "BrutalPistol": {
+  "Offset": [
+   0.82,
+   -8.333
+  ],
+  "ZOffset": -1.408,
+  "note": "all five are ABSOLUTE MODELDEF values (1.92: Offset 0 0, ZOffset -5, no angle offsets)",
+  "AngleOffset": 3.854,
+  "PitchOffset": 3.363,
+  "RollOffset": 10.974,
+  "fit_max_cm": 1.0886980803209723e-14,
+  "chain_check_cm": 2.7755575615628914e-15
+ },
+ "Flamethrower2": {
+  "Offset": [
+   1.104,
+   -5.282
+  ],
+  "ZOffset": -2.851,
+  "note": "all five are ABSOLUTE MODELDEF values (1.92: Offset 0 0, ZOffset -5, no angle offsets)",
+  "AngleOffset": -2.677,
+  "PitchOffset": 1.868,
+  "RollOffset": 8.412,
+  "fit_max_cm": 2.864289338439558e-14,
+  "chain_check_cm": 7.632783294297951e-15
+ }
+}

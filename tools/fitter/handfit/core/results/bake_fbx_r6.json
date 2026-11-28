@@ -1,0 +1,116 @@
+[
+ {
+  "name": "Brutal_gun",
+  "side": "R",
+  "frame": 0,
+  "hook": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "rot": [
+   0.0,
+   0.0,
+   -0.0
+  ],
+  "wrist_rot_deg": 0.0,
+  "wrist_move_cm": 9.485749680535094e-16,
+  "bake_check_max_cm": 0.007965451730729711,
+  "md3": "fbx_r6_R.md3"
+ },
+ {
+  "name": "Brutal_sup",
+  "side": "L",
+  "frame": 0,
+  "hook": [
+   0.0,
+   -0.0,
+   -0.0
+  ],
+  "rot": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "wrist_rot_deg": 2.091309789151873e-06,
+  "wrist_move_cm": 5.617333549722722e-15,
+  "bake_check_max_cm": 0.007963374159345005,
+  "md3": "fbx_r6_L.md3"
+ },
+ {
+  "name": "Flamet_gun",
+  "side": "R",
+  "frame": 1,
+  "hook": [
+   -0.0,
+   0.0,
+   0.0
+  ],
+  "rot": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "wrist_rot_deg": 1.2074182697257333e-06,
+  "wrist_move_cm": 3.66205343881779e-15,
+  "bake_check_max_cm": 0.00796673800388703,
+  "md3": "fbx_r6_R.md3"
+ },
+ {
+  "name": "Flamet_sup",
+  "side": "L",
+  "frame": 1,
+  "hook": [
+   0.0,
+   0.0,
+   -0.0
+  ],
+  "rot": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "wrist_rot_deg": 1.7075472925031877e-06,
+  "wrist_move_cm": 1.0986160316453369e-14,
+  "bake_check_max_cm": 0.00796711388396254,
+  "md3": "fbx_r6_L.md3"
+ },
+ {
+  "name": "Brutal_sqz",
+  "side": "R",
+  "frame": 2,
+  "hook": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "rot": [
+   0.0,
+   0.0,
+   -0.0
+  ],
+  "wrist_rot_deg": 0.0,
+  "wrist_move_cm": 9.485749680535094e-16,
+  "bake_check_max_cm": 0.007965451730729711,
+  "md3": "fbx_r6_R.md3"
+ },
+ {
+  "name": "Flamet_sqz",
+  "side": "R",
+  "frame": 3,
+  "hook": [
+   -0.0,
+   -0.0,
+   -0.0
+  ],
+  "rot": [
+   -0.0,
+   0.0,
+   -0.0
+  ],
+  "wrist_rot_deg": 0.0,
+  "wrist_move_cm": 5.4025784115714076e-15,
+  "bake_check_max_cm": 0.007966334586294366,
+  "md3": "fbx_r6_R.md3"
+ }
+]

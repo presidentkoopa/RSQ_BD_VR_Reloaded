@@ -1,0 +1,546 @@
+{
+ "BrutalPistol": {
+  "card": {
+   "palm": [
+    20.655,
+    -0.601,
+    -8.749
+   ],
+   "triggerat": [
+    29.831,
+    0.011,
+    -4.671
+   ],
+   "seat": [
+    23.404,
+    -1.688,
+    -6.126
+   ],
+   "supportat": [
+    26.999,
+    2.619,
+    -11.437
+   ],
+   "rake": 15.8,
+   "supportaxis": [
+    0.272,
+    0.041,
+    0.961
+   ],
+   "supporthold": "cup",
+   "poses": {
+    "trigger": "gun hand as solved (index on the trigger face)",
+    "squeeze": "NOT SOLVED this round (1.92 uses the same frame for RQGU; see REPORT)",
+    "cup": "support hand as solved"
+   },
+   "frame_note": "gun md3 file space of the 1.92 mesh frame drawn at ready (BrutalPistol.md3 frame 3), md3 units; fit residual of the inverse placement 9.2e-14"
+  },
+  "controller_frame_cm_in_gun_192_frame": {
+   "palm": [
+    -8.93,
+    -0.61,
+    -8.92
+   ],
+   "triggerat": [
+    0.43,
+    0.01,
+    -4.76
+   ],
+   "seat": [
+    -6.13,
+    -1.72,
+    -6.25
+   ],
+   "supportat": [
+    -2.46,
+    2.67,
+    -11.67
+   ]
+  },
+  "named": {
+   "gun hand": {
+    "per_finger": {
+     "thumb": [
+      [
+       "fbx_fist",
+       16.9
+      ],
+      [
+       "fbx_open",
+       22.8
+      ],
+      [
+       "fbx_crossed",
+       24.5
+      ]
+     ],
+     "index": [
+      [
+       "fbx_thumb_out",
+       21.3
+      ],
+      [
+       "fbx_open",
+       21.3
+      ],
+      [
+       "fbx_relaxed",
+       23.2
+      ]
+     ],
+     "middle": [
+      [
+       "fbx_fist",
+       39.9
+      ],
+      [
+       "fbx_wrap_tight",
+       41.5
+      ],
+      [
+       "fbx_wrap_half",
+       44.9
+      ]
+     ],
+     "ring": [
+      [
+       "fbx_fist",
+       32.2
+      ],
+      [
+       "fbx_cup",
+       35.4
+      ],
+      [
+       "fbx_twohand_support",
+       35.4
+      ]
+     ],
+     "pinky": [
+      [
+       "fbx_fist",
+       32.2
+      ],
+      [
+       "fbx_wrap_tight",
+       40.8
+      ],
+      [
+       "fbx_crossed",
+       42.5
+      ]
+     ]
+    },
+    "nearest_composed": [
+     [
+      "pointing",
+      30.6
+     ],
+     [
+      "gun_grip",
+      38.4
+     ],
+     [
+      "grip_pistol",
+      38.4
+     ]
+    ]
+   },
+   "support hand": {
+    "per_finger": {
+     "thumb": [
+      [
+       "fbx_fist",
+       13.2
+      ],
+      [
+       "fbx_crossed",
+       16.9
+      ],
+      [
+       "fbx_open",
+       19.0
+      ]
+     ],
+     "index": [
+      [
+       "fbx_wrap_half",
+       19.3
+      ],
+      [
+       "fbx_wrap_tight",
+       23.2
+      ],
+      [
+       "fbx_thumb_out",
+       42.2
+      ]
+     ],
+     "middle": [
+      [
+       "fbx_wrap_half",
+       11.7
+      ],
+      [
+       "fbx_wrap_tight",
+       17.5
+      ],
+      [
+       "fbx_crossed",
+       30.8
+      ]
+     ],
+     "ring": [
+      [
+       "fbx_wrap_tight",
+       22.3
+      ],
+      [
+       "fbx_crossed",
+       24.1
+      ],
+      [
+       "fbx_wrap_half",
+       25.2
+      ]
+     ],
+     "pinky": [
+      [
+       "fbx_fist",
+       31.3
+      ],
+      [
+       "fbx_wrap_tight",
+       36.8
+      ],
+      [
+       "fbx_crossed",
+       39.1
+      ]
+     ]
+    },
+    "nearest_composed": [
+     [
+      "gun_grip",
+      26.5
+     ],
+     [
+      "grip_pistol",
+      26.5
+     ],
+     [
+      "grip_shotgun",
+      26.5
+     ]
+    ]
+   }
+  }
+ },
+ "Flamethrower2": {
+  "card": {
+   "palm": [
+    16.515,
+    -0.833,
+    -4.684
+   ],
+   "triggerat": [
+    27.907,
+    -0.341,
+    -8.368
+   ],
+   "seat": [
+    20.396,
+    -1.392,
+    -3.852
+   ],
+   "supportat": [
+    45.279,
+    0.007,
+    -18.25
+   ],
+   "rake": 73.0,
+   "supportaxis": [
+    0.153,
+    0.001,
+    0.988
+   ],
+   "supporthold": "vgrip",
+   "poses": {
+    "trigger": "gun hand as solved (index on the trigger face)",
+    "squeeze": "NOT SOLVED this round (1.92 uses the same frame for RQGU; see REPORT)",
+    "vgrip": "support hand as solved"
+   },
+   "frame_note": "gun md3 file space of the 1.92 mesh frame drawn at ready (Flamethrower2.md3 frame 0), md3 units; fit residual of the inverse placement 2.0e-13"
+  },
+  "controller_frame_cm_in_gun_192_frame": {
+   "palm": [
+    -13.15,
+    -0.85,
+    -4.78
+   ],
+   "triggerat": [
+    -1.54,
+    -0.35,
+    -8.54
+   ],
+   "seat": [
+    -9.2,
+    -1.42,
+    -3.93
+   ],
+   "supportat": [
+    16.18,
+    0.01,
+    -18.61
+   ]
+  },
+  "named": {
+   "gun hand": {
+    "per_finger": {
+     "thumb": [
+      [
+       "fbx_fist",
+       14.9
+      ],
+      [
+       "fbx_crossed",
+       23.0
+      ],
+      [
+       "fbx_open",
+       23.5
+      ]
+     ],
+     "index": [
+      [
+       "fbx_fingergun",
+       14.0
+      ],
+      [
+       "fbx_twofinger_point",
+       15.2
+      ],
+      [
+       "fbx_twohand_gun",
+       15.4
+      ]
+     ],
+     "middle": [
+      [
+       "fbx_fist",
+       21.9
+      ],
+      [
+       "fbx_wrap_tight",
+       28.5
+      ],
+      [
+       "fbx_wrap_half",
+       39.0
+      ]
+     ],
+     "ring": [
+      [
+       "fbx_fist",
+       9.3
+      ],
+      [
+       "fbx_wrap_tight",
+       50.8
+      ],
+      [
+       "fbx_crossed",
+       59.3
+      ]
+     ],
+     "pinky": [
+      [
+       "fbx_wrap_tight",
+       29.3
+      ],
+      [
+       "fbx_wrap_half",
+       31.6
+      ],
+      [
+       "fbx_crossed",
+       38.2
+      ]
+     ]
+    },
+    "nearest_composed": [
+     [
+      "pointing",
+      26.6
+     ],
+     [
+      "gun_grip",
+      40.6
+     ],
+     [
+      "grip_pistol",
+      40.6
+     ]
+    ]
+   },
+   "support hand": {
+    "per_finger": {
+     "thumb": [
+      [
+       "fbx_fist",
+       7.4
+      ],
+      [
+       "fbx_crossed",
+       23.2
+      ],
+      [
+       "fbx_open",
+       23.9
+      ]
+     ],
+     "index": [
+      [
+       "fbx_wrap_tight",
+       24.2
+      ],
+      [
+       "fbx_fist",
+       30.7
+      ],
+      [
+       "fbx_wrap_half",
+       34.4
+      ]
+     ],
+     "middle": [
+      [
+       "fbx_fist",
+       12.6
+      ],
+      [
+       "fbx_wrap_tight",
+       40.0
+      ],
+      [
+       "fbx_wrap_half",
+       54.3
+      ]
+     ],
+     "ring": [
+      [
+       "fbx_fist",
+       22.1
+      ],
+      [
+       "fbx_wrap_tight",
+       33.4
+      ],
+      [
+       "fbx_cup",
+       39.9
+      ]
+     ],
+     "pinky": [
+      [
+       "fbx_fist",
+       18.9
+      ],
+      [
+       "fbx_crossed",
+       58.6
+      ],
+      [
+       "fbx_wrap_tight",
+       60.3
+      ]
+     ]
+    },
+    "nearest_composed": [
+     [
+      "grip_saw",
+      20.0
+     ],
+     [
+      "melee_grip",
+      20.0
+     ],
+     [
+      "hold_foregrip",
+      20.0
+     ]
+    ]
+   }
+  }
+ },
+ "quest_cost": {
+  "flamethrower_fbxhand_L.md3": {
+   "frames": 1,
+   "verts": 1937,
+   "tris": 3330,
+   "bytes_per_frame": 15552,
+   "file_bytes": 71292
+  },
+  "flamethrower_fbxhand_R.md3": {
+   "frames": 1,
+   "verts": 1937,
+   "tris": 3330,
+   "bytes_per_frame": 15552,
+   "file_bytes": 71292
+  },
+  "pistol_fbxhand_L.md3": {
+   "frames": 1,
+   "verts": 1937,
+   "tris": 3330,
+   "bytes_per_frame": 15552,
+   "file_bytes": 71292
+  },
+  "pistol_fbxhand_R.md3": {
+   "frames": 1,
+   "verts": 1937,
+   "tris": 3330,
+   "bytes_per_frame": 15552,
+   "file_bytes": 71292
+  },
+  "1.92 hand.md3": {
+   "frames": 44,
+   "verts": 1021,
+   "tris": 1693,
+   "bytes_per_frame": 8224,
+   "file_bytes": 390624
+  },
+  "1.92 hand2.md3": {
+   "frames": 5,
+   "verts": 1021,
+   "tris": 1693,
+   "bytes_per_frame": 8224,
+   "file_bytes": 69888
+  }
+ },
+ "glove": {
+  "ermac_hand_png": [
+   [
+    66.6,
+    52.5,
+    46.7
+   ],
+   [
+    33.0,
+    33.0,
+    33.0
+   ]
+  ],
+  "fbx_base_color": [
+   [
+    169.0,
+    115.0,
+    94.5
+   ],
+   [
+    171.0,
+    113.0,
+    94.0
+   ]
+  ]
+ }
+}

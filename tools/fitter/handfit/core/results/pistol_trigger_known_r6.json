@@ -1,0 +1,152 @@
+{
+ "0": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.0
+ },
+ "1": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.0
+ },
+ "2": {
+  "sprites": [
+   "PISTF"
+  ],
+  "trigger_pose_index_in_trigger_cm": 0.12,
+  "squeeze_pose_index_in_trigger_cm": 0.14
+ },
+ "3": {
+  "sprites": [
+   "PISTJ",
+   "PISTO",
+   "PISTI",
+   "2ISTA",
+   "PISTA",
+   "2ISTI"
+  ],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.24
+ },
+ "4": {
+  "sprites": [
+   "PISTB",
+   "2ISTB"
+  ],
+  "trigger_pose_index_in_trigger_cm": 0.17,
+  "squeeze_pose_index_in_trigger_cm": 0.12
+ },
+ "5": {
+  "sprites": [
+   "PISTC",
+   "2ISTC"
+  ],
+  "trigger_pose_index_in_trigger_cm": 0.13,
+  "squeeze_pose_index_in_trigger_cm": 0.14
+ },
+ "6": {
+  "sprites": [
+   "PISTD",
+   "2ISTD"
+  ],
+  "trigger_pose_index_in_trigger_cm": 0.13,
+  "squeeze_pose_index_in_trigger_cm": 0.14
+ },
+ "7": {
+  "sprites": [
+   "2ISTE",
+   "PISTE"
+  ],
+  "trigger_pose_index_in_trigger_cm": 0.12,
+  "squeeze_pose_index_in_trigger_cm": 0.14
+ },
+ "8": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.12,
+  "squeeze_pose_index_in_trigger_cm": 0.12
+ },
+ "9": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.18,
+  "squeeze_pose_index_in_trigger_cm": 0.14
+ },
+ "10": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.18,
+  "squeeze_pose_index_in_trigger_cm": 0.24
+ },
+ "11": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.24,
+  "squeeze_pose_index_in_trigger_cm": 0.13
+ },
+ "12": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.22
+ },
+ "13": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.0
+ },
+ "14": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.0
+ },
+ "15": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.0
+ },
+ "16": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.0
+ },
+ "17": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.0
+ },
+ "18": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.02
+ },
+ "19": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.0,
+  "squeeze_pose_index_in_trigger_cm": 0.22
+ },
+ "20": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.22,
+  "squeeze_pose_index_in_trigger_cm": 0.12
+ },
+ "21": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.14,
+  "squeeze_pose_index_in_trigger_cm": 0.16
+ },
+ "22": {
+  "sprites": [],
+  "trigger_pose_index_in_trigger_cm": 0.12,
+  "squeeze_pose_index_in_trigger_cm": 0.14
+ },
+ "23": {
+  "sprites": [
+   "PISTP",
+   "PISTQ",
+   "PISTR",
+   "PISTS",
+   "PISTK",
+   "PISTL",
+   "PISTM",
+   "PISTN"
+  ],
+  "trigger_pose_index_in_trigger_cm": 0.21,
+  "squeeze_pose_index_in_trigger_cm": 0.16
+ }
+}

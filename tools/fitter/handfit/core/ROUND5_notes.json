@@ -1,0 +1,264 @@
+{
+ "round": 5,
+ "status": "done",
+ "squeeze": {
+  "BrutalPistol": {
+   "gun": "BrutalPistol",
+   "travel_cm": 0.6,
+   "travel_source": "chosen 0.6 cm (mesh trigger moves forward on fire)",
+   "q_index_trigger": [
+    -0.24104910275314112,
+    0.24900029771467308,
+    7.590635739374276
+   ],
+   "q_index_squeeze": [
+    -0.2717592586102721,
+    0.36055935614586837,
+    6.908990789251963
+   ],
+   "pad_target_err_cm": 7.180630982004085e-06,
+   "pad_moved_cm": 0.5999940039653618,
+   "non_index_vertices_moved_max_cm": 0.03644113259491503,
+   "frames": {
+    "3": {
+     "pen_index_cm": 0.1736824325104706,
+     "pen_whole_hand_cm": 0.1736824325104706,
+     "pad_to_trigger_cm": 0.03584518294303266,
+     "trigger_pose_pad_to_trigger_cm": 0.08957146759585163
+    },
+    "4": {
+     "pen_index_cm": 0.11552251187825874,
+     "pen_whole_hand_cm": 0.11552251187825874,
+     "pad_to_trigger_cm": 0.4566530203042217,
+     "trigger_pose_pad_to_trigger_cm": 0.0068026396592213685
+    },
+    "5": {
+     "pen_index_cm": 0.14299725560679535,
+     "pen_whole_hand_cm": 0.14299725560679535,
+     "pad_to_trigger_cm": 0.6788472845422674,
+     "trigger_pose_pad_to_trigger_cm": 0.25996998315350933
+    },
+    "6": {
+     "pen_index_cm": 0.1429975971727925,
+     "pen_whole_hand_cm": 0.1429975971727925,
+     "pad_to_trigger_cm": 0.6721151799592168,
+     "trigger_pose_pad_to_trigger_cm": 0.2576738387550132
+    }
+   }
+  },
+  "Flamethrower2": {
+   "gun": "Flamethrower2",
+   "travel_cm": 1.9496724776325451,
+   "travel_source": "mesh",
+   "q_index_trigger": [
+    -0.39999999999999997,
+    -0.09999999999999999,
+    13.965641119366591
+   ],
+   "q_index_squeeze": [
+    -0.39999999999999997,
+    0.07604066023229136,
+    1.9399681127896902
+   ],
+   "pad_target_err_cm": 0.3901482830493339,
+   "pad_moved_cm": 2.0116167843965638,
+   "non_index_vertices_moved_max_cm": 0.12920213267324332,
+   "frames": {
+    "0": {
+     "pen_index_cm": 0.4815212467242589,
+     "pen_whole_hand_cm": 0.4815212467242589,
+     "pad_to_trigger_cm": 1.0125183669518247,
+     "trigger_pose_pad_to_trigger_cm": 0.04497547380594292
+    },
+    "3": {
+     "pen_index_cm": 0.4815212467242591,
+     "pen_whole_hand_cm": 0.4815212467242591,
+     "pad_to_trigger_cm": 0.0007407182952709909,
+     "trigger_pose_pad_to_trigger_cm": 0.3606591745824048
+    },
+    "4": {
+     "pen_index_cm": 0.4815212467242591,
+     "pen_whole_hand_cm": 0.4815212467242591,
+     "pad_to_trigger_cm": 0.0007407182952709909,
+     "trigger_pose_pad_to_trigger_cm": 0.3606591745824048
+    }
+   }
+  }
+ },
+ "trigger_travel": {
+  "Flamethrower2": "MEASURED: trigger lever = separate part (surface 1); turns 15.0 deg ready frame 0 -> fire frames 3/4 (rigid fit residual 0.014 cm); the index pad follows it: 1.95 cm at the pad",
+  "BrutalPistol": "trigger IS a separate part (surface 5) but its fire frames 4-6 turn it 37 deg FORWARD (face 0.7-1.4 cm toward the muzzle) of the ready frame 3: no pull in the mesh. Used 0.6 cm straight back along the reverse of that arc. Consequence: during fire frames 4-6 the drawn trigger is 0.46-0.68 cm in front of the squeezed pad"
+ },
+ "wiring": "hands.zs (rows 4/7 only): squeeze = gun layer on its fire tics: pistol sprite PIST/2IST and (state BRIGHT [the shot tic, \"####\" A 1 BRIGHT] or frame B/C/D); flamer FLMT/2LMT and (BRIGHT or frame D/E/G/H); trigger otherwise. No BD22 state or timing touched. Dual wield (dualhands.zs) still squeezes on the fire BUTTON (its hand is not gun-state aware) -- now with the real squeeze frame.",
+ "frames": {
+  "md3": "fbx_r3_R.md3 in the pack (from out/fbx_r5_R.md3): frame 0 pistol trigger, 1 flamer trigger (both byte-identical to r4), 2 pistol squeeze, 3 flamer squeeze; RQFG B -> 2, RQFG D -> 3"
+ },
+ "pack": {
+  "path": "tools/handfit/core/out/BD22Q_192_fbx_headset_r5.pk3",
+  "sha256": "ff355a246c288c0cb16daf3acedf537aec9ec9ab5fc370b973ad897439166dfc",
+  "differs_from_r4": [
+   "MODELDEF.purist",
+   "MODELDEF.rsq",
+   "MODELDEF.rsqdual",
+   "MODELDEF.rsqoff",
+   "models/rsq/fbx/fbx_r3_R.md3",
+   "zscript/rsq/hands.zs"
+  ]
+ },
+ "gate": {
+  "pistol": {
+   "rc": 0,
+   "frames": 102,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "CARRY",
+    "INSERT",
+    "SEATED",
+    "CHARGE"
+   ],
+   "fbx_sprite_tics": 663,
+   "squeeze_tics": 12
+  },
+  "flamer": {
+   "rc": 0,
+   "frames": 92,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [],
+   "fbx_sprite_tics": 521,
+   "squeeze_tics": 24
+  },
+  "Revolver": {
+   "rc": 0,
+   "frames": 112,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [],
+   "fbx_sprite_tics": 0,
+   "squeeze_tics": 0
+  },
+  "Devastator": {
+   "rc": 0,
+   "frames": 122,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [],
+   "fbx_sprite_tics": 0,
+   "squeeze_tics": 0
+  },
+  "BrutalSMG": {
+   "rc": 0,
+   "frames": 125,
+   "markers_all": true,
+   "errors_not_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "EMPTY",
+    "DROP",
+    "EMPTY"
+   ],
+   "fbx_sprite_tics": 0,
+   "squeeze_tics": 0
+  },
+  "r5c_pistol": {
+   "hand_frame_vs_gun_frame_bright_button": [
+    [
+     "0 4 0 0",
+     227
+    ],
+    [
+     "0 0 1 1",
+     10
+    ],
+    [
+     "1 1 0 1",
+     10
+    ],
+    [
+     "1 2 0 1",
+     10
+    ],
+    [
+     "1 3 0 1",
+     10
+    ],
+    [
+     "0 4 0 1",
+     9
+    ],
+    [
+     "0 0 0 0",
+     3
+    ],
+    [
+     "0 1 0 0",
+     1
+    ],
+    [
+     "0 2 0 0",
+     1
+    ]
+   ]
+  },
+  "r5c_flamer": {
+   "hand_frame_vs_gun_frame_bright_button": [
+    [
+     "2 0 0 0",
+     77
+    ],
+    [
+     "2 1 0 0",
+     76
+    ],
+    [
+     "2 2 0 0",
+     76
+    ],
+    [
+     "3 4 1 1",
+     12
+    ],
+    [
+     "3 3 1 1",
+     11
+    ],
+    [
+     "3 6 1 1",
+     11
+    ],
+    [
+     "3 7 1 1",
+     11
+    ],
+    [
+     "2 8 0 0",
+     1
+    ],
+    [
+     "2 9 0 0",
+     1
+    ],
+    [
+     "2 10 0 0",
+     1
+    ]
+   ]
+  }
+ },
+ "gate_notes": "one engine at a time; load average 1.3-2.6 during the full gate (other lanes running); every run rc 0, all phases reached, no script error from the pack (BD_VoxelPack 8 voxeldef lines + BD22 Deh_Actor_153/DeathSphereHealth as with 1.92)",
+ "timing": "per-tic probe: pistol shows SQUEEZE on gun frames B/C/D (3 tics per shot); the shot tic itself (\"####\" A 1 BRIGHT) still shows TRIGGER (the hand layer is set before the gun layer enters that state: one-tic lag); flamer shows SQUEEZE on every D/E/G/H fire tic and TRIGGER otherwise. No BD22 state or tic count changed.",
+ "penetration": "exact, against the ready and every fire frame (body aligned): pistol squeeze index <= 0.17 cm; flamer squeeze 0.48 cm (limit 0.5); non-index skin moved by blending <= 0.04 cm (pistol) / 0.13 cm (flamer)",
+ "sheet": "sheets/squeeze_r5.png",
+ "sha256": "ff355a246c288c0cb16daf3acedf537aec9ec9ab5fc370b973ad897439166dfc"
+}

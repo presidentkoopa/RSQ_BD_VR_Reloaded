@@ -1,0 +1,860 @@
+{
+"Rifle": {
+"gun": {
+"path": "bd22q_192/models/bd/Rifle/Rifle.md3",
+"frame": 3,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 38,
+"gletter": "TO",
+"ghook": [
+0.76,
+-4.96,
+2.73
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 2,
+"shook": [
+0.954,
+-12.744,
+-17.4
+],
+"srot": [
+0.0,
+0.0,
+10.0
+]
+},
+"BrutalPistol": {
+"gun": {
+"path": "bd22q_192/models/bd/BrutalPistol/BrutalPistol.md3",
+"frame": 3,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 14,
+"gletter": "TC",
+"ghook": [
+0.0,
+-5.02,
+3.18
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 0,
+"shook": [
+0.0,
+-5.02,
+3.18
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"BrutalSMG": {
+"gun": {
+"path": "bd22q_192/models/bd/BrutalSMG/BrutalSMG.md3",
+"frame": 3,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 16,
+"gletter": "TD",
+"ghook": [
+0.18,
+-4.01,
+-0.26
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+-7.88,
+13.17
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"MP40": {
+"gun": {
+"path": "bd22q_192/models/bd/MP40/MP40.md3",
+"frame": 2,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 28,
+"gletter": "TJ",
+"ghook": [
+0.3,
+-3.95,
+1.33
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+1.07,
+-1.31
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"AssaultShotgun": {
+"gun": {
+"path": "bd22q_192/models/bd/AssaultShotgun/AssaultShotgun.md3",
+"frame": 4,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 10,
+"gletter": "TA",
+"ghook": [
+0.49,
+-1.84,
+2.81
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+-4.91,
+-1.11
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Shot_Gun": {
+"gun": {
+"path": "bd22q_192/models/bd/ShotGun/Shotgun.md3",
+"frame": 4,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 42,
+"gletter": "TQ",
+"ghook": [
+-0.1,
+-5.58,
+-0.47
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+-4.7,
+-1.38
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Revolver": {
+"gun": {
+"path": "bd22q_192/models/bd/Revolver/Revolver.md3",
+"frame": 0,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 36,
+"gletter": "TN",
+"ghook": [
+-0.07,
+-4.85,
+-0.07
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 0,
+"shook": [
+-0.07,
+-4.85,
+-0.07
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"SSG": {
+"gun": {
+"path": "bd22q_192/models/bd/SSG/SSG.md3",
+"frame": 1,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 40,
+"gletter": "TP",
+"ghook": [
+0.05,
+-5.97,
+1.66
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 2,
+"shook": [
+-1.19,
+-6.34,
+4.22
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Rocket_Launcher": {
+"gun": {
+"path": "bd22q_192/models/bd/RPG/RPG.md3",
+"frame": 5,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 22,
+"gletter": "TG",
+"ghook": [
+0.38,
+-7.24,
+0.76
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 3,
+"shook": [
+1.75,
+-1.68,
+5.63
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"RailGun": {
+"gun": {
+"path": "bd22q_192/models/bd/RailGun/RailGun.md3",
+"frame": 3,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 34,
+"gletter": "TM",
+"ghook": [
+0.21,
+-4.73,
+1.8
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+-10.54,
+-3.1
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Plasma_Gun": {
+"gun": {
+"path": "bd22q_192/models/bd/Plasma_Gun/Plasma.md3",
+"frame": 4,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 32,
+"gletter": "TL",
+"ghook": [
+0.14,
+-5.04,
+0.79
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+-11.74,
+-1.8
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"GrenadeLauncher": {
+"gun": {
+"path": "bd22q_192/models/bd/M79/M79.md3",
+"frame": 3,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 20,
+"gletter": "TF",
+"ghook": [
+-0.11,
+-4.48,
+-0.67
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 2,
+"shook": [
+-1.19,
+-8.24,
+-1.77
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Minigun": {
+"gun": {
+"path": "bd22q_192/models/bd/Minigun/Minigun.md3",
+"frame": 4,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 18,
+"gletter": "TE",
+"ghook": [
+0.25,
+-3.37,
+-0.31
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 4,
+"shook": [
+-9.07,
+-25.68,
+-2.1
+],
+"srot": [
+10.21,
+16.06,
+95.16
+]
+},
+"BIG_FUCKING_GUN": {
+"gun": {
+"path": "bd22q_192/models/bd/BFG/BFG.md3",
+"frame": 4,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 12,
+"gletter": "TB",
+"ghook": [
+0.08,
+-6.14,
+3.85
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 3,
+"shook": [
+1.75,
+-13.2,
+-2.55
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"BFG10k": {
+"gun": {
+"path": "bd22q_192/models/bd/BFG/BFG_10k.md3",
+"frame": 4,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 12,
+"gletter": "TB",
+"ghook": [
+0.08,
+-6.14,
+3.85
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 3,
+"shook": [
+1.75,
+-13.2,
+-2.55
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Unmaker": {
+"gun": {
+"path": "bd22q_192/models/bd/Unmaker/Unmaker.md3",
+"frame": 0,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 18,
+"gletter": "TE",
+"ghook": [
+0.14,
+-6.02,
+-0.39
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 3,
+"shook": [
+1.75,
+-9.72,
+-1.52
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Flamethrower2": {
+"gun": {
+"path": "bd22q_192/models/bd/Flamethrower2/Flamethrower2.md3",
+"frame": 0,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 18,
+"gletter": "TE",
+"ghook": [
+0.22,
+-2.16,
+-1.64
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+-12.71,
+-7.44
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"HellishMissileLauncher": {
+"gun": {
+"path": "bd22q_192/models/bd/HellishMissile/HellishMissile.md3",
+"frame": 0,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 22,
+"gletter": "TG",
+"ghook": [
+3.59,
+-8.08,
+3.6
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 3,
+"shook": [
+1.75,
+-24.53,
+2.08
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"IncendiaryLauncher": {
+"gun": {
+"path": "bd22q_192/models/bd/M32/m32.md3",
+"frame": 0,
+"scale": [
+-0.62,
+0.62,
+0.62
+],
+"off": [
+0.0,
+-30.0,
+-8.0
+]
+},
+"gframe": 24,
+"gletter": "TH",
+"ghook": [
+0.05,
+-0.42,
+2.54
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 4,
+"shook": [
+-1.28,
+-6.53,
+-13.82
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"MG42": {
+"gun": {
+"path": "bd22q_192/models/bd/HitlersBuzzsaw/HitlersBuzzsaw.md3",
+"frame": 0,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 26,
+"gletter": "TI",
+"ghook": [
+0.07,
+-3.69,
+0.51
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 1,
+"shook": [
+-0.09,
+-1.83,
+8.86
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"NukeLauncher": {
+"gun": {
+"path": "bd22q_192/models/bd/Nuker/Nuker.md3",
+"frame": 0,
+"scale": [
+-1.1,
+1.1,
+1.1
+],
+"off": [
+0.0,
+0.0,
+-5.0
+]
+},
+"gframe": 30,
+"gletter": "TK",
+"ghook": [
+-0.51,
+-4.85,
+4.16
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 3,
+"shook": [
+1.75,
+-16.12,
+2.35
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+},
+"Devastator": {
+"gun": {
+"path": "bd22q_192/models/bd/Sidewinder/sidewinder.md3",
+"frame": 0,
+"scale": [
+-1.0,
+1.0,
+1.0
+],
+"off": [
+0.0,
+-13.0,
+0.0
+]
+},
+"gframe": 18,
+"gletter": "TE",
+"ghook": [
+0.15,
+-3.74,
+-1.11
+],
+"grot": [
+0.0,
+0.0,
+0.0
+],
+"sframe": 4,
+"shook": [
+-1.19,
+-4.45,
+-10.32
+],
+"srot": [
+0.0,
+0.0,
+0.0
+]
+}
+}

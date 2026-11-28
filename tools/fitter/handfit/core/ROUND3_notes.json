@@ -1,0 +1,554 @@
+{
+ "pk3": "tools/handfit/core/out/BD22Q_192_fbx_headset.pk3",
+ "sha256": "a5ce7756c62d2c8747171798b5bc3205d87a56c4b4cbe50694b964bf8ba1ff54",
+ "rules": {
+  "BrutalPistol": "G1G G2G G3G G4G G5G G6G G7G G8G G9G S1G S2G S3G S4G S5G S6G",
+  "Flamethrower2": "G1G G2G G3G G4G G5G G6G G7G G8G G9Y S1G S2G S3G S4G S5G S6Y"
+ },
+ "penetration_cm": {
+  "BrutalPistol": {
+   "gun_hand": {
+    "before": {
+     "into_gun": 0.10295288499469926
+    },
+    "after": {
+     "into_gun": 0.10295288499469926,
+     "into_support": 0.14278861336969734
+    }
+   },
+   "support": {
+    "before": {
+     "into_gun": 0.1154269418634021,
+     "into_gun_hand": 0.17328234961472527
+    },
+    "after": {
+     "into_gun": 0.1154269418634021,
+     "into_gun_hand": 0.14736884073484982
+    }
+   },
+   "projection": {
+    "gun_hand": {
+     "passes": [],
+     "moved_vertices": 0,
+     "max_move_cm": 0.0,
+     "mean_move_cm": 0.0
+    },
+    "support": {
+     "passes": [
+      1
+     ],
+     "moved_vertices": 1,
+     "max_move_cm": 0.05328234961541726,
+     "mean_move_cm": 0.05328234961541726
+    },
+    "gun_hand_vs_support": {
+     "passes": [
+      12
+     ],
+     "moved_vertices": 27,
+     "max_move_cm": 0.2455825197665888,
+     "mean_move_cm": 0.06283770487454825
+    }
+   }
+  },
+  "Flamethrower2": {
+   "gun_hand": {
+    "before": {
+     "into_gun": 0.5230278067922127
+    },
+    "after": {
+     "into_gun": 0.14980957027681638,
+     "into_support": 0.0
+    }
+   },
+   "support": {
+    "before": {
+     "into_gun": 0.2786520892895946,
+     "into_gun_hand": 0.0
+    },
+    "after": {
+     "into_gun": 0.14127579975245028,
+     "into_gun_hand": 0.0
+    }
+   },
+   "projection": {
+    "gun_hand": {
+     "passes": [
+      66
+     ],
+     "moved_vertices": 177,
+     "max_move_cm": 0.4030278067924415,
+     "mean_move_cm": 0.09892381290441457
+    },
+    "support": {
+     "passes": [
+      22
+     ],
+     "moved_vertices": 61,
+     "max_move_cm": 0.1586520892900247,
+     "mean_move_cm": 0.03386939912263264
+    },
+    "gun_hand_vs_support": {
+     "passes": [],
+     "moved_vertices": 0,
+     "max_move_cm": 0.0,
+     "mean_move_cm": 0.0
+    }
+   }
+  }
+ },
+ "s6": {
+  "BrutalPistol": {
+   "kind": "cup",
+   "off_origin_cm": [
+    7.29,
+    4.9,
+    -1.91
+   ],
+   "dist_main_cm": 8.987119235072447,
+   "off_rot_vs_main_deg": 13.978891039561999,
+   "reaim_deg": 0.0,
+   "support_mismatch_deg": 0.0,
+   "support_mismatch_cm": 0.0
+  },
+  "Flamethrower2": {
+   "kind": "stabilised",
+   "off_origin_cm": [
+    25.3,
+    0.73,
+    -7.71
+   ],
+   "dist_main_cm": 26.457399927522573,
+   "off_rot_vs_main_deg": 48.66386857561651,
+   "reaim_deg": 17.025734128780446,
+   "support_mismatch_deg": 17.025734128780446,
+   "support_mismatch_cm": 7.8330578986488835
+  }
+ },
+ "gate": {
+  "hs_pistol": {
+   "rc": 0,
+   "frames": 101,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "CARRY",
+    "INSERT",
+    "SEATED",
+    "CHARGE",
+    "EMPTY"
+   ]
+  },
+  "hs_flamer": {
+   "rc": 0,
+   "frames": 102,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "hs_Revolver": {
+   "rc": 0,
+   "frames": 56,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "hs_Devastator": {
+   "rc": 0,
+   "frames": 84,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "hs_BrutalSMG": {
+   "rc": 0,
+   "frames": 89,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "EMPTY",
+    "DROP",
+    "EMPTY"
+   ]
+  },
+  "v192_Revolver": {
+   "rc": 0,
+   "frames": 86,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "v192_Devastator": {
+   "rc": 0,
+   "frames": 73,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": []
+  },
+  "v192_BrutalSMG": {
+   "rc": 0,
+   "frames": 85,
+   "markers": {
+    "LANEC_REST": true,
+    "LANEC_SUPPORT": true,
+    "LANEC_FIRE": true,
+    "LANEC_ALTFIRE": true,
+    "LANEC_RELOAD": true,
+    "LANEC_MIDRELOAD": true
+   },
+   "errors_not_bd22_baseline": [],
+   "voxelpack_script_errors": 8,
+   "reload_phases": [
+    "EMPTY",
+    "DROP",
+    "EMPTY",
+    "EMPTY",
+    "DROP",
+    "EMPTY"
+   ]
+  }
+ },
+ "edits": [
+  {
+   "file": "models/rsq/fbx/",
+   "what": "add: fbx_r3_R.md3 (gun hands: frame 0 pistol, 1 flamer), fbx_r3_L.md3 (support), fbx_hand.png (FBX base colour, 512 px)",
+   "before": "-",
+   "after": "added"
+  },
+  {
+   "file": "MODELDEF.rsq",
+   "what": "append Model blocks RSQ_GunSide (RQFG A-D, RQFS A-B) and RSQ_Hands (same, for dual wield)",
+   "before": "-",
+   "after": "appended"
+  },
+  {
+   "file": "MODELDEF.rsqdual",
+   "what": "append dual-wield FBX hand block(s): BrutalPistol, Flamethrower2",
+   "before": "-",
+   "after": "appended"
+  },
+  {
+   "file": "MODELDEF.rsqoff",
+   "what": "append dual-wield FBX hand block(s): RSQ_Off_BrutalPistol",
+   "before": "-",
+   "after": "appended"
+  },
+  {
+   "file": "MODELDEF.purist",
+   "what": "append dual-wield FBX hand block(s): PuristPistol, PuristFlamethrower2",
+   "before": "-",
+   "after": "appended"
+  },
+  {
+   "file": "zscript/rsq/hands.zs",
+   "what": "RSQ_GunSide states for the FBX hands",
+   "before": "SupF: RQSP F -1; Stop;",
+   "after": "SupF: RQSP F -1; Stop;\n\t// lane_c R3: the FBX hands (rows 4 BrutalPistol, 7 Flamethrower2)\n\tFbxTrgP: RQFG A -1; Stop;\n\tFbxSqzP: RQFG B -1; Stop;\n\tFbxTrgF: RQFG C -1; Stop;\n\tFbxSqzF: RQFG D -1; Stop;\n\t"
+  },
+  {
+   "file": "zscript/rsq/hands.zs",
+   "what": "RSQ_Hands dual-wield states for the FBX hands",
+   "before": "DGunH: RQGS H -1; Stop;",
+   "after": "DGunH: RQGS H -1; Stop;\n\tDFbxTrgP: RQFG A -1; Stop;\t// lane_c R3: dual wield, the FBX hands\n\tDFbxSqzP: RQFG B -1; Stop;\n\tDFbxTrgF: RQFG C -1; Stop;\n\tDFbxSqzF: RQFG D -1; Stop;"
+  },
+  {
+   "file": "zscript/rsq/hands.zs",
+   "what": "gun-hand label for rows 4 / 7",
+   "before": "String gl = tf != \"\" ? ((p.cmd.buttons & BT_ATTACK) ? \"Sqz\" .. tf : \"Trg\" .. tf) : \"Gun\" .. g;",
+   "after": "String gl = tf != \"\" ? ((p.cmd.buttons & BT_ATTACK) ? \"Sqz\" .. tf : \"Trg\" .. tf) : \"Gun\" .. g;\n\t\tif (i == 4 || i == 7)\t// lane_c R3: the FBX hands on BrutalPistol / Flamethrower2\n\t\t\tgl = ((p.cmd.butto"
+  },
+  {
+   "file": "zscript/rsq/hands.zs",
+   "what": "support label for rows 4 / 7",
+   "before": "invoker.SetLayer(p, RSQ_Layers.SUPPORT, gs, hold && sp != \"\" ? \"Sup\" .. sp : \"Hidden\");",
+   "after": "String spl = (i == 4 || i == 7) ? (i == 4 ? \"FbxSupP\" : \"FbxSupF\") : \"Sup\" .. sp;\t// lane_c R3\n\t\tinvoker.SetLayer(p, RSQ_Layers.SUPPORT, gs, hold && sp != \"\" ? spl : \"Hidden\");"
+  },
+  {
+   "file": "zscript/rsq/dualhands.zs",
+   "what": "dual-wield label for rows 4 / 7",
+   "before": "label = tf != \"\" ? (firing ? \"DSqz\" : \"DTrg\") .. tf : \"DGun\" .. RSQ_HandTable.GunOne(i);",
+   "after": "label = tf != \"\" ? (firing ? \"DSqz\" : \"DTrg\") .. tf : \"DGun\" .. RSQ_HandTable.GunOne(i);\n\t\t\t\tif (i == 4 || i == 7)\t// lane_c R3: the FBX hands\n\t\t\t\t\tlabel = (firing ? \"DFbxSqz\" : \"DFbxTrg\") .. (i == 4 "
+  },
+  {
+   "file": "zscript/rsq/handtable.zs",
+   "what": "row 4 GunHook/GunRot/SupportHook/SupportRot",
+   "before": "1.92 values",
+   "after": "0 0 0 (frames baked in place)"
+  },
+  {
+   "file": "zscript/rsq/handtable.zs",
+   "what": "row 7 GunHook/GunRot/SupportHook/SupportRot",
+   "before": "1.92 values",
+   "after": "0 0 0 (frames baked in place)"
+  },
+  {
+   "file": "MODELDEF.bd.txt",
+   "what": "gun placement: Flamethrower2 block \"Flamethrower2\" line 1180 (2LMT,FLMT)",
+   "before": "Offset 0.0 0.0 0.0 ZOffset -5",
+   "after": "Offset -4.371 -8.313, ZOffset -5.669, Angle/Pitch/Roll -3.798 1.805 0.100"
+  },
+  {
+   "file": "MODELDEF.bd.txt",
+   "what": "gun placement: BrutalPistol block \"BrutalPistol\" line 420 (2ISR,2IST,P3ST,PI2G,PISI,PISP,PISR,PISS,)",
+   "before": "Offset 0.0 0.0 0.0 ZOffset -5",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.purist",
+   "what": "gun placement: BrutalPistol block \"PuristPistol\" line 10678 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.purist",
+   "what": "gun placement: BrutalPistol block \"PuristPistol\" line 10661 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.purist",
+   "what": "gun placement: Flamethrower2 block \"PuristFlamethrower2\" line 493 (2LMT,FLMT)",
+   "before": "Offset 0.0 0.0 0.0 ZOffset -5",
+   "after": "Offset -4.371 -8.313, ZOffset -5.669, Angle/Pitch/Roll -3.798 1.805 0.100"
+  },
+  {
+   "file": "MODELDEF.purist",
+   "what": "gun placement: BrutalPistol block \"PuristPistol\" line 188 (2ISR,2IST,P3ST,PI2G,PISI,PISP,PISR,PISS,)",
+   "before": "Offset 0.0 0.0 0.0 ZOffset -5",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsqoff",
+   "what": "gun placement: BrutalPistol block \"RSQ_Off_BrutalPistol\" line 5573 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsqoff",
+   "what": "gun placement: BrutalPistol block \"RSQ_Off_BrutalPistol\" line 5555 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsqoff",
+   "what": "gun placement: BrutalPistol block \"RSQ_Off_BrutalPistol\" line 5537 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsqoff",
+   "what": "gun placement: BrutalPistol block \"RSQ_Off_BrutalPistol\" line 135 (2ISR,2IST,P3ST,PI2G,PISI,PISP,PISR,PISS,)",
+   "before": "Offset 0.0 0.0 0.0 ZOffset -5",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsr",
+   "what": "gun placement: BrutalPistol block \"RSR_GunParts\" line 219 (RQPP)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsr",
+   "what": "gun placement: BrutalPistol block \"RSR_GunParts\" line 201 (RQPP)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsr",
+   "what": "gun placement: BrutalPistol block \"BrutalPistol\" line 183 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsr",
+   "what": "gun placement: BrutalPistol block \"BrutalPistol\" line 166 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "MODELDEF.rsr",
+   "what": "gun placement: BrutalPistol block \"BrutalPistol\" line 148 (RQPM)",
+   "before": "Offset 0.0000 0.0000 0.0 ZOffset -5.0000",
+   "after": "Offset 0.820 -8.333, ZOffset -1.408, Angle/Pitch/Roll 3.854 3.363 10.974"
+  },
+  {
+   "file": "zscript/rsq/gunmoves.zs",
+   "what": "Pivot(4) BrutalPistol",
+   "before": "0.000 5.000 24.000",
+   "after": "-0.820 8.592 15.667"
+  },
+  {
+   "file": "zscript/rsq/gunmoves.zs",
+   "what": "recoil row 15 (BrutalPistol)",
+   "before": "0.00 5.00 0.00 0.00 -0.15 0.86",
+   "after": "0.97 4.89 0.43 0.15 -0.94 0.47"
+  },
+  {
+   "file": "zscript/rsq/gunmoves.zs",
+   "what": "recoil row 16 (BrutalPistol)",
+   "before": "0.00 3.79 0.00 0.00 -0.13 0.65",
+   "after": "0.73 3.70 0.32 0.11 -0.73 0.35"
+  },
+  {
+   "file": "zscript/rsq/gunmoves.zs",
+   "what": "recoil row 17 (BrutalPistol)",
+   "before": "0.00 1.21 0.00 0.00 -0.05 0.21",
+   "after": "0.23 1.18 0.10 0.04 -0.24 0.11"
+  },
+  {
+   "file": "zscript/rsq/gunmoves.zs",
+   "what": "Pivot(7) Flamethrower2",
+   "before": "0.000 5.000 24.000",
+   "after": "4.371 4.331 15.687"
+  },
+  {
+   "file": "zscript/rsq/gunmoves.zs",
+   "what": "recoil row 28 (Flamethrower2)",
+   "before": "0.00 0.00 0.00 0.00 0.00 1.02",
+   "after": "-0.00 0.00 -0.00 0.07 -0.03 1.02"
+  },
+  {
+   "file": "zscript/rsq/gunmoves.zs",
+   "what": "recoil row 29 (Flamethrower2)",
+   "before": "0.00 0.00 0.00 0.00 0.00 1.02",
+   "after": "-0.00 0.00 -0.00 0.07 -0.03 1.02"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol Well(2)",
+   "before": "(-3.000, -0.000, -2.200)",
+   "after": "(5.324, 1.418, 3.020)"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol MagCentre(2)",
+   "before": "(-4.084, -0.035, -5.084)",
+   "after": "(4.376, 1.870, 0.124)"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol Grab(2)",
+   "before": "(-6.900, -0.000, -0.300)",
+   "after": "(1.355, 0.788, 4.653)"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol Axis(2)",
+   "before": "(0.153, 0.001, 0.988)",
+   "after": "(0.108, -0.180, 0.977)"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol Pull(2)",
+   "before": "(-1.000, -0.000, -0.000)",
+   "after": "(-0.996, -0.067, -0.059)"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol WellHook(2)",
+   "before": "(-0.001, -0.988, 0.153)",
+   "after": "(0.180, -0.977, 0.108)"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol HandleHook(2)",
+   "before": "(-0.000, -0.000, 1.000)",
+   "after": "(-0.067, -0.059, 0.996)"
+  },
+  {
+   "file": "zscript/rsr/rsr_guns.bd.zs",
+   "what": "RSR pistol Offset(2)",
+   "before": "(0.000, 0.000, -5.000)",
+   "after": "(0.820, -8.333, -1.408)"
+  },
+  {
+   "file": "zscript/rsq/casings.zs",
+   "what": "BrutalPistol ejection port",
+   "before": "if (w is 'BrutalPistol')\t\treturn (-1.0, -1.0, 1.3);",
+   "after": "if (w is 'BrutalPistol')\t\treturn (7.2, -0.1, 6.4);\t// lane_c R3: moved with the gun"
+  },
+  {
+   "file": "(none: BD22 actors)",
+   "what": "BrutalPistol muzzle: the shot spawns at the controller (AttackPos) along its aim; the drawn muzzle moved",
+   "before": "[15.17, -0.01, 0.1]",
+   "after": "[23.32, 2.19, 6.34] (10.5 cm)"
+  },
+  {
+   "file": "(none: BD22 actors)",
+   "what": "Flamethrower2 muzzle: the shot spawns at the controller (AttackPos) along its aim; the drawn muzzle moved",
+   "before": "[85.37, 4.06, -7.84]",
+   "after": "[93.89, 0.78, -4.87] (9.6 cm)"
+  }
+ ],
+ "open": [
+  "Flamethrower2 G9 yellow (forearm 20 deg yaw off the bore, unchanged since round 2)",
+  "Flamethrower2 S6 yellow: steadied two-hand re-aims the gun 17.0 deg, drawn vs real off hand 7.8 cm (1.92 median 15.1 / 10.2; 80th 23.4 / 14.4). Pushing S6 to green broke S4 (R3i: S4 -0.99).",
+  "squeeze pose not solved: RQFG B / D = trigger frame",
+  "BD22 shot origin is the controller (AttackPos), not the drawn muzzle: the drawn muzzle moved 10.5 cm (pistol), 9.6 cm (flamer); flame visibly leaves near the muzzle in the rig (flamethrower_engine_r3.png)",
+  "Flamethrower2 has no RSR/pump/break table in 1.92 (its reload is BD22 own): nothing to move",
+  "pistol RSR reload ran IDLE>EMPTY>DROP>EMPTY>CARRY>INSERT>SEATED>CHARGE on the moved tables (rig mags.py geometry from the pack dump)",
+  "headset pass by the owner: not done (rig only)"
+ ]
+}

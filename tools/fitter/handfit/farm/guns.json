@@ -1,0 +1,141 @@
+{
+ "_note": "Guns fit_hv.HV does not list, in HV's form. it.path is under src/models/bd. frame = MODELDEF.bd.txt FrameIndex of the gun's BD22 Ready sprite (actors/Weapons/*.dec in brutal22test6.pk3); scale / off = MODELDEF Scale, Offset + ZOffset. trig_surf / bore_surf / grip_surf from surf_hv.py's listing at that frame. row = handtable.zs Index(). SSG: surfaces and crop from the shotgun lane's fit_sg.py (lane-b-1.99x).",
+ "SSG": {
+  "row": 20,
+  "it": {
+   "path": "SSG/SSG.md3",
+   "frame": 1,
+   "crop": 20.0,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ]
+  },
+  "trig_surf": 5,
+  "bore_surf": 0,
+  "grip_surf": [
+   1
+  ]
+ },
+ "BIG_FUCKING_GUN": {
+  "row": 3,
+  "it": {
+   "path": "BFG/BFG.md3",
+   "frame": 4,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ]
+  },
+  "trig_surf": 1,
+  "bore_surf": 0
+ },
+ "BFG10k": {
+  "row": 2,
+  "it": {
+   "path": "BFG/BFG_10k.md3",
+   "frame": 4,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ]
+  },
+  "trig_surf": 1,
+  "bore_surf": 0
+ },
+ "NukeLauncher": {
+  "row": 14,
+  "it": {
+   "path": "Nuker/Nuker.md3",
+   "frame": 0,
+   "scale": [
+    -1.1,
+    1.1,
+    1.1
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ]
+  },
+  "trig_surf": 1,
+  "bore_surf": 0
+ },
+ "Devastator": {
+  "row": 6,
+  "it": {
+   "path": "Sidewinder/sidewinder.md3",
+   "frame": 0,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    -13.0,
+    0.0
+   ]
+  },
+  "trig_surf": 2,
+  "bore_surf": 1
+ },
+ "_note_r4": "hands r4: Unmaker (row 23) and HellishMissileLauncher (row 9) have NO trigger surface (surf_hv.py: Unmaker 3 surfaces, all 'mp_salvocannon' body/skull; HellishMissile 1 surface 'mp_revenant'); trig_surf null = fitted with the 'wrap' job option (all four fingers wrapped on the handle 1.92 held). Ready frame 0 (MODELDEF.bd.txt FrameIndex of the Ready sprite 2NHG A / RVCG A), Scale -1 1 1, Offset 0 0, ZOffset -5.",
+ "Unmaker": {
+  "row": 23,
+  "it": {
+   "path": "Unmaker/Unmaker.md3",
+   "frame": 0,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ]
+  },
+  "trig_surf": null,
+  "bore_surf": 0
+ },
+ "HellishMissileLauncher": {
+  "row": 9,
+  "it": {
+   "path": "HellishMissile/HellishMissile.md3",
+   "frame": 0,
+   "scale": [
+    -1.0,
+    1.0,
+    1.0
+   ],
+   "off": [
+    0.0,
+    0.0,
+    -5.0
+   ]
+  },
+  "trig_surf": null,
+  "bore_surf": 0
+ }
+}
