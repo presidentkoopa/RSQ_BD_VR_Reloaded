@@ -1,7 +1,5 @@
 *.pk3
 __pycache__/
 
-# tools/fitter: the working hand fitter (moved from RS_ModelSwapper, 2026-11-27). The FBX hand is never committed here
-# (licence unknown: tools/handfit/README.md); run output is not kept.
-tools/fitter/handfit/core/fbx_hand/
+# tools/fitter: the working hand fitter (moved from RS_ModelSwapper, 2026-11-27); run output is not kept.
 work/
